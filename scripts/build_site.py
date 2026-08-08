@@ -360,7 +360,11 @@ def build_monthly(months):
         if os.path.exists(mdpath):
             body=open(mdpath,encoding="utf-8").read()
             h=md_to_html(body,{},out)
-            open(out,"w",encoding="utf-8").write(f"<!DOCTYPE html><html lang='en'><head><meta charset='utf-8'><title>Monthly {m}</title><link rel='stylesheet' href='../assets/site.css'></head><body><div class='container'><div class='crumb'><a href='../index.html'>Home</a> · <a href='index.html'>Monthly</a></div><div class='wiki-body'>{h}</div></div></body></html>")
+            page=f'''{head(f"Monthly Digest {m}", "monthly/", root="../")}
+            <div class="crumb"><a href="../index.html">Home</a> · <a href="index.html">Monthly</a> · {m}</div>
+            <div class="wiki-body">{h}</div>
+            {foot()}'''
+            open(out,"w",encoding="utf-8").write(page)
     cards="".join(f'<a class="card" href="{m}.html"><h3>Monthly · {m}</h3><span class="go">Open →</span></a>' for m in months)
     html=head("Monthly Editions","monthly/index.html", root="../")+f'''<div class="hero"><div class="kicker">Aggregate</div><h1>Monthly <span class="accent">Digests</span></h1>
     <p class="sub">Monthly aggregation, spotlight stories, tradecraft and fact-check reports.</p></div>
