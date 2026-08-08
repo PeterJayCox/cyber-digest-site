@@ -107,3 +107,12 @@ a:hover{text-decoration:underline}
   .navlinks a span.t{display:none}
   .wiki-body{padding:22px}
 }
+
+/* Wiki index collapsible sections */
+.ws-head{cursor:pointer;display:flex;align-items:center;gap:10px;user-select:none;padding:8px 0;margin:0}
+.ws-head:hover{color:var(--accent)}
+.ws-toggle{display:inline-block;width:20px;height:20px;line-height:18px;text-align:center;border-radius:4px;background:var(--surface2);font-size:12px;font-weight:700;color:var(--text-muted);flex-shrink:0}
+.ws-count{font-size:13px;color:var(--text-dim);font-weight:400;margin-left:4px}
+.ws-body{overflow:hidden;transition:max-height .25s}
+.wiki-section.collapsed .ws-body{display:none}
+.wiki-section.collapsed .ws-toggle{color:var(--accent);background:var(--accent-glow)}
