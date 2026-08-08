@@ -39,7 +39,7 @@ def slugify(s):
 def esc(s):
     return html.escape(str(s), quote=True)
 
-def nav_html(active=""):
+def nav_html(active="", root=""):
     items = [("index.html","Home","🏠"),("stories.html","Story DB","📚"),
              ("daily/","Daily","🗓️"),("monthly/index.html","Monthly","📅"),
              ("wiki/index.html","Wiki","🧠")]
@@ -47,20 +47,20 @@ def nav_html(active=""):
     for href,label,ico in items:
         cls="active" if href==active else ""
         if active=="daily/" and href=="daily/": cls="active"
-        ls.append(f'<a href="{href}" class="{cls}"><span class="t">{ico} {label}</span></a>')
+        ls.append(f'<a href="{root}{href}" class="{cls}"><span class="t">{ico} {label}</span></a>')
     return f'''<nav class="topnav"><div class="inner">
-        <a class="brand" href="index.html"><span class="dot"></span>Cyber&nbsp;Digest<small>public site</small></a>
+        <a class="brand" href="{root}index.html"><span class="dot"></span>Cyber&nbsp;Digest<small>public site</small></a>
         <div class="navlinks">{"".join(ls)}</div></div></nav>'''
 
 SHARE_CSS = "assets/site.css"
-def head(title, active=""):
+def head(title, active="", root=""):
     return f'''<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{esc(title)}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{SHARE_CSS}"></head><body>
-{nav_html(active)}<main class="container">'''
+<link rel="stylesheet" href="{root}{SHARE_CSS}"></head><body>
+{nav_html(active, root)}<main class="container">'''
 
 def foot():
     return f'''</main>
@@ -342,11 +342,11 @@ def build_daily(days):
 <link rel="stylesheet" href="{css_rel}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-</head><body>{nav_html("")}<div class="container"><div class="crumb"><a href="../index.html">Home</a> · <a href="index.html">Daily</a></div>
+</head><body>{nav_html("", root="../")}<div class="container"><div class="crumb"><a href="../index.html">Home</a> · <a href="index.html">Daily</a></div>
 <div class="wiki-body">{h}</div></div></body></html>''')
     # daily index
     cards="".join(f'<a class="card" href="{d}.html"><h3>{d}</h3><span class="meta">{month} 2026</span><span class="go">Read →</span></a>' for d,month in days)
-    html=head("Daily Editions","daily/")+f'''<div class="hero"><div class="kicker">Archive</div><h1>Daily <span class="accent">Digests</span></h1>
+    html=head("Daily Editions","daily/", root="../")+f'''<div class="hero"><div class="kicker">Archive</div><h1>Daily <span class="accent">Digests</span></h1>
     <p class="sub">Every daily sector-by-sector roundup, newest first.</p></div>
     <div class="grid cards">{cards}</div>'''+foot()
     open(os.path.join(DOCS,"daily","index.html"),"w",encoding="utf-8").write(html)
@@ -362,7 +362,7 @@ def build_monthly(months):
             h=md_to_html(body,{},out)
             open(out,"w",encoding="utf-8").write(f"<!DOCTYPE html><html lang='en'><head><meta charset='utf-8'><title>Monthly {m}</title><link rel='stylesheet' href='../assets/site.css'></head><body><div class='container'><div class='crumb'><a href='../index.html'>Home</a> · <a href='index.html'>Monthly</a></div><div class='wiki-body'>{h}</div></div></body></html>")
     cards="".join(f'<a class="card" href="{m}.html"><h3>Monthly · {m}</h3><span class="go">Open →</span></a>' for m in months)
-    html=head("Monthly Editions","monthly/index.html")+f'''<div class="hero"><div class="kicker">Aggregate</div><h1>Monthly <span class="accent">Digests</span></h1>
+    html=head("Monthly Editions","monthly/index.html", root="../")+f'''<div class="hero"><div class="kicker">Aggregate</div><h1>Monthly <span class="accent">Digests</span></h1>
     <p class="sub">Monthly aggregation, spotlight stories, tradecraft and fact-check reports.</p></div>
     <div class="grid cards">{cards}</div>'''+foot()
     open(os.path.join(DOCS,"monthly","index.html"),"w",encoding="utf-8").write(html)
@@ -386,9 +386,13 @@ def build_wiki(pages):
             cl=lambda s: re.sub(r"\[\[+([^\]]+)\]\]+", r"\1", s)
             meta_lines=[cl(x) for x in meta_lines]
             meta_block=f'<div class="frontmatter">{" · ".join(esc(x) for x in meta_lines)}</div>' if meta_lines else ''
-            page=f'''{head(title,'wiki/index.html')}
+            # compute root-relative depth for nav/css links
+            rp=os.path.relpath(DOCS, d)
+            wiki_root = rp + "/" if not rp.endswith("/") else rp
+            if wiki_root == "./": wiki_root = ""
+            page=f'''{head(title,'wiki/index.html', root=wiki_root)}
             <div class="container">
-            <div class="crumb"><a href="../index.html">Home</a> · <a href="../wiki/index.html">Wiki</a> · {esc(type_names.get(ptype,ptype))}</div>
+            <div class="crumb"><a href="{wiki_root}index.html">Home</a> · <a href="{wiki_root}wiki/index.html">Wiki</a> · {esc(type_names.get(ptype,ptype))}</div>
             <div class="wiki-body">{meta_block}{content}</div>
             </div>{foot()}'''
             open(os.path.join(d,f"{slug}.html"),"w",encoding="utf-8").write(page)
@@ -403,7 +407,7 @@ def build_wiki(pages):
             summary=strip_wl(fm.get("summary") or "")
             cards+=f'<a class="card wiki-card" href="{ptype}/{slug}.html"><h3>{esc(title)}</h3><p>{esc(summary[:140])}</p><span class="go">Open →</span></a>'
         cards+="</div></div>"
-    html=head("Cyber Wiki","wiki/index.html")+f'''<div class="hero"><div class="kicker">Knowledge base</div><h1>Cyber <span class="accent">Wiki</span></h1>
+    html=head("Cyber Wiki","wiki/index.html", root="../")+f'''<div class="hero"><div class="kicker">Knowledge base</div><h1>Cyber <span class="accent">Wiki</span></h1>
     <p class="sub">Entities, threat actors, incidents, vulnerabilities and concepts — linked from every digest and cross-referenced.</p></div>
     {cards}'''+foot()
     open(os.path.join(wiki_index,"index.html"),"w",encoding="utf-8").write(html)
