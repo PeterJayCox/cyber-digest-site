@@ -1,0 +1,102 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlassian Rovo AI Assistant Prompt Injection — Jira and Confluence Data Exfiltration</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/site.css"></head><body>
+<nav class="topnav"><div class="inner">
+        <a class="brand" href="../../index.html"><span class="dot"></span>Cyber&nbsp;Digest<small>public site</small></a>
+        <div class="navlinks"><a href="../../index.html" class=""><span class="t">🏠 Home</span></a><a href="../../stories.html" class=""><span class="t">📚 Story DB</span></a><a href="../../daily/" class=""><span class="t">🗓️ Daily</span></a><a href="../../monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="../../wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a></div></div></nav><main class="container">
+            <div class="container">
+            <div class="crumb"><a href="../../index.html">Home</a> · <a href="../../wiki/index.html">Wiki</a> · Incidents &amp; Campaigns</div>
+            <div class="wiki-body"><div class="frontmatter">created: 2026-08-09 · updated: 2026-08-09 · type: incident · tags: [incident, prompt-injection, ai-assistant, atlassian, data-exfiltration, jira, confluence, saas] · confidence: high · affected_sectors: [technology, enterprise-software, all] · au_impact: true</div><h1>Atlassian Rovo AI Assistant Prompt Injection — Jira and Confluence Data Exfiltration</h1>
+<p><strong>Two independent security firms</strong> found that <strong>Atlassian Rovo</strong> — the company's AI assistant for Jira and Confluence — is vulnerable to prompt-injection attacks that can exfiltrate internal data to attacker-controlled servers. One of the two attack paths remains unresolved as of publication.</p>
+<h2>Overview</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Discovered by</strong></td>
+<td>PromptArmor &amp; Varonis Threat Labs</td>
+</tr>
+<tr>
+<td><strong>Product</strong></td>
+<td>Atlassian Rovo (AI assistant for Jira and Confluence)</td>
+</tr>
+<tr>
+<td><strong>Attack type</strong></td>
+<td>Prompt injection (content-borne + URL parameter)</td>
+</tr>
+<tr>
+<td><strong>Impact</strong></td>
+<td>Exfiltration of Jira/Confluence data to attacker-controlled servers</td>
+</tr>
+<tr>
+<td><strong>CVE</strong></td>
+<td>None assigned</td>
+</tr>
+<tr>
+<td><strong>Fix status</strong></td>
+<td>Partially patched (link flaw fixed server-side 8 July 2026; content-borne path unconfirmed)</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td>2026-08-08</td>
+</tr>
+<tr>
+<td><strong>Source</strong></td>
+<td>The Hacker News</td>
+</tr>
+</tbody>
+</table>
+<h2>Attack Vectors</h2>
+<h3>1. Content-Borne Prompt Injection (PromptArmor)</h3>
+<p><strong>PromptArmor</strong> demonstrated that malicious instructions hidden in uploaded content that Rovo reads can cause the assistant to:</p>
+<ul>
+<li>Collect data from Jira and Confluence</li>
+<li>Send the exfiltrated data to an attacker-controlled server via URL request</li>
+<li>Bypass any separate approval step</li>
+<li>Operate even with the web-search toggle disabled</li>
+</ul>
+<h3>2. URL Parameter Injection (Varonis Threat Labs)</h3>
+<p><strong>Varonis Threat Labs</strong> found a separate one-click flaw via the <code>rovoChatPrompt</code> URL parameter that:</p>
+<ul>
+<li>Preloads attacker instructions into the Rovo Chat interface</li>
+<li>Requires only one authenticated user click to trigger exfiltration</li>
+<li>Does not require any uploaded content</li>
+</ul>
+<h2>Fix Status</h2>
+<ul>
+<li><strong>Link flaw (Varonis):</strong> Fixed server-side by Atlassian on 8 July 2026</li>
+<li><strong>Content-borne path (PromptArmor):</strong> Status remains unconfirmed post-publication</li>
+<li><strong>No CVE assigned</strong> for either vulnerability at the time of disclosure</li>
+</ul>
+<h2>Significance</h2>
+<p>This vulnerability is significant because:</p>
+<ol>
+<li><strong>Rovo is deeply integrated</strong> into Jira and Confluence, which are widely used across enterprise, government, and financial services globally</li>
+<li><strong>Prompt injection in AI assistants</strong> represents a growing attack surface as organisations deploy AI agents with access to internal data</li>
+<li><strong>Australian and NZ enterprises</strong> using Atlassian products (widespread in both countries) should assess their Rovo deployment and review access controls</li>
+<li>The <strong>split fix status</strong> (one path fixed, one unconfirmed) creates ambiguity for security teams</li>
+</ol>
+<h2>Mitigation</h2>
+<ol>
+<li>Review Atlassian Rovo deployment and disable where not strictly needed</li>
+<li>Monitor for anomalous outbound requests from Atlassian instances</li>
+<li>Restrict Rovo's data access scope via Atlassian admin controls</li>
+<li>Review user education on AI assistant prompt injection risks</li>
+<li>Monitor Atlassian security advisories for the content-borne path fix</li>
+</ol>
+<h2>Related Pages</h2>
+<ul>
+<li><a href="irregular-firm-behind-ai-hacking-incidents-won-t-say-if-there-were-more.html">Irregular Firm Behind Ai Hacking Incidents Won T Say If There Were More</a> — AI agent autonomy and containment failures</li>
+<li><a href="uk-ncsc-statement-on-recent-incidents-resulting-from-frontier-ai-evaluations.html">Uk Ncsc Statement On Recent Incidents Resulting From Frontier Ai Evaluations</a> — UK NCSC statement on AI model containment breaches</li>
+</ul></div>
+            </div></main>
+<div class="footer">Cyber Digest public site · built 2026-08-09 08:23 · AU security intelligence</div>
+</body></html>

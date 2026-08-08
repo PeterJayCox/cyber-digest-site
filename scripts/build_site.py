@@ -397,17 +397,25 @@ def build_daily(days):
 def build_monthly(months):
     os.makedirs(os.path.join(DOCS,"monthly"),exist_ok=True)
     monthly_src=os.path.join(VAULT,"Cyber Digest","Monthly")
+    # Pre-generated HTML from monthly-html.py (has interactive TOC, Full/Exec toggle, story cards, analytics)
+    cybergendir=os.path.expanduser("~/Desktop/Hermes/Cyber Digest/Monthly")
     for m in months:
-        mdpath=os.path.join(monthly_src,f"Cyber-Digest-Monthly-{m}.md")
         out=os.path.join(DOCS,"monthly",f"{m}.html")
-        if os.path.exists(mdpath):
-            body=open(mdpath,encoding="utf-8").read()
-            h=md_to_html(body,{},out)
-            page=f'''{head(f"Monthly Digest {m}", "monthly/", root="../")}
-            <div class="crumb"><a href="../index.html">Home</a> · <a href="index.html">Monthly</a> · {m}</div>
-            <div class="wiki-body">{h}</div>
-            {foot()}'''
-            open(out,"w",encoding="utf-8").write(page)
+        htmlgen=os.path.join(cybergendir,f"Cyber-Digest-Monthly-{m}.html")
+        if os.path.exists(htmlgen):
+            # Use the rich interactive HTML from monthly-html.py
+            shutil.copy2(htmlgen, out)
+        else:
+            # Fallback: convert markdown to basic HTML (no interactive features)
+            mdpath=os.path.join(monthly_src,f"Cyber-Digest-Monthly-{m}.md")
+            if os.path.exists(mdpath):
+                body=open(mdpath,encoding="utf-8").read()
+                h=md_to_html(body,{},out)
+                page=f'''{head(f"Monthly Digest {m}", "monthly/", root="../")}
+                <div class="crumb"><a href="../index.html">Home</a> · <a href="index.html">Monthly</a> · {m}</div>
+                <div class="wiki-body">{h}</div>
+                {foot()}'''
+                open(out,"w",encoding="utf-8").write(page)
     cards="".join(f'<a class="card" href="{m}.html"><h3>Monthly · {m}</h3><span class="go">Open →</span></a>' for m in months)
     html=head("Monthly Editions","monthly/index.html", root="../")+f'''<div class="hero"><div class="kicker">Aggregate</div><h1>Monthly <span class="accent">Digests</span></h1>
     <p class="sub">Monthly aggregation, spotlight stories, tradecraft and fact-check reports.</p></div>
