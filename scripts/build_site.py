@@ -419,19 +419,35 @@ def build_monthly(months, stories):
     # Build enriched cards with story counts and edition type
     cards_parts = []
     for m in months:
-        # Count stories in this month from DB
-        prefix = m  # e.g. "2026-08"
-        month_stories = [s for s in stories if s.get("digest_date","").startswith(prefix)]
-        story_count = len(month_stories)
-        # Check if partial month edition
+        # Count stories in the monthly markdown (more reliable than DB which may lag)
         mdpath = os.path.join(monthly_src, f"Cyber-Digest-Monthly-{m}.md")
+        story_count = 0
         is_partial = False
+        dates_found = []
         if os.path.exists(mdpath):
             body = open(mdpath, encoding="utf-8").read()
             is_partial = "Partial-month" in body
-        # Date range from story dates
-        dates = sorted(set(s.get("digest_date","") for s in month_stories if s.get("digest_date","").startswith(prefix)))
-        date_range = f"{dates[0][-2:]}–{dates[-1][-2:]} {['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][int(m[5:7])-1]}" if dates else m
+            # Count lines starting with `**N.` — these are story headlines
+            story_count = len(re.findall(r"^\*\*\d+\.\s+", body, re.M))
+            # Extract date range from exec summary mentions of digest days
+            dm = re.search(r"(\d+)\s*(?:–|to)\s*(\d+)\s+(August|July|June|May|April|March|January|February|September|October|November|December)", body, re.I)
+            if dm:
+                start_day = dm.group(1)
+                end_day = dm.group(2)
+                month_name = dm.group(3)
+                month_abbr = month_name[:3]
+                date_range = f"{start_day}–{end_day} {month_abbr}"
+            else:
+                # Fallback: extract from dates in the exec summary
+                date_nums = re.findall(r"\b(\d{1,2})\s+(?:August|July|June|May|April|March|January|February|September|October|November|December)\b", body, re.I)
+                if date_nums:
+                    month_name = re.search(r"(August|July|June|May|April|March|January|February|September|October|November|December)", body, re.I)
+                    mn = month_name.group(1)[:3] if month_name else m[5:]
+                    date_range = f"{date_nums[0]}–{date_nums[-1]} {mn}"
+                else:
+                    date_range = m
+        else:
+            date_range = m
         tag_cls = "amber" if is_partial else "green"
         tag_lbl = "Partial" if is_partial else "Full month"
         card = f'''<a class="card" href="{m}.html">
