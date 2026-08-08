@@ -394,7 +394,7 @@ def build_daily(days):
     with open(css_path,"a") as f: f.write(css_extra)
     open(os.path.join(DOCS,"daily","index.html"),"w",encoding="utf-8").write(html)
 
-def build_monthly(months):
+def build_monthly(months, stories):
     os.makedirs(os.path.join(DOCS,"monthly"),exist_ok=True)
     monthly_src=os.path.join(VAULT,"Cyber Digest","Monthly")
     # Pre-generated HTML from monthly-html.py (has interactive TOC, Full/Exec toggle, story cards, analytics)
@@ -416,7 +416,37 @@ def build_monthly(months):
                 <div class="wiki-body">{h}</div>
                 {foot()}'''
                 open(out,"w",encoding="utf-8").write(page)
-    cards="".join(f'<a class="card" href="{m}.html"><h3>Monthly · {m}</h3><span class="go">Open →</span></a>' for m in months)
+    # Build enriched cards with story counts and edition type
+    cards_parts = []
+    for m in months:
+        # Count stories in this month from DB
+        prefix = m  # e.g. "2026-08"
+        month_stories = [s for s in stories if s.get("digest_date","").startswith(prefix)]
+        story_count = len(month_stories)
+        # Check if partial month edition
+        mdpath = os.path.join(monthly_src, f"Cyber-Digest-Monthly-{m}.md")
+        is_partial = False
+        if os.path.exists(mdpath):
+            body = open(mdpath, encoding="utf-8").read()
+            is_partial = "Partial-month" in body
+        # Date range from story dates
+        dates = sorted(set(s.get("digest_date","") for s in month_stories if s.get("digest_date","").startswith(prefix)))
+        date_range = f"{dates[0][-2:]}–{dates[-1][-2:]} {['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][int(m[5:7])-1]}" if dates else m
+        tag_cls = "amber" if is_partial else "green"
+        tag_lbl = "Partial" if is_partial else "Full month"
+        card = f'''<a class="card" href="{m}.html">
+          <div style="display:flex;align-items:flex-start;gap:14px">
+            <div style="font-size:2rem;line-height:1;flex-shrink:0;margin-top:2px">📅</div>
+            <div style="flex:1;min-width:0">
+              <h3>Monthly · {m}</h3>
+              <div class="meta">{date_range} · {story_count} stories</div>
+            </div>
+            <span class="tag {tag_cls}" style="flex-shrink:0;margin-top:2px">{tag_lbl}</span>
+          </div>
+          <span class="go" style="margin-top:6px">Open →</span>
+        </a>'''
+        cards_parts.append(card)
+    cards = "".join(cards_parts)
     html=head("Monthly Editions","monthly/index.html", root="../")+f'''<div class="hero"><div class="kicker">Aggregate</div><h1>Monthly <span class="accent">Digests</span></h1>
     <p class="sub">Monthly aggregation, spotlight stories, tradecraft and fact-check reports.</p></div>
     <div class="grid cards">{cards}</div>'''+foot()
@@ -550,7 +580,7 @@ def main():
     days,months=build_index(stories)
     build_stories(stories)
     build_daily(days)
-    build_monthly(months)
+    build_monthly(months, stories)
     build_wiki(pages)
     print(f"✅ Site built -> {DOCS}")
     print(f"   {len(stories)} stories, {len(days)} daily, {len(months)} monthly, {sum(len(v) for v in pages.values())} wiki pages")
