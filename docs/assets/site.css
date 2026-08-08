@@ -101,6 +101,23 @@ a:hover{text-decoration:underline}
 .pill{display:inline-block;background:var(--surface2);border:1px solid var(--border);color:var(--text-muted);padding:6px 14px;border-radius:999px;font-size:13px;margin:4px}
 .pill:hover{color:var(--accent);border-color:var(--accent);text-decoration:none}
 
+/* Source-link pill buttons in monthly/daily story entries */
+.wiki-body p > a[href^="http"]:not(.no-pill) {
+  display:inline-block;background:var(--surface2);border:1px solid var(--border-light);color:var(--accent);
+  padding:2px 12px;border-radius:999px;font-size:12px;font-weight:600;text-decoration:none;
+  transition:background .15s,border-color .15s,transform .15s;line-height:1.6;vertical-align:baseline;margin:1px 0
+}
+.wiki-body p > a[href^="http"]:not(.no-pill):hover {
+  background:var(--accent-glow);border-color:var(--accent);text-decoration:none;transform:translateY(-1px)
+}
+.wiki-body p > a[href^="http"]:not(.no-pill)::before{content:"↗\FE0E ";font-size:10px;opacity:.7}
+
+/* Back-to-monthly nav button */
+.nav-back{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);color:var(--text-muted);
+  padding:10px 20px;border-radius:12px;font-size:14px;font-weight:600;text-decoration:none;transition:all .15s;margin:30px 0 10px}
+.nav-back:hover{background:var(--accent-glow);border-color:var(--accent);color:var(--accent);text-decoration:none;transform:translateX(-3px)}
+.nav-back-wrap{display:flex}
+
 .empty{text-align:center;color:var(--text-dim);padding:40px 0;font-size:15px}
 
 @media(max-width:620px){
