@@ -361,11 +361,12 @@ def build_daily(days):
             dt=datetime.strptime(d,"%Y-%m-%d")
             dow=day_names[dt.weekday()]
             story_count=counts.get(d,0)
+            count_label=f"<span class=\"meta\">{story_count} stories</span>" if story_count else "<span class=\"meta\" style=\"color:var(--text-dim);opacity:.5\">pending DB ingest</span>"
             latest=" latest" if d==days[0][0] else ""
             badge=f'<span class="tag cyan">latest</span>' if d==days[0][0] else f'<span class="tag blue">{dow}</span>'
             cards+=f'''<a class="card daily-card{latest}" href="{d}.html">
                 <div class="daily-date"><span class="daily-num">{dt.day}</span><span class="daily-dow">{dow}</span></div>
-                <div class="daily-info"><h3>{d}</h3><span class="meta">{story_count} stories</span></div>
+                <div class="daily-info"><h3>{d}</h3>{count_label}</div>
                 {badge}
                 <span class="go">→</span>
             </a>'''
