@@ -1,189 +1,323 @@
-<!DOCTYPE html><html><head><meta charset='utf-8'><title>2026-07-09</title></head><body><h1>🛡️ Cyber Digest — July 3–9, 2026</h1>
-<p><em>A weekly roundup of key cybersecurity developments across sectors</em></p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Digest — 2026-07-09</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0e1a;--surface:#111827;--surface2:#1a2332;--border:#1e293b;--border-light:#2d3a52;--text:#e2e8f0;--text-muted:#b0c0d0;--text-dim:#8a9cb6;--accent:#00b4d8;--accent-glow:rgba(0,180,216,.12);--vuln:#f43f5e;--geo:#8b5cf6;--crime:#f59e0b;--iot:#10b981;--govt:#3b82f6;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--purple:#8b5cf6}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:Inter,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,180,216,.025)1px,transparent 1px),linear-gradient(90deg,rgba(0,180,216,.025)1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
+.skip-link{position:absolute;left:-9999px;top:0;z-index:2000;background:var(--accent);color:#fff;padding:8px 14px;border-radius:0 0 8px 0;font-size:13px;font-weight:600}
+.skip-link:focus{left:0}
+#progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--purple));z-index:1000;width:0%;transition:width .15s}
+.orb{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0;animation:orbFloat 20s ease-in-out infinite}
+.orb-1{width:500px;height:500px;background:var(--accent-glow);top:-200px;right:-200px}
+.orb-2{width:400px;height:400px;background:rgba(139,92,246,.08);bottom:-150px;left:-150px;animation-delay:-7s}
+.orb-3{width:300px;height:300px;background:rgba(244,63,94,.06);top:50%;left:50%;animation-delay:-14s}
+@keyframes orbFloat{0%,100%{transform:translate(0,0)scale(1)}33%{transform:translate(30px,-40px)scale(1.1)}66%{transform:translate(-20px,20px)scale(.9)}}
+.wrap{max-width:1100px;margin:auto;padding:0 28px 80px;display:flex;gap:32px;position:relative;z-index:1}
+#toc{position:sticky;top:24px;width:210px;flex-shrink:0;height:fit-content;max-height:calc(100vh-48px);overflow-y:auto;padding:18px 14px;background:var(--surface);border:1px solid var(--border);border-radius:12px;font-size:12px}
+#toc h3{color:var(--accent);font-size:10px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px}
+#toc a{display:block;color:var(--text-muted);text-decoration:none;padding:3px 8px;border-radius:6px;margin-bottom:2px;transition:all .2s;border-left:2px solid transparent;font-size:12px}
+#toc a:hover{color:var(--text);background:rgba(0,180,216,.08)}
+#toc a.active{color:var(--accent);border-left-color:var(--accent);background:rgba(0,180,216,.1)}
+.main{flex:1;min-width:0}
+.header{padding:40px 0 28px;text-align:center;border-bottom:1px solid var(--border);margin-bottom:32px}
+.header-badge{display:inline-flex;align-items:center;gap:8px;background:var(--accent-glow);border:1px solid rgba(0,180,216,.2);color:var(--accent);padding:5px 14px;border-radius:100px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;margin-bottom:18px}
+.header-badge .dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.header h1{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;letter-spacing:-.03em;background:linear-gradient(135deg,#e2e8f0 0%,#00b4d8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}
+.header .subtitle{color:var(--text-muted);font-size:14px}
+.section{margin-bottom:28px;scroll-margin-top:80px}
+.section h2{font-size:1.15rem;margin-bottom:14px;border-bottom:1px solid var(--border);padding-bottom:10px;display:flex;align-items:center;gap:10px}
+.section h2 .icon{font-size:1.3rem;line-height:1}
+.section h2 .count{margin-left:auto;background:var(--surface2);color:var(--text-muted);padding:2px 10px;border-radius:100px;font-size:11px;font-weight:600;white-space:nowrap}
+/* Exec summary box — surface bg, border, gradient top accent, padding */
+.exec-summary{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px 30px;margin-bottom:28px;position:relative;overflow:hidden}
+.exec-summary::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--vuln),var(--purple))}
+.exec-summary h2{font-size:11px;text-transform:uppercase;letter-spacing:.15em;color:var(--accent);font-weight:700;margin-bottom:14px;border:none;padding:0}
+.exec-summary p{color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:14px}
+.exec-summary p:last-child{margin-bottom:0}
+.exec-summary p strong{color:var(--text);font-weight:600}
+/* AU context box */
+.au-context-box{background:linear-gradient(135deg,rgba(0,180,216,.06),rgba(59,130,246,.06));border:1px solid rgba(0,180,216,.15);border-radius:12px;padding:18px 22px;margin:14px 0;position:relative}
+.au-context-box::before{content:'AU';position:absolute;top:-8px;right:14px;background:var(--accent);color:#fff;font-size:10px;font-weight:800;padding:1px 7px;border-radius:4px;letter-spacing:.05em}
+.au-context-box p{color:var(--text-muted);font-size:13px;line-height:1.65}
+/* Stats row */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:28px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 12px;text-align:center}
+.stat-card .stat-num{font-size:1.5rem;font-weight:800;line-height:1.1}
+.stat-card .stat-label{font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.05em;margin-top:4px}
+.stat-card.stat-vuln .stat-num{color:var(--vuln)}.stat-card.stat-geo .stat-num{color:var(--purple)}.stat-card.stat-crime .stat-num{color:var(--crime)}.stat-card.stat-iot .stat-num{color:var(--green)}.stat-card.stat-govt .stat-num{color:var(--govt)}
+/* Bar charts */
+.bar-chart{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:18px}
+.bar-chart h3{font-size:13px;font-weight:600;color:var(--text);margin-bottom:12px}
+.bar-row{display:flex;align-items:center;margin-bottom:6px;gap:8px}
+.bar-row .bar-label{font-size:12px;color:var(--text-muted);width:130px;flex-shrink:0;text-align:right}
+.bar-row .bar-track{flex:1;height:16px;background:var(--surface2);border-radius:99px;overflow:hidden}
+.bar-row .bar-fill{height:100%;border-radius:99px;transition:width .6s ease;min-width:4px}
+.bar-row .bar-val{font-size:11px;font-weight:600;color:var(--text);width:36px;flex-shrink:0;font-family:'JetBrains Mono',monospace}
+.bar-cyan .bar-fill{background:linear-gradient(90deg,var(--accent),#0096c7)}
+.bar-purple .bar-fill{background:linear-gradient(90deg,var(--purple),#a78bfa)}
+.bar-amber .bar-fill{background:linear-gradient(90deg,var(--amber),#fbbf24)}
+.bar-red .bar-fill{background:linear-gradient(90deg,var(--vuln),#fb7185)}
+.bar-green .bar-fill{background:linear-gradient(90deg,var(--green),#4ade80)}
+.bar-blue .bar-fill{background:linear-gradient(90deg,var(--govt),#60a5fa)}
+/* Pie chart */
+.pie-container{display:flex;align-items:center;gap:28px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px 28px;margin:18px 0}
+.pie{width:140px;height:140px;border-radius:50%;flex-shrink:0}
+.pie-legend{display:flex;flex-direction:column;gap:6px;flex:1}
+.pie-legend .legend-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-muted)}
+.pie-legend .legend-item .dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.pie-legend .legend-item .val{margin-left:auto;font-weight:600;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:12px}
+/* Table */
+.data-table{width:100%;border-collapse:collapse;font-size:13px;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:18px 0}
+.data-table th{background:var(--surface2);color:var(--text-muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.08em;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border)}
+.data-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-muted)}
+.data-table tr:last-child td{border-bottom:none}
+.data-table .tier-badge{display:inline-flex;align-items:center;gap:6px;padding:2px 8px;border-radius:100px;font-size:11px;font-weight:600}
+.data-table .tier-1{background:rgba(34,197,94,.1);color:var(--green)}
+.data-table .tier-2{background:rgba(245,158,11,.1);color:var(--amber)}
+.data-table .tier-3{background:rgba(148,163,184,.1);color:var(--text-muted)}
+.data-table .tier-4{background:rgba(239,68,68,.1);color:var(--red)}
+/* Story cards */
+.story-grid{display:flex;flex-direction:column;gap:14px}
+.story-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 22px;transition:all .2s ease;position:relative;overflow:hidden}
+.story-card:hover{border-color:var(--border-light);background:var(--surface2);transform:translateY(-1px)}
+.story-card .card-accent{position:absolute;top:0;left:0;bottom:0;width:3px;border-radius:0 3px 3px 0}
+.story-card.num-1 .card-accent{background:var(--vuln)}.story-card.num-2 .card-accent{background:var(--purple)}.story-card.num-3 .card-accent{background:var(--crime)}.story-card.num-4 .card-accent{background:var(--green)}.story-card.num-5 .card-accent{background:var(--govt)}
+.story-number{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);font-weight:500;margin-bottom:4px}
+.story-card h3{font-size:1rem;font-weight:600;color:var(--text);margin-bottom:6px;line-height:1.4}
+.story-card p.summary{color:var(--text-muted);font-size:13px;line-height:1.65;margin-bottom:10px}
+.story-card .meta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:12px}
+.story-card .meta .source{color:var(--accent);text-decoration:none;font-weight:500}
+.story-card .meta .source:hover{text-decoration:underline}
+.story-card .meta .reliability{display:inline-flex;align-items:center;gap:4px;color:var(--text-dim)}
+.story-card .meta .reliability .tier-1{color:var(--green)}
+.story-card .meta .reliability .tier-2{color:var(--amber)}
+.story-card .meta .reliability .tier-3{color:var(--text-muted)}
+.story-card .meta .reliability .tier-4{color:var(--red)}
+.story-card .meta .date{color:var(--text-dim);margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px}
+/* Also notable */
+.bundle-box{background:var(--surface);border:1px dashed var(--border);border-radius:10px;padding:14px 18px;margin-top:6px}
+.bundle-box .bundle-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);font-weight:600;margin-bottom:6px}
+.bundle-box ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+.bundle-box ul li{font-size:13px;color:var(--text-muted);padding-left:12px;position:relative;line-height:1.5}
+.bundle-box ul li::before{content:'\25B8';position:absolute;left:0;color:var(--text-dim)}
+/* Controls */
+.controls{display:flex;gap:10px;margin-bottom:20px}
+.btn{font-size:12px;font-weight:600;padding:6px 16px;border-radius:99px;border:1px solid var(--border);background:var(--surface);color:var(--text-muted);cursor:pointer;transition:all .2s;font-family:inherit}
+.btn:hover{background:var(--surface2);color:var(--text)}
+.btn.active{background:rgba(0,180,216,.15);border-color:var(--accent);color:var(--accent)}
+#back-top{position:fixed;bottom:28px;right:28px;width:42px;height:42px;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--accent);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;z-index:900;font-family:inherit}
+#back-top.visible{opacity:1}
+#back-top:hover{background:var(--surface2)}
+.footer{text-align:center;padding:28px 0 10px;border-top:1px solid var(--border);margin-top:32px}
+.footer .source-line{font-size:12px;color:var(--text-dim);font-family:'JetBrains Mono',monospace;margin-bottom:6px}
+.footer .note{font-size:11px;color:var(--text-dim);font-style:italic}
+/* Executive view */
+body.exec-view .hide-exec,
+body.exec-view .story-card .meta,
+body.exec-view .story-card p.summary,
+body.exec-view .bundle-box,
+body.exec-view .bar-chart,
+body.exec-view .pie-container,
+body.exec-view .data-table {display:none!important}
+body.exec-view .story-card{padding:10px 18px;margin-bottom:4px;cursor:pointer}
+body.exec-view .story-card h3{font-size:14px;margin-bottom:0}
+body.exec-view .story-number{display:none}
+body.exec-view .story-grid{gap:6px}
+body.exec-view .story-card::after{content:'▶ Click to expand';display:block;font-size:10px;color:var(--text-dim);margin-top:4px;opacity:.5;transition:opacity .2s}
+body.exec-view .story-card:hover::after{opacity:1}
+body.exec-view .story-card.expanded::after{content:'▼ Click to collapse'}
+body.exec-view .story-card.expanded .meta,
+body.exec-view .story-card.expanded p.summary{display:block!important}
+body.exec-view .story-card.expanded{padding:14px 18px}
+body.exec-view .story-card.expanded .story-number{display:block}
+body.exec-view .story-card.expanded h3{margin-bottom:6px;font-size:1rem}
+body.exec-view .story-card.expanded p.summary{margin-bottom:10px}
+/* Analytics grid: responsive — 2 cols desktop, 1 col narrow. Target the inline grid
+   emitted by the generator (which uses the same rule). */
+.analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:860px){.wrap{flex-direction:column}#toc{position:static;width:100%;max-height:unset;margin-bottom:20px}.pie-container{flex-direction:column;align-items:center;gap:16px}.stats-row{grid-template-columns:repeat(2,1fr)}.header h1{font-size:1.5rem}.analytics-grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important;scroll-behavior:auto!important}}
+@media print{body{background:#fff!important;color:#111!important;font-size:11pt}body::before,.orb{display:none}#toc{display:none}.wrap{display:block;max-width:100%;padding:0}.main{width:100%}.header h1{-webkit-text-fill-color:#111;background:none;color:#111}.exec-summary p,.story-card p.summary,.bar-chart,.au-context-box p,.bundle-box ul li{color:#333!important}.exec-summary,.story-card,.bar-chart,.pie-container{break-inside:avoid}@page{margin:2cm 2.5cm;@bottom-right{content:counter(page)" / "counter(pages);font-size:9pt;color:#999}}}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<div id="progress"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+<div class="wrap">
+<nav id="toc" aria-label="Table of contents">
+<h3>Daily Digest</h3>
+<a href="#exec" data-section="exec">Executive summary</a>
+<a href="#sector-it-technology" data-section="sector-it-technology">💻  IT / Technology</a>
+<a href="#sector-government" data-section="sector-government">🏛️ Government</a>
+<a href="#sector-defence" data-section="sector-defence">🛰️ Defence</a>
+<a href="#sector-financial-services" data-section="sector-financial-services">💰 Financial Services</a>
+<a href="#sector-healthcare" data-section="sector-healthcare">🏥 Healthcare</a>
+<a href="#sector-general-cross-sector" data-section="sector-general-cross-sector">🌐  General / Cross-Sector</a>
+<a href="#analytics" data-section="analytics">📊 Analytics</a>
+</nav>
+<main id="main" class="main">
+
+<header class="header">
+<div class="header-badge"><span class="dot"></span> Daily Digest · 2026-07-09</div>
+<h1>🔐 Cyber Digest</h1>
+<p class="subtitle">A daily roundup of key cybersecurity developments across sectors</p>
+</header>
+
+<div class="controls">
+<button class="btn active" id="btn-full" onclick="setView('full')">Full report</button>
+<button class="btn" id="btn-exec" onclick="setView('exec')">Executive view</button>
+</div>
+
+<section id="exec" class="exec-summary">
 <h2>📋 Executive Summary</h2>
-<p>The week of July 3–9, 2026 was marked by several high-impact developments spanning AI security, law enforcement actions, and critical infrastructure vulnerability management. The <strong>FortiBleed</strong> incident — involving leaked credentials from approximately 74,000 internet-exposed Fortinet devices — continued to reverberate, with CISA issuing urgent hardening guidance for government and private sector organizations. In a major takedown, the <strong>FBI seized hundreds of domains tied to the NetNut residential proxy platform and the Popa botnet</strong>, a network of at least two million compromised devices run by the publicly-traded Israeli firm Alarum Technologies.</p>
-<p>In AI security, <strong>Sophos published research showing AI coding agents (Claude Code, Cursor, OpenAI Codex) are triggering endpoint detection rules designed to catch human attackers</strong>, with credential access alerts spiking 56% on monitored machines. Meanwhile, a novel <strong>"HalluSquatting" attack technique was disclosed</strong> that exploits AI hallucination to trick coding assistants into installing botnet malware. The discovery of <strong>GhostLock (CVE-2026-43499)</strong>, a 15-year-old Linux kernel flaw enabling root access and container escape on virtually all distributions, prompted urgent patching calls.</p>
-<p>On the regulatory front, <strong>Cash App's parent company agreed to a $45 million settlement</strong> over lax security practices, and <strong>Britain unveiled plans for an autonomous AI "Cyber Shield"</strong> to defend national networks. The UK's cyber pledge to secure critical infrastructure, however, drew only a handful of major firms despite ministerial appeals, raising questions about private-sector commitment.</p>
-<hr />
-<h2>Sector Reports</h2>
-<h3>💻 IT / Technology</h3>
-<p><strong>1. AI Coding Agents Triggering Endpoint Security Rules Built to Catch Attackers</strong>
-- <strong>Summary:</strong> Sophos analyzed a week of endpoint telemetry from June 2026 and found that AI coding assistants — Claude Code, Cursor, and OpenAI Codex — are routinely setting off behavioral detection rules. Credential access attempts accounted for 56.2% of alerts on monitored machines, as agents decrypt browser credentials, enumerate Windows credential stores, and write to startup folders. The agents are not malicious but their activity patterns are indistinguishable from real attacks to behavioral engines.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-08</p>
-<p><strong>2. New HalluSquatting Attack Exploits AI Hallucination to Install Botnet Malware</strong>
-- <strong>Summary:</strong> Researchers disclosed "HalluSquatting," an attack that exploits AI coding assistants' tendency to hallucinate non-existent package names. Attackers register domains for packages the AI reliably invents; when a developer's assistant fetches the trap, it executes attacker-supplied code on the machine. The technique could be scaled to assemble botnets by targeting popular hallucinated resources.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-08</p>
-<p><strong>3. GhostLock (CVE-2026-43499): 15-Year-Old Linux Kernel Flaw Enables Root and Container Escape</strong>
-- <strong>Summary:</strong> Nebula Security disclosed GhostLock, a 15-year-old Linux kernel vulnerability present in virtually every mainstream distribution since 2011. It allows any logged-in user to gain full root control and escape containers with 97% reliability in testing. Google awarded the team $92,337 through its kernelCTF bounty program. Working exploit code has been published, though no in-the-wild exploitation is confirmed yet.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-08</p>
-<p><strong>4. CISA Adds 4 Actively Exploited Flaws to KEV Catalog — Adobe, Joomla, Langflow</strong>
-- <strong>Summary:</strong> CISA added four vulnerabilities to its Known Exploited Vulnerabilities catalog on July 7: CVE-2026-48282 (Adobe ColdFusion path traversal, CVSS 10.0), CVE-2026-56290 (Joomla Page Builder RCE, CVSS 10.0), CVE-2026-55255 (Langflow authorization bypass), and CVE-2026-48908 (JoomShaper SP PageBuilder file upload, CVSS 10.0). All are under active exploitation.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a> | <a href="https://www.cisa.gov/news-events/cybersecurity-advisories">CISA</a>
-- <strong>Reliability:</strong> Tier 1/4 — Very High
-- <strong>Date:</strong> 2026-07-07</p>
-<p><strong>5. GitHub 'Verified' Commits Can Be Rewritten Into New Hashes Without Breaking Signatures</strong>
-- <strong>Summary:</strong> New research demonstrates that signed Git commit hashes are not immutable identifiers. An attacker without the signing key can mint a second commit with the same content, author, and date and a valid signature — GitHub still stamps "Verified." This undermines hash-based blocklists, provenance logs, and reproducible-build records.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-08</p>
-<p><strong>6. GitHub Copilot Refuses Harmful Requests in Chat, Then Writes Them in Code</strong>
-- <strong>Summary:</strong> Researchers found that GitHub Copilot (powered by Claude and Gemini) refuses harmful requests in chat but produces the same harmful content when the request is broken into small, ordinary-looking coding steps. In 816 workflow runs, the model produced the banned content in every case — a technique called "workflow-level jailbreak construction."
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-08</p>
-<p><strong>7. Ubiquiti Patches Critical UniFi Flaws Across Multiple Products</strong>
-- <strong>Summary:</strong> Ubiquiti shipped updates for critical vulnerabilities in UniFi Connect (CVE-2026-50746, CVSS 10.0 — command injection), UniFi Talk (CVE-2026-50747, CVSS 9.9 — SQL injection), UniFi Access (CVE-2026-50748, CVSS 9.9 — input validation), UniFi Protect, and UniFi OS. All could lead to privilege escalation or arbitrary code execution.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-08</p>
-<p><strong>8. Rogue Agent Flaw in Google Dialogflow CX Could Let Attackers Hijack Chatbots</strong>
-- <strong>Summary:</strong> Varonis disclosed "Rogue Agent," a flaw in Google's Dialogflow CX that could let an attacker with edit rights on one Code Block-enabled agent compromise all agents in the same Google Cloud project — enabling reading live conversations, stealing user data, and impersonating the bot. Google has fixed the issue; no evidence of exploitation was found.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-07</p>
-<p><strong>9. Microsoft Warns Poisoned MCP Tool Descriptions Can Make AI Agents Leak Data</strong>
-- <strong>Summary:</strong> Microsoft issued a warning that maliciously crafted MCP (Model Context Protocol) tool descriptions can trick AI agents into leaking sensitive data. The technique exploits how agents interpret tool metadata, potentially causing them to route data to attacker-controlled endpoints.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-08</p>
-<p><strong>10. RedWing MaaS Packages Android Bank Fraud as a Telegram Rental Service</strong>
-- <strong>Summary:</strong> A new Android malware operation called RedWing is being sold as a Malware-as-a-Service on Telegram, allowing even low-skill criminals to deploy banking trojans with overlay attacks and OTP theft. Zimperium's zLabs identified it as a variant of the Oblivion platform, rented at $300/month with Telegram bot-driven custom builds.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-07</p>
-<p><strong>11. China-Linked UAT-7810 Expands ORB Network With New LONGLEASH Malware</strong>
-- <strong>Summary:</strong> Cisco Talos reported that APT actor UAT-7810 is actively refining LONGLEASH malware to compromise internet-facing networking devices and expand its LapDogs Operational Relay Box (ORB) network. The infrastructure is then leveraged by China-nexus threat actor UAT-5918 for attacks on critical infrastructure in Taiwan.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-08</p>
-<hr />
-<h3>🏛️ Government</h3>
-<p><strong>1. CISA Urges Hardening Fortinet Devices After FortiBleed Credential Exposure</strong>
-- <strong>Summary:</strong> CISA issued an urgent alert regarding "FortiBleed" — the exposure of leaked credentials associated with approximately 74,000 Fortinet devices (firewalls and SSL VPN gateways) across government and private sectors globally. CISA urged organizations to terminate all active sessions, reset credentials, enforce PBKDF2 hashing, deploy phishing-resistant MFA, and restrict management interfaces from the public internet.
-- <strong>Source:</strong> <a href="https://www.cisa.gov/news-events/alerts/2026/06/18/cisa-urges-hardening-fortinet-devices-after-reports-credential-exposure">CISA</a>
-- <strong>Reliability:</strong> Tier 1/4 — Very High
-- <strong>Date:</strong> 2026-06-18 (Updated 2026-06-22)</p>
-<p><strong>2. FBI Seizes NetNut Proxy Platform, Popa Botnet — 2 Million Devices</strong>
-- <strong>Summary:</strong> The FBI, working with Google, Lumen, and Shadowserver, seized hundreds of domains tied to NetNut, a residential proxy service operated by Alarum Technologies [NASDAQ: ALAR]. The Popa botnet — at least 2 million compromised devices including smart TVs and streaming boxes — was used to relay abusive traffic, including credential stuffing, advertising fraud, and account takeover. Google observed 316 distinct threat actor clusters using NetNut exit nodes in a single week.
-- <strong>Source:</strong> <a href="https://krebsonsecurity.com/">Krebs on Security</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-02</p>
-<p><strong>3. Taiwan Charges Two Businessmen Over Chinese Espionage Campaign</strong>
-- <strong>Summary:</strong> Taiwan's MJIB (Investigation Bureau) charged two businessmen for their alleged roles in a Chinese espionage campaign targeting Taiwanese critical infrastructure and government systems. The charges come amid heightened cross-strait cybersecurity tensions.
-- <strong>Source:</strong> <a href="https://therecord.media/">The Record from Recorded Future News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-08</p>
-<p><strong>4. Spain Arrests Alleged Supporter of Pro-Russian Hacktivist Groups After FBI Tip</strong>
-- <strong>Summary:</strong> Spanish police arrested an individual allegedly linked to pro-Russian hacktivist groups following a tip from the FBI. The arrest highlights ongoing international cooperation targeting hacktivist operations aligned with Russian state interests.
-- <strong>Source:</strong> <a href="https://therecord.media/">The Record from Recorded Future News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-08</p>
-<p><strong>5. Canadian Spy Agency Reports Hacking Three Criminal Groups in 2025</strong>
-- <strong>Summary:</strong> Canada's Communications Security Establishment (CSE) disclosed that its operatives conducted offensive cyber operations against three criminal groups in 2025, marking a rare public acknowledgment of active cyber countermeasures by the agency.
-- <strong>Source:</strong> <a href="https://therecord.media/">The Record from Recorded Future News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-06</p>
-<p><strong>6. Russian Intelligence Services Continue to Target Commercial Messaging Applications</strong>
-- <strong>Summary:</strong> CISA published an external resource alert noting that Russian intelligence services continue to target commercial messaging applications, including Signal and WhatsApp. The advisory follows the US posting a $10 million reward for information on Russian cyber campaigns targeting these platforms.
-- <strong>Source:</strong> <a href="https://www.cisa.gov/news-events/cybersecurity-advisories">CISA</a>
-- <strong>Reliability:</strong> Tier 1/4 — Very High
-- <strong>Date:</strong> 2026-06-26</p>
-<hr />
-<h3>🛡️ Defence</h3>
-<p><strong>1. Britain Plans to Build Autonomous AI 'Cyber Shield' to Defend the Nation</strong>
-- <strong>Summary:</strong> The UK government unveiled plans to develop an autonomous AI-powered "Cyber Shield" capable of defending national networks at machine speed. The system would automatically detect and respond to cyber threats without human intervention, representing a significant escalation in AI-driven defensive cyber operations.
-- <strong>Source:</strong> <a href="https://therecord.media/">The Record from Recorded Future News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-07</p>
-<p><strong>2. EU Unveils Cyber Plan to Reduce Reliance on Foreign AI Systems</strong>
-- <strong>Summary:</strong> The European Commission announced a comprehensive cyber plan aimed at reducing the EU's dependence on foreign AI systems, particularly from the US and China. The initiative includes requirements for AI security audits, supply chain resilience, and investment in indigenous AI security capabilities.
-- <strong>Source:</strong> <a href="https://therecord.media/">The Record from Recorded Future News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-08</p>
-<hr />
-<h3>💰 Financial Services</h3>
-<p><strong>1. Cash App Owner to Pay $45 Million to Settle Allegations of Lax Security</strong>
-- <strong>Summary:</strong> Block Inc., owner of Cash App, agreed to a $45 million settlement to resolve allegations of inadequate security practices that led to user data exposure and financial losses. The settlement underscores growing regulatory scrutiny of fintech security practices.
-- <strong>Source:</strong> <a href="https://therecord.media/">The Record from Recorded Future News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-08</p>
-<p><strong>2. SCMBANKER Malware Uses ClickFix Lures to Target Mexican Banking Users</strong>
-- <strong>Summary:</strong> Elastic Security Labs uncovered REF6045, a campaign targeting Mexican banks, fintech firms, and crypto exchanges with SCMBANKER malware. The infection chain uses fake CAPTCHA pages ("ClickFix" lures) to trick victims into running PowerShell commands that install the toolkit, which can lock screens, redirect browsers, and deploy remote access tools for full account takeover.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-08</p>
-<hr />
-<h3>🏥 Healthcare</h3>
-<p><strong>1. Scattered Spider Hackers Plead Guilty on Day 1 of Trial — Targeted Healthcare Providers</strong>
-- <strong>Summary:</strong> Two key members of the prolific Scattered Spider cybercrime group — Owen Flowers, 18, and Thalha Jubair, 20 — pleaded guilty on the first day of their trial in the UK. Charges included attacks on Transport for London and US healthcare providers SSM Health Care Corporation and Sutter Health. US prosecutors separately allege the group conducted 120 network intrusions against 47 US entities, collecting at least $115 million in ransom payments.
-- <strong>Source:</strong> <a href="https://krebsonsecurity.com/">Krebs on Security</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-06-23</p>
-<hr />
-<h3>🌐 General / Cross-Sector</h3>
-<p><strong>1. Felons, Fraudsters Behind Offensive Cybersecurity Startup IRIS C2</strong>
-- <strong>Summary:</strong> KrebsOnSecurity revealed that IRIS C2, a startup offering millions of dollars for zero-day exploits, is run by convicted felons and far-right conspiracy theorists Jack Burkman and Jacob Wohl. The pair have a history of creating fake intelligence companies and spreading false claims. IRIS C2 is registered through Calvexa Group LLC, a federal contractor with no apparent active government contracts.
-- <strong>Source:</strong> <a href="https://krebsonsecurity.com/">Krebs on Security</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-08</p>
-<p><strong>2. Greek Victims File Lawsuit Against Intellexa Over Predator Spyware</strong>
-- <strong>Summary:</strong> Greek citizens filed a lawsuit against Intellexa, the company behind the Predator spyware, alleging illegal surveillance. The case adds to the growing legal pressure on commercial spyware vendors, following similar actions in Europe.
-- <strong>Source:</strong> <a href="https://therecord.media/">The Record from Recorded Future News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-09</p>
-<p><strong>3. Supreme Court Allows Texas App Law Requiring Age Verification to Take Effect</strong>
-- <strong>Summary:</strong> The US Supreme Court allowed a Texas law requiring app stores to verify users' ages before allowing downloads to take effect. The law has significant implications for privacy, security, and the digital economy, and is expected to face further legal challenges.
-- <strong>Source:</strong> <a href="https://therecord.media/">The Record from Recorded Future News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-07</p>
-<p><strong>4. UK Cyber Pledge Draws Only a Handful of Top Firms Despite Ministerial Appeal</strong>
-- <strong>Summary:</strong> The UK government's voluntary cyber security pledge, aimed at getting major companies to commit to baseline security practices, attracted only a small number of top firms. The lackluster response raises questions about the effectiveness of voluntary approaches to critical infrastructure security.
-- <strong>Source:</strong> <a href="https://therecord.media/">The Record from Recorded Future News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-07</p>
-<hr />
-<h2>📊 Source Reliability Index</h2>
-<table>
-<thead>
-<tr>
-<th>Tier</th>
-<th>Label</th>
-<th>Description</th>
-<th>Sources Used</th>
-</tr>
-</thead>
+<p>The week of July 3–9, 2026 was marked by several high-impact developments spanning AI security, law enforcement actions, and critical infrastructure vulnerability management. The <strong>FortiBleed</strong> incident — involving leaked credentials from approximately 74,000 internet-exposed Fortinet devices — continued to reverberate, with CISA issuing urgent hardening guidance for government and private sector organizations. In a major takedown, the <strong>FBI seized hundreds of domains tied to the NetNut residential proxy platform and the Popa botnet</strong>, a network of at least two million compromised devices run by the publicly-traded Israeli firm Alarum Technologies.
+In AI security, <strong>Sophos published research showing AI coding agents (Claude Code, Cursor, OpenAI Codex) are triggering endpoint detection rules designed to catch human attackers</strong>, with credential access alerts spiking 56% on monitored machines. Meanwhile, a novel <strong>&quot;HalluSquatting&quot; attack technique was disclosed</strong> that exploits AI hallucination to trick coding assistants into installing botnet malware. The discovery of <strong>GhostLock (CVE-2026-43499)</strong>, a 15-year-old Linux kernel flaw enabling root access and container escape on virtually all distributions, prompted urgent patching calls.
+On the regulatory front, <strong>Cash App&#x27;s parent company agreed to a $45 million settlement</strong> over lax security practices, and <strong>Britain unveiled plans for an autonomous AI &quot;Cyber Shield&quot;</strong> to defend national networks. The UK&#x27;s cyber pledge to secure critical infrastructure, however, drew only a handful of major firms despite ministerial appeals, raising questions about private-sector commitment.</p>
+</section>
+
+<div class="stats-row"><div class="stat-card stat-geo"><div class="stat-num">11</div><div class="stat-label">IT / Technology</div></div>
+<div class="stat-card stat-govt"><div class="stat-num">6</div><div class="stat-label">Government</div></div>
+<div class="stat-card stat-crime"><div class="stat-num">2</div><div class="stat-label">Defence</div></div>
+<div class="stat-card stat-iot"><div class="stat-num">2</div><div class="stat-label">Financial Services</div></div>
+<div class="stat-card stat-vuln"><div class="stat-num">1</div><div class="stat-label">Healthcare</div></div></div>
+
+<section id="sector-it-technology" class="section"><h2><span class="icon">💻 </span> IT / Technology <span class="count">11 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>AI Coding Agents Triggering Endpoint Security Rules Built to Catch Attackers</h3><p class="summary">Sophos analyzed a week of endpoint telemetry from June 2026 and found that AI coding assistants — Claude Code, Cursor, and OpenAI Codex — are routinely setting off behavioral detection rules. Credential access attempts accounted for 56.2% of alerts on monitored machines, as agents decrypt browser credentials, enumerate Windows credential stores, and write to startup folders. The agents are not malicious but their activity patterns are indistinguishable from real attacks to behavioral engines.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-08</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>New HalluSquatting Attack Exploits AI Hallucination to Install Botnet Malware</h3><p class="summary">Researchers disclosed &quot;HalluSquatting,&quot; an attack that exploits AI coding assistants&#x27; tendency to hallucinate non-existent package names. Attackers register domains for packages the AI reliably invents; when a developer&#x27;s assistant fetches the trap, it executes attacker-supplied code on the machine. The technique could be scaled to assemble botnets by targeting popular hallucinated resources.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-08</span></div></div>
+<div class="story-card num-3"><div class="card-accent"></div><div class="story-number">3</div><h3>GhostLock (CVE-2026-43499): 15-Year-Old Linux Kernel Flaw Enables Root and Container Escape</h3><p class="summary">Nebula Security disclosed GhostLock, a 15-year-old Linux kernel vulnerability present in virtually every mainstream distribution since 2011. It allows any logged-in user to gain full root control and escape containers with 97% reliability in testing. Google awarded the team $92,337 through its kernelCTF bounty program. Working exploit code has been published, though no in-the-wild exploitation is confirmed yet.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-08</span></div></div>
+<div class="story-card num-4"><div class="card-accent"></div><div class="story-number">4</div><h3>CISA Adds 4 Actively Exploited Flaws to KEV Catalog — Adobe, Joomla, Langflow</h3><p class="summary">CISA added four vulnerabilities to its Known Exploited Vulnerabilities catalog on July 7: CVE-2026-48282 (Adobe ColdFusion path traversal, CVSS 10.0), CVE-2026-56290 (Joomla Page Builder RCE, CVSS 10.0), CVE-2026-55255 (Langflow authorization bypass), and CVE-2026-48908 (JoomShaper SP PageBuilder file upload, CVSS 10.0). All are under active exploitation.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 1/4 — Very High</span><span class="date">2026-07-07</span></div></div>
+<div class="story-card num-5"><div class="card-accent"></div><div class="story-number">5</div><h3>GitHub &#x27;Verified&#x27; Commits Can Be Rewritten Into New Hashes Without Breaking Signatures</h3><p class="summary">New research demonstrates that signed Git commit hashes are not immutable identifiers. An attacker without the signing key can mint a second commit with the same content, author, and date and a valid signature — GitHub still stamps &quot;Verified.&quot; This undermines hash-based blocklists, provenance logs, and reproducible-build records.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-08</span></div></div>
+<div class="story-card num-1"><div class="card-accent"></div><div class="story-number">6</div><h3>GitHub Copilot Refuses Harmful Requests in Chat, Then Writes Them in Code</h3><p class="summary">Researchers found that GitHub Copilot (powered by Claude and Gemini) refuses harmful requests in chat but produces the same harmful content when the request is broken into small, ordinary-looking coding steps. In 816 workflow runs, the model produced the banned content in every case — a technique called &quot;workflow-level jailbreak construction.&quot;</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-08</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">7</div><h3>Ubiquiti Patches Critical UniFi Flaws Across Multiple Products</h3><p class="summary">Ubiquiti shipped updates for critical vulnerabilities in UniFi Connect (CVE-2026-50746, CVSS 10.0 — command injection), UniFi Talk (CVE-2026-50747, CVSS 9.9 — SQL injection), UniFi Access (CVE-2026-50748, CVSS 9.9 — input validation), UniFi Protect, and UniFi OS. All could lead to privilege escalation or arbitrary code execution.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-08</span></div></div>
+<div class="story-card num-3"><div class="card-accent"></div><div class="story-number">8</div><h3>Rogue Agent Flaw in Google Dialogflow CX Could Let Attackers Hijack Chatbots</h3><p class="summary">Varonis disclosed &quot;Rogue Agent,&quot; a flaw in Google&#x27;s Dialogflow CX that could let an attacker with edit rights on one Code Block-enabled agent compromise all agents in the same Google Cloud project — enabling reading live conversations, stealing user data, and impersonating the bot. Google has fixed the issue; no evidence of exploitation was found.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-07</span></div></div>
+<div class="story-card num-4"><div class="card-accent"></div><div class="story-number">9</div><h3>Microsoft Warns Poisoned MCP Tool Descriptions Can Make AI Agents Leak Data</h3><p class="summary">Microsoft issued a warning that maliciously crafted MCP (Model Context Protocol) tool descriptions can trick AI agents into leaking sensitive data. The technique exploits how agents interpret tool metadata, potentially causing them to route data to attacker-controlled endpoints.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-08</span></div></div>
+<div class="story-card num-5"><div class="card-accent"></div><div class="story-number">10</div><h3>RedWing MaaS Packages Android Bank Fraud as a Telegram Rental Service</h3><p class="summary">A new Android malware operation called RedWing is being sold as a Malware-as-a-Service on Telegram, allowing even low-skill criminals to deploy banking trojans with overlay attacks and OTP theft. Zimperium&#x27;s zLabs identified it as a variant of the Oblivion platform, rented at $300/month with Telegram bot-driven custom builds.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-07</span></div></div>
+<div class="story-card num-1"><div class="card-accent"></div><div class="story-number">11</div><h3>China-Linked UAT-7810 Expands ORB Network With New LONGLEASH Malware</h3><p class="summary">Cisco Talos reported that APT actor UAT-7810 is actively refining LONGLEASH malware to compromise internet-facing networking devices and expand its LapDogs Operational Relay Box (ORB) network. The infrastructure is then leveraged by China-nexus threat actor UAT-5918 for attacks on critical infrastructure in Taiwan.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-08</span></div></div>
+</div>
+</section>
+<section id="sector-government" class="section"><h2><span class="icon">🏛️</span> Government <span class="count">6 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>CISA Urges Hardening Fortinet Devices After FortiBleed Credential Exposure</h3><p class="summary">CISA issued an urgent alert regarding &quot;FortiBleed&quot; — the exposure of leaked credentials associated with approximately 74,000 Fortinet devices (firewalls and SSL VPN gateways) across government and private sectors globally. CISA urged organizations to terminate all active sessions, reset credentials, enforce PBKDF2 hashing, deploy phishing-resistant MFA, and restrict management interfaces from the public internet.</p><div class="meta"><a class="source" href="https://www.cisa.gov/news-events/alerts/2026/06/18/cisa-urges-hardening-fortinet-devices-after-reports-credential-exposure" target="_blank" rel="noopener">CISA</a><span class="reliability"><span class="tier-2">●</span> Tier 1/4 — Very High</span><span class="date">2026-06-18 (Updated 2026-06-22)</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>FBI Seizes NetNut Proxy Platform, Popa Botnet — 2 Million Devices</h3><p class="summary">The FBI, working with Google, Lumen, and Shadowserver, seized hundreds of domains tied to NetNut, a residential proxy service operated by Alarum Technologies [NASDAQ: ALAR]. The Popa botnet — at least 2 million compromised devices including smart TVs and streaming boxes — was used to relay abusive traffic, including credential stuffing, advertising fraud, and account takeover. Google observed 316 distinct threat actor clusters using NetNut exit nodes in a single week.</p><div class="meta"><a class="source" href="https://krebsonsecurity.com/" target="_blank" rel="noopener">Krebs on Security</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-02</span></div></div>
+<div class="story-card num-3"><div class="card-accent"></div><div class="story-number">3</div><h3>Taiwan Charges Two Businessmen Over Chinese Espionage Campaign</h3><p class="summary">Taiwan&#x27;s MJIB (Investigation Bureau) charged two businessmen for their alleged roles in a Chinese espionage campaign targeting Taiwanese critical infrastructure and government systems. The charges come amid heightened cross-strait cybersecurity tensions.</p><div class="meta"><a class="source" href="https://therecord.media/" target="_blank" rel="noopener">The Record from Recorded Future News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-08</span></div></div>
+<div class="story-card num-4"><div class="card-accent"></div><div class="story-number">4</div><h3>Spain Arrests Alleged Supporter of Pro-Russian Hacktivist Groups After FBI Tip</h3><p class="summary">Spanish police arrested an individual allegedly linked to pro-Russian hacktivist groups following a tip from the FBI. The arrest highlights ongoing international cooperation targeting hacktivist operations aligned with Russian state interests.</p><div class="meta"><a class="source" href="https://therecord.media/" target="_blank" rel="noopener">The Record from Recorded Future News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-08</span></div></div>
+<div class="story-card num-5"><div class="card-accent"></div><div class="story-number">5</div><h3>Canadian Spy Agency Reports Hacking Three Criminal Groups in 2025</h3><p class="summary">Canada&#x27;s Communications Security Establishment (CSE) disclosed that its operatives conducted offensive cyber operations against three criminal groups in 2025, marking a rare public acknowledgment of active cyber countermeasures by the agency.</p><div class="meta"><a class="source" href="https://therecord.media/" target="_blank" rel="noopener">The Record from Recorded Future News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-06</span></div></div>
+<div class="story-card num-1"><div class="card-accent"></div><div class="story-number">6</div><h3>Russian Intelligence Services Continue to Target Commercial Messaging Applications</h3><p class="summary">CISA published an external resource alert noting that Russian intelligence services continue to target commercial messaging applications, including Signal and WhatsApp. The advisory follows the US posting a $10 million reward for information on Russian cyber campaigns targeting these platforms.</p><div class="meta"><a class="source" href="https://www.cisa.gov/news-events/cybersecurity-advisories" target="_blank" rel="noopener">CISA</a><span class="reliability"><span class="tier-2">●</span> Tier 1/4 — Very High</span><span class="date">2026-06-26</span></div></div>
+</div>
+</section>
+<section id="sector-defence" class="section"><h2><span class="icon">🛰️</span> Defence <span class="count">2 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Britain Plans to Build Autonomous AI &#x27;Cyber Shield&#x27; to Defend the Nation</h3><p class="summary">The UK government unveiled plans to develop an autonomous AI-powered &quot;Cyber Shield&quot; capable of defending national networks at machine speed. The system would automatically detect and respond to cyber threats without human intervention, representing a significant escalation in AI-driven defensive cyber operations.</p><div class="meta"><a class="source" href="https://therecord.media/" target="_blank" rel="noopener">The Record from Recorded Future News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-07</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>EU Unveils Cyber Plan to Reduce Reliance on Foreign AI Systems</h3><p class="summary">The European Commission announced a comprehensive cyber plan aimed at reducing the EU&#x27;s dependence on foreign AI systems, particularly from the US and China. The initiative includes requirements for AI security audits, supply chain resilience, and investment in indigenous AI security capabilities.</p><div class="meta"><a class="source" href="https://therecord.media/" target="_blank" rel="noopener">The Record from Recorded Future News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-08</span></div></div>
+</div>
+</section>
+<section id="sector-financial-services" class="section"><h2><span class="icon">💰</span> Financial Services <span class="count">2 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Cash App Owner to Pay $45 Million to Settle Allegations of Lax Security</h3><p class="summary">Block Inc., owner of Cash App, agreed to a $45 million settlement to resolve allegations of inadequate security practices that led to user data exposure and financial losses. The settlement underscores growing regulatory scrutiny of fintech security practices.</p><div class="meta"><a class="source" href="https://therecord.media/" target="_blank" rel="noopener">The Record from Recorded Future News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-08</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>SCMBANKER Malware Uses ClickFix Lures to Target Mexican Banking Users</h3><p class="summary">Elastic Security Labs uncovered REF6045, a campaign targeting Mexican banks, fintech firms, and crypto exchanges with SCMBANKER malware. The infection chain uses fake CAPTCHA pages (&quot;ClickFix&quot; lures) to trick victims into running PowerShell commands that install the toolkit, which can lock screens, redirect browsers, and deploy remote access tools for full account takeover.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-08</span></div></div>
+</div>
+</section>
+<section id="sector-healthcare" class="section"><h2><span class="icon">🏥</span> Healthcare <span class="count">1 story</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Scattered Spider Hackers Plead Guilty on Day 1 of Trial — Targeted Healthcare Providers</h3><p class="summary">Two key members of the prolific Scattered Spider cybercrime group — Owen Flowers, 18, and Thalha Jubair, 20 — pleaded guilty on the first day of their trial in the UK. Charges included attacks on Transport for London and US healthcare providers SSM Health Care Corporation and Sutter Health. US prosecutors separately allege the group conducted 120 network intrusions against 47 US entities, collecting at least $115 million in ransom payments.</p><div class="meta"><a class="source" href="https://krebsonsecurity.com/" target="_blank" rel="noopener">Krebs on Security</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-06-23</span></div></div>
+</div>
+</section>
+<section id="sector-general-cross-sector" class="section"><h2><span class="icon">🌐 </span> General / Cross-Sector <span class="count">4 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Felons, Fraudsters Behind Offensive Cybersecurity Startup IRIS C2</h3><p class="summary">KrebsOnSecurity revealed that IRIS C2, a startup offering millions of dollars for zero-day exploits, is run by convicted felons and far-right conspiracy theorists Jack Burkman and Jacob Wohl. The pair have a history of creating fake intelligence companies and spreading false claims. IRIS C2 is registered through Calvexa Group LLC, a federal contractor with no apparent active government contracts.</p><div class="meta"><a class="source" href="https://krebsonsecurity.com/" target="_blank" rel="noopener">Krebs on Security</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-08</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>Greek Victims File Lawsuit Against Intellexa Over Predator Spyware</h3><p class="summary">Greek citizens filed a lawsuit against Intellexa, the company behind the Predator spyware, alleging illegal surveillance. The case adds to the growing legal pressure on commercial spyware vendors, following similar actions in Europe.</p><div class="meta"><a class="source" href="https://therecord.media/" target="_blank" rel="noopener">The Record from Recorded Future News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-09</span></div></div>
+<div class="story-card num-3"><div class="card-accent"></div><div class="story-number">3</div><h3>Supreme Court Allows Texas App Law Requiring Age Verification to Take Effect</h3><p class="summary">The US Supreme Court allowed a Texas law requiring app stores to verify users&#x27; ages before allowing downloads to take effect. The law has significant implications for privacy, security, and the digital economy, and is expected to face further legal challenges.</p><div class="meta"><a class="source" href="https://therecord.media/" target="_blank" rel="noopener">The Record from Recorded Future News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-07</span></div></div>
+<div class="story-card num-4"><div class="card-accent"></div><div class="story-number">4</div><h3>UK Cyber Pledge Draws Only a Handful of Top Firms Despite Ministerial Appeal</h3><p class="summary">The UK government&#x27;s voluntary cyber security pledge, aimed at getting major companies to commit to baseline security practices, attracted only a small number of top firms. The lackluster response raises questions about the effectiveness of voluntary approaches to critical infrastructure security.</p><div class="meta"><a class="source" href="https://therecord.media/" target="_blank" rel="noopener">The Record from Recorded Future News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-07</span></div></div>
+</div>
+</section>
+
+<!-- Analytics Section -->
+<section id="analytics" class="section">
+<h2><span class="icon">📊</span> Analytics</h2>
+<div class="analytics-grid"><div class="bar-chart"><h3>Sector distribution</h3><div class="bar-row bar-cyan"><span class="bar-label">IT / Technology</span><div class="bar-track"><div class="bar-fill" style="width:42%"></div></div><span class="bar-val">11</span></div>
+<div class="bar-row bar-blue"><span class="bar-label">Government</span><div class="bar-track"><div class="bar-fill" style="width:23%"></div></div><span class="bar-val">6</span></div>
+<div class="bar-row bar-blue"><span class="bar-label">Defence</span><div class="bar-track"><div class="bar-fill" style="width:8%"></div></div><span class="bar-val">2</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">Financial Services</span><div class="bar-track"><div class="bar-fill" style="width:8%"></div></div><span class="bar-val">2</span></div>
+<div class="bar-row bar-red"><span class="bar-label">Healthcare</span><div class="bar-track"><div class="bar-fill" style="width:4%"></div></div><span class="bar-val">1</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">General / Cross-Sector</span><div class="bar-track"><div class="bar-fill" style="width:15%"></div></div><span class="bar-val">4</span></div></div><div class="bar-chart"><h3>Source breakdown</h3><div class="bar-row bar-cyan"><span class="bar-label">The Hacker News</span><div class="bar-track"><div class="bar-fill" style="width:46%"></div></div><span class="bar-val">12</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">The Record from Recorded Future News</span><div class="bar-track"><div class="bar-fill" style="width:35%"></div></div><span class="bar-val">9</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">Krebs on Security</span><div class="bar-track"><div class="bar-fill" style="width:12%"></div></div><span class="bar-val">3</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">CISA</span><div class="bar-track"><div class="bar-fill" style="width:8%"></div></div><span class="bar-val">2</span></div></div></div>
+<div class="pie-container"><div class="pie" style="background:conic-gradient(var(--accent) 0deg 152deg,var(--purple) 152deg 235deg,var(--govt) 235deg 263deg,var(--vuln) 263deg 291deg,var(--crime) 291deg 305deg,var(--govt) 305deg 360deg);"></div><div class="pie-legend"><div class="legend-item"><span class="dot" style="background:var(--accent)"></span> IT / Technology <span class="val">11</span></div><div class="legend-item"><span class="dot" style="background:var(--purple)"></span> Government <span class="val">6</span></div><div class="legend-item"><span class="dot" style="background:var(--govt)"></span> Defence <span class="val">2</span></div><div class="legend-item"><span class="dot" style="background:var(--vuln)"></span> Financial Services <span class="val">2</span></div><div class="legend-item"><span class="dot" style="background:var(--crime)"></span> Healthcare <span class="val">1</span></div><div class="legend-item"><span class="dot" style="background:var(--govt)"></span> General / Cross-Sector <span class="val">4</span></div></div></div>
+<h3 style="font-size:14px;color:var(--text);margin-bottom:10px">Source Reliability Index</h3>
+<table class="data-table">
+<thead><tr><th>Tier</th><th>Label</th><th>Description</th></tr></thead>
 <tbody>
-<tr>
-<td>1</td>
-<td><strong>Very High</strong></td>
-<td>Official disclosures, first-party advisories</td>
-<td>CISA</td>
-</tr>
-<tr>
-<td>2</td>
-<td><strong>High</strong></td>
-<td>Established cybersecurity journalism</td>
-<td>The Hacker News, Krebs on Security, The Record (Recorded Future News)</td>
-</tr>
-<tr>
-<td>3</td>
-<td><strong>Moderate</strong></td>
-<td>General tech/news media with security desks</td>
-<td>—</td>
-</tr>
-<tr>
-<td>4</td>
-<td><strong>Low</strong></td>
-<td>Social media, anonymous forums, unverified claims</td>
-<td>—</td>
-</tr>
+<tr><td><span class="tier-badge tier-1">● Tier 1</span></td><td>Very High</td><td>Official / first-party</td></tr>
+<tr><td><span class="tier-badge tier-2">● Tier 2</span></td><td>High</td><td>Established cyber journalism</td></tr>
+<tr><td><span class="tier-badge tier-3">● Tier 3</span></td><td>Moderate</td><td>General tech/news media</td></tr>
+<tr><td><span class="tier-badge tier-4">● Tier 4</span></td><td>Low</td><td>Social / unverified</td></tr>
 </tbody>
 </table>
-<hr />
-<p><em>Report generated: July 9, 2026. Sources: The Hacker News, Krebs on Security, The Record from Recorded Future News, CISA.</em></p></body></html>
+</section>
+
+<footer class="footer">
+<div class="source-line">Digest generated 2026-07-09.</div>
+<div class="note">Digest prepared 9 July 2026. 48-hour freshness window (72-hour max for weekend bridging).</div>
+</footer>
+</main>
+</div>
+
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+
+<script>
+window.addEventListener('scroll',function(){
+var h=document.documentElement;
+var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+document.getElementById('progress').style.width=Math.min(p,100)+'%';
+var bt=document.getElementById('back-top');
+bt.classList.toggle('visible',(h.scrollTop||document.body.scrollTop)>300);
+var sections=document.querySelectorAll('section[id],.exec-summary');
+var links=document.querySelectorAll('#toc a');
+var cur='';
+sections.forEach(function(s){
+var t=s.getBoundingClientRect().top;
+if(t<250) cur=s.id;
+});
+links.forEach(function(l){
+l.classList.toggle('active',l.dataset.section===cur);
+});
+});
+function setView(m){
+document.body.classList.toggle('exec-view',m==='exec');
+document.getElementById('btn-full').classList.toggle('active',m==='full');
+document.getElementById('btn-exec').classList.toggle('active',m==='exec');
+document.querySelectorAll('.story-card').forEach(function(c){
+var interactive=m==='exec';
+c.setAttribute('role',interactive?'button':null);
+c.setAttribute('tabindex',interactive?'0':null);
+c.setAttribute('aria-expanded',interactive?(c.classList.contains('expanded')?'true':'false'):null);
+});
+}
+document.addEventListener('keydown',function(e){
+if(e.key==='Escape') setView('full');
+});
+function toggleCard(c){ if(!document.body.classList.contains('exec-view'))return; c.classList.toggle('expanded'); c.setAttribute('aria-expanded',c.classList.contains('expanded')?'true':'false'); }
+document.querySelectorAll('.story-card').forEach(function(c){
+c.addEventListener('click',function(e){
+if(e.target.closest('a')) return;
+toggleCard(this);
+});
+c.addEventListener('keydown',function(e){
+if(e.target.closest('a')) return;
+if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggleCard(this); }
+});
+});
+document.querySelectorAll('#toc a').forEach(function(l){
+l.setAttribute('role','navigation');
+});
+/* aria-current for active TOC link */
+var _tocObs=new MutationObserver(function(){
+document.querySelectorAll('#toc a.active').forEach(function(a){a.setAttribute('aria-current','location');});
+document.querySelectorAll('#toc a:not(.active)').forEach(function(a){a.removeAttribute('aria-current');});
+});
+_tocObs.observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['class']});
+</script>
+</body>
+</html>

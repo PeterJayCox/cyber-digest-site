@@ -1,244 +1,333 @@
-<!DOCTYPE html><html><head><meta charset='utf-8'><title>2026-07-19</title></head><body><h1>🛡️ Cyber Digest — 2026-07-19 (Daily)</h1>
-<p><em>A daily roundup of key cybersecurity developments across sectors</em></p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Digest — 2026-07-19</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0e1a;--surface:#111827;--surface2:#1a2332;--border:#1e293b;--border-light:#2d3a52;--text:#e2e8f0;--text-muted:#b0c0d0;--text-dim:#8a9cb6;--accent:#00b4d8;--accent-glow:rgba(0,180,216,.12);--vuln:#f43f5e;--geo:#8b5cf6;--crime:#f59e0b;--iot:#10b981;--govt:#3b82f6;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--purple:#8b5cf6}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:Inter,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,180,216,.025)1px,transparent 1px),linear-gradient(90deg,rgba(0,180,216,.025)1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
+.skip-link{position:absolute;left:-9999px;top:0;z-index:2000;background:var(--accent);color:#fff;padding:8px 14px;border-radius:0 0 8px 0;font-size:13px;font-weight:600}
+.skip-link:focus{left:0}
+#progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--purple));z-index:1000;width:0%;transition:width .15s}
+.orb{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0;animation:orbFloat 20s ease-in-out infinite}
+.orb-1{width:500px;height:500px;background:var(--accent-glow);top:-200px;right:-200px}
+.orb-2{width:400px;height:400px;background:rgba(139,92,246,.08);bottom:-150px;left:-150px;animation-delay:-7s}
+.orb-3{width:300px;height:300px;background:rgba(244,63,94,.06);top:50%;left:50%;animation-delay:-14s}
+@keyframes orbFloat{0%,100%{transform:translate(0,0)scale(1)}33%{transform:translate(30px,-40px)scale(1.1)}66%{transform:translate(-20px,20px)scale(.9)}}
+.wrap{max-width:1100px;margin:auto;padding:0 28px 80px;display:flex;gap:32px;position:relative;z-index:1}
+#toc{position:sticky;top:24px;width:210px;flex-shrink:0;height:fit-content;max-height:calc(100vh-48px);overflow-y:auto;padding:18px 14px;background:var(--surface);border:1px solid var(--border);border-radius:12px;font-size:12px}
+#toc h3{color:var(--accent);font-size:10px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px}
+#toc a{display:block;color:var(--text-muted);text-decoration:none;padding:3px 8px;border-radius:6px;margin-bottom:2px;transition:all .2s;border-left:2px solid transparent;font-size:12px}
+#toc a:hover{color:var(--text);background:rgba(0,180,216,.08)}
+#toc a.active{color:var(--accent);border-left-color:var(--accent);background:rgba(0,180,216,.1)}
+.main{flex:1;min-width:0}
+.header{padding:40px 0 28px;text-align:center;border-bottom:1px solid var(--border);margin-bottom:32px}
+.header-badge{display:inline-flex;align-items:center;gap:8px;background:var(--accent-glow);border:1px solid rgba(0,180,216,.2);color:var(--accent);padding:5px 14px;border-radius:100px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;margin-bottom:18px}
+.header-badge .dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.header h1{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;letter-spacing:-.03em;background:linear-gradient(135deg,#e2e8f0 0%,#00b4d8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}
+.header .subtitle{color:var(--text-muted);font-size:14px}
+.section{margin-bottom:28px;scroll-margin-top:80px}
+.section h2{font-size:1.15rem;margin-bottom:14px;border-bottom:1px solid var(--border);padding-bottom:10px;display:flex;align-items:center;gap:10px}
+.section h2 .icon{font-size:1.3rem;line-height:1}
+.section h2 .count{margin-left:auto;background:var(--surface2);color:var(--text-muted);padding:2px 10px;border-radius:100px;font-size:11px;font-weight:600;white-space:nowrap}
+/* Exec summary box — surface bg, border, gradient top accent, padding */
+.exec-summary{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px 30px;margin-bottom:28px;position:relative;overflow:hidden}
+.exec-summary::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--vuln),var(--purple))}
+.exec-summary h2{font-size:11px;text-transform:uppercase;letter-spacing:.15em;color:var(--accent);font-weight:700;margin-bottom:14px;border:none;padding:0}
+.exec-summary p{color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:14px}
+.exec-summary p:last-child{margin-bottom:0}
+.exec-summary p strong{color:var(--text);font-weight:600}
+/* AU context box */
+.au-context-box{background:linear-gradient(135deg,rgba(0,180,216,.06),rgba(59,130,246,.06));border:1px solid rgba(0,180,216,.15);border-radius:12px;padding:18px 22px;margin:14px 0;position:relative}
+.au-context-box::before{content:'AU';position:absolute;top:-8px;right:14px;background:var(--accent);color:#fff;font-size:10px;font-weight:800;padding:1px 7px;border-radius:4px;letter-spacing:.05em}
+.au-context-box p{color:var(--text-muted);font-size:13px;line-height:1.65}
+/* Stats row */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:28px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 12px;text-align:center}
+.stat-card .stat-num{font-size:1.5rem;font-weight:800;line-height:1.1}
+.stat-card .stat-label{font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.05em;margin-top:4px}
+.stat-card.stat-vuln .stat-num{color:var(--vuln)}.stat-card.stat-geo .stat-num{color:var(--purple)}.stat-card.stat-crime .stat-num{color:var(--crime)}.stat-card.stat-iot .stat-num{color:var(--green)}.stat-card.stat-govt .stat-num{color:var(--govt)}
+/* Bar charts */
+.bar-chart{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:18px}
+.bar-chart h3{font-size:13px;font-weight:600;color:var(--text);margin-bottom:12px}
+.bar-row{display:flex;align-items:center;margin-bottom:6px;gap:8px}
+.bar-row .bar-label{font-size:12px;color:var(--text-muted);width:130px;flex-shrink:0;text-align:right}
+.bar-row .bar-track{flex:1;height:16px;background:var(--surface2);border-radius:99px;overflow:hidden}
+.bar-row .bar-fill{height:100%;border-radius:99px;transition:width .6s ease;min-width:4px}
+.bar-row .bar-val{font-size:11px;font-weight:600;color:var(--text);width:36px;flex-shrink:0;font-family:'JetBrains Mono',monospace}
+.bar-cyan .bar-fill{background:linear-gradient(90deg,var(--accent),#0096c7)}
+.bar-purple .bar-fill{background:linear-gradient(90deg,var(--purple),#a78bfa)}
+.bar-amber .bar-fill{background:linear-gradient(90deg,var(--amber),#fbbf24)}
+.bar-red .bar-fill{background:linear-gradient(90deg,var(--vuln),#fb7185)}
+.bar-green .bar-fill{background:linear-gradient(90deg,var(--green),#4ade80)}
+.bar-blue .bar-fill{background:linear-gradient(90deg,var(--govt),#60a5fa)}
+/* Pie chart */
+.pie-container{display:flex;align-items:center;gap:28px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px 28px;margin:18px 0}
+.pie{width:140px;height:140px;border-radius:50%;flex-shrink:0}
+.pie-legend{display:flex;flex-direction:column;gap:6px;flex:1}
+.pie-legend .legend-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-muted)}
+.pie-legend .legend-item .dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.pie-legend .legend-item .val{margin-left:auto;font-weight:600;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:12px}
+/* Table */
+.data-table{width:100%;border-collapse:collapse;font-size:13px;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:18px 0}
+.data-table th{background:var(--surface2);color:var(--text-muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.08em;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border)}
+.data-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-muted)}
+.data-table tr:last-child td{border-bottom:none}
+.data-table .tier-badge{display:inline-flex;align-items:center;gap:6px;padding:2px 8px;border-radius:100px;font-size:11px;font-weight:600}
+.data-table .tier-1{background:rgba(34,197,94,.1);color:var(--green)}
+.data-table .tier-2{background:rgba(245,158,11,.1);color:var(--amber)}
+.data-table .tier-3{background:rgba(148,163,184,.1);color:var(--text-muted)}
+.data-table .tier-4{background:rgba(239,68,68,.1);color:var(--red)}
+/* Story cards */
+.story-grid{display:flex;flex-direction:column;gap:14px}
+.story-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 22px;transition:all .2s ease;position:relative;overflow:hidden}
+.story-card:hover{border-color:var(--border-light);background:var(--surface2);transform:translateY(-1px)}
+.story-card .card-accent{position:absolute;top:0;left:0;bottom:0;width:3px;border-radius:0 3px 3px 0}
+.story-card.num-1 .card-accent{background:var(--vuln)}.story-card.num-2 .card-accent{background:var(--purple)}.story-card.num-3 .card-accent{background:var(--crime)}.story-card.num-4 .card-accent{background:var(--green)}.story-card.num-5 .card-accent{background:var(--govt)}
+.story-number{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);font-weight:500;margin-bottom:4px}
+.story-card h3{font-size:1rem;font-weight:600;color:var(--text);margin-bottom:6px;line-height:1.4}
+.story-card p.summary{color:var(--text-muted);font-size:13px;line-height:1.65;margin-bottom:10px}
+.story-card .meta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:12px}
+.story-card .meta .source{color:var(--accent);text-decoration:none;font-weight:500}
+.story-card .meta .source:hover{text-decoration:underline}
+.story-card .meta .reliability{display:inline-flex;align-items:center;gap:4px;color:var(--text-dim)}
+.story-card .meta .reliability .tier-1{color:var(--green)}
+.story-card .meta .reliability .tier-2{color:var(--amber)}
+.story-card .meta .reliability .tier-3{color:var(--text-muted)}
+.story-card .meta .reliability .tier-4{color:var(--red)}
+.story-card .meta .date{color:var(--text-dim);margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px}
+/* Also notable */
+.bundle-box{background:var(--surface);border:1px dashed var(--border);border-radius:10px;padding:14px 18px;margin-top:6px}
+.bundle-box .bundle-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);font-weight:600;margin-bottom:6px}
+.bundle-box ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+.bundle-box ul li{font-size:13px;color:var(--text-muted);padding-left:12px;position:relative;line-height:1.5}
+.bundle-box ul li::before{content:'\25B8';position:absolute;left:0;color:var(--text-dim)}
+/* Controls */
+.controls{display:flex;gap:10px;margin-bottom:20px}
+.btn{font-size:12px;font-weight:600;padding:6px 16px;border-radius:99px;border:1px solid var(--border);background:var(--surface);color:var(--text-muted);cursor:pointer;transition:all .2s;font-family:inherit}
+.btn:hover{background:var(--surface2);color:var(--text)}
+.btn.active{background:rgba(0,180,216,.15);border-color:var(--accent);color:var(--accent)}
+#back-top{position:fixed;bottom:28px;right:28px;width:42px;height:42px;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--accent);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;z-index:900;font-family:inherit}
+#back-top.visible{opacity:1}
+#back-top:hover{background:var(--surface2)}
+.footer{text-align:center;padding:28px 0 10px;border-top:1px solid var(--border);margin-top:32px}
+.footer .source-line{font-size:12px;color:var(--text-dim);font-family:'JetBrains Mono',monospace;margin-bottom:6px}
+.footer .note{font-size:11px;color:var(--text-dim);font-style:italic}
+/* Executive view */
+body.exec-view .hide-exec,
+body.exec-view .story-card .meta,
+body.exec-view .story-card p.summary,
+body.exec-view .bundle-box,
+body.exec-view .bar-chart,
+body.exec-view .pie-container,
+body.exec-view .data-table {display:none!important}
+body.exec-view .story-card{padding:10px 18px;margin-bottom:4px;cursor:pointer}
+body.exec-view .story-card h3{font-size:14px;margin-bottom:0}
+body.exec-view .story-number{display:none}
+body.exec-view .story-grid{gap:6px}
+body.exec-view .story-card::after{content:'▶ Click to expand';display:block;font-size:10px;color:var(--text-dim);margin-top:4px;opacity:.5;transition:opacity .2s}
+body.exec-view .story-card:hover::after{opacity:1}
+body.exec-view .story-card.expanded::after{content:'▼ Click to collapse'}
+body.exec-view .story-card.expanded .meta,
+body.exec-view .story-card.expanded p.summary{display:block!important}
+body.exec-view .story-card.expanded{padding:14px 18px}
+body.exec-view .story-card.expanded .story-number{display:block}
+body.exec-view .story-card.expanded h3{margin-bottom:6px;font-size:1rem}
+body.exec-view .story-card.expanded p.summary{margin-bottom:10px}
+/* Analytics grid: responsive — 2 cols desktop, 1 col narrow. Target the inline grid
+   emitted by the generator (which uses the same rule). */
+.analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:860px){.wrap{flex-direction:column}#toc{position:static;width:100%;max-height:unset;margin-bottom:20px}.pie-container{flex-direction:column;align-items:center;gap:16px}.stats-row{grid-template-columns:repeat(2,1fr)}.header h1{font-size:1.5rem}.analytics-grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important;scroll-behavior:auto!important}}
+@media print{body{background:#fff!important;color:#111!important;font-size:11pt}body::before,.orb{display:none}#toc{display:none}.wrap{display:block;max-width:100%;padding:0}.main{width:100%}.header h1{-webkit-text-fill-color:#111;background:none;color:#111}.exec-summary p,.story-card p.summary,.bar-chart,.au-context-box p,.bundle-box ul li{color:#333!important}.exec-summary,.story-card,.bar-chart,.pie-container{break-inside:avoid}@page{margin:2cm 2.5cm;@bottom-right{content:counter(page)" / "counter(pages);font-size:9pt;color:#999}}}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<div id="progress"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+<div class="wrap">
+<nav id="toc" aria-label="Table of contents">
+<h3>Daily Digest</h3>
+<a href="#exec" data-section="exec">Executive summary</a>
+<a href="#sector-it-technology" data-section="sector-it-technology">💻  IT / Technology</a>
+<a href="#sector-healthcare" data-section="sector-healthcare">🏥 Healthcare</a>
+<a href="#sector-legal-regulatory" data-section="sector-legal-regulatory">⚖️ Legal / Regulatory</a>
+<a href="#sector-financial-services" data-section="sector-financial-services">💰 Financial Services</a>
+<a href="#sector-government" data-section="sector-government">🏛️ Government</a>
+<a href="#sector-defence" data-section="sector-defence">🛰️ Defence</a>
+<a href="#sector-manufacturing" data-section="sector-manufacturing">🏭  Manufacturing</a>
+<a href="#sector-media-entertainment" data-section="sector-media-entertainment">🎬  Media &amp; Entertainment</a>
+<a href="#sector-general-cross-sector" data-section="sector-general-cross-sector">🌐  General / Cross-Sector</a>
+<a href="#analytics" data-section="analytics">📊 Analytics</a>
+</nav>
+<main id="main" class="main">
+
+<header class="header">
+<div class="header-badge"><span class="dot"></span> Daily Digest · 2026-07-19</div>
+<h1>🔐 Cyber Digest</h1>
+<p class="subtitle">A daily roundup of key cybersecurity developments across sectors</p>
+</header>
+
+<div class="controls">
+<button class="btn active" id="btn-full" onclick="setView('full')">Full report</button>
+<button class="btn" id="btn-exec" onclick="setView('exec')">Executive view</button>
+</div>
+
+<section id="exec" class="exec-summary">
 <h2>📋 Executive Summary</h2>
-<p>Sunday's digest covers the final waves of a news-heavy week in cybersecurity. The most significant stories include the disclosure of the <strong>Wp2Shell WordPress Core flaw</strong> (CVE-2026-63030 + CVE-2026-60137) — an unauthenticated RCE chain that puts hundreds of millions of WordPress sites at risk, now with a public PoC. Microsoft's <strong>record-smashing Patch Tuesday</strong> plugged 570 security holes, nearly triple last month's count, with AI-driven discovery credited for the surge. In legal developments, <strong>Illinois became the third US state to enact a frontier AI model law</strong>, and CISA announced it plans to <strong>finalise Cyber Incident Reporting regulations</strong> by September 2026. The joint CISA/ASD/NCSC advisory on Russian state-sponsored targeting of network devices continued to reverberate through the week. On the cybercrime front, two Scattered Spider affiliates were sentenced to 5.5 years for the £29 million Transport for London hack, while a series of healthcare data breaches — including All About Women's Care (12,000 patients affected) — continued to accumulate.</p>
-<hr />
-<h2>Sector Reports</h2>
-<h3>💻 IT / TechnoLogy</h3>
-<p><strong>1. New Wp2Shell WordPress Core Flaw Lets Unauthenticated Attackers Run Code</strong>
-- <strong>Summary:</strong> Two chained vulnerabilities in WordPress core — CVE-2026-63030 (REST API batch-route confusion) and CVE-2026-60137 (SQL injection) — allow anonymous HTTP requests to achieve code execution on any unpatched WordPress 6.9 or 7.0 site. WordPress shipped emergency updates (6.9.5/7.0.2) with forced auto-updates, but a public PoC is now on GitHub. A bare install with zero plugins is exploitable.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-17 (updated 2026-07-18)</p>
-<p><strong>2. Microsoft Patches a Record 570 Security Flaws</strong>
-- <strong>Summary:</strong> Microsoft's July Patch Tuesday fixed at least 570 vulnerabilities, nearly triple last month's count and an all-time record. Nearly 60 were rated Critical, including three zero-days, two of which are under active exploitation. Microsoft EVP Rajeesh Davuluri attributed the surge to AI-aided vulnerability discovery.
-- <strong>Source:</strong> <a href="https://krebsonsecurity.com/">Krebs on Security</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-14</p>
-<p><strong>3. OpenSSL HollowByte Flaw Could Freeze Server Memory with 11-Byte TLS Requests</strong>
-- <strong>Summary:</strong> Okta's Red Team disclosed a denial-of-service vulnerability in OpenSSL where an 11-byte TLS handshake message tricks the server into allocating up to 131 KB of memory that is never freed. The fix shipped in June without a CVE or changeLog entry. Fixed releases: OpenSSL 4.0.1, 3.6.3, 3.5.7, 3.4.6, 3.0.21.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-17</p>
-<p><strong>4. CISA Adds Exploited SharePoint RCE Zero-Day CVE-2026-58644 to KEV</strong>
-- <strong>Summary:</strong> CISA added CVE-2026-58644 (CVSS 9.8) to its Known Exploited Vulnerabilities cataLog — a deserialisation vulnerability in Microsoft SharePoint Server allowing remote code execution by an attacker with at least Site Owner privileges. FCEB agencies must patch by July 19.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-17</p>
-<p><strong>5. GoldenEyeDog Subgroup Linked to DigiCert Breach and Code-Signing Certificate Theft</strong>
-- <strong>Summary:</strong> Expel attributed the April 2026 DigiCert security incident to CylindricalCanine, a sub-group of the Chinese cybercrime group GoldenEyeDog (APT-Q-27). The threat actor accessed a DigiCert support member's device via Gh0st RAT, stealing code-signing certificates intended for customers.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-17</p>
-<p><strong>Also notable:</strong> NadMesh Go botnet hunts exposed AI services (claimed 3,811 AWS keys); seven malicious Vite npm packages use blockchain C2 (ViteVenom); ACR Stealer uses ClickFix lures to steal browser tokens and M365 files; fake coding tests deliver OtterCookie malware via SVG steganography.</p>
-<hr />
-<h3>🏥 Healthcare</h3>
-<p><strong>1. All About Women's Care Data Breach Affects Up to 12,000 Patients</strong>
-- <strong>Summary:</strong> All About Women's Care in Colorado notified 12,000 patients that their data was compromised in a data breach. The incident underscores ongoing cybersecurity challenges facing women's healthcare providers.
-- <strong>Source:</strong> <a href="https://www.hipaajournal.com/">HIPAA Journal</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-17</p>
-<p><strong>2. Atrium Health Pays Up to $1.8M to Resolve Pixel Lawsuit</strong>
-- <strong>Summary:</strong> Charlotte-Mecklenburg Hospital Authority (doing business as Atrium Health) agreed to pay up to $1,800,000 to settle a class action lawsuit over the use of tracking pixels on its patient portal, which allegedly disclosed protected health information to third parties without consent.
-- <strong>Source:</strong> <a href="https://www.hipaajournal.com/">HIPAA Journal</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-17</p>
-<p><strong>Also notable:</strong> Vision Care Providers settle data breach class actions; Ohio Living, Erlanger Health, Heart of America Eye Care announce breaches; Physicians Primary Care of SW Florida agrees to breach settlement; Lucent Health Solutions pays $1.95M to settle breach litigation.</p>
-<hr />
-<h3>⚖️ Legal / Regulatory</h3>
-<p><strong>1. Illinois Governor Signs Frontier AI Model Law</strong>
-- <strong>Summary:</strong> Illinois Governor JB Pritzker signed SB 315, the Artificial Intelligence Safety Measures Act, making Illinois the third US state to enact comprehensive safety and transparency requirements for developers of advanced AI systems. The law covers frontier model testing, incident reporting, and pre-deployment assessments.
-- <strong>Source:</strong> [Hunton Andrews Kurth Privacy &amp; Cybersecurity Law BLog(https://www.hunton.com/privacy-and-cybersecurity-law-bLog/)
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-17</p>
-<p><strong>2. CISA Plans to Finalize Cyber Incident Reporting Regulations in September 2026</strong>
-- <strong>Summary:</strong> CISA continues to finalise regulations implementing the Cyber Incident Reporting for Critical Infrastructure Act of 2022 (CIRCIA). A final rule is expected in September 2026, requiring covered critical infrastructure entities to report significant cyber incidents within 72 hours and ransomware payments within 24 hours.
-- <strong>Source:</strong> [Hunton Andrews Kurth Privacy &amp; Cybersecurity Law BLog(https://www.hunton.com/privacy-and-cybersecurity-law-bLog/)
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-17</p>
-<p><strong>3. New Jersey Adopts New Data Broker Registration Regime and Sensitive Data Sale Restrictions</strong>
-- <strong>Summary:</strong> New Jersey Governor Mikie Sherrill signed a new law requiring data brokers and data collectors to register annually, pay a fee, make specified disclosures, and refrain from selling or licensing sensitive data. The law takes effect in 2027.
-- <strong>Source:</strong> [Hunton Andrews Kurth Privacy &amp; Cybersecurity Law BLog(https://www.hunton.com/privacy-and-cybersecurity-law-bLog/)
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-17</p>
-<p><strong>4. European Commission Refers Four Member States to CJEU Over NIS2 Transposition Delays</strong>
-- <strong>Summary:</strong> The European Commission referred Ireland, Spain, France, and the Netherlands to the Court of Justice of the EU for failing to notify full transposition of the NIS2 Directive into national law. The action underscores growing EU enforcement pressure on member states lagging behind the October 2024 deadline.
-- <strong>Source:</strong> [Hunton Andrews Kurth Privacy &amp; Cybersecurity Law BLog(https://www.hunton.com/privacy-and-cybersecurity-law-bLog/)
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-09</p>
-<p><strong>Also notable:</strong> EU Commission unveils Cybersecurity and AI Action Plan; EU orders Google to open Android to rival AI assistants under DMA; Louisiana enacts 22nd state comprehensive privacy law; Canada proposes social media ban for children under 16.</p>
-<hr />
-<h3>💰 Financial Services</h3>
-<p><strong>1. 23andMe Reaches $18 Million Settlement with States for Massive Breach</strong>
-- <strong>Summary:</strong> 23andMe reached an $18 million settlement with multiple US states over a 2023 data breach that exposed the genetic and personal data of millions of customers. The settlement resolves investigations by state attorneys general into the company's security practices.
-- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-16</p>
-<p><strong>2. Cash App Owner to Pay $45 Million to Settle Allegations of Lax Security</strong>
-- <strong>Summary:</strong> The owner of Cash App agreed to pay $45 million to settle allegations of inadequate security practices following a data security incident. The settlement — featured in The Record's briefs sidebar — highlights growing regulatory focus on fintech security.
-- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-09</p>
-<hr />
-<h3>🏛️ Government</h3>
-<p><strong>1. Lessons Learned from CISA's Recent GitHub Leak</strong>
-- <strong>Summary:</strong> CISA issued a postmortem on a data leak where a contractor published internal CISA credentials — including AWS GovCloud keys — in a public GitHub repository for nearly six months. The report acknowledges key rotation delays, unclear reporting channels, and nine ignored automated alerts from GitGuardian. KrebsOnSecurity first broke the story and facilitated notification.
-- <strong>Source:</strong> <a href="https://krebsonsecurity.com/">Krebs on Security</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-13</p>
-<p><strong>2. Trump Administration Unveils AI-Supported Clearinghouse for Cyber Vulnerabilities</strong>
-- <strong>Summary:</strong> The White House announced a new AI-supported clearinghouse for cyber vulnerabilities, designed to aggregate and prioritise vulnerability disclosures using machine learning. The initiative aims to accelerate federal response times to emerging threats.
-- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-16</p>
-<p><strong>Also notable:</strong> LAPD sidelines relationship with license-plate reader company Flock Safety; Senator Wyden calls for pushback against Canadian surveillance legislation.</p>
-<hr />
-<h3>🛡️ Defence</h3>
-<p><strong>1. Joint Advisory: Improve Router Hygiene to Protect Against Russian State-Sponsored Targeting</strong>
-- <strong>Summary:</strong> CISA, ASD, NCSC, and international partners released a joint advisory (Aa26 194A) outlining persistent malicious cyber activity by Russian state-sponsored actors targeting network devices including routers, firewalls, and VPN gateways. The advisory provides detection and mitigation guidance, emphasising the need for improved router hygiene and firmware updates.
-- <strong>Source:</strong> <a href="https://www.cisa.gov/news-events/cybersecurity-advisories">CISA</a>
-- <strong>Reliability:</strong> Tier 1/4 — Very High
-- <strong>Date:</strong> 2026-07-14</p>
-<p><strong>2. New GoSerpent Malware Targets Southeast Asian Governments and Diplomats</strong>
-- <strong>Summary:</strong> Kaspersky discovered a previously undocumented malware called GoSerpent used since late 2025 targeting government and diplomatic entities in Southeast Asia. The malware enables long-term access and intelligence gathering, with evolved tooling including a Stowaway RAT observed in May 2026.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-17</p>
-<p><strong>Also notable:</strong> The race to field military autonomy accelerates across US, UK, and NATO with focus on trusted information infrastructure; Sandworm hackers use CAPTCHA trick for Ukrainians.</p>
-<hr />
-<h3>🏭 Manufacturing</h3>
-<p><strong>1. Cyberattack on Japan's Largest Cold-Chain Operator Disrupts KFC and Supermarket Supplies</strong>
-- <strong>Summary:</strong> A cyberattack on Japan's largest cold-chain Logistics operator disrupted KFC and supermarket supply chains across the country. The incident highlights the vulnerability of critical cold-chain infrastructure to operational disruption via cyber means.
-- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-16</p>
-<p><strong>2. Dairy Company Fairlife Suspends Production in US After Cyber Incident</strong>
-- <strong>Summary:</strong> Dairy company Fairlife suspended production at US facilities following a cyber incident. The disruption to a major dairy brand underscores the growing impact of cyber incidents on food manufacturing and supply chains.
-- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-17</p>
-<hr />
-<h3>🎬 Media &amp; Entertainment</h3>
-<p><strong>1. Madison Square Garden Kept a List of Gay Celebrities</strong>
-- <strong>Summary:</strong> A Wired investigation revealed that Madison Square Garden compiled and maintained a list identifying gay celebrities who attended events at its venues. The story, covered in depth by Wired's security desk, raises significant privacy and data collection concerns about one of America's most prominent entertainment venues.
-- <strong>Source:</strong> <a href="https://www.wired.com/tag/security/">Wired Security</a>
-- <strong>Reliability:</strong> Tier 3/4 — Moderate
-- <strong>Date:</strong> 2026-07-17</p>
-<p><strong>2. Hackers Claim to Leak Stolen Madison Square Garden Data</strong>
-- <strong>Summary:</strong> Following the Wired investigation, hackers claimed to have leaked stolen data from Madison Square Garden. The claimed breach adds a cyber dimension to the MSG privacy controversy, with potential exposure of additional sensitive patron information.
-- <strong>Source:</strong> <a href="https://www.wired.com/tag/security/">Wired Security</a>
-- <strong>Reliability:</strong> Tier 3/4 — Moderate
-- <strong>Date:</strong> 2026-07-17</p>
-<hr />
-<h3>🌐 General / Cross-Sector</h3>
-<p><strong>1. Two Scattered Spider Hackers Sentenced to 5.5 Years for £29 Million TfL Hack</strong>
-- <strong>Summary:</strong> Owen Flowers, 18, and Thalha Jubair, 20, were sentenced to five and a half years each at Woolwich Crown Court for the 2024 Transport for London hack that left 148 systems inoperable and cost £29 million. They are believed to be the first hackers successfully prosecuted under Section 3ZA of the Computer Misuse Act 1990. Both pleaded guilty on the day their trial was due to start.
-- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-16</p>
-<p><strong>2. EU Commission Unveils Cybersecurity and AI Action Plan</strong>
-- <strong>Summary:</strong> On July 7, the European Commission presented an Action Plan on Cybersecurity and Artificial Intelligence aimed at supporting the safe use of AI while strengthening cyber resilience across the EU. The plan covers AI threat detection, cyber defence investment, and international cooperation frameworks.
-- <strong>Source:</strong> [Hunton Andrews Kurth Privacy &amp; Cybersecurity Law BLog(https://www.hunton.com/privacy-and-cybersecurity-law-bLog/)
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-10</p>
-<hr />
-<h2>📊 Industry Breakdown</h2>
-<pre><code class="language-mermaid">pie showData
-    &quot;IT / Technology&quot; : 5
-    &quot;Healthcare&quot; : 3
-    &quot;Legal / Regulatory&quot; : 4
-    &quot;Financial Services&quot; : 2
-    &quot;Government&quot; : 2
-    &quot;Defence&quot; : 2
-    &quot;Manufacturing&quot; : 2
-    &quot;Media &amp; Entertainment&quot; : 2
-    &quot;General / Cross-Sector&quot; : 2
-</code></pre>
-<hr />
-<h2>📊 Source Reliability Index</h2>
-<table>
-<thead>
-<tr>
-<th>Tier</th>
-<th>Label</th>
-<th>Description</th>
-<th>Examples</th>
-</tr>
-</thead>
+<p>Sunday&#x27;s digest covers the final waves of a news-heavy week in cybersecurity. The most significant stories include the disclosure of the <strong>wp2shell WordPress Core flaw</strong> (CVE-2026-63030 + CVE-2026-60137) — an unauthenticated RCE chain that puts hundreds of millions of WordPress sites at risk, now with a public PoC. Microsoft&#x27;s <strong>record-smashing Patch Tuesday</strong> plugged 570 security holes, nearly triple last month&#x27;s count, with AI-driven discovery credited for the surge. In legal developments, <strong>Illinois became the third US state to enact a frontier AI model law</strong>, and CISA announced it plans to <strong>finalise Cyber Incident Reporting regulations</strong> by September 2026. The joint CISA/ASD/NCSC advisory on Russian state-sponsored targeting of network devices continued to reverberate through the week. On the cybercrime front, two Scattered Spider affiliates were sentenced to 5.5 years for the £29 million Transport for London hack, while a series of healthcare data breaches — including All About Women&#x27;s Care (12,000 patients affected) — continued to accumulate.</p>
+</section>
+
+<div class="stats-row"><div class="stat-card stat-geo"><div class="stat-num">5</div><div class="stat-label">IT / Technology</div></div>
+<div class="stat-card stat-govt"><div class="stat-num">2</div><div class="stat-label">Healthcare</div></div>
+<div class="stat-card stat-crime"><div class="stat-num">4</div><div class="stat-label">Legal / Regulatory</div></div>
+<div class="stat-card stat-iot"><div class="stat-num">2</div><div class="stat-label">Financial Services</div></div>
+<div class="stat-card stat-vuln"><div class="stat-num">2</div><div class="stat-label">Government</div></div></div>
+
+<section id="sector-it-technology" class="section"><h2><span class="icon">💻 </span> IT / Technology <span class="count">5 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>New wp2shell WordPress Core Flaw Lets Unauthenticated Attackers Run Code</h3><p class="summary">Two chained vulnerabilities in WordPress core — CVE-2026-63030 (REST API batch-route confusion) and CVE-2026-60137 (SQL injection) — allow anonymous HTTP requests to achieve code execution on any unpatched WordPress 6.9 or 7.0 site. WordPress shipped emergency updates (6.9.5/7.0.2) with forced auto-updates, but a public PoC is now on GitHub. A bare install with zero plugins is exploitable.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-17 (updated 2026-07-18)</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>Microsoft Patches a Record 570 Security Flaws</h3><p class="summary">Microsoft&#x27;s July Patch Tuesday fixed at least 570 vulnerabilities, nearly triple last month&#x27;s count and an all-time record. Nearly 60 were rated Critical, including three zero-days, two of which are under active exploitation. Microsoft EVP Rajeesh Davuluri attributed the surge to AI-aided vulnerability discovery.</p><div class="meta"><a class="source" href="https://krebsonsecurity.com/" target="_blank" rel="noopener">Krebs on Security</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-14</span></div></div>
+<div class="story-card num-3"><div class="card-accent"></div><div class="story-number">3</div><h3>OpenSSL HollowByte Flaw Could Freeze Server Memory with 11-Byte TLS Requests</h3><p class="summary">Okta&#x27;s Red Team disclosed a denial-of-service vulnerability in OpenSSL where an 11-byte TLS handshake message tricks the server into allocating up to 131 KB of memory that is never freed. The fix shipped in June without a CVE or changelog entry. Fixed releases: OpenSSL 4.0.1, 3.6.3, 3.5.7, 3.4.6, 3.0.21.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-17</span></div></div>
+<div class="story-card num-4"><div class="card-accent"></div><div class="story-number">4</div><h3>CISA Adds Exploited SharePoint RCE Zero-Day CVE-2026-58644 to KEV</h3><p class="summary">CISA added CVE-2026-58644 (CVSS 9.8) to its Known Exploited Vulnerabilities catalog — a deserialisation vulnerability in Microsoft SharePoint Server allowing remote code execution by an attacker with at least Site Owner privileges. FCEB agencies must patch by July 19.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-17</span></div></div>
+<div class="story-card num-5"><div class="card-accent"></div><div class="story-number">5</div><h3>GoldenEyeDog Subgroup Linked to DigiCert Breach and Code-Signing Certificate Theft</h3><p class="summary">Expel attributed the April 2026 DigiCert security incident to CylindricalCanine, a sub-group of the Chinese cybercrime group GoldenEyeDog (APT-Q-27). The threat actor accessed a DigiCert support member&#x27;s device via Gh0st RAT, stealing code-signing certificates intended for customers.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-17</span></div></div>
+</div>
+</section>
+<section id="sector-healthcare" class="section"><h2><span class="icon">🏥</span> Healthcare <span class="count">2 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>All About Women&#x27;s Care Data Breach Affects Up to 12,000 Patients</h3><p class="summary">All About Women&#x27;s Care in Colorado notified 12,000 patients that their data was compromised in a data breach. The incident underscores ongoing cybersecurity challenges facing women&#x27;s healthcare providers.</p><div class="meta"><a class="source" href="https://www.hipaajournal.com/" target="_blank" rel="noopener">HIPAA Journal</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-17</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>Atrium Health Pays Up to $1.8M to Resolve Pixel Lawsuit</h3><p class="summary">Charlotte-Mecklenburg Hospital Authority (doing business as Atrium Health) agreed to pay up to $1,800,000 to settle a class action lawsuit over the use of tracking pixels on its patient portal, which allegedly disclosed protected health information to third parties without consent.</p><div class="meta"><a class="source" href="https://www.hipaajournal.com/" target="_blank" rel="noopener">HIPAA Journal</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-17</span></div></div>
+</div>
+</section>
+<section id="sector-legal-regulatory" class="section"><h2><span class="icon">⚖️</span> Legal / Regulatory <span class="count">4 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Illinois Governor Signs Frontier AI Model Law</h3><p class="summary">Illinois Governor JB Pritzker signed SB 315, the Artificial Intelligence Safety Measures Act, making Illinois the third US state to enact comprehensive safety and transparency requirements for developers of advanced AI systems. The law covers frontier model testing, incident reporting, and pre-deployment assessments.</p><div class="meta"><a class="source" href="https://www.hunton.com/privacy-and-cybersecurity-law-blog/" target="_blank" rel="noopener">Hunton Andrews Kurth Privacy &amp; Cybersecurity Law Blog</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-17</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>CISA Plans to Finalize Cyber Incident Reporting Regulations in September 2026</h3><p class="summary">CISA continues to finalise regulations implementing the Cyber Incident Reporting for Critical Infrastructure Act of 2022 (CIRCIA). A final rule is expected in September 2026, requiring covered critical infrastructure entities to report significant cyber incidents within 72 hours and ransomware payments within 24 hours.</p><div class="meta"><a class="source" href="https://www.hunton.com/privacy-and-cybersecurity-law-blog/" target="_blank" rel="noopener">Hunton Andrews Kurth Privacy &amp; Cybersecurity Law Blog</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-17</span></div></div>
+<div class="story-card num-3"><div class="card-accent"></div><div class="story-number">3</div><h3>New Jersey Adopts New Data Broker Registration Regime and Sensitive Data Sale Restrictions</h3><p class="summary">New Jersey Governor Mikie Sherrill signed a new law requiring data brokers and data collectors to register annually, pay a fee, make specified disclosures, and refrain from selling or licensing sensitive data. The law takes effect in 2027.</p><div class="meta"><a class="source" href="https://www.hunton.com/privacy-and-cybersecurity-law-blog/" target="_blank" rel="noopener">Hunton Andrews Kurth Privacy &amp; Cybersecurity Law Blog</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-17</span></div></div>
+<div class="story-card num-4"><div class="card-accent"></div><div class="story-number">4</div><h3>European Commission Refers Four Member States to CJEU Over NIS2 Transposition Delays</h3><p class="summary">The European Commission referred Ireland, Spain, France, and the Netherlands to the Court of Justice of the EU for failing to notify full transposition of the NIS2 Directive into national law. The action underscores growing EU enforcement pressure on member states lagging behind the October 2024 deadline.</p><div class="meta"><a class="source" href="https://www.hunton.com/privacy-and-cybersecurity-law-blog/" target="_blank" rel="noopener">Hunton Andrews Kurth Privacy &amp; Cybersecurity Law Blog</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-09</span></div></div>
+</div>
+</section>
+<section id="sector-financial-services" class="section"><h2><span class="icon">💰</span> Financial Services <span class="count">2 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>23andMe Reaches $18 Million Settlement with States for Massive Breach</h3><p class="summary">23andMe reached an $18 million settlement with multiple US states over a 2023 data breach that exposed the genetic and personal data of millions of customers. The settlement resolves investigations by state attorneys general into the company&#x27;s security practices.</p><div class="meta"><a class="source" href="https://therecord.media/" target="_blank" rel="noopener">The Record</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-16</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>Cash App Owner to Pay $45 Million to Settle Allegations of Lax Security</h3><p class="summary">The owner of Cash App agreed to pay $45 million to settle allegations of inadequate security practices following a data security incident. The settlement — featured in The Record&#x27;s briefs sidebar — highlights growing regulatory focus on fintech security.</p><div class="meta"><a class="source" href="https://therecord.media/" target="_blank" rel="noopener">The Record</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-09</span></div></div>
+</div>
+</section>
+<section id="sector-government" class="section"><h2><span class="icon">🏛️</span> Government <span class="count">2 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Lessons Learned from CISA&#x27;s Recent GitHub Leak</h3><p class="summary">CISA issued a postmortem on a data leak where a contractor published internal CISA credentials — including AWS GovCloud keys — in a public GitHub repository for nearly six months. The report acknowledges key rotation delays, unclear reporting channels, and nine ignored automated alerts from GitGuardian. KrebsOnSecurity first broke the story and facilitated notification.</p><div class="meta"><a class="source" href="https://krebsonsecurity.com/" target="_blank" rel="noopener">Krebs on Security</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-13</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>Trump Administration Unveils AI-Supported Clearinghouse for Cyber Vulnerabilities</h3><p class="summary">The White House announced a new AI-supported clearinghouse for cyber vulnerabilities, designed to aggregate and prioritise vulnerability disclosures using machine learning. The initiative aims to accelerate federal response times to emerging threats.</p><div class="meta"><a class="source" href="https://therecord.media/" target="_blank" rel="noopener">The Record</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-16</span></div></div>
+</div>
+</section>
+<section id="sector-defence" class="section"><h2><span class="icon">🛰️</span> Defence <span class="count">2 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Joint Advisory: Improve Router Hygiene to Protect Against Russian State-Sponsored Targeting</h3><p class="summary">CISA, ASD, NCSC, and international partners released a joint advisory (AA26-194A) outlining persistent malicious cyber activity by Russian state-sponsored actors targeting network devices including routers, firewalls, and VPN gateways. The advisory provides detection and mitigation guidance, emphasising the need for improved router hygiene and firmware updates.</p><div class="meta"><a class="source" href="https://www.cisa.gov/news-events/cybersecurity-advisories" target="_blank" rel="noopener">CISA</a><span class="reliability"><span class="tier-2">●</span> Tier 1/4 — Very High</span><span class="date">2026-07-14</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>New GoSerpent Malware Targets Southeast Asian Governments and Diplomats</h3><p class="summary">Kaspersky discovered a previously undocumented malware called GoSerpent used since late 2025 targeting government and diplomatic entities in Southeast Asia. The malware enables long-term access and intelligence gathering, with evolved tooling including a Stowaway RAT observed in May 2026.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-17</span></div></div>
+</div>
+</section>
+<section id="sector-manufacturing" class="section"><h2><span class="icon">🏭 </span> Manufacturing <span class="count">2 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Cyberattack on Japan&#x27;s Largest Cold-Chain Operator Disrupts KFC and Supermarket Supplies</h3><p class="summary">A cyberattack on Japan&#x27;s largest cold-chain logistics operator disrupted KFC and supermarket supply chains across the country. The incident highlights the vulnerability of critical cold-chain infrastructure to operational disruption via cyber means.</p><div class="meta"><a class="source" href="https://therecord.media/" target="_blank" rel="noopener">The Record</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-16</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>Dairy Company Fairlife Suspends Production in US After Cyber Incident</h3><p class="summary">Dairy company Fairlife suspended production at US facilities following a cyber incident. The disruption to a major dairy brand underscores the growing impact of cyber incidents on food manufacturing and supply chains.</p><div class="meta"><a class="source" href="https://therecord.media/" target="_blank" rel="noopener">The Record</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-17</span></div></div>
+</div>
+</section>
+<section id="sector-media-entertainment" class="section"><h2><span class="icon">🎬 </span> Media &amp; Entertainment <span class="count">2 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Madison Square Garden Kept a List of Gay Celebrities</h3><p class="summary">A Wired investigation revealed that Madison Square Garden compiled and maintained a list identifying gay celebrities who attended events at its venues. The story, covered in depth by Wired&#x27;s security desk, raises significant privacy and data collection concerns about one of America&#x27;s most prominent entertainment venues.</p><div class="meta"><a class="source" href="https://www.wired.com/tag/security/" target="_blank" rel="noopener">Wired Security</a><span class="reliability"><span class="tier-2">●</span> Tier 3/4 — Moderate</span><span class="date">2026-07-17</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>Hackers Claim to Leak Stolen Madison Square Garden Data</h3><p class="summary">Following the Wired investigation, hackers claimed to have leaked stolen data from Madison Square Garden. The claimed breach adds a cyber dimension to the MSG privacy controversy, with potential exposure of additional sensitive patron information.</p><div class="meta"><a class="source" href="https://www.wired.com/tag/security/" target="_blank" rel="noopener">Wired Security</a><span class="reliability"><span class="tier-2">●</span> Tier 3/4 — Moderate</span><span class="date">2026-07-17</span></div></div>
+</div>
+</section>
+<section id="sector-general-cross-sector" class="section"><h2><span class="icon">🌐 </span> General / Cross-Sector <span class="count">2 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Two Scattered Spider Hackers Sentenced to 5.5 Years for £29 Million TfL Hack</h3><p class="summary">Owen Flowers, 18, and Thalha Jubair, 20, were sentenced to five and a half years each at Woolwich Crown Court for the 2024 Transport for London hack that left 148 systems inoperable and cost £29 million. They are believed to be the first hackers successfully prosecuted under Section 3ZA of the Computer Misuse Act 1990. Both pleaded guilty on the day their trial was due to start.</p><div class="meta"><a class="source" href="https://therecord.media/" target="_blank" rel="noopener">The Record</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-16</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>EU Commission Unveils Cybersecurity and AI Action Plan</h3><p class="summary">On July 7, the European Commission presented an Action Plan on Cybersecurity and Artificial Intelligence aimed at supporting the safe use of AI while strengthening cyber resilience across the EU. The plan covers AI threat detection, cyber defence investment, and international cooperation frameworks.</p><div class="meta"><a class="source" href="https://www.hunton.com/privacy-and-cybersecurity-law-blog/" target="_blank" rel="noopener">Hunton Andrews Kurth Privacy &amp; Cybersecurity Law Blog</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-10</span></div></div>
+</div>
+</section>
+
+<!-- Analytics Section -->
+<section id="analytics" class="section">
+<h2><span class="icon">📊</span> Analytics</h2>
+<div class="analytics-grid"><div class="bar-chart"><h3>Sector distribution</h3><div class="bar-row bar-cyan"><span class="bar-label">IT / Technology</span><div class="bar-track"><div class="bar-fill" style="width:22%"></div></div><span class="bar-val">5</span></div>
+<div class="bar-row bar-red"><span class="bar-label">Healthcare</span><div class="bar-track"><div class="bar-fill" style="width:9%"></div></div><span class="bar-val">2</span></div>
+<div class="bar-row bar-purple"><span class="bar-label">Legal / Regulatory</span><div class="bar-track"><div class="bar-fill" style="width:17%"></div></div><span class="bar-val">4</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">Financial Services</span><div class="bar-track"><div class="bar-fill" style="width:9%"></div></div><span class="bar-val">2</span></div>
+<div class="bar-row bar-blue"><span class="bar-label">Government</span><div class="bar-track"><div class="bar-fill" style="width:9%"></div></div><span class="bar-val">2</span></div>
+<div class="bar-row bar-blue"><span class="bar-label">Defence</span><div class="bar-track"><div class="bar-fill" style="width:9%"></div></div><span class="bar-val">2</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">Manufacturing</span><div class="bar-track"><div class="bar-fill" style="width:9%"></div></div><span class="bar-val">2</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">Media &amp; Entertainment</span><div class="bar-track"><div class="bar-fill" style="width:9%"></div></div><span class="bar-val">2</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">General / Cross-Sector</span><div class="bar-track"><div class="bar-fill" style="width:9%"></div></div><span class="bar-val">2</span></div></div><div class="bar-chart"><h3>Source breakdown</h3><div class="bar-row bar-cyan"><span class="bar-label">The Record</span><div class="bar-track"><div class="bar-fill" style="width:26%"></div></div><span class="bar-val">6</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">The Hacker News</span><div class="bar-track"><div class="bar-fill" style="width:22%"></div></div><span class="bar-val">5</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">Hunton Andrews Kurth Privacy &amp; Cybersecurity Law Blog</span><div class="bar-track"><div class="bar-fill" style="width:22%"></div></div><span class="bar-val">5</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">Krebs on Security</span><div class="bar-track"><div class="bar-fill" style="width:9%"></div></div><span class="bar-val">2</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">HIPAA Journal</span><div class="bar-track"><div class="bar-fill" style="width:9%"></div></div><span class="bar-val">2</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">Wired Security</span><div class="bar-track"><div class="bar-fill" style="width:9%"></div></div><span class="bar-val">2</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">CISA</span><div class="bar-track"><div class="bar-fill" style="width:4%"></div></div><span class="bar-val">1</span></div></div></div>
+<div class="pie-container"><div class="pie" style="background:conic-gradient(var(--accent) 0deg 78deg,var(--purple) 78deg 109deg,var(--govt) 109deg 172deg,var(--vuln) 172deg 203deg,var(--crime) 203deg 234deg,var(--govt) 234deg 265deg,var(--crime) 265deg 296deg,var(--crime) 296deg 327deg,var(--vuln) 327deg 358deg);"></div><div class="pie-legend"><div class="legend-item"><span class="dot" style="background:var(--accent)"></span> IT / Technology <span class="val">5</span></div><div class="legend-item"><span class="dot" style="background:var(--purple)"></span> Healthcare <span class="val">2</span></div><div class="legend-item"><span class="dot" style="background:var(--govt)"></span> Legal / Regulatory <span class="val">4</span></div><div class="legend-item"><span class="dot" style="background:var(--vuln)"></span> Financial Services <span class="val">2</span></div><div class="legend-item"><span class="dot" style="background:var(--crime)"></span> Government <span class="val">2</span></div><div class="legend-item"><span class="dot" style="background:var(--govt)"></span> Defence <span class="val">2</span></div><div class="legend-item"><span class="dot" style="background:var(--crime)"></span> Manufacturing <span class="val">2</span></div><div class="legend-item"><span class="dot" style="background:var(--crime)"></span> Media &amp; Entertainment <span class="val">2</span></div><div class="legend-item"><span class="dot" style="background:var(--vuln)"></span> General / Cross-Sector <span class="val">2</span></div></div></div>
+<h3 style="font-size:14px;color:var(--text);margin-bottom:10px">Source Reliability Index</h3>
+<table class="data-table">
+<thead><tr><th>Tier</th><th>Label</th><th>Description</th></tr></thead>
 <tbody>
-<tr>
-<td>1</td>
-<td><strong>Very High</strong></td>
-<td>Official / first-party — government agencies, vendor PSAs, peer-reviewed papers</td>
-<td>CISA, ASD/ACSC</td>
-</tr>
-<tr>
-<td>2</td>
-<td><strong>High</strong></td>
-<td>Established cybersecurity journalism and research orgs</td>
-<td>Krebs on Security, The Hacker News, The Record, HIPAA Journal, Hunton Andrews Kurth BLog</td>
-</tr>
-<tr>
-<td>3</td>
-<td><strong>Moderate</strong></td>
-<td>General tech / news media with security desks</td>
-<td>Wired</td>
-</tr>
-<tr>
-<td>4</td>
-<td><strong>Low</strong></td>
-<td>Social / unverified / anonymous — leads only</td>
-<td>N/A this edition</td>
-</tr>
+<tr><td><span class="tier-badge tier-1">● Tier 1</span></td><td>Very High</td><td>Official / first-party</td></tr>
+<tr><td><span class="tier-badge tier-2">● Tier 2</span></td><td>High</td><td>Established cyber journalism</td></tr>
+<tr><td><span class="tier-badge tier-3">● Tier 3</span></td><td>Moderate</td><td>General tech/news media</td></tr>
+<tr><td><span class="tier-badge tier-4">● Tier 4</span></td><td>Low</td><td>Social / unverified</td></tr>
 </tbody>
 </table>
-<h3>Source Distribution</h3>
-<table>
-<thead>
-<tr>
-<th>Source</th>
-<th>Stories</th>
-<th>%</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>The Hacker News</td>
-<td>5</td>
-<td>22.7%</td>
-</tr>
-<tr>
-<td>The Record</td>
-<td>5</td>
-<td>22.7%</td>
-</tr>
-<tr>
-<td>Hunton Andrews Kurth BLog</td>
-<td>4</td>
-<td>18.2%</td>
-</tr>
-<tr>
-<td>HIPAA Journal</td>
-<td>3</td>
-<td>13.6%</td>
-</tr>
-<tr>
-<td>Krebs on Security</td>
-<td>2</td>
-<td>9.1%</td>
-</tr>
-<tr>
-<td>Wired Security</td>
-<td>2</td>
-<td>9.1%</td>
-</tr>
-<tr>
-<td>CISA</td>
-<td>1</td>
-<td>4.5%</td>
-</tr>
-</tbody>
-</table>
-<p><em>No single source exceeds 40%. THN at 22.7% is well within the 35% target.</em></p>
-<h3>Sector Coverage Assessment</h3>
-<p>All sectors covered this edition. Heavier focus on IT/TechnoLogy (5 stories) and Legal/Regulatory (4) reflecting the volume of newsworthy developments. Manufacturing and Media &amp; Entertainment each contributed 2 stories, meeting the skill's commitment to active coverage of underrepresented sectors.</p></body></html>
+</section>
+
+<footer class="footer">
+<div class="source-line">Digest generated 2026-07-19.</div>
+<div class="note">Digest prepared 19 July 2026. 48-hour freshness window (72-hour max for weekend bridging).</div>
+</footer>
+</main>
+</div>
+
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+
+<script>
+window.addEventListener('scroll',function(){
+var h=document.documentElement;
+var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+document.getElementById('progress').style.width=Math.min(p,100)+'%';
+var bt=document.getElementById('back-top');
+bt.classList.toggle('visible',(h.scrollTop||document.body.scrollTop)>300);
+var sections=document.querySelectorAll('section[id],.exec-summary');
+var links=document.querySelectorAll('#toc a');
+var cur='';
+sections.forEach(function(s){
+var t=s.getBoundingClientRect().top;
+if(t<250) cur=s.id;
+});
+links.forEach(function(l){
+l.classList.toggle('active',l.dataset.section===cur);
+});
+});
+function setView(m){
+document.body.classList.toggle('exec-view',m==='exec');
+document.getElementById('btn-full').classList.toggle('active',m==='full');
+document.getElementById('btn-exec').classList.toggle('active',m==='exec');
+document.querySelectorAll('.story-card').forEach(function(c){
+var interactive=m==='exec';
+c.setAttribute('role',interactive?'button':null);
+c.setAttribute('tabindex',interactive?'0':null);
+c.setAttribute('aria-expanded',interactive?(c.classList.contains('expanded')?'true':'false'):null);
+});
+}
+document.addEventListener('keydown',function(e){
+if(e.key==='Escape') setView('full');
+});
+function toggleCard(c){ if(!document.body.classList.contains('exec-view'))return; c.classList.toggle('expanded'); c.setAttribute('aria-expanded',c.classList.contains('expanded')?'true':'false'); }
+document.querySelectorAll('.story-card').forEach(function(c){
+c.addEventListener('click',function(e){
+if(e.target.closest('a')) return;
+toggleCard(this);
+});
+c.addEventListener('keydown',function(e){
+if(e.target.closest('a')) return;
+if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggleCard(this); }
+});
+});
+document.querySelectorAll('#toc a').forEach(function(l){
+l.setAttribute('role','navigation');
+});
+/* aria-current for active TOC link */
+var _tocObs=new MutationObserver(function(){
+document.querySelectorAll('#toc a.active').forEach(function(a){a.setAttribute('aria-current','location');});
+document.querySelectorAll('#toc a:not(.active)').forEach(function(a){a.removeAttribute('aria-current');});
+});
+_tocObs.observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['class']});
+</script>
+</body>
+</html>

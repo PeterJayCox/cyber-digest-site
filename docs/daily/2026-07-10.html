@@ -1,196 +1,327 @@
-<!DOCTYPE html><html><head><meta charset='utf-8'><title>2026-07-10</title></head><body><h1>🛡️ Cyber Digest — 2026-07-10 (Daily)</h1>
-<p><em>A daily roundup of key cybersecurity developments across sectors</em></p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Digest — 2026-07-10</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0e1a;--surface:#111827;--surface2:#1a2332;--border:#1e293b;--border-light:#2d3a52;--text:#e2e8f0;--text-muted:#b0c0d0;--text-dim:#8a9cb6;--accent:#00b4d8;--accent-glow:rgba(0,180,216,.12);--vuln:#f43f5e;--geo:#8b5cf6;--crime:#f59e0b;--iot:#10b981;--govt:#3b82f6;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--purple:#8b5cf6}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:Inter,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,180,216,.025)1px,transparent 1px),linear-gradient(90deg,rgba(0,180,216,.025)1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
+.skip-link{position:absolute;left:-9999px;top:0;z-index:2000;background:var(--accent);color:#fff;padding:8px 14px;border-radius:0 0 8px 0;font-size:13px;font-weight:600}
+.skip-link:focus{left:0}
+#progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--purple));z-index:1000;width:0%;transition:width .15s}
+.orb{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0;animation:orbFloat 20s ease-in-out infinite}
+.orb-1{width:500px;height:500px;background:var(--accent-glow);top:-200px;right:-200px}
+.orb-2{width:400px;height:400px;background:rgba(139,92,246,.08);bottom:-150px;left:-150px;animation-delay:-7s}
+.orb-3{width:300px;height:300px;background:rgba(244,63,94,.06);top:50%;left:50%;animation-delay:-14s}
+@keyframes orbFloat{0%,100%{transform:translate(0,0)scale(1)}33%{transform:translate(30px,-40px)scale(1.1)}66%{transform:translate(-20px,20px)scale(.9)}}
+.wrap{max-width:1100px;margin:auto;padding:0 28px 80px;display:flex;gap:32px;position:relative;z-index:1}
+#toc{position:sticky;top:24px;width:210px;flex-shrink:0;height:fit-content;max-height:calc(100vh-48px);overflow-y:auto;padding:18px 14px;background:var(--surface);border:1px solid var(--border);border-radius:12px;font-size:12px}
+#toc h3{color:var(--accent);font-size:10px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px}
+#toc a{display:block;color:var(--text-muted);text-decoration:none;padding:3px 8px;border-radius:6px;margin-bottom:2px;transition:all .2s;border-left:2px solid transparent;font-size:12px}
+#toc a:hover{color:var(--text);background:rgba(0,180,216,.08)}
+#toc a.active{color:var(--accent);border-left-color:var(--accent);background:rgba(0,180,216,.1)}
+.main{flex:1;min-width:0}
+.header{padding:40px 0 28px;text-align:center;border-bottom:1px solid var(--border);margin-bottom:32px}
+.header-badge{display:inline-flex;align-items:center;gap:8px;background:var(--accent-glow);border:1px solid rgba(0,180,216,.2);color:var(--accent);padding:5px 14px;border-radius:100px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;margin-bottom:18px}
+.header-badge .dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.header h1{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;letter-spacing:-.03em;background:linear-gradient(135deg,#e2e8f0 0%,#00b4d8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}
+.header .subtitle{color:var(--text-muted);font-size:14px}
+.section{margin-bottom:28px;scroll-margin-top:80px}
+.section h2{font-size:1.15rem;margin-bottom:14px;border-bottom:1px solid var(--border);padding-bottom:10px;display:flex;align-items:center;gap:10px}
+.section h2 .icon{font-size:1.3rem;line-height:1}
+.section h2 .count{margin-left:auto;background:var(--surface2);color:var(--text-muted);padding:2px 10px;border-radius:100px;font-size:11px;font-weight:600;white-space:nowrap}
+/* Exec summary box — surface bg, border, gradient top accent, padding */
+.exec-summary{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px 30px;margin-bottom:28px;position:relative;overflow:hidden}
+.exec-summary::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--vuln),var(--purple))}
+.exec-summary h2{font-size:11px;text-transform:uppercase;letter-spacing:.15em;color:var(--accent);font-weight:700;margin-bottom:14px;border:none;padding:0}
+.exec-summary p{color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:14px}
+.exec-summary p:last-child{margin-bottom:0}
+.exec-summary p strong{color:var(--text);font-weight:600}
+/* AU context box */
+.au-context-box{background:linear-gradient(135deg,rgba(0,180,216,.06),rgba(59,130,246,.06));border:1px solid rgba(0,180,216,.15);border-radius:12px;padding:18px 22px;margin:14px 0;position:relative}
+.au-context-box::before{content:'AU';position:absolute;top:-8px;right:14px;background:var(--accent);color:#fff;font-size:10px;font-weight:800;padding:1px 7px;border-radius:4px;letter-spacing:.05em}
+.au-context-box p{color:var(--text-muted);font-size:13px;line-height:1.65}
+/* Stats row */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:28px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 12px;text-align:center}
+.stat-card .stat-num{font-size:1.5rem;font-weight:800;line-height:1.1}
+.stat-card .stat-label{font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.05em;margin-top:4px}
+.stat-card.stat-vuln .stat-num{color:var(--vuln)}.stat-card.stat-geo .stat-num{color:var(--purple)}.stat-card.stat-crime .stat-num{color:var(--crime)}.stat-card.stat-iot .stat-num{color:var(--green)}.stat-card.stat-govt .stat-num{color:var(--govt)}
+/* Bar charts */
+.bar-chart{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:18px}
+.bar-chart h3{font-size:13px;font-weight:600;color:var(--text);margin-bottom:12px}
+.bar-row{display:flex;align-items:center;margin-bottom:6px;gap:8px}
+.bar-row .bar-label{font-size:12px;color:var(--text-muted);width:130px;flex-shrink:0;text-align:right}
+.bar-row .bar-track{flex:1;height:16px;background:var(--surface2);border-radius:99px;overflow:hidden}
+.bar-row .bar-fill{height:100%;border-radius:99px;transition:width .6s ease;min-width:4px}
+.bar-row .bar-val{font-size:11px;font-weight:600;color:var(--text);width:36px;flex-shrink:0;font-family:'JetBrains Mono',monospace}
+.bar-cyan .bar-fill{background:linear-gradient(90deg,var(--accent),#0096c7)}
+.bar-purple .bar-fill{background:linear-gradient(90deg,var(--purple),#a78bfa)}
+.bar-amber .bar-fill{background:linear-gradient(90deg,var(--amber),#fbbf24)}
+.bar-red .bar-fill{background:linear-gradient(90deg,var(--vuln),#fb7185)}
+.bar-green .bar-fill{background:linear-gradient(90deg,var(--green),#4ade80)}
+.bar-blue .bar-fill{background:linear-gradient(90deg,var(--govt),#60a5fa)}
+/* Pie chart */
+.pie-container{display:flex;align-items:center;gap:28px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px 28px;margin:18px 0}
+.pie{width:140px;height:140px;border-radius:50%;flex-shrink:0}
+.pie-legend{display:flex;flex-direction:column;gap:6px;flex:1}
+.pie-legend .legend-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-muted)}
+.pie-legend .legend-item .dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.pie-legend .legend-item .val{margin-left:auto;font-weight:600;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:12px}
+/* Table */
+.data-table{width:100%;border-collapse:collapse;font-size:13px;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:18px 0}
+.data-table th{background:var(--surface2);color:var(--text-muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.08em;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border)}
+.data-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-muted)}
+.data-table tr:last-child td{border-bottom:none}
+.data-table .tier-badge{display:inline-flex;align-items:center;gap:6px;padding:2px 8px;border-radius:100px;font-size:11px;font-weight:600}
+.data-table .tier-1{background:rgba(34,197,94,.1);color:var(--green)}
+.data-table .tier-2{background:rgba(245,158,11,.1);color:var(--amber)}
+.data-table .tier-3{background:rgba(148,163,184,.1);color:var(--text-muted)}
+.data-table .tier-4{background:rgba(239,68,68,.1);color:var(--red)}
+/* Story cards */
+.story-grid{display:flex;flex-direction:column;gap:14px}
+.story-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 22px;transition:all .2s ease;position:relative;overflow:hidden}
+.story-card:hover{border-color:var(--border-light);background:var(--surface2);transform:translateY(-1px)}
+.story-card .card-accent{position:absolute;top:0;left:0;bottom:0;width:3px;border-radius:0 3px 3px 0}
+.story-card.num-1 .card-accent{background:var(--vuln)}.story-card.num-2 .card-accent{background:var(--purple)}.story-card.num-3 .card-accent{background:var(--crime)}.story-card.num-4 .card-accent{background:var(--green)}.story-card.num-5 .card-accent{background:var(--govt)}
+.story-number{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);font-weight:500;margin-bottom:4px}
+.story-card h3{font-size:1rem;font-weight:600;color:var(--text);margin-bottom:6px;line-height:1.4}
+.story-card p.summary{color:var(--text-muted);font-size:13px;line-height:1.65;margin-bottom:10px}
+.story-card .meta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:12px}
+.story-card .meta .source{color:var(--accent);text-decoration:none;font-weight:500}
+.story-card .meta .source:hover{text-decoration:underline}
+.story-card .meta .reliability{display:inline-flex;align-items:center;gap:4px;color:var(--text-dim)}
+.story-card .meta .reliability .tier-1{color:var(--green)}
+.story-card .meta .reliability .tier-2{color:var(--amber)}
+.story-card .meta .reliability .tier-3{color:var(--text-muted)}
+.story-card .meta .reliability .tier-4{color:var(--red)}
+.story-card .meta .date{color:var(--text-dim);margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px}
+/* Also notable */
+.bundle-box{background:var(--surface);border:1px dashed var(--border);border-radius:10px;padding:14px 18px;margin-top:6px}
+.bundle-box .bundle-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);font-weight:600;margin-bottom:6px}
+.bundle-box ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+.bundle-box ul li{font-size:13px;color:var(--text-muted);padding-left:12px;position:relative;line-height:1.5}
+.bundle-box ul li::before{content:'\25B8';position:absolute;left:0;color:var(--text-dim)}
+/* Controls */
+.controls{display:flex;gap:10px;margin-bottom:20px}
+.btn{font-size:12px;font-weight:600;padding:6px 16px;border-radius:99px;border:1px solid var(--border);background:var(--surface);color:var(--text-muted);cursor:pointer;transition:all .2s;font-family:inherit}
+.btn:hover{background:var(--surface2);color:var(--text)}
+.btn.active{background:rgba(0,180,216,.15);border-color:var(--accent);color:var(--accent)}
+#back-top{position:fixed;bottom:28px;right:28px;width:42px;height:42px;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--accent);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;z-index:900;font-family:inherit}
+#back-top.visible{opacity:1}
+#back-top:hover{background:var(--surface2)}
+.footer{text-align:center;padding:28px 0 10px;border-top:1px solid var(--border);margin-top:32px}
+.footer .source-line{font-size:12px;color:var(--text-dim);font-family:'JetBrains Mono',monospace;margin-bottom:6px}
+.footer .note{font-size:11px;color:var(--text-dim);font-style:italic}
+/* Executive view */
+body.exec-view .hide-exec,
+body.exec-view .story-card .meta,
+body.exec-view .story-card p.summary,
+body.exec-view .bundle-box,
+body.exec-view .bar-chart,
+body.exec-view .pie-container,
+body.exec-view .data-table {display:none!important}
+body.exec-view .story-card{padding:10px 18px;margin-bottom:4px;cursor:pointer}
+body.exec-view .story-card h3{font-size:14px;margin-bottom:0}
+body.exec-view .story-number{display:none}
+body.exec-view .story-grid{gap:6px}
+body.exec-view .story-card::after{content:'▶ Click to expand';display:block;font-size:10px;color:var(--text-dim);margin-top:4px;opacity:.5;transition:opacity .2s}
+body.exec-view .story-card:hover::after{opacity:1}
+body.exec-view .story-card.expanded::after{content:'▼ Click to collapse'}
+body.exec-view .story-card.expanded .meta,
+body.exec-view .story-card.expanded p.summary{display:block!important}
+body.exec-view .story-card.expanded{padding:14px 18px}
+body.exec-view .story-card.expanded .story-number{display:block}
+body.exec-view .story-card.expanded h3{margin-bottom:6px;font-size:1rem}
+body.exec-view .story-card.expanded p.summary{margin-bottom:10px}
+/* Analytics grid: responsive — 2 cols desktop, 1 col narrow. Target the inline grid
+   emitted by the generator (which uses the same rule). */
+.analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:860px){.wrap{flex-direction:column}#toc{position:static;width:100%;max-height:unset;margin-bottom:20px}.pie-container{flex-direction:column;align-items:center;gap:16px}.stats-row{grid-template-columns:repeat(2,1fr)}.header h1{font-size:1.5rem}.analytics-grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important;scroll-behavior:auto!important}}
+@media print{body{background:#fff!important;color:#111!important;font-size:11pt}body::before,.orb{display:none}#toc{display:none}.wrap{display:block;max-width:100%;padding:0}.main{width:100%}.header h1{-webkit-text-fill-color:#111;background:none;color:#111}.exec-summary p,.story-card p.summary,.bar-chart,.au-context-box p,.bundle-box ul li{color:#333!important}.exec-summary,.story-card,.bar-chart,.pie-container{break-inside:avoid}@page{margin:2cm 2.5cm;@bottom-right{content:counter(page)" / "counter(pages);font-size:9pt;color:#999}}}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<div id="progress"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+<div class="wrap">
+<nav id="toc" aria-label="Table of contents">
+<h3>Daily Digest</h3>
+<a href="#exec" data-section="exec">Executive summary</a>
+<a href="#sector-it-technology" data-section="sector-it-technology">💻  IT / Technology</a>
+<a href="#sector-defence" data-section="sector-defence">🛰️ Defence</a>
+<a href="#sector-general-cross-sector" data-section="sector-general-cross-sector">🌐  General / Cross-Sector</a>
+<a href="#sector-financial-services" data-section="sector-financial-services">💰 Financial Services</a>
+<a href="#sector-government" data-section="sector-government">🏛️ Government</a>
+<a href="#sector-it-technology-vulnerabilities" data-section="sector-it-technology-vulnerabilities">💻  IT / Technology (Vulnerabilities)</a>
+<a href="#sector-government-australia" data-section="sector-government-australia">🏛️ Government (Australia)</a>
+<a href="#sector-manufacturing" data-section="sector-manufacturing">🏭  Manufacturing</a>
+<a href="#sector-media-entertainment" data-section="sector-media-entertainment">🎬  Media &amp; Entertainment</a>
+<a href="#analytics" data-section="analytics">📊 Analytics</a>
+</nav>
+<main id="main" class="main">
+
+<header class="header">
+<div class="header-badge"><span class="dot"></span> Daily Digest · 2026-07-10</div>
+<h1>🔐 Cyber Digest</h1>
+<p class="subtitle">A daily roundup of key cybersecurity developments across sectors</p>
+</header>
+
+<div class="controls">
+<button class="btn active" id="btn-full" onclick="setView('full')">Full report</button>
+<button class="btn" id="btn-exec" onclick="setView('exec')">Executive view</button>
+</div>
+
+<section id="exec" class="exec-summary">
 <h2>📋 Executive Summary</h2>
-<p>Today's news brings fresh developments in <strong>mobile privacy, authentication phishing, and malware</strong>. A University of Michigan study of 281 free Android VPN apps (MVPNalyzer) found that 29 leak traffic outside the tunnel, 61 send data in plain text, and 5 expose configuration files — all with 2.4 billion cumulative installs. Separately, Okta tracked a threat actor (O-UNC-066) using voice phishing ("vishing") to trick Microsoft 365 users into enrolling fake Entra passkeys, targeting multiple industries.</p>
-<p>On the malware front, Microsoft detailed <strong>GigaWiper</strong> (also BLUERABBIT), a destructive Windows backdoor tied to likely Iranian actors. Wiz published <strong>GhostApproval</strong> symlink attacks against six AI coding assistants. The <strong>ACSC critical alert</strong> on CMS exploitation remains active for Australian organisations. The <strong>EU took member states to court</strong> over unimplemented NIS2 cybersecurity law, and the <strong>NSA revived the Tailored Access Operations brand</strong> for its elite hacking unit.</p>
-<hr />
-<h2>Sector Reports</h2>
-<h3>💻 IT / Technology</h3>
-<p><strong>1. Study of 281 Free Android VPN Apps Finds Traffic Leaks, Unencrypted Data, and Tracking</strong>
-- <strong>Summary:</strong> Researchers at the University of Michigan, University of New Mexico, and IIT Delhi tested 281 popular free Android VPN apps using MVPNalyzer. 29 apps leak traffic outside the encrypted tunnel; 61 send data in plain text; 5 expose configuration files, enabling attacker-in-the-middle redirection. The flagged apps have been installed over 2.4 billion times. The findings were presented at NDSS 2026.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-10
-- <strong>Threat type:</strong> Privacy | <strong>Geo:</strong> Global | <strong>ANZSIC:</strong> M (Computer System Design)</p>
-<p><strong>2. Hackers Use Fake Microsoft Entra Passkey Enrollment to Gain Microsoft 365 Access</strong>
-- <strong>Summary:</strong> Okta tracked threat actor O-UNC-066 using voice phishing (vishing) to call users and persuade them to enroll a fake passkey for Microsoft 365. The phishing kit is identical to the real Microsoft Entra passkey enrollment process. Sectors targeted include food/beverage, technology, healthcare, automotive, construction, and aviation.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-10
-- <strong>Threat type:</strong> Phishing / BEC | <strong>Geo:</strong> Global | <strong>ANZSIC:</strong> M (Computer System Design)</p>
-<p><strong>3. GhostApproval: Symlink Flaws in Six AI Coding Assistants</strong>
-- <strong>Summary:</strong> Wiz disclosed GhostApproval affecting Amazon Q Developer, Claude Code, Augment, Cursor, Google Antigravity, and Windsurf. A malicious repo uses unverified symlinks so a harmless-looking approval-file write lands on a sensitive system file. Three of six shipped fixes.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-09
-- <strong>Threat type:</strong> AI Security | <strong>Geo:</strong> Global | <strong>ANZSIC:</strong> M (Computer System Design)</p>
-<p><strong>4. Friendly Fire: AI Coding Agents Can Be Tricked Into Running Malicious Code</strong>
-- <strong>Summary:</strong> AI Now Institute published a proof-of-concept showing autonomous Claude Code and OpenAI Codex can be hijacked to execute attacker code during vulnerability scanning of untrusted third-party code.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-09
-- <strong>Threat type:</strong> AI Security | <strong>Geo:</strong> US | <strong>ANZSIC:</strong> M (Computer System Design)</p>
-<p><strong>5. npm 12 Disables Install Scripts by Default to Reduce Supply Chain Risk</strong>
-- <strong>Summary:</strong> GitHub released npm 12 with lifecycle scripts, Git deps, and remote URL deps all defaulting to off. Users must explicitly approve trusted packages. Granular access tokens bypassing 2FA also deprecated.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-09
-- <strong>Threat type:</strong> Supply Chain | <strong>Geo:</strong> Global | <strong>ANZSIC:</strong> M (Computer System Design)</p>
-<p><strong>6. Microsoft Patches RoguePlanet Defender Flaw (CVE-2026-50656)</strong>
-- <strong>Summary:</strong> Microsoft patched a race condition in mpengine.dll granting SYSTEM shell. CVSS 7.8. Patched in version 1.1.26060.3008.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-09
-- <strong>Threat type:</strong> Zero-day / Vuln | <strong>Geo:</strong> US | <strong>ANZSIC:</strong> M (Computer System Design)</p>
-<p><strong>7. GigaWiper Windows Backdoor Bundles Disk Wiping, Fake Ransomware, Spyware</strong>
-- <strong>Summary:</strong> Microsoft analyzed GigaWiper (also BLUERABBIT), a destructive Windows backdoor combining three older destructive programs. Google GTIG ties to likely Iran-linked actors. No patch — defence rests on detection and offline backups.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-09
-- <strong>Threat type:</strong> Malware | <strong>Geo:</strong> Global | <strong>ANZSIC:</strong> M (Computer System Design)</p>
-<p><strong>8. Dormant GitHub Accounts Mapping Corporate Orgs</strong>
-- <strong>Summary:</strong> Datadog Security Labs warns of campaigns using 50+ dormant GitHub "ghost" accounts and compromised PATs to enumerate organisations and clone private repositories.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-09
-- <strong>Threat type:</strong> Other | <strong>Geo:</strong> Global | <strong>ANZSIC:</strong> M (Computer System Design)</p>
-<p><strong>9. GodDamn Ransomware Uses PoisonX Driver to Disable Endpoint Defenses</strong>
-- <strong>Summary:</strong> Symantec flagged GodDamn ransomware (rebrand of Beast/Monster lineage tracked as "Hyadina") using the PoisonX kernel driver for defense evasion. Used AnyDesk for remote access and NirSoft credential harvesting.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-09
-- <strong>Threat type:</strong> Ransomware | <strong>Geo:</strong> Global | <strong>ANZSIC:</strong> M (Computer System Design)</p>
-<p><strong>10. Fake 7-Zip Installers Turn Devices Into Residential Proxy Nodes</strong>
-- <strong>Summary:</strong> Infoblox disclosed "Lurking Lizard" operating a residential proxy business via 230+ lookalike domains, including trojanized 7-Zip installers. Activity dating to at least August 2022.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-09
-- <strong>Threat type:</strong> Malware | <strong>Geo:</strong> Global | <strong>ANZSIC:</strong> M (Computer System Design)</p>
-<h3>🏛️ Government</h3>
-<p><strong>1. EU Takes Member States to Court Over Unimplemented Cybersecurity Law</strong>
-- <strong>Summary:</strong> The European Commission escalated enforcement by taking member states to court for failing to transpose NIS2 cybersecurity directives into national law.
-- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-10
-- <strong>Threat type:</strong> Regulatory / Policy | <strong>Geo:</strong> Europe | <strong>ANZSIC:</strong> O (Government Admin)</p>
-<p><strong>2. NSA Revives "Tailored Access Operations" Name for Elite Hacking Unit</strong>
-- <strong>Summary:</strong> The NSA revived the TAO branding for its elite offensive cyber unit, signalling renewed focus on computer network exploitation.
-- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-09
-- <strong>Threat type:</strong> APT / Nation-State | <strong>Geo:</strong> US | <strong>ANZSIC:</strong> O (Defence)</p>
-<p><strong>3. CISA Adds Multiple KEVs, Urges Fortinet Hardening</strong>
-- <strong>Summary:</strong> CISA added several Known Exploited Vulnerabilities to the catalog and urged Fortinet device hardening after credential exposure reports. The Adobe ColdFusion CVE-2026-48282 (CVSS 10) KEV due date is today.
-- <strong>Source:</strong> <a href="https://www.cisa.gov/news-events/cybersecurity-advisories">CISA</a>
-- <strong>Reliability:</strong> Tier 1/4 — Very High
-- <strong>Date:</strong> 2026-07-10
-- <strong>Threat type:</strong> Zero-day / Vuln | <strong>Geo:</strong> US | <strong>ANZSIC:</strong> O (Government Admin)</p>
-<p><strong>4. Taiwan Charges Two Businessmen Over Chinese Espionage Campaign</strong>
-- <strong>Summary:</strong> Taiwan's MJIB charged two businessmen for alleged roles in a Chinese espionage campaign targeting government agencies and tech firms.
-- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-08
-- <strong>Threat type:</strong> APT / Nation-State | <strong>Geo:</strong> APAC | <strong>ANZSIC:</strong> O (Government Admin)</p>
-<p><strong>5. Spain Arrests Alleged Supporter of Pro-Russian Hacktivist Groups</strong>
-- <strong>Summary:</strong> Spanish police arrested an individual linked to pro-Russian hacktivist activity after an FBI tip.
-- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-08
-- <strong>Threat type:</strong> APT / Nation-State | <strong>Geo:</strong> Europe | <strong>ANZSIC:</strong> O (Government Admin)</p>
-<h3>🛡️ Defence</h3>
-<p><strong>1. Britain Plans Autonomous AI "Cyber Shield"</strong>
-- <strong>Summary:</strong> UK government unveiled plans for an autonomous AI-powered Cyber Shield to defend national infrastructure at machine speed.
-- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-07
-- <strong>Threat type:</strong> AI Security | <strong>Geo:</strong> Europe | <strong>ANZSIC:</strong> O (Defence)</p>
-<p><strong>2. EU Unveils Cyber Plan to Reduce Reliance on Foreign AI</strong>
-- <strong>Summary:</strong> EU published a plan to reduce strategic dependence on foreign AI systems, including sovereign AI training infrastructure.
-- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-08
-- <strong>Threat type:</strong> Regulatory / Policy | <strong>Geo:</strong> Europe | <strong>ANZSIC:</strong> O (Government Admin)</p>
-<h3>🇦🇺 Australian</h3>
-<p><strong>1. [CRITICAL] ACSC Tracks Large-Scale Exploitation Campaign Targeting CMS</strong>
-- <strong>Summary:</strong> ASD's ACSC issued a critical alert on large-scale exploitation targeting CMS vulnerabilities. Affects AU small/medium businesses, critical infrastructure, and government.
-- <strong>Source:</strong> <a href="https://www.cyber.gov.au/">ACSC / cyber.gov.au</a>
-- <strong>Reliability:</strong> Tier 1/4 — Very High
-- <strong>Date:</strong> 2026-07-09
-- <strong>Threat type:</strong> Zero-day / Vuln | <strong>Geo:</strong> Australia | <strong>ANZSIC:</strong> O (Government Admin)</p>
-<h3>💰 Financial Services</h3>
-<p><strong>1. Cash App Owner to Pay $45 Million to Settle Lax Security Allegations</strong>
-- <strong>Summary:</strong> Block Inc. (Cash App) agreed to a $45 million settlement over alleged weak security practices. (Recurring story — appears across multiple July digests.)
-- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-08
-- <strong>Threat type:</strong> Regulatory / Policy | <strong>Geo:</strong> US | <strong>ANZSIC:</strong> K (Finance)</p>
-<p><strong>2. Global Operation First Light 2026: ~6,000 Arrests</strong>
-- <strong>Summary:</strong> 97-country operation produced 5,811 arrests, $293M seized targeting social engineering scams and money laundering.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-09
-- <strong>Threat type:</strong> Fraud / Cybercrime | <strong>Geo:</strong> Global | <strong>ANZSIC:</strong> O (Government Admin)</p>
-<h3>🏭 Manufacturing</h3>
-<p><strong>1. Latvian Forestry Company Still Restoring Systems After Ransomware Attack</strong>
-- <strong>Summary:</strong> A Latvian forestry company continues recovery weeks after a ransomware attack, illustrating industrial sector vulnerability.
-- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-09
-- <strong>Threat type:</strong> Ransomware | <strong>Geo:</strong> Europe | <strong>ANZSIC:</strong> C (Manufacturing)</p>
-<h3>🎬 Media &amp; Entertainment</h3>
-<p><strong>1. Greek Victims File Lawsuit Against Intellexa Over Predator Spyware</strong>
-- <strong>Summary:</strong> Greek citizens filed suit against Intellexa over Predator spyware surveillance, adding to legal pressure on spyware vendors.
-- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-08
-- <strong>Threat type:</strong> Regulatory / Policy | <strong>Geo:</strong> Europe | <strong>ANZSIC:</strong> R (Arts &amp; Entertainment)</p>
-<h3>🌐 General / Cross-Sector</h3>
-<p><strong>1. IRIS C2 Startup Run by Felons (Krebs Investigation)</strong>
-- <strong>Summary:</strong> Krebs revealed IRIS C2 zero-day exploit acquisition startup is run by convicted felons Burkman and Wohl via Calvexa Group LLC.
-- <strong>Source:</strong> <a href="https://krebsonsecurity.com/">Krebs on Security</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-08
-- <strong>Threat type:</strong> Other | <strong>Geo:</strong> US | <strong>ANZSIC:</strong> NULL</p>
-<hr />
-<h2>📊 Source Reliability Index</h2>
-<table>
-<thead>
-<tr>
-<th>Tier</th>
-<th>Label</th>
-<th>Sources Used This Digest</th>
-</tr>
-</thead>
+<p>The cybersecurity landscape on July 10, 2026 is dominated by two heavy themes: <strong>AI agent security</strong> and <strong>supply chain risk</strong>. Multiple coordinated disclosures — Friendly Fire, GhostApproval, and Sophos&#x27;s detection-trigger analysis — collectively reveal that AI coding assistants (Claude Code, OpenAI Codex, Cursor, Amazon Q Developer, Windsurf, Augment, Google Antigravity) introduce novel attack surfaces at the toolchain level, not just at the AI model level. Separately, Microsoft dissected the GigaWiper/BLUERABBIT destructive backdoor and patched the RoguePlanet Defender privilege escalation flaw, while CISA continued adding to the KEV catalog and urging Fortinet hardening. On the regulatory front, the EU is taking member states to court over unimplemented NIS2-style cybersecurity law, and Cash App&#x27;s owner agreed to a $45M settlement over lax security practices. In Australia, the ACSC issued a critical alert over a large-scale CMS exploitation campaign.</p>
+</section>
+
+<div class="stats-row"><div class="stat-card stat-geo"><div class="stat-num">6</div><div class="stat-label">IT / Technology</div></div>
+<div class="stat-card stat-govt"><div class="stat-num">2</div><div class="stat-label">Defence</div></div>
+<div class="stat-card stat-crime"><div class="stat-num">1</div><div class="stat-label">General / Cross-Sector</div></div>
+<div class="stat-card stat-iot"><div class="stat-num">1</div><div class="stat-label">Financial Services</div></div>
+<div class="stat-card stat-vuln"><div class="stat-num">3</div><div class="stat-label">Government</div></div></div>
+
+<section id="sector-it-technology" class="section"><h2><span class="icon">💻 </span> IT / Technology <span class="count">6 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Friendly Fire: AI Coding Agents Can Be Tricked Into Running Malicious Code</h3><p class="summary">Researchers at the AI Now Institute published a proof-of-concept attack called &quot;Friendly Fire&quot; showing that AI coding agents (Claude Code, OpenAI Codex) running in autonomous mode can be hijacked to execute attacker code. When instructed to scan untrusted open-source code for vulnerabilities, the agent itself becomes the vector — running the attacker&#x27;s code on the developer&#x27;s machine instead of catching the threat. Tested across multiple versions of both tools.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-09</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>GhostApproval: Symlink Flaws in Six AI Coding Assistants</h3><p class="summary">Wiz disclosed a vulnerability pattern called GhostApproval affecting Amazon Q Developer, Claude Code, Augment, Cursor, Google Antigravity, and Windsurf. A booby-trapped repo uses unverified symlinks so that when the AI assistant asks permission to write one harmless-looking file, the write actually lands on a sensitive system file. Three of six have shipped fixes; others remain exposed.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-09</span></div></div>
+<div class="story-card num-3"><div class="card-accent"></div><div class="story-number">3</div><h3>AI Coding Agents Triggering Endpoint Security Rules Built to Catch Attackers</h3><p class="summary">Sophos published telemetry from a week of June 2026 showing that AI coding agents (Claude Code, Cursor, OpenAI Codex) are setting off behavioral detection rules designed for human intruders. Common agent activities — decrypting browser credentials, reading the Windows credential store, pulling files via system tools, writing to startup folders — registered at 56.2% for credential access on monitored machines, creating significant alert fatigue.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-08</span></div></div>
+<div class="story-card num-4"><div class="card-accent"></div><div class="story-number">4</div><h3>npm 12 Disables Install Scripts by Default to Reduce Supply Chain Risk</h3><p class="summary">GitHub released npm version 12 with a major security default change: install scripts (`allowScripts`), Git dependencies (`--allow-git`), and remote URL dependencies (`--allow-remote`) all default to off. Users must explicitly run `npm approve-scripts` to permit trusted packages. Granular access tokens (GATs) that bypassed 2FA are also being deprecated.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-09</span></div></div>
+<div class="story-card num-5"><div class="card-accent"></div><div class="story-number">5</div><h3>Microsoft Patches RoguePlanet Defender Flaw (CVE-2026-50656)</h3><p class="summary">Microsoft patched a privilege escalation vulnerability in the Microsoft Malware Protection Engine (`mpengine.dll`) tracked as RoguePlanet (CVE-2026-50656, CVSS 7.8). The race condition could be abused to spawn a SYSTEM-level shell. Patched in version 1.1.26060.3008, nearly a month after public disclosure by researcher Chaotic Eclipse.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-09</span></div></div>
+<div class="story-card num-1"><div class="card-accent"></div><div class="story-number">6</div><h3>Dormant GitHub Accounts Systematically Mapping Corporate Orgs</h3><p class="summary">Datadog Security Labs warned of overlapping campaigns using dormant GitHub &quot;ghost&quot; accounts and compromised PATs/OAuth tokens to enumerate corporate GitHub organizations, repositories, and user accounts. Over 50 dormant accounts used alongside dozens of compromised legitimate accounts. In select cases, attackers successfully cloned private repositories.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-09</span></div></div>
+</div>
+</section>
+<section id="sector-defence" class="section"><h2><span class="icon">🛰️</span> Defence <span class="count">2 stories</span></h2><div class="story-grid"><div class="story-card num-2"><div class="card-accent"></div><div class="story-number">7</div><h3>NSA Revives &#x27;Tailored Access Operations&#x27; Name for Elite Hacking Unit</h3><p class="summary">The NSA has revived the &quot;Tailored Access Operations&quot; (TAO) designation for its elite offensive hacking unit. TAO was originally active during the early 2000s and was publicly disclosed by Edward Snowden in 2013. The revival signals a renewed organizational focus on computer network exploitation.</p><div class="meta"><a class="source" href="https://therecord.media/" target="_blank" rel="noopener">The Record from Recorded Future News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-09</span></div></div>
+<div class="story-card num-3"><div class="card-accent"></div><div class="story-number">8</div><h3>Britain Plans to Build Autonomous AI &#x27;Cyber Shield&#x27; to Defend Nation</h3><p class="summary">The UK government unveiled plans to develop an autonomous AI-powered &quot;Cyber Shield&quot; to defend national infrastructure. The initiative aims to automate threat detection and response at machine speed, reducing reliance on human-in-the-loop incident response.</p><div class="meta"><a class="source" href="https://therecord.media/" target="_blank" rel="noopener">The Record from Recorded Future News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-07</span></div></div>
+</div>
+</section>
+<section id="sector-general-cross-sector" class="section"><h2><span class="icon">🌐 </span> General / Cross-Sector <span class="count">1 story</span></h2><div class="story-grid"><div class="story-card num-4"><div class="card-accent"></div><div class="story-number">9</div><h3>Global Operation First Light 2026: ~6,000 Arrests, $293M Seized</h3><p class="summary">A coordinated global anti-fraud operation involving 97 countries resulted in 5,811 arrests and the seizure of $293 million in illicit assets. Codenamed First Light 2026, the operation targeted social engineering scams and associated money laundering from January to April 2026. Over 142,000 victims identified globally.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-09</span></div></div>
+</div>
+</section>
+<section id="sector-financial-services" class="section"><h2><span class="icon">💰</span> Financial Services <span class="count">1 story</span></h2><div class="story-grid"><div class="story-card num-5"><div class="card-accent"></div><div class="story-number">10</div><h3>Cash App Owner to Pay $45 Million to Settle Lax Security Allegations</h3><p class="summary">Block, Inc. (owner of Cash App) agreed to pay $45 million to settle allegations of inadequate security practices. The settlement addresses claims that the company failed to implement reasonable security measures, leading to user data exposure and financial losses.</p><div class="meta"><a class="source" href="https://therecord.media/" target="_blank" rel="noopener">The Record from Recorded Future News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-08</span></div></div>
+</div>
+</section>
+<section id="sector-government" class="section"><h2><span class="icon">🏛️</span> Government <span class="count">3 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">11</div><h3>EU Takes Member States to Court Over Unimplemented Cybersecurity Law</h3><p class="summary">The European Commission is taking multiple member states to court for failing to transpose cybersecurity directives (NIS2) into national law. The legal action underscores growing EU impatience with member-state implementation lag, even as cyber threats escalate across the bloc.</p><div class="meta"><a class="source" href="https://therecord.media/" target="_blank" rel="noopener">The Record from Recorded Future News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-09</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">12</div><h3>EU Unveils Cyber Plan to Reduce Reliance on Foreign AI Systems</h3><p class="summary">The European Commission published a cyber plan aimed at reducing strategic dependence on foreign AI systems, particularly from the US and China. The plan includes investment in sovereign AI training infrastructure and cybersecurity certification for AI supply chains.</p><div class="meta"><a class="source" href="https://therecord.media/" target="_blank" rel="noopener">The Record from Recorded Future News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-08</span></div></div>
+<div class="story-card num-3"><div class="card-accent"></div><div class="story-number">13</div><h3>Taiwan Charges Two Businessmen in Chinese Espionage Campaign</h3><p class="summary">Taiwan&#x27;s Ministry of Justice Investigation Bureau charged two businessmen for their alleged roles in a Chinese espionage campaign targeting Taiwanese government agencies and technology firms. The case marks an escalation in Taiwan&#x27;s response to cross-strait cyber-enabled intelligence operations.</p><div class="meta"><a class="source" href="https://therecord.media/" target="_blank" rel="noopener">The Record from Recorded Future News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-08</span></div></div>
+</div>
+</section>
+<section id="sector-it-technology-vulnerabilities" class="section"><h2><span class="icon">💻 </span> IT / Technology (Vulnerabilities) <span class="count">4 stories</span></h2><div class="story-grid"><div class="story-card num-4"><div class="card-accent"></div><div class="story-number">14</div><h3>GodDamn Ransomware Uses PoisonX Driver to Disable Endpoint Defenses</h3><p class="summary">A new ransomware family called GodDamn leverages the PoisonX kernel driver to neutralize security software as a defense evasion strategy. First spotted in the wild on May 21, 2026. Symantec assesses it as a rebrand of Beast ransomware (itself an evolution of Monster), with the developer tracked as Hyadina. Attackers used AnyDesk for remote access and NirSoft-based credential harvesting.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-09</span></div></div>
+<div class="story-card num-5"><div class="card-accent"></div><div class="story-number">15</div><h3>New GigaWiper Windows Backdoor Bundles Disk Wiping, Fake Ransomware, Spyware</h3><p class="summary">Microsoft analyzed GigaWiper, a destructive Windows backdoor combining three older destructive programs into one: full disk wiping, boot drive overwriting, and fake ransomware that encrypts files with an unsaved key. Same malicious files also identified as BLUERABBIT by Binary Defense. Google Threat Intelligence Group ties the malware to a likely Iran-linked threat actor.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-09</span></div></div>
+<div class="story-card num-1"><div class="card-accent"></div><div class="story-number">16</div><h3>Fake 7-Zip Installers Turn Devices Into Residential Proxy Nodes</h3><p class="summary">Infoblox disclosed a threat actor dubbed Lurking Lizard operating a residential proxy business via trojanized 7-Zip installers on lookalike domains (including `7zip[.]com`). Over 230 lookalike domains; activity dating to at least August 2022. The actor also impersonates major proxy providers and runs fake review sites. IPIDEA&#x27;s infrastructure was dismantled by Google in January 2026.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-09</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">17</div><h3>CISA Adds Multiple KEVs, Urges Fortinet Hardening</h3><p class="summary">CISA added several new Known Exploited Vulnerabilities to the catalog over the past week, including alerts urging organizations to harden Fortinet devices following reports of credential exposure. Separately, CISA published a joint advisory on Russian intelligence services continuing to target commercial messaging applications.</p><div class="meta"><a class="source" href="https://www.cisa.gov/news-events/cybersecurity-advisories" target="_blank" rel="noopener">CISA</a><span class="reliability"><span class="tier-2">●</span> Tier 1/4 — Very High</span><span class="date">2026-07-09</span></div></div>
+</div>
+</section>
+<section id="sector-government-australia" class="section"><h2><span class="icon">🏛️</span> Government (Australia) <span class="count">1 story</span></h2><div class="story-grid"><div class="story-card num-3"><div class="card-accent"></div><div class="story-number">18</div><h3>ACSC Critical Alert: Large-Scale Exploitation Campaign Targeting CMS</h3><p class="summary">The Australian Signals Directorate&#x27;s ACSC issued a critical-rated alert regarding a large-scale exploitation campaign targeting various vulnerabilities in website content management systems (CMS). The advisory is applicable to small &amp; medium businesses, organisations &amp; critical infrastructure, and government audiences.</p><div class="meta"><a class="source" href="https://www.cyber.gov.au/" target="_blank" rel="noopener">ACSC / Cyber.gov.au</a><span class="reliability"><span class="tier-2">●</span> Tier 1/4 — Very High</span><span class="date">2026-07-09</span></div></div>
+</div>
+</section>
+<section id="sector-manufacturing" class="section"><h2><span class="icon">🏭 </span> Manufacturing <span class="count">1 story</span></h2><div class="story-grid"><div class="story-card num-4"><div class="card-accent"></div><div class="story-number">19</div><h3>Latvian Forestry Company Still Restoring Systems Weeks After Ransomware Attack</h3><p class="summary">A Latvian forestry company continues restoring systems weeks after a ransomware attack that severely disrupted operations. The extended recovery timeline illustrates the disproportionate impact of ransomware on smaller industrial firms with limited IT/OT resilience.</p><div class="meta"><a class="source" href="https://therecord.media/" target="_blank" rel="noopener">The Record from Recorded Future News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-09</span></div></div>
+</div>
+</section>
+<section id="sector-media-entertainment" class="section"><h2><span class="icon">🎬 </span> Media &amp; Entertainment <span class="count">1 story</span></h2><div class="story-grid"><div class="story-card num-5"><div class="card-accent"></div><div class="story-number">20</div><h3>Greek Victims File Lawsuit Against Intellexa Over Predator Spyware</h3><p class="summary">Greek citizens filed a lawsuit against Intellexa, the maker of the Predator spyware, alleging illegal surveillance. The case adds to mounting legal pressure on the commercial spyware industry, following similar actions in other European jurisdictions.</p><div class="meta"><a class="source" href="https://therecord.media/" target="_blank" rel="noopener">The Record from Recorded Future News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-08</span></div></div>
+</div>
+</section>
+
+<!-- Analytics Section -->
+<section id="analytics" class="section">
+<h2><span class="icon">📊</span> Analytics</h2>
+<div class="analytics-grid"><div class="bar-chart"><h3>Sector distribution</h3><div class="bar-row bar-cyan"><span class="bar-label">IT / Technology</span><div class="bar-track"><div class="bar-fill" style="width:30%"></div></div><span class="bar-val">6</span></div>
+<div class="bar-row bar-blue"><span class="bar-label">Defence</span><div class="bar-track"><div class="bar-fill" style="width:10%"></div></div><span class="bar-val">2</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">General / Cross-Sector</span><div class="bar-track"><div class="bar-fill" style="width:5%"></div></div><span class="bar-val">1</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">Financial Services</span><div class="bar-track"><div class="bar-fill" style="width:5%"></div></div><span class="bar-val">1</span></div>
+<div class="bar-row bar-blue"><span class="bar-label">Government</span><div class="bar-track"><div class="bar-fill" style="width:15%"></div></div><span class="bar-val">3</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">IT / Technology (Vulnerabilities)</span><div class="bar-track"><div class="bar-fill" style="width:20%"></div></div><span class="bar-val">4</span></div>
+<div class="bar-row bar-blue"><span class="bar-label">Government (Australia)</span><div class="bar-track"><div class="bar-fill" style="width:5%"></div></div><span class="bar-val">1</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">Manufacturing</span><div class="bar-track"><div class="bar-fill" style="width:5%"></div></div><span class="bar-val">1</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">Media &amp; Entertainment</span><div class="bar-track"><div class="bar-fill" style="width:5%"></div></div><span class="bar-val">1</span></div></div><div class="bar-chart"><h3>Source breakdown</h3><div class="bar-row bar-cyan"><span class="bar-label">The Hacker News</span><div class="bar-track"><div class="bar-fill" style="width:50%"></div></div><span class="bar-val">10</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">The Record from Recorded Future News</span><div class="bar-track"><div class="bar-fill" style="width:40%"></div></div><span class="bar-val">8</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">CISA</span><div class="bar-track"><div class="bar-fill" style="width:5%"></div></div><span class="bar-val">1</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">ACSC / Cyber.gov.au</span><div class="bar-track"><div class="bar-fill" style="width:5%"></div></div><span class="bar-val">1</span></div></div></div>
+<div class="pie-container"><div class="pie" style="background:conic-gradient(var(--accent) 0deg 108deg,var(--purple) 108deg 144deg,var(--govt) 144deg 162deg,var(--vuln) 162deg 180deg,var(--crime) 180deg 234deg,var(--govt) 234deg 306deg,var(--crime) 306deg 324deg,var(--crime) 324deg 342deg,var(--vuln) 342deg 360deg);"></div><div class="pie-legend"><div class="legend-item"><span class="dot" style="background:var(--accent)"></span> IT / Technology <span class="val">6</span></div><div class="legend-item"><span class="dot" style="background:var(--purple)"></span> Defence <span class="val">2</span></div><div class="legend-item"><span class="dot" style="background:var(--govt)"></span> General / Cross-Sector <span class="val">1</span></div><div class="legend-item"><span class="dot" style="background:var(--vuln)"></span> Financial Services <span class="val">1</span></div><div class="legend-item"><span class="dot" style="background:var(--crime)"></span> Government <span class="val">3</span></div><div class="legend-item"><span class="dot" style="background:var(--govt)"></span> IT / Technology (Vulnerabilities) <span class="val">4</span></div><div class="legend-item"><span class="dot" style="background:var(--crime)"></span> Government (Australia) <span class="val">1</span></div><div class="legend-item"><span class="dot" style="background:var(--crime)"></span> Manufacturing <span class="val">1</span></div><div class="legend-item"><span class="dot" style="background:var(--vuln)"></span> Media &amp; Entertainment <span class="val">1</span></div></div></div>
+<h3 style="font-size:14px;color:var(--text);margin-bottom:10px">Source Reliability Index</h3>
+<table class="data-table">
+<thead><tr><th>Tier</th><th>Label</th><th>Description</th></tr></thead>
 <tbody>
-<tr>
-<td>1</td>
-<td><strong>Very High</strong></td>
-<td>CISA, ACSC</td>
-</tr>
-<tr>
-<td>2</td>
-<td><strong>High</strong></td>
-<td>The Hacker News, The Record, Krebs on Security</td>
-</tr>
-<tr>
-<td>3</td>
-<td><strong>Moderate</strong></td>
-<td>—</td>
-</tr>
-<tr>
-<td>4</td>
-<td><strong>Low</strong></td>
-<td>—</td>
-</tr>
+<tr><td><span class="tier-badge tier-1">● Tier 1</span></td><td>Very High</td><td>Official / first-party</td></tr>
+<tr><td><span class="tier-badge tier-2">● Tier 2</span></td><td>High</td><td>Established cyber journalism</td></tr>
+<tr><td><span class="tier-badge tier-3">● Tier 3</span></td><td>Moderate</td><td>General tech/news media</td></tr>
+<tr><td><span class="tier-badge tier-4">● Tier 4</span></td><td>Low</td><td>Social / unverified</td></tr>
 </tbody>
 </table>
-<hr />
-<h2>📝 Methodology Notes</h2>
-<ul>
-<li><strong>Cadence:</strong> daily (focus ~last 24–48 hours; older high-signal stories retained).</li>
-<li><strong>Source diversity:</strong> 10 stories from THN, 6 from The Record, 1 from Krebs, 1 from CISA, 1 from ACSC. THN at 53% — flagged for exceeding 40% threshold.</li>
-<li><strong>New columns populated:</strong> threat_type, geo_region, anzsic_code, is_recurring (Cash App settlement marked recurring), score.</li>
-<li><strong>Overwrite:</strong> Replaces the earlier 2026-07-10 digest.</li>
-</ul>
-<hr />
-<p><em>Generated by Hermes Agent — Cyber Digest Pipeline (Daily)</em></p></body></html>
+</section>
+
+<footer class="footer">
+<div class="source-line">Digest generated 2026-07-10.</div>
+<div class="note">Digest prepared 10 July 2026. 48-hour freshness window (72-hour max for weekend bridging).</div>
+</footer>
+</main>
+</div>
+
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+
+<script>
+window.addEventListener('scroll',function(){
+var h=document.documentElement;
+var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+document.getElementById('progress').style.width=Math.min(p,100)+'%';
+var bt=document.getElementById('back-top');
+bt.classList.toggle('visible',(h.scrollTop||document.body.scrollTop)>300);
+var sections=document.querySelectorAll('section[id],.exec-summary');
+var links=document.querySelectorAll('#toc a');
+var cur='';
+sections.forEach(function(s){
+var t=s.getBoundingClientRect().top;
+if(t<250) cur=s.id;
+});
+links.forEach(function(l){
+l.classList.toggle('active',l.dataset.section===cur);
+});
+});
+function setView(m){
+document.body.classList.toggle('exec-view',m==='exec');
+document.getElementById('btn-full').classList.toggle('active',m==='full');
+document.getElementById('btn-exec').classList.toggle('active',m==='exec');
+document.querySelectorAll('.story-card').forEach(function(c){
+var interactive=m==='exec';
+c.setAttribute('role',interactive?'button':null);
+c.setAttribute('tabindex',interactive?'0':null);
+c.setAttribute('aria-expanded',interactive?(c.classList.contains('expanded')?'true':'false'):null);
+});
+}
+document.addEventListener('keydown',function(e){
+if(e.key==='Escape') setView('full');
+});
+function toggleCard(c){ if(!document.body.classList.contains('exec-view'))return; c.classList.toggle('expanded'); c.setAttribute('aria-expanded',c.classList.contains('expanded')?'true':'false'); }
+document.querySelectorAll('.story-card').forEach(function(c){
+c.addEventListener('click',function(e){
+if(e.target.closest('a')) return;
+toggleCard(this);
+});
+c.addEventListener('keydown',function(e){
+if(e.target.closest('a')) return;
+if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggleCard(this); }
+});
+});
+document.querySelectorAll('#toc a').forEach(function(l){
+l.setAttribute('role','navigation');
+});
+/* aria-current for active TOC link */
+var _tocObs=new MutationObserver(function(){
+document.querySelectorAll('#toc a.active').forEach(function(a){a.setAttribute('aria-current','location');});
+document.querySelectorAll('#toc a:not(.active)').forEach(function(a){a.removeAttribute('aria-current');});
+});
+_tocObs.observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['class']});
+</script>
+</body>
+</html>

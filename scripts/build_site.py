@@ -331,12 +331,19 @@ def build_daily(days):
         mdpath=os.path.join(daily_src,month,f"Cyber-Digest-{d}.md")
         out=os.path.join(DOCS,"daily",f"{d}.html")
         # reuse daily-html.py generator for faithful rendering
-        sub=os.system(f'"{sys.executable}" {NASSP}/daily-html.py --date {d} --out "{out}" --no-vault >/dev/null 2>&1')
+        sub=os.system(f'"{sys.executable}" "{NASSP}/daily-html.py" --date {d} --out "{out}" --no-vault >/dev/null 2>&1')
         if sub!=0:
-            # fallback: simple conversion
+            # fallback with styling
             body=open(mdpath,encoding="utf-8").read()
             h=md_to_html(body,{},out)
-            open(out,"w",encoding="utf-8").write(f"<!DOCTYPE html><html><head><meta charset='utf-8'><title>{d}</title></head><body>{h}</body></html>")
+            css_rel=os.path.relpath(os.path.join(DOCS,"assets","site.css"), os.path.dirname(out))
+            open(out,"w",encoding="utf-8").write(f'''<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<title>Cyber Digest — {d}</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="{css_rel}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head><body>{nav_html("")}<div class="container"><div class="crumb"><a href="../index.html">Home</a> · <a href="index.html">Daily</a></div>
+<div class="wiki-body">{h}</div></div></body></html>''')
     # daily index
     cards="".join(f'<a class="card" href="{d}.html"><h3>{d}</h3><span class="meta">{month} 2026</span><span class="go">Read →</span></a>' for d,month in days)
     html=head("Daily Editions","daily/")+f'''<div class="hero"><div class="kicker">Archive</div><h1>Daily <span class="accent">Digests</span></h1>
@@ -386,13 +393,14 @@ def build_wiki(pages):
             </div>{foot()}'''
             open(os.path.join(d,f"{slug}.html"),"w",encoding="utf-8").write(page)
     # build wiki index
+    def strip_wl(s): return re.sub(r"\[\[+([^\]]+)\]\]+", r"\1", str(s))
     cards=""
     for ptype in type_order:
         if ptype not in pages: continue
         cards+=f'<div class="section"><h2><span class="bar"></span>{esc(type_names.get(ptype,ptype))} <span style="font-size:13px;color:var(--text-dim)">({len(pages[ptype])})</span></h2><div class="grid cards">'
         for slug,info in pages[ptype].items():
-            fm=info["fm"]; title=fm.get("title") or slug.replace("-"," ").title()
-            summary=fm.get("summary") or ""
+            fm=info["fm"]; title=strip_wl(fm.get("title") or slug.replace("-"," ").title())
+            summary=strip_wl(fm.get("summary") or "")
             cards+=f'<a class="card wiki-card" href="{ptype}/{slug}.html"><h3>{esc(title)}</h3><p>{esc(summary[:140])}</p><span class="go">Open →</span></a>'
         cards+="</div></div>"
     html=head("Cyber Wiki","wiki/index.html")+f'''<div class="hero"><div class="kicker">Knowledge base</div><h1>Cyber <span class="accent">Wiki</span></h1>

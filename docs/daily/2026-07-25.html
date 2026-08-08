@@ -1,163 +1,315 @@
-<!DOCTYPE html><html><head><meta charset='utf-8'><title>2026-07-25</title></head><body><h1>🛡️ Cyber Digest — 2026-07-25 (Daily)</h1>
-<p><em>A daily roundup of key cybersecurity developments across sectors</em></p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Digest — 2026-07-25</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0e1a;--surface:#111827;--surface2:#1a2332;--border:#1e293b;--border-light:#2d3a52;--text:#e2e8f0;--text-muted:#b0c0d0;--text-dim:#8a9cb6;--accent:#00b4d8;--accent-glow:rgba(0,180,216,.12);--vuln:#f43f5e;--geo:#8b5cf6;--crime:#f59e0b;--iot:#10b981;--govt:#3b82f6;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--purple:#8b5cf6}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:Inter,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,180,216,.025)1px,transparent 1px),linear-gradient(90deg,rgba(0,180,216,.025)1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
+.skip-link{position:absolute;left:-9999px;top:0;z-index:2000;background:var(--accent);color:#fff;padding:8px 14px;border-radius:0 0 8px 0;font-size:13px;font-weight:600}
+.skip-link:focus{left:0}
+#progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--purple));z-index:1000;width:0%;transition:width .15s}
+.orb{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0;animation:orbFloat 20s ease-in-out infinite}
+.orb-1{width:500px;height:500px;background:var(--accent-glow);top:-200px;right:-200px}
+.orb-2{width:400px;height:400px;background:rgba(139,92,246,.08);bottom:-150px;left:-150px;animation-delay:-7s}
+.orb-3{width:300px;height:300px;background:rgba(244,63,94,.06);top:50%;left:50%;animation-delay:-14s}
+@keyframes orbFloat{0%,100%{transform:translate(0,0)scale(1)}33%{transform:translate(30px,-40px)scale(1.1)}66%{transform:translate(-20px,20px)scale(.9)}}
+.wrap{max-width:1100px;margin:auto;padding:0 28px 80px;display:flex;gap:32px;position:relative;z-index:1}
+#toc{position:sticky;top:24px;width:210px;flex-shrink:0;height:fit-content;max-height:calc(100vh-48px);overflow-y:auto;padding:18px 14px;background:var(--surface);border:1px solid var(--border);border-radius:12px;font-size:12px}
+#toc h3{color:var(--accent);font-size:10px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px}
+#toc a{display:block;color:var(--text-muted);text-decoration:none;padding:3px 8px;border-radius:6px;margin-bottom:2px;transition:all .2s;border-left:2px solid transparent;font-size:12px}
+#toc a:hover{color:var(--text);background:rgba(0,180,216,.08)}
+#toc a.active{color:var(--accent);border-left-color:var(--accent);background:rgba(0,180,216,.1)}
+.main{flex:1;min-width:0}
+.header{padding:40px 0 28px;text-align:center;border-bottom:1px solid var(--border);margin-bottom:32px}
+.header-badge{display:inline-flex;align-items:center;gap:8px;background:var(--accent-glow);border:1px solid rgba(0,180,216,.2);color:var(--accent);padding:5px 14px;border-radius:100px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;margin-bottom:18px}
+.header-badge .dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.header h1{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;letter-spacing:-.03em;background:linear-gradient(135deg,#e2e8f0 0%,#00b4d8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}
+.header .subtitle{color:var(--text-muted);font-size:14px}
+.section{margin-bottom:28px;scroll-margin-top:80px}
+.section h2{font-size:1.15rem;margin-bottom:14px;border-bottom:1px solid var(--border);padding-bottom:10px;display:flex;align-items:center;gap:10px}
+.section h2 .icon{font-size:1.3rem;line-height:1}
+.section h2 .count{margin-left:auto;background:var(--surface2);color:var(--text-muted);padding:2px 10px;border-radius:100px;font-size:11px;font-weight:600;white-space:nowrap}
+/* Exec summary box — surface bg, border, gradient top accent, padding */
+.exec-summary{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px 30px;margin-bottom:28px;position:relative;overflow:hidden}
+.exec-summary::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--vuln),var(--purple))}
+.exec-summary h2{font-size:11px;text-transform:uppercase;letter-spacing:.15em;color:var(--accent);font-weight:700;margin-bottom:14px;border:none;padding:0}
+.exec-summary p{color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:14px}
+.exec-summary p:last-child{margin-bottom:0}
+.exec-summary p strong{color:var(--text);font-weight:600}
+/* AU context box */
+.au-context-box{background:linear-gradient(135deg,rgba(0,180,216,.06),rgba(59,130,246,.06));border:1px solid rgba(0,180,216,.15);border-radius:12px;padding:18px 22px;margin:14px 0;position:relative}
+.au-context-box::before{content:'AU';position:absolute;top:-8px;right:14px;background:var(--accent);color:#fff;font-size:10px;font-weight:800;padding:1px 7px;border-radius:4px;letter-spacing:.05em}
+.au-context-box p{color:var(--text-muted);font-size:13px;line-height:1.65}
+/* Stats row */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:28px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 12px;text-align:center}
+.stat-card .stat-num{font-size:1.5rem;font-weight:800;line-height:1.1}
+.stat-card .stat-label{font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.05em;margin-top:4px}
+.stat-card.stat-vuln .stat-num{color:var(--vuln)}.stat-card.stat-geo .stat-num{color:var(--purple)}.stat-card.stat-crime .stat-num{color:var(--crime)}.stat-card.stat-iot .stat-num{color:var(--green)}.stat-card.stat-govt .stat-num{color:var(--govt)}
+/* Bar charts */
+.bar-chart{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:18px}
+.bar-chart h3{font-size:13px;font-weight:600;color:var(--text);margin-bottom:12px}
+.bar-row{display:flex;align-items:center;margin-bottom:6px;gap:8px}
+.bar-row .bar-label{font-size:12px;color:var(--text-muted);width:130px;flex-shrink:0;text-align:right}
+.bar-row .bar-track{flex:1;height:16px;background:var(--surface2);border-radius:99px;overflow:hidden}
+.bar-row .bar-fill{height:100%;border-radius:99px;transition:width .6s ease;min-width:4px}
+.bar-row .bar-val{font-size:11px;font-weight:600;color:var(--text);width:36px;flex-shrink:0;font-family:'JetBrains Mono',monospace}
+.bar-cyan .bar-fill{background:linear-gradient(90deg,var(--accent),#0096c7)}
+.bar-purple .bar-fill{background:linear-gradient(90deg,var(--purple),#a78bfa)}
+.bar-amber .bar-fill{background:linear-gradient(90deg,var(--amber),#fbbf24)}
+.bar-red .bar-fill{background:linear-gradient(90deg,var(--vuln),#fb7185)}
+.bar-green .bar-fill{background:linear-gradient(90deg,var(--green),#4ade80)}
+.bar-blue .bar-fill{background:linear-gradient(90deg,var(--govt),#60a5fa)}
+/* Pie chart */
+.pie-container{display:flex;align-items:center;gap:28px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px 28px;margin:18px 0}
+.pie{width:140px;height:140px;border-radius:50%;flex-shrink:0}
+.pie-legend{display:flex;flex-direction:column;gap:6px;flex:1}
+.pie-legend .legend-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-muted)}
+.pie-legend .legend-item .dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.pie-legend .legend-item .val{margin-left:auto;font-weight:600;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:12px}
+/* Table */
+.data-table{width:100%;border-collapse:collapse;font-size:13px;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:18px 0}
+.data-table th{background:var(--surface2);color:var(--text-muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.08em;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border)}
+.data-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-muted)}
+.data-table tr:last-child td{border-bottom:none}
+.data-table .tier-badge{display:inline-flex;align-items:center;gap:6px;padding:2px 8px;border-radius:100px;font-size:11px;font-weight:600}
+.data-table .tier-1{background:rgba(34,197,94,.1);color:var(--green)}
+.data-table .tier-2{background:rgba(245,158,11,.1);color:var(--amber)}
+.data-table .tier-3{background:rgba(148,163,184,.1);color:var(--text-muted)}
+.data-table .tier-4{background:rgba(239,68,68,.1);color:var(--red)}
+/* Story cards */
+.story-grid{display:flex;flex-direction:column;gap:14px}
+.story-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 22px;transition:all .2s ease;position:relative;overflow:hidden}
+.story-card:hover{border-color:var(--border-light);background:var(--surface2);transform:translateY(-1px)}
+.story-card .card-accent{position:absolute;top:0;left:0;bottom:0;width:3px;border-radius:0 3px 3px 0}
+.story-card.num-1 .card-accent{background:var(--vuln)}.story-card.num-2 .card-accent{background:var(--purple)}.story-card.num-3 .card-accent{background:var(--crime)}.story-card.num-4 .card-accent{background:var(--green)}.story-card.num-5 .card-accent{background:var(--govt)}
+.story-number{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);font-weight:500;margin-bottom:4px}
+.story-card h3{font-size:1rem;font-weight:600;color:var(--text);margin-bottom:6px;line-height:1.4}
+.story-card p.summary{color:var(--text-muted);font-size:13px;line-height:1.65;margin-bottom:10px}
+.story-card .meta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:12px}
+.story-card .meta .source{color:var(--accent);text-decoration:none;font-weight:500}
+.story-card .meta .source:hover{text-decoration:underline}
+.story-card .meta .reliability{display:inline-flex;align-items:center;gap:4px;color:var(--text-dim)}
+.story-card .meta .reliability .tier-1{color:var(--green)}
+.story-card .meta .reliability .tier-2{color:var(--amber)}
+.story-card .meta .reliability .tier-3{color:var(--text-muted)}
+.story-card .meta .reliability .tier-4{color:var(--red)}
+.story-card .meta .date{color:var(--text-dim);margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px}
+/* Also notable */
+.bundle-box{background:var(--surface);border:1px dashed var(--border);border-radius:10px;padding:14px 18px;margin-top:6px}
+.bundle-box .bundle-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);font-weight:600;margin-bottom:6px}
+.bundle-box ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+.bundle-box ul li{font-size:13px;color:var(--text-muted);padding-left:12px;position:relative;line-height:1.5}
+.bundle-box ul li::before{content:'\25B8';position:absolute;left:0;color:var(--text-dim)}
+/* Controls */
+.controls{display:flex;gap:10px;margin-bottom:20px}
+.btn{font-size:12px;font-weight:600;padding:6px 16px;border-radius:99px;border:1px solid var(--border);background:var(--surface);color:var(--text-muted);cursor:pointer;transition:all .2s;font-family:inherit}
+.btn:hover{background:var(--surface2);color:var(--text)}
+.btn.active{background:rgba(0,180,216,.15);border-color:var(--accent);color:var(--accent)}
+#back-top{position:fixed;bottom:28px;right:28px;width:42px;height:42px;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--accent);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;z-index:900;font-family:inherit}
+#back-top.visible{opacity:1}
+#back-top:hover{background:var(--surface2)}
+.footer{text-align:center;padding:28px 0 10px;border-top:1px solid var(--border);margin-top:32px}
+.footer .source-line{font-size:12px;color:var(--text-dim);font-family:'JetBrains Mono',monospace;margin-bottom:6px}
+.footer .note{font-size:11px;color:var(--text-dim);font-style:italic}
+/* Executive view */
+body.exec-view .hide-exec,
+body.exec-view .story-card .meta,
+body.exec-view .story-card p.summary,
+body.exec-view .bundle-box,
+body.exec-view .bar-chart,
+body.exec-view .pie-container,
+body.exec-view .data-table {display:none!important}
+body.exec-view .story-card{padding:10px 18px;margin-bottom:4px;cursor:pointer}
+body.exec-view .story-card h3{font-size:14px;margin-bottom:0}
+body.exec-view .story-number{display:none}
+body.exec-view .story-grid{gap:6px}
+body.exec-view .story-card::after{content:'▶ Click to expand';display:block;font-size:10px;color:var(--text-dim);margin-top:4px;opacity:.5;transition:opacity .2s}
+body.exec-view .story-card:hover::after{opacity:1}
+body.exec-view .story-card.expanded::after{content:'▼ Click to collapse'}
+body.exec-view .story-card.expanded .meta,
+body.exec-view .story-card.expanded p.summary{display:block!important}
+body.exec-view .story-card.expanded{padding:14px 18px}
+body.exec-view .story-card.expanded .story-number{display:block}
+body.exec-view .story-card.expanded h3{margin-bottom:6px;font-size:1rem}
+body.exec-view .story-card.expanded p.summary{margin-bottom:10px}
+/* Analytics grid: responsive — 2 cols desktop, 1 col narrow. Target the inline grid
+   emitted by the generator (which uses the same rule). */
+.analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:860px){.wrap{flex-direction:column}#toc{position:static;width:100%;max-height:unset;margin-bottom:20px}.pie-container{flex-direction:column;align-items:center;gap:16px}.stats-row{grid-template-columns:repeat(2,1fr)}.header h1{font-size:1.5rem}.analytics-grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important;scroll-behavior:auto!important}}
+@media print{body{background:#fff!important;color:#111!important;font-size:11pt}body::before,.orb{display:none}#toc{display:none}.wrap{display:block;max-width:100%;padding:0}.main{width:100%}.header h1{-webkit-text-fill-color:#111;background:none;color:#111}.exec-summary p,.story-card p.summary,.bar-chart,.au-context-box p,.bundle-box ul li{color:#333!important}.exec-summary,.story-card,.bar-chart,.pie-container{break-inside:avoid}@page{margin:2cm 2.5cm;@bottom-right{content:counter(page)" / "counter(pages);font-size:9pt;color:#999}}}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<div id="progress"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+<div class="wrap">
+<nav id="toc" aria-label="Table of contents">
+<h3>Daily Digest</h3>
+<a href="#exec" data-section="exec">Executive summary</a>
+<a href="#sector-energy-utilities" data-section="sector-energy-utilities">⚡ Energy &amp; Utilities</a>
+<a href="#sector-it-technology" data-section="sector-it-technology">🖥️ IT / Technology</a>
+<a href="#sector-threat-intelligence-malware" data-section="sector-threat-intelligence-malware">🦠  Threat Intelligence / Malware</a>
+<a href="#sector-government-defence" data-section="sector-government-defence">🛰️ Government &amp; Defence</a>
+<a href="#sector-healthcare" data-section="sector-healthcare">🏥 Healthcare</a>
+<a href="#sector-legal-regulatory" data-section="sector-legal-regulatory">⚖️ Legal &amp; Regulatory</a>
+<a href="#analytics" data-section="analytics">📊 Analytics</a>
+</nav>
+<main id="main" class="main">
+
+<header class="header">
+<div class="header-badge"><span class="dot"></span> Daily Digest · 2026-07-25</div>
+<h1>🔐 Cyber Digest</h1>
+<p class="subtitle">A daily roundup of key cybersecurity developments across sectors</p>
+</header>
+
+<div class="controls">
+<button class="btn active" id="btn-full" onclick="setView('full')">Full report</button>
+<button class="btn" id="btn-exec" onclick="setView('exec')">Executive view</button>
+</div>
+
+<section id="exec" class="exec-summary">
 <h2>📋 Executive Summary</h2>
-<p>Saturday's digest rounds up a busy Friday in cyber news. A major <strong>Aus</strong>tralian energy supplier confirmed a customer data compromise — the most directly relevant story for domestic readers. Microsoft patched a critical AD CS flaw (CVE-2026-54121, CVSS 8.8) dubbed <strong>Certighost</strong>, allowing low-privileged users to impersonate Domain Controllers. Researchers disclosed <strong>AgentForger</strong>, a CSRF vulnerability in OpenAI's ChatGPT Workspace Agents that could deploy rogue AI agents via a single phishing link. Two critical Bing Images flaws (CVE-2026-32194/32191, CVSS 9.8) allowed SVG-triggered RCE on Microsoft's production servers. In healthcare, Tennessee Pathology Group notified 170,000 patients of a breach, and a new report signals a surge in malicious insider incidents. The US State Department imposed visa restrictions on foreign cyber scammers, and the US House passed an extension of CISA's 2015 info-sharing protections.</p>
-<hr />
-<h2>Sector Reports</h2>
-<h3>🏭 Energy &amp; Utilities</h3>
-<p><strong>1. Major Australian energy supplier confirms customer data compromised</strong>
-- <strong>Summary:</strong> An unnamed major Australian energy supplier has confirmed a cyber incident that compromised customer data, as reported by The Record on 23 July. The energy sector is a critical infrastructure pillar in Australia, making this incident of particular concern for domestic readers and regulators.
-- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
-- <strong>Reliability:</strong> Tier 2/4 — High (Established cyber journalism)
-- <strong>Date:</strong> 2026-07-23</p>
-<hr />
-<h3>🖥️ IT / Technology</h3>
-<p><strong>1. Certighost Exploit Lets Low-Privileged AD Users Impersonate a Domain Controller</strong>
-- <strong>Summary:</strong> Researchers H0j3n and Aniq Fakhrul published a working exploit (CVE-2026-54121, CVSS 8.8) allowing low-privileged Active Directory users to obtain a certificate for a Domain Controller and authenticate as that machine. This enables DCSync attacks to retrieve the krbtgt secret. Microsoft patched the AD CS issue ten days earlier.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-24</p>
-<p><strong>2. Bing Images Flaws Let Crafted SVGs Run Commands as SYSTEM on Microsoft's Servers</strong>
-- <strong>Summary:</strong> Two critical CVEs (CVE-2026-32194, CVE-2026-32191, both CVSS 9.8) in Bing's image-processing tier allowed crafted SVGs to achieve RCE as SYSTEM (Windows) or root (Linux). Discovered by XBOW and fixed server-side by Microsoft.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-24</p>
-<p><strong>3. ChatGPT AgentForger Flaw Could Deploy Rogue Workspace Agents via a Phishing Link</strong>
-- <strong>Summary:</strong> Zenity Labs disclosed a CSRF vulnerability in OpenAI's ChatGPT Workspace Agents (codenamed AgentForger) that allowed a single phishing link to build, authorise, and deploy an attacker-controlled AI agent inside a victim's organisation. Fixed by OpenAI on 8 June 2026.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-24</p>
-<p><strong>4. NodeBB Patches Eight AI-Found Flaws Exposing Admin Access and Private Chats</strong>
-- <strong>Summary:</strong> Aikido Security's AI pentest agents found eight high-severity flaws in NodeBB forum software in a six-hour source code review. Fixed in version 4.14.2. Flaws included a configuration bypass that let regular members access the admin dashboard.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-24</p>
-<p><strong>5. Kimi K3 Agents Found Redis Zero-Days and Built RCE Exploit</strong>
-- <strong>Summary:</strong> Redis shipped seven security releases on 23 July after researchers published authenticated RCE PoCs for multiple versions. Flaws include use-after-free in Streams shared-NACK and out-of-bounds writes in RedisBloom/TDigest modules. Multiple branches affected (6.2.x through 8.8.x).
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-24</p>
-<hr />
-<h3>🦠 Threat Intelligence / Malware</h3>
-<p><strong>1. BlueNoroff Zoom Phishing Kit Profiles Crypto Wallets Before Malware Delivery</strong>
-- <strong>Summary:</strong> North Korean BlueNoroff actors have operationalised an operator-driven phishing kit that profiles victims' cryptocurrency wallets before delivering malware. The campaign uses typosquatted Zoom and Microsoft Teams domains with compromised trusted contacts as initial access.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-24</p>
-<p><strong>2. Golden Chickens Resurfaces With Four New Malware Families</strong>
-- <strong>Summary:</strong> The Golden Chickens MaaS ecosystem operators (TAG-195) resurfaced with TinyEgg, ChonkyChicken, a modularised variant, and a credential theft utility called ChromEggscalator. TAG-127 observed deploying TinyEgg via ClickFix-style social engineering.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-24</p>
-<p><strong>3. Fake Notepad++ Plugin Delivers MATCHBOIL.V2 in UAC-0099 Attacks</strong>
-- <strong>Summary:</strong> CERT-UA warned of a Russia-aligned threat cluster (UAC-0099) using a malicious Notepad++ plugin to compromise Windows systems. The campaign begins with phishing emails containing image attachments that lead to a ZIP archive via file-sharing services.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-24</p>
-<hr />
-<h3>🏛️ Government &amp; Defence</h3>
-<p><strong>1. Hacker Runs Hermes AI Agent Unattended for Post-Exploitation at Thai Finance Ministry</strong>
-- <strong>Summary:</strong> Threat intelligence firm Hunt.io and researcher Bob Diachenko discovered logs from an AI assistant (Hermes, by Nous Research) running unattended in YOLO mode against Thailand's Ministry of Finance. The agent checked hosts for root access, hunted through file systems, and accessed staff personnel records.
-- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-24</p>
-<p><strong>2. State Department imposes visa restrictions on foreign cyber scammers</strong>
-- <strong>Summary:</strong> US Secretary of State Marco Rubio announced visa restrictions targeting foreign nationals involved in cyber scams, a new diplomatic tool to combat cyber-enabled financial fraud.
-- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-23</p>
-<p><strong>3. 'Wrench' attacks against crypto holders appear to be on the rise</strong>
-- <strong>Summary:</strong> Physical coercion attacks ("wrench attacks") targeting cryptocurrency holders are increasing, with criminals using violence or the threat of violence to force victims to transfer digital assets.
-- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-24</p>
-<p><strong>4. Andy Burnham signals continuity on UK cyber policy, reappoints minister despite scrapping ministry</strong>
-- <strong>Summary:</strong> UK Prime Minister Andy Burnham has signalled continuity in cyber policy, reappointing the cyber minister despite restructuring that saw the dedicated ministry scrapped.
-- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-24</p>
-<hr />
-<h3>🏥 Healthcare</h3>
-<p><strong>1. Tennessee Pathology Group Announces 170K-record Data Breach</strong>
-- <strong>Summary:</strong> Anatomic and Clinical Laboratory Associates is notifying almost 170,000 patients about a recent cybersecurity incident. The breach adds to a growing list of healthcare sector incidents this month.
-- <strong>Source:</strong> <a href="https://www.hipaajournal.com/">HIPAA Journal</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-24</p>
-<p><strong>2. Report Shows Surge in Malicious Insider Incidents; Mega Data Breaches</strong>
-- <strong>Summary:</strong> There has been a general trend of increasing data breaches over the past decade, with this year on track to exceed previous records. The report highlights a surge in malicious insider incidents alongside external attacks.
-- <strong>Source:</strong> <a href="https://www.hipaajournal.com/">HIPAA Journal</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-23</p>
-<p><strong>3. Colorado Behavioral Healthcare Provider Discovers Insider Data Breach</strong>
-- <strong>Summary:</strong> Multiple healthcare providers announced breaches including NAS Recovery Solutions, Entyre Care Massachusetts, Carle Health, and Brown Health Medical Group-MA. Insider threat remains a persistent vector in the sector.
-- <strong>Source:</strong> <a href="https://www.hipaajournal.com/">HIPAA Journal</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-23</p>
-<p><strong>4. Patient Data Exposed in Cybersecurity Incident at Ohio Revenue Cycle Management Company</strong>
-- <strong>Summary:</strong> Security incidents at United Technology Systems, Meridian Health Plan of Illinois, and others resulted in patient data exposure, underscoring the third-party risk prevalent in healthcare revenue cycle management.
-- <strong>Source:</strong> <a href="https://www.hipaajournal.com/">HIPAA Journal</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-23</p>
-<hr />
-<h3>⚖️ Legal &amp; Regulatory</h3>
-<p><strong>1. Singapore launches AI training data guidelines, expands PETs resources</strong>
-- <strong>Summary:</strong> Singapore released new guidelines on AI training data governance and expanded resources for privacy-enhancing technologies (PETs), positioning itself as a leader in AI governance in the Asia-Pacific region.
-- <strong>Source:</strong> <a href="https://www.iapp.org/news/">IAPP News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-24</p>
-<p><strong>2. Congressional stalemates take wind out of US digital policy sails</strong>
-- <strong>Summary:</strong> Ongoing congressional gridlock is stalling US digital policy initiatives, including comprehensive federal privacy legislation. The IAPP analysis notes that state-level activity continues to fill the vacuum.
-- <strong>Source:</strong> <a href="https://www.iapp.org/news/">IAPP News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-24</p>
-<p><strong>3. China's regulation on AI companions takes force</strong>
-- <strong>Summary:</strong> New Chinese regulations governing AI companion applications have taken effect, establishing requirements for content moderation, data protection, and age verification for AI-driven social and companion apps.
-- <strong>Source:</strong> <a href="https://www.iapp.org/news/">IAPP News</a>
-- <strong>Reliability:</strong> Tier 2/4 — High
-- <strong>Date:</strong> 2026-07-24</p>
-<hr />
-<h2>📊 Industry Breakdown</h2>
-<pre><code class="language-mermaid">pie showData
-    &quot;IT / Technology&quot; : 5
-    &quot;Threat Intelligence / Malware&quot; : 3
-    &quot;Government &amp; Defence&quot; : 4
-    &quot;Healthcare&quot; : 4
-    &quot;Energy &amp; Utilities&quot; : 1
-    &quot;Legal &amp; Regulatory&quot; : 3
-</code></pre>
-<hr />
-<h2>📊 Source Reliability Index</h2>
-<table>
-<thead>
-<tr>
-<th>Tier</th>
-<th>Label</th>
-<th>Description</th>
-</tr>
-</thead>
+<p>Saturday&#x27;s digest rounds up a busy Friday in cyber news. A major <strong>Aus</strong>tralian energy supplier confirmed a customer data compromise — the most directly relevant story for domestic readers. Microsoft patched a critical AD CS flaw (CVE-2026-54121, CVSS 8.8) dubbed <strong>Certighost</strong>, allowing low-privileged users to impersonate Domain Controllers. Researchers disclosed <strong>AgentForger</strong>, a CSRF vulnerability in OpenAI&#x27;s ChatGPT Workspace Agents that could deploy rogue AI agents via a single phishing link. Two critical Bing Images flaws (CVE-2026-32194/32191, CVSS 9.8) allowed SVG-triggered RCE on Microsoft&#x27;s production servers. In healthcare, Tennessee Pathology Group notified 170,000 patients of a breach, and a new report signals a surge in malicious insider incidents. The US State Department imposed visa restrictions on foreign cyber scammers, and the US House passed an extension of CISA&#x27;s 2015 info-sharing protections.</p>
+</section>
+
+<div class="stats-row"><div class="stat-card stat-geo"><div class="stat-num">1</div><div class="stat-label">Energy &amp; Utilities</div></div>
+<div class="stat-card stat-govt"><div class="stat-num">5</div><div class="stat-label">IT / Technology</div></div>
+<div class="stat-card stat-crime"><div class="stat-num">3</div><div class="stat-label">Threat Intelligence / Malware</div></div>
+<div class="stat-card stat-iot"><div class="stat-num">4</div><div class="stat-label">Government &amp; Defence</div></div>
+<div class="stat-card stat-vuln"><div class="stat-num">4</div><div class="stat-label">Healthcare</div></div></div>
+
+<section id="sector-energy-utilities" class="section"><h2><span class="icon">⚡</span> Energy &amp; Utilities <span class="count">1 story</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Major Australian energy supplier confirms customer data compromised</h3><p class="summary">An unnamed major Australian energy supplier has confirmed a cyber incident that compromised customer data, as reported by The Record on 23 July. The energy sector is a critical infrastructure pillar in Australia, making this incident of particular concern for domestic readers and regulators.</p><div class="meta"><a class="source" href="https://therecord.media/" target="_blank" rel="noopener">The Record</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High (Established cyber journalism)</span><span class="date">2026-07-23</span></div></div>
+</div>
+</section>
+<section id="sector-it-technology" class="section"><h2><span class="icon">🖥️</span> IT / Technology <span class="count">5 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Certighost Exploit Lets Low-Privileged AD Users Impersonate a Domain Controller</h3><p class="summary">Researchers H0j3n and Aniq Fakhrul published a working exploit (CVE-2026-54121, CVSS 8.8) allowing low-privileged Active Directory users to obtain a certificate for a Domain Controller and authenticate as that machine. This enables DCSync attacks to retrieve the krbtgt secret. Microsoft patched the AD CS issue ten days earlier.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-24</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>Bing Images Flaws Let Crafted SVGs Run Commands as SYSTEM on Microsoft&#x27;s Servers</h3><p class="summary">Two critical CVEs (CVE-2026-32194, CVE-2026-32191, both CVSS 9.8) in Bing&#x27;s image-processing tier allowed crafted SVGs to achieve RCE as SYSTEM (Windows) or root (Linux). Discovered by XBOW and fixed server-side by Microsoft.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-24</span></div></div>
+<div class="story-card num-3"><div class="card-accent"></div><div class="story-number">3</div><h3>ChatGPT AgentForger Flaw Could Deploy Rogue Workspace Agents via a Phishing Link</h3><p class="summary">Zenity Labs disclosed a CSRF vulnerability in OpenAI&#x27;s ChatGPT Workspace Agents (codenamed AgentForger) that allowed a single phishing link to build, authorise, and deploy an attacker-controlled AI agent inside a victim&#x27;s organisation. Fixed by OpenAI on 8 June 2026.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-24</span></div></div>
+<div class="story-card num-4"><div class="card-accent"></div><div class="story-number">4</div><h3>NodeBB Patches Eight AI-Found Flaws Exposing Admin Access and Private Chats</h3><p class="summary">Aikido Security&#x27;s AI pentest agents found eight high-severity flaws in NodeBB forum software in a six-hour source code review. Fixed in version 4.14.2. Flaws included a configuration bypass that let regular members access the admin dashboard.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-24</span></div></div>
+<div class="story-card num-5"><div class="card-accent"></div><div class="story-number">5</div><h3>Kimi K3 Agents Found Redis Zero-Days and Built RCE Exploit</h3><p class="summary">Redis shipped seven security releases on 23 July after researchers published authenticated RCE PoCs for multiple versions. Flaws include use-after-free in Streams shared-NACK and out-of-bounds writes in RedisBloom/TDigest modules. Multiple branches affected (6.2.x through 8.8.x).</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-24</span></div></div>
+</div>
+</section>
+<section id="sector-threat-intelligence-malware" class="section"><h2><span class="icon">🦠 </span> Threat Intelligence / Malware <span class="count">3 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>BlueNoroff Zoom Phishing Kit Profiles Crypto Wallets Before Malware Delivery</h3><p class="summary">North Korean BlueNoroff actors have operationalised an operator-driven phishing kit that profiles victims&#x27; cryptocurrency wallets before delivering malware. The campaign uses typosquatted Zoom and Microsoft Teams domains with compromised trusted contacts as initial access.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-24</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>Golden Chickens Resurfaces With Four New Malware Families</h3><p class="summary">The Golden Chickens MaaS ecosystem operators (TAG-195) resurfaced with TinyEgg, ChonkyChicken, a modularised variant, and a credential theft utility called ChromEggscalator. TAG-127 observed deploying TinyEgg via ClickFix-style social engineering.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-24</span></div></div>
+<div class="story-card num-3"><div class="card-accent"></div><div class="story-number">3</div><h3>Fake Notepad++ Plugin Delivers MATCHBOIL.V2 in UAC-0099 Attacks</h3><p class="summary">CERT-UA warned of a Russia-aligned threat cluster (UAC-0099) using a malicious Notepad++ plugin to compromise Windows systems. The campaign begins with phishing emails containing image attachments that lead to a ZIP archive via file-sharing services.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-24</span></div></div>
+</div>
+</section>
+<section id="sector-government-defence" class="section"><h2><span class="icon">🛰️</span> Government &amp; Defence <span class="count">4 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Hacker Runs Hermes AI Agent Unattended for Post-Exploitation at Thai Finance Ministry</h3><p class="summary">Threat intelligence firm Hunt.io and researcher Bob Diachenko discovered logs from an AI assistant (Hermes, by Nous Research) running unattended in YOLO mode against Thailand&#x27;s Ministry of Finance. The agent checked hosts for root access, hunted through file systems, and accessed staff personnel records.</p><div class="meta"><a class="source" href="https://thehackernews.com/" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-24</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>State Department imposes visa restrictions on foreign cyber scammers</h3><p class="summary">US Secretary of State Marco Rubio announced visa restrictions targeting foreign nationals involved in cyber scams, a new diplomatic tool to combat cyber-enabled financial fraud.</p><div class="meta"><a class="source" href="https://therecord.media/" target="_blank" rel="noopener">The Record</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-23</span></div></div>
+<div class="story-card num-3"><div class="card-accent"></div><div class="story-number">3</div><h3>&#x27;Wrench&#x27; attacks against crypto holders appear to be on the rise</h3><p class="summary">Physical coercion attacks (&quot;wrench attacks&quot;) targeting cryptocurrency holders are increasing, with criminals using violence or the threat of violence to force victims to transfer digital assets.</p><div class="meta"><a class="source" href="https://therecord.media/" target="_blank" rel="noopener">The Record</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-24</span></div></div>
+<div class="story-card num-4"><div class="card-accent"></div><div class="story-number">4</div><h3>Andy Burnham signals continuity on UK cyber policy, reappoints minister despite scrapping ministry</h3><p class="summary">UK Prime Minister Andy Burnham has signalled continuity in cyber policy, reappointing the cyber minister despite restructuring that saw the dedicated ministry scrapped.</p><div class="meta"><a class="source" href="https://therecord.media/" target="_blank" rel="noopener">The Record</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-24</span></div></div>
+</div>
+</section>
+<section id="sector-healthcare" class="section"><h2><span class="icon">🏥</span> Healthcare <span class="count">4 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Tennessee Pathology Group Announces 170K-record Data Breach</h3><p class="summary">Anatomic and Clinical Laboratory Associates is notifying almost 170,000 patients about a recent cybersecurity incident. The breach adds to a growing list of healthcare sector incidents this month.</p><div class="meta"><a class="source" href="https://www.hipaajournal.com/" target="_blank" rel="noopener">HIPAA Journal</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-24</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>Report Shows Surge in Malicious Insider Incidents; Mega Data Breaches</h3><p class="summary">There has been a general trend of increasing data breaches over the past decade, with this year on track to exceed previous records. The report highlights a surge in malicious insider incidents alongside external attacks.</p><div class="meta"><a class="source" href="https://www.hipaajournal.com/" target="_blank" rel="noopener">HIPAA Journal</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-23</span></div></div>
+<div class="story-card num-3"><div class="card-accent"></div><div class="story-number">3</div><h3>Colorado Behavioral Healthcare Provider Discovers Insider Data Breach</h3><p class="summary">Multiple healthcare providers announced breaches including NAS Recovery Solutions, Entyre Care Massachusetts, Carle Health, and Brown Health Medical Group-MA. Insider threat remains a persistent vector in the sector.</p><div class="meta"><a class="source" href="https://www.hipaajournal.com/" target="_blank" rel="noopener">HIPAA Journal</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-23</span></div></div>
+<div class="story-card num-4"><div class="card-accent"></div><div class="story-number">4</div><h3>Patient Data Exposed in Cybersecurity Incident at Ohio Revenue Cycle Management Company</h3><p class="summary">Security incidents at United Technology Systems, Meridian Health Plan of Illinois, and others resulted in patient data exposure, underscoring the third-party risk prevalent in healthcare revenue cycle management.</p><div class="meta"><a class="source" href="https://www.hipaajournal.com/" target="_blank" rel="noopener">HIPAA Journal</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-23</span></div></div>
+</div>
+</section>
+<section id="sector-legal-regulatory" class="section"><h2><span class="icon">⚖️</span> Legal &amp; Regulatory <span class="count">3 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Singapore launches AI training data guidelines, expands PETs resources</h3><p class="summary">Singapore released new guidelines on AI training data governance and expanded resources for privacy-enhancing technologies (PETs), positioning itself as a leader in AI governance in the Asia-Pacific region.</p><div class="meta"><a class="source" href="https://www.iapp.org/news/" target="_blank" rel="noopener">IAPP News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-24</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>Congressional stalemates take wind out of US digital policy sails</h3><p class="summary">Ongoing congressional gridlock is stalling US digital policy initiatives, including comprehensive federal privacy legislation. The IAPP analysis notes that state-level activity continues to fill the vacuum.</p><div class="meta"><a class="source" href="https://www.iapp.org/news/" target="_blank" rel="noopener">IAPP News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-24</span></div></div>
+<div class="story-card num-3"><div class="card-accent"></div><div class="story-number">3</div><h3>China&#x27;s regulation on AI companions takes force</h3><p class="summary">New Chinese regulations governing AI companion applications have taken effect, establishing requirements for content moderation, data protection, and age verification for AI-driven social and companion apps.</p><div class="meta"><a class="source" href="https://www.iapp.org/news/" target="_blank" rel="noopener">IAPP News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-24</span></div></div>
+</div>
+</section>
+
+<!-- Analytics Section -->
+<section id="analytics" class="section">
+<h2><span class="icon">📊</span> Analytics</h2>
+<div class="analytics-grid"><div class="bar-chart"><h3>Sector distribution</h3><div class="bar-row bar-amber"><span class="bar-label">Energy &amp; Utilities</span><div class="bar-track"><div class="bar-fill" style="width:5%"></div></div><span class="bar-val">1</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">IT / Technology</span><div class="bar-track"><div class="bar-fill" style="width:25%"></div></div><span class="bar-val">5</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">Threat Intelligence / Malware</span><div class="bar-track"><div class="bar-fill" style="width:15%"></div></div><span class="bar-val">3</span></div>
+<div class="bar-row bar-blue"><span class="bar-label">Government &amp; Defence</span><div class="bar-track"><div class="bar-fill" style="width:20%"></div></div><span class="bar-val">4</span></div>
+<div class="bar-row bar-red"><span class="bar-label">Healthcare</span><div class="bar-track"><div class="bar-fill" style="width:20%"></div></div><span class="bar-val">4</span></div>
+<div class="bar-row bar-purple"><span class="bar-label">Legal &amp; Regulatory</span><div class="bar-track"><div class="bar-fill" style="width:15%"></div></div><span class="bar-val">3</span></div></div><div class="bar-chart"><h3>Source breakdown</h3><div class="bar-row bar-cyan"><span class="bar-label">The Hacker News</span><div class="bar-track"><div class="bar-fill" style="width:45%"></div></div><span class="bar-val">9</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">The Record</span><div class="bar-track"><div class="bar-fill" style="width:20%"></div></div><span class="bar-val">4</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">HIPAA Journal</span><div class="bar-track"><div class="bar-fill" style="width:20%"></div></div><span class="bar-val">4</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">IAPP News</span><div class="bar-track"><div class="bar-fill" style="width:15%"></div></div><span class="bar-val">3</span></div></div></div>
+<div class="pie-container"><div class="pie" style="background:conic-gradient(var(--accent) 0deg 18deg,var(--purple) 18deg 108deg,var(--govt) 108deg 162deg,var(--vuln) 162deg 234deg,var(--crime) 234deg 306deg,var(--govt) 306deg 360deg);"></div><div class="pie-legend"><div class="legend-item"><span class="dot" style="background:var(--accent)"></span> Energy &amp; Utilities <span class="val">1</span></div><div class="legend-item"><span class="dot" style="background:var(--purple)"></span> IT / Technology <span class="val">5</span></div><div class="legend-item"><span class="dot" style="background:var(--govt)"></span> Threat Intelligence / Malware <span class="val">3</span></div><div class="legend-item"><span class="dot" style="background:var(--vuln)"></span> Government &amp; Defence <span class="val">4</span></div><div class="legend-item"><span class="dot" style="background:var(--crime)"></span> Healthcare <span class="val">4</span></div><div class="legend-item"><span class="dot" style="background:var(--govt)"></span> Legal &amp; Regulatory <span class="val">3</span></div></div></div>
+<h3 style="font-size:14px;color:var(--text);margin-bottom:10px">Source Reliability Index</h3>
+<table class="data-table">
+<thead><tr><th>Tier</th><th>Label</th><th>Description</th></tr></thead>
 <tbody>
-<tr>
-<td>1</td>
-<td>Very High</td>
-<td>Official / first-party</td>
-</tr>
-<tr>
-<td>2</td>
-<td>High</td>
-<td>Established cyber journalism</td>
-</tr>
-<tr>
-<td>3</td>
-<td>Moderate</td>
-<td>General tech/news media</td>
-</tr>
-<tr>
-<td>4</td>
-<td>Low</td>
-<td>Social / unverified</td>
-</tr>
+<tr><td><span class="tier-badge tier-1">● Tier 1</span></td><td>Very High</td><td>Official / first-party</td></tr>
+<tr><td><span class="tier-badge tier-2">● Tier 2</span></td><td>High</td><td>Established cyber journalism</td></tr>
+<tr><td><span class="tier-badge tier-3">● Tier 3</span></td><td>Moderate</td><td>General tech/news media</td></tr>
+<tr><td><span class="tier-badge tier-4">● Tier 4</span></td><td>Low</td><td>Social / unverified</td></tr>
 </tbody>
 </table>
-<hr />
-<h2>Source Diversity</h2>
-<p><em>Digest generated 2026-07-25. Sources: The Hacker News (8), The Record (4), HIPAA Journal (4), IAPP News (3). No single source exceeded 40% threshold.</em></p></body></html>
+</section>
+
+<footer class="footer">
+<div class="source-line">Digest generated 2026-07-25.</div>
+<div class="note">Digest prepared 25 July 2026. 48-hour freshness window (72-hour max for weekend bridging).</div>
+</footer>
+</main>
+</div>
+
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+
+<script>
+window.addEventListener('scroll',function(){
+var h=document.documentElement;
+var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+document.getElementById('progress').style.width=Math.min(p,100)+'%';
+var bt=document.getElementById('back-top');
+bt.classList.toggle('visible',(h.scrollTop||document.body.scrollTop)>300);
+var sections=document.querySelectorAll('section[id],.exec-summary');
+var links=document.querySelectorAll('#toc a');
+var cur='';
+sections.forEach(function(s){
+var t=s.getBoundingClientRect().top;
+if(t<250) cur=s.id;
+});
+links.forEach(function(l){
+l.classList.toggle('active',l.dataset.section===cur);
+});
+});
+function setView(m){
+document.body.classList.toggle('exec-view',m==='exec');
+document.getElementById('btn-full').classList.toggle('active',m==='full');
+document.getElementById('btn-exec').classList.toggle('active',m==='exec');
+document.querySelectorAll('.story-card').forEach(function(c){
+var interactive=m==='exec';
+c.setAttribute('role',interactive?'button':null);
+c.setAttribute('tabindex',interactive?'0':null);
+c.setAttribute('aria-expanded',interactive?(c.classList.contains('expanded')?'true':'false'):null);
+});
+}
+document.addEventListener('keydown',function(e){
+if(e.key==='Escape') setView('full');
+});
+function toggleCard(c){ if(!document.body.classList.contains('exec-view'))return; c.classList.toggle('expanded'); c.setAttribute('aria-expanded',c.classList.contains('expanded')?'true':'false'); }
+document.querySelectorAll('.story-card').forEach(function(c){
+c.addEventListener('click',function(e){
+if(e.target.closest('a')) return;
+toggleCard(this);
+});
+c.addEventListener('keydown',function(e){
+if(e.target.closest('a')) return;
+if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggleCard(this); }
+});
+});
+document.querySelectorAll('#toc a').forEach(function(l){
+l.setAttribute('role','navigation');
+});
+/* aria-current for active TOC link */
+var _tocObs=new MutationObserver(function(){
+document.querySelectorAll('#toc a.active').forEach(function(a){a.setAttribute('aria-current','location');});
+document.querySelectorAll('#toc a:not(.active)').forEach(function(a){a.removeAttribute('aria-current');});
+});
+_tocObs.observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['class']});
+</script>
+</body>
+</html>
