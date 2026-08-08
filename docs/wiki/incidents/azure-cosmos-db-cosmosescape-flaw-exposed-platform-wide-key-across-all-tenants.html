@@ -1,0 +1,38 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Azure Cosmos DB &#x27;CosmosEscape&#x27; Flaw Exposed Platform-Wide Key Across All Tenants</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css"></head><body>
+<nav class="topnav"><div class="inner">
+        <a class="brand" href="index.html"><span class="dot"></span>Cyber&nbsp;Digest<small>public site</small></a>
+        <div class="navlinks"><a href="index.html" class=""><span class="t">🏠 Home</span></a><a href="stories.html" class=""><span class="t">📚 Story DB</span></a><a href="daily/" class=""><span class="t">🗓️ Daily</span></a><a href="monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a></div></div></nav><main class="container">
+            <div class="container">
+            <div class="crumb"><a href="../index.html">Home</a> · <a href="../wiki/index.html">Wiki</a> · Incidents &amp; Campaigns</div>
+            <div class="wiki-body"><div class="frontmatter">type: incident · tags: [cyber, digest-2026-07-31, azure, cosmos-db, cloud-security, sandbox-escape, vulnerability]</div><h1>Azure Cosmos DB 'CosmosEscape' Flaw Exposed Platform-Wide Key Across All Tenants</h1>
+<h2>Summary</h2>
+<p>Wiz disclosed a now-patched vulnerability chain in Azure Cosmos DB dubbed CosmosEscape that could have let an attacker escape the Gremlin query sandbox and obtain full read/write access to databases across customer tenants. The exploit chain involved a crafted Gremlin query achieving code execution on a multi-tenant gateway, exposing a platform-wide signing secret and a regional account directory, enabling researchers to locate a target and retrieve its primary account key.</p>
+<h2>Key Details</h2>
+<ul>
+<li><strong>Date:</strong> 2026-07-30</li>
+<li><strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a></li>
+<li><strong>Reliability:</strong> Tier 2/4 — Established cyber journalism</li>
+<li><strong>Discoverer:</strong> Wiz Research</li>
+<li><strong>Vulnerability Type:</strong> Sandbox escape — multi-tenant</li>
+<li><strong>Attack Vector:</strong> Crafted Gremlin query → code execution on multi-tenant gateway</li>
+<li><strong>Exposed Data:</strong> Platform-wide signing secret, regional account directory, primary account keys</li>
+<li><strong>Microsoft Response:</strong> Blocked vulnerable Gremlin entry point within 48 hours of November 2025 report; full fix across all regions completed July 2026</li>
+<li><strong>Risk:</strong> Full read/write access to databases across customer tenants</li>
+</ul>
+<h2>Source</h2>
+<ul>
+<li><a href="https://thehackernews.com/">The Hacker News</a></li>
+</ul>
+<h2>See Also</h2>
+<ul>
+<li>CISA Adds One New Known Exploited Vulnerability to KEV Catalogue</li>
+<li>CISA Publishes Open Source Software Security Principles and Practices</li>
+</ul></div>
+            </div></main>
+<div class="footer">Cyber Digest public site · built 2026-08-08 15:35 · AU security intelligence</div>
+</body></html>

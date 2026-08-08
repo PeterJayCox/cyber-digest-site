@@ -1,0 +1,54 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DigiCert Breach (April 2026)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css"></head><body>
+<nav class="topnav"><div class="inner">
+        <a class="brand" href="index.html"><span class="dot"></span>Cyber&nbsp;Digest<small>public site</small></a>
+        <div class="navlinks"><a href="index.html" class=""><span class="t">🏠 Home</span></a><a href="stories.html" class=""><span class="t">📚 Story DB</span></a><a href="daily/" class=""><span class="t">🗓️ Daily</span></a><a href="monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a></div></div></nav><main class="container">
+            <div class="container">
+            <div class="crumb"><a href="../index.html">Home</a> · <a href="../wiki/index.html">Wiki</a> · Incidents &amp; Campaigns</div>
+            <div class="wiki-body"><div class="frontmatter">created: 2026-07-18 · updated: 2026-07-18 · type: incident · tags: [incident, supply-chain, certificate-authority] · confidence: medium · affected_sectors: [technology, sector-government, sector-finance] · au_impact: false</div><h1>DigiCert Breach (April 2026)</h1>
+<p>In April 2026, <strong>DigiCert</strong> — one of the world's largest Certificate Authorities (CAs) — suffered a security incident in which attackers stole <strong>code-signing certificates</strong> intended for customers.</p>
+<h2>Timeline</h2>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Event</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>April 2026</td>
+<td>Security incident occurs at DigiCert</td>
+</tr>
+<tr>
+<td>July 17, 2026</td>
+<td>Expel researchers attribute the breach to CylindricalCanine (GoldenEyeDog subgroup)</td>
+</tr>
+</tbody>
+</table>
+<h2>Attribution</h2>
+<p><strong>Expel researchers</strong> attributed the incident to <strong><a href="../entities/cylindrical-canine.html">Cylindrical Canine</a></strong>, a subgroup of the Chinese cybercrime group <strong>GoldenEyeDog (APT-Q-27)</strong>. <span class="fn">(raw/digests/Cyber-Digest-2026-07-18)</span></p>
+<h2>Tactics</h2>
+<ul>
+<li>Attackers used a <strong>modified Gh0st RAT</strong> to compromise a <strong>DigiCert support member's device</strong></li>
+<li>Stole <strong>code-signing certificates</strong> that were intended for DigiCert customers</li>
+<li>The breach targeted the CA's internal support infrastructure, not the certificate issuance pipeline itself</li>
+</ul>
+<h2>Significance</h2>
+<p>Code-signing certificate theft from a major CA enables threat actors to sign malware with trusted certificates, bypassing OS and security software trust checks. This represents a <strong>supply chain attack at the internet trust infrastructure layer</strong>.</p>
+<h2>Related Pages</h2>
+<ul>
+<li><a href="../entities/cylindrical-canine.html">Cylindrical Canine</a> — The threat actor subgroup attributed to the breach</li>
+<li><a href="../entities/intellexa-predator.html">Intellexa Predator</a> — Another trust/espionage supply chain (spyware)</li>
+<li><a href="../entities/progress-software.html">Progress Software</a> — Software supply chain incidents (MOVEit, etc.)</li>
+</ul>
+<blockquote>
+<p><strong>Note:</strong> DigiCert has not independently confirmed the attribution. This assessment is based solely on Expel's research (Tier 2 source).</p>
+</blockquote></div>
+            </div></main>
+<div class="footer">Cyber Digest public site · built 2026-08-08 15:35 · AU security intelligence</div>
+</body></html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JADEPUFFER — AI-Agent-Driven Threat Actor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css"></head><body>
+<nav class="topnav"><div class="inner">
+        <a class="brand" href="index.html"><span class="dot"></span>Cyber&nbsp;Digest<small>public site</small></a>
+        <div class="navlinks"><a href="index.html" class=""><span class="t">🏠 Home</span></a><a href="stories.html" class=""><span class="t">📚 Story DB</span></a><a href="daily/" class=""><span class="t">🗓️ Daily</span></a><a href="monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a></div></div></nav><main class="container">
+            <div class="container">
+            <div class="crumb"><a href="../index.html">Home</a> · <a href="../wiki/index.html">Wiki</a> · Entities &amp; Threat Actors</div>
+            <div class="wiki-body"><div class="frontmatter">created: 2026-07-21 · updated: 2026-07-21 · type: entity · tags: [cybercrime-group, ransomware-group] · confidence: medium · affected_sectors: [technology] · au_impact: false</div><h1>JADEPUFFER — AI-Agent-Driven Threat Actor</h1>
+<p>JADEPUFFER is an <strong>AI-agent-driven cybercrime operator</strong> that targets AI infrastructure, particularly Langflow servers. The operator has been linked to multiple attacks on the same Langflow deployment, with Sysdig researchers confirming a second attack via the same entry vector.</p>
+<h2>TTPs</h2>
+<ul>
+<li><strong>Entry point:</strong> CVE-2025-3248 (CVSS 9.8) — critical Langflow vulnerability, in CISA's KEV cataLog since May 2025</li>
+<li><strong>Target:</strong> AI infrastructure — model weights, vector Indexes, training datasets</li>
+<li><strong>Tooling:</strong> Deploys <a href="encforge.html">Encforge</a> custom ransomware compiled in Go</li>
+<li><strong>Modus operandi:</strong> AI-agent-driven operations, suggesting automated or semi-automated attack lifecycle</li>
+</ul>
+<h2>Affiliations</h2>
+<ul>
+<li>Associated with <a href="encforge.html">Encforge</a> ransomware deployment</li>
+<li>Possibly the same operator behind earlier Langflow attacks (per Sysdig research linking \xe2\x80\x9csecond attack\xe2\x80\x9d to same server)</li>
+</ul>
+<h2>Related Pages</h2>
+<ul>
+<li><a href="encforge.html">Encforge</a> — The Go ransomware deployed by JADEPUFFER</li>
+<li><a href="nadmesh-botnet.html">Nadmesh Botnet</a> — Go-based botnet scanning for exposed AI services (potential overlap)</li>
+</ul></div>
+            </div></main>
+<div class="footer">Cyber Digest public site · built 2026-08-08 15:35 · AU security intelligence</div>
+</body></html>

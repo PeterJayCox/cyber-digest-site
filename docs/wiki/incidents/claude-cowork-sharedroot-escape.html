@@ -1,0 +1,69 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Cowork SharedRoot Sandbox Escape (~500K macOS Users)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css"></head><body>
+<nav class="topnav"><div class="inner">
+        <a class="brand" href="index.html"><span class="dot"></span>Cyber&nbsp;Digest<small>public site</small></a>
+        <div class="navlinks"><a href="index.html" class=""><span class="t">🏠 Home</span></a><a href="stories.html" class=""><span class="t">📚 Story DB</span></a><a href="daily/" class=""><span class="t">🗓️ Daily</span></a><a href="monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a></div></div></nav><main class="container">
+            <div class="container">
+            <div class="crumb"><a href="../index.html">Home</a> · <a href="../wiki/index.html">Wiki</a> · Incidents &amp; Campaigns</div>
+            <div class="wiki-body"><div class="frontmatter">created: 2026-07-24 · updated: 2026-07-24 · type: incident · tags: [incident, ai-security, sandbox-escape, macos, anthropic, container] · confidence: high · affected_sectors: [technology] · au_impact: false</div><h1>Claude Cowork SharedRoot Sandbox Escape</h1>
+<p>A sandbox escape vulnerability in <strong>Anthropic's Claude Cowork</strong> (codenamed <strong>SharedRoot</strong>) was disclosed by <strong>Accomplish AI</strong> on July 23, 2026, affecting approximately <strong>500,000 macOS users</strong>.</p>
+<h2>Details</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Product</strong></td>
+<td>Anthropic Claude Cowork (codename SharedRoot)</td>
+</tr>
+<tr>
+<td><strong>Vulnerability</strong></td>
+<td>Sandbox escape — Linux VM container breach</td>
+</tr>
+<tr>
+<td><strong>Impact</strong></td>
+<td>Read/write anywhere on host Mac including SSH keys</td>
+</tr>
+<tr>
+<td><strong>Users Affected</strong></td>
+<td>~500,000 macOS users running local Cowork sessions</td>
+</tr>
+<tr>
+<td><strong>Disclosed by</strong></td>
+<td>Accomplish AI</td>
+</tr>
+<tr>
+<td><strong>Status</strong></td>
+<td>Patched by Anthropic</td>
+</tr>
+</tbody>
+</table>
+<h2>The Vulnerability</h2>
+<p>The flaw allowed an AI agent running inside Claude Cowork's Linux VM container to break out and access files on the <strong>host macOS system</strong> with <strong>no permission prompts</strong>. This included:</p>
+<ul>
+<li>SSH private keys</li>
+<li>Browser data</li>
+<li>All user-accessible files on the host</li>
+</ul>
+<p>No user interaction or approval was required for the escape — the AI agent could autonomously cross the container boundary.</p>
+<h2>Significance</h2>
+<p>This is one of the most significant <strong>AI agent sandbox escape</strong> incidents publicly documented. As AI coding agents and desktop automation tools become more prevalent, container isolation boundaries become critical security controls. The SharedRoot vulnerability demonstrates that current containerisation approaches for AI agents may be insufficient without additional access control layers.</p>
+<h2>Remediation</h2>
+<p>Anthropic has patched the vulnerability. Users of Claude Cowork on macOS should ensure they are running the latest patched version.</p>
+<h2>Related Pages</h2>
+<ul>
+<li><a href="hugging-face-ai-breach.html">Hugging Face Ai Breach</a> — OpenAI AI models escaped sandbox containment (related AI agent containment theme)</li>
+<li><a href="../concepts/ghostapproval.html">Ghostapproval</a> — Symlink attacks on 6 AI coding assistants (related AI agent security)</li>
+<li><a href="../concepts/friendly-fire-ai-hijacking.html">Friendly Fire Ai Hijacking</a> — AI agent hijacking during untrusted code review</li>
+</ul></div>
+            </div></main>
+<div class="footer">Cyber Digest public site · built 2026-08-08 15:35 · AU security intelligence</div>
+</body></html>

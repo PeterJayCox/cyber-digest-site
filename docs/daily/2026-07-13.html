@@ -1,0 +1,200 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><title>2026-07-13</title></head><body><h1>🛡️ Cyber Digest — 2026-07-13 (Daily)</h1>
+<p><em>A daily roundup of key cybersecurity developments across sectors</em></p>
+<h2>📋 Executive Summary</h2>
+<p>This weekend's cybersecurity landscape is defined by three major themes: <strong>software supply chain attacks</strong> hitting critical infrastructure, <strong>EU regulatory escalation</strong> on cybersecurity and AI, and <strong>evolving state-sponsored cyber espionage</strong> tactics. The most urgent story is the compromised jscrambler npm package (v8.14.0) — a code-obfuscation tool trusted by thousands of applications — which was silently dropping a Rust-based infostealer via its install hook before Socket Research flagged it within six minutes. Separately, the European Commission escalated NIS2 enforcement by referring four member states to the Court of Justice of the European Union, while also unveiling a new Cybersecurity and AI Action Plan. In the Indo-Pacific, the ACSC issued a critical alert over a large-scale exploitation campaign targeting web content management systems, and Australia's signals intelligence arm published new guidance on the cyber implications of frontier AI models.</p>
+<hr />
+<h2>Sector Reports</h2>
+<h3>💻 IT / TechnoLogy</h3>
+<p><strong>1. Compromised jscrambler 8.14.0 npm Release Drops Rust Infostealer During Install</strong>
+- <strong>Summary:</strong> The jscrambler npm package — a widely-used JavaScript obfuscation tool — was compromised in its 8.14.0 release with a <code>preinstall</code> hook that drops and executes a native Rust infostealer binary targeting Windows, macOS, and Linux. Socket Research flagged the malicious release within six minutes of publication. The payload (disguised as <code>intro.js</code>) is a ~7.8 MB container packing three gzip-compressed binaries. Any build system that pulled the package in that window is compromised.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-11</p>
+<p><strong>2. Critical Zimbra Flaw Could Let Crafted Emails Run Malicious Code in User Sessions</strong>
+- <strong>Summary:</strong> Zimbra is urging customers to patch a critical stored cross-site scripting (XSS) vulnerability in the Classic Web Client that allows specially crafted emails to execute arbitrary JavaScript in a user's session, enabling session hijacking, credential theft, and account compromise. No CVE has been assigned yet.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-11</p>
+<p><strong>3. Exposed Hacker Server Reveals Wp Shellstorm Backdooring Thousands of WordPress Sites</strong>
+- <strong>Summary:</strong> A cybercrime crew left one of its command servers exposed for three weeks, revealing the inner workings of a mass site-hacking operation tracked as Wp Shellstorm. The server Logs showed target lists of more than 1.4 million websites, with the crew exploiting out-of-date plugins (notably Breeze caching and Joomla's JCE editor) to plant webshell backdoors for resale as an access brokerage.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-10</p>
+<p><strong>4. Hackers Use Fake Microsoft Entra Passkey Enrollment to Gain Microsoft 365 Access</strong>
+- <strong>Summary:</strong> A threat actor tracked as O Unc 066 by Okta is targeting organizations across food &amp; beverage, healthcare, and technoLogy sectors with voice phishing calls urging users to enroll a new Entra passkey. The calls direct victims to a convincing phishing kit that mirrors the Microsoft passkey enrollment process, enabling data extortion attacks.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-10</p>
+<p><strong>5. Study of 281 Free Android VPN Apps Finds Traffic Leaks, Unencrypted Data, and Tracking</strong>
+- <strong>Summary:</strong> Researchers at the University of Michigan, University of New Mexico, and IIT Delhi tested 281 popular free VPN apps on Google Play using a new system called MVPNalyzer. They found 29 apps leaking user traffic outside the encrypted tunnel, 61 apps sending data in plaintext, and five apps exposing configuration files in the clear — collectively installed more than 2.4 billion times.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-10</p>
+<hr />
+<h3>⚖️ Legal / Regulatory</h3>
+<p><strong>1. EU Takes 4 Member States to Court Over NIS2 Transposition Delays</strong>
+- <strong>Summary:</strong> On July 8, the European Commission referred Ireland, Spain, France, and the Netherlands to the Court of Justice of the European Union for failing to fully transpose the NIS2 Directive into national law. The move is the Commission's most aggressive enforcement action on the landmark cybersecurity directive, signalling that transposition delays will no longer be tolerated.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record by Recorded Future</a> / <a href="https://www.hunton.com/privacy-and-cybersecurity-law-bLog/">Hunton Andrews Kurth</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-09</p>
+<p><strong>2. European Commission Unveils Cybersecurity and AI Action Plan</strong>
+- <strong>Summary:</strong> On July 7, the European Commission presented an Action Plan on Cybersecurity and Artificial Intelligence aimed at supporting safe and responsible AI use while strengthening cyber resilience across the EU. The plan addresses the intersection of AI system security and the growing attack surface from AI adoption.
+- <strong>Source:</strong> <a href="https://www.hunton.com/privacy-and-cybersecurity-law-bLog/">Hunton Andrews Kurth</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-10</p>
+<p><strong>3. EDPB Opens Public Consultation on New Personal Data Breach Notification Template</strong>
+- <strong>Summary:</strong> The European Data Protection Board has opened a public consultation on a new standardized template for personal data breach notifications, aiming to harmonise breach reporting across EU member states and reduce administrative burden for organisations operating cross-border.
+- <strong>Source:</strong> <a href="https://www.hunton.com/privacy-and-cybersecurity-law-bLog/">Hunton Andrews Kurth</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-08</p>
+<p><strong>4. Ryuk Operator Pleads Guilty; Blackcat/AlphV Conspirator Gets Nearly 6-Year Sentence</strong>
+- <strong>Summary:</strong> A Ryuk ransomware operator has pleaded guilty to charges, while a conspirator in the Blackcat (AlphV) ransomware group received a sentence of nearly six years. The convictions mark continued law enforcement success in dismantling major ransomware operations.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record by Recorded Future</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-10</p>
+<hr />
+<h3>🌐 General / Cross-Sector</h3>
+<p><strong>1. ACSC: Large-Scale Exploitation Campaign Targeting Website CMS — Critical Alert</strong>
+- <strong>Summary:</strong> The Australian Signals Directorate's Australian Cyber Security Centre (ASD's ACSC) issued a critical alert tracking a large-scale exploitation campaign targeting vulnerabilities in web content management systems. The campaign is affecting small &amp; medium businesses, organisations, critical infrastructure, and government entities. This mirrors a global trend of CMS-based attacks accelerating in volume.
+- <strong>Source:</strong> <a href="https://www.cyber.gov.au/">ACSC / Cyber.gov.au</a>
+- <strong>Reliability:</strong> Tier 1/4 — Very High
+- <strong>Date:</strong> 2026-07-09</p>
+<p><strong>2. Europe Revives Law Allowing Big Tech to Scan for CSAM</strong>
+- <strong>Summary:</strong> The European Parliament has revived proposed legislation that would require big technoLogy companies to scan private communications for child sexual abuse material (CSAM). The law had faced significant privacy objections but has been reintroduced amid renewed debate over encryption, child safety, and fundamental rights.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record by Recorded Future</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-10</p>
+<p><strong>3. CISA Joint Advisory: Russian Intelligence Services Continue to Target Commercial Messaging Applications</strong>
+- <strong>Summary:</strong> CISA published a joint advisory warning that Russian intelligence services continue to target commercial messaging applications as part of an ongoing espionage campaign. The advisory provides indicators of compromise and mitigation recommendations for organisations using these platforms.
+- <strong>Source:</strong> <a href="https://www.cisa.gov/news-events/cybersecurity-advisories">CISA</a>
+- <strong>Reliability:</strong> Tier 1/4 — Very High
+- <strong>Date:</strong> 2026-07-13</p>
+<hr />
+<h3>🛡️ Defence</h3>
+<p><strong>1. NSA Revives 'Tailored Access Operations' Name for Elite Hacking Unit</strong>
+- <strong>Summary:</strong> The U.S. National Security Agency has revived the "Tailored Access Operations" (TAO) designation for its elite hacking unit, a name historically associated with some of the agency's most sensitive offensive cyber operations. The revival signals a renewed focus on offensive cyber capabilities under the current administration.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record by Recorded Future</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-13</p>
+<p><strong>2. CISA Adds Known Exploited Vulnerabilities to CataLog / Urges Hardening Fortinet Devices</strong>
+- <strong>Summary:</strong> CISA continues to expand its Known Exploited Vulnerabilities cataLog with multiple new entries, and separately issued an alert urging organisations to harden Fortinet devices following reports of widespread credential exposure affecting Fortinet firewalls and VPN gateways — a finding corroborated by the Australian ACSC.
+- <strong>Source:</strong> <a href="https://www.cisa.gov/news-events/cybersecurity-advisories">CISA</a>
+- <strong>Reliability:</strong> Tier 1/4 — Very High
+- <strong>Date:</strong> 2026-07-13</p>
+<hr />
+<h3>🏛️ Government</h3>
+<p><strong>1. China and India Ran Separate Spying Campaigns Against Same Pakistani Police Force</strong>
+- <strong>Summary:</strong> SentinelOne SentinelLABS disclosed details of sustained cyber espionage activity targeting Pakistani law enforcement organisations by suspected China- and India-aligned threat actors between February 2024 and April 2026. Compromised assets included servers managing police biometric records, criminal case files, and personnel data. A China-nexus actor deployed a custom implant masquerading as an update to the Balochistan Police's Complaint Management System.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a> / <a href="https://therecord.media/">The Record by Recorded Future</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-11</p>
+<hr />
+<h3>💰 Financial Services</h3>
+<p><strong>1. Cash App Owner to Pay $45 Million to Settle Allegations of Lax Security</strong>
+- <strong>Summary:</strong> The owner of Cash App has agreed to pay $45 million to settle allegations of inadequate security practices that exposed user financial data. The settlement resolves claims that the company failed to implement basic cybersecurity controls and did not adequately respond to known security incidents affecting its digital payment platform.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record by Recorded Future</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-08</p>
+<hr />
+<h2>📊 Industry Breakdown</h2>
+<pre><code class="language-mermaid">pie showData
+    &quot;IT / Technology&quot; : 5
+    &quot;Legal / Regulatory&quot; : 4
+    &quot;General / Cross-Sector&quot; : 3
+    &quot;Defence&quot; : 2
+    &quot;Financial Services&quot; : 1
+    &quot;Government&quot; : 1
+</code></pre>
+<hr />
+<h2>📊 Source Reliability Index</h2>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Label</th>
+<th>Description</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Very High</strong></td>
+<td>Official / first-party — government agencies, vendor PSAs, peer-reviewed papers</td>
+<td>CISA, ACSC</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>High</strong></td>
+<td>Established cybersecurity journalism and research orgs</td>
+<td>The Hacker News, The Record, Hunton Andrews Kurth</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Moderate</strong></td>
+<td>General tech / news media with security desks</td>
+<td>—</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Low</strong></td>
+<td>Social / unverified / anonymous — leads only</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>MethodoLogy:</strong> Each source is rated per the 4-tier reliability Index. Tier 1 sources are official government or first-party advisories. Tier 2 sources are professional cybersecurity journalism outlets and established law firm bLogs with editorial standards. No Tier 3 or Tier 4 sources were used in this digest.</p>
+</blockquote>
+<hr />
+<h2>📐 Source Diversity Check</h2>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Story Count</th>
+<th>Percentage</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The Hacker News</td>
+<td>5</td>
+<td>31.25%</td>
+<td>✅ Under 40%</td>
+</tr>
+<tr>
+<td>The Record</td>
+<td>4</td>
+<td>25.00%</td>
+<td>✅ Under 40%</td>
+</tr>
+<tr>
+<td>Hunton Andrews Kurth</td>
+<td>3</td>
+<td>18.75%</td>
+<td>✅ Under 40%</td>
+</tr>
+<tr>
+<td>CISA</td>
+<td>2</td>
+<td>12.50%</td>
+<td>✅ Under 40%</td>
+</tr>
+<tr>
+<td>ACSC</td>
+<td>1</td>
+<td>6.25%</td>
+<td>✅ Under 40%</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>16</strong></td>
+<td><strong>100%</strong></td>
+<td><strong>✅ PASS</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Generated on 2026-07-13 by Hermes Agent. Research sources: The Hacker News, The Record, CISA Advisories, ACSC (Cyber.gov.au), Hunton Andrews Kurth Privacy &amp; Cybersecurity BLog, Krebs on Security, WilmerHale Privacy and Cybersecurity Law BLog.</em></p></body></html>

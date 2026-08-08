@@ -1,0 +1,70 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GhostApproval</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css"></head><body>
+<nav class="topnav"><div class="inner">
+        <a class="brand" href="index.html"><span class="dot"></span>Cyber&nbsp;Digest<small>public site</small></a>
+        <div class="navlinks"><a href="index.html" class=""><span class="t">🏠 Home</span></a><a href="stories.html" class=""><span class="t">📚 Story DB</span></a><a href="daily/" class=""><span class="t">🗓️ Daily</span></a><a href="monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a></div></div></nav><main class="container">
+            <div class="container">
+            <div class="crumb"><a href="../index.html">Home</a> · <a href="../wiki/index.html">Wiki</a> · Concepts &amp; Frameworks</div>
+            <div class="wiki-body"><div class="frontmatter">created: 2026-07-11 · updated: 2026-07-11 · type: concept · tags: [technique, supply-chain] · confidence: high · affected_sectors: [technology] · au_impact: false</div><h1>GhostApproval</h1>
+<p>GhostApproval is a symlink-based attack technique disclosed by Wiz affecting six major AI coding assistants. A malicious repository uses unverified symlinks so a harmless-looking approval-file write lands on a sensitive system file instead of the intended location.</p>
+<h2>Affected Tools</h2>
+<table>
+<thead>
+<tr>
+<th>Product</th>
+<th>Vendor</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Amazon Q Developer</td>
+<td>Amazon</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>Claude Code</td>
+<td>Anthropic</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>Augment</td>
+<td>Augment</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>Cursor</td>
+<td>Cursor</td>
+<td>Vulnerable at disclosure</td>
+</tr>
+<tr>
+<td>Google Antigravity</td>
+<td>Google</td>
+<td>Vulnerable at disclosure</td>
+</tr>
+<tr>
+<td>Windsurf</td>
+<td>Windsurf</td>
+<td>Vulnerable at disclosure</td>
+</tr>
+</tbody>
+</table>
+<h2>Technical Detail</h2>
+<ul>
+<li>Malicious repos use <strong>unverified symbolic links</strong></li>
+<li>When an AI coding assistant writes to what appears to be a harmless approval file, the symlink redirects the write to a <strong>sensitive system file</strong></li>
+<li>Three of the six affected vendors shipped fixes; three remained unpatched at disclosure <span class="fn">(raw/digests/Cyber-Digest-2026-07-10)</span></li>
+</ul>
+<h2>Related Pages</h2>
+<ul>
+<li><a href="hallusquatting.html">Hallusquatting</a> — AI coding assistant supply chain attack (different vector)</li>
+<li><a href="mcp-tool-poisoning.html">Mcp Tool Poisoning</a> — MCP tool description attacks</li>
+<li><a href="uk-cyber-shield.html">Uk Cyber Shield</a> — Defensive AI context</li>
+</ul></div>
+            </div></main>
+<div class="footer">Cyber Digest public site · built 2026-08-08 15:35 · AU security intelligence</div>
+</body></html>

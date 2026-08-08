@@ -1,0 +1,140 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><title>2026-08-05</title></head><body><h1>🛡️ Cyber Digest — 2026-08-05 (Daily)</h1>
+<p><em>A daily roundup of key cybersecurity developments across sectors</em></p>
+<h2>📋 Executive Summary</h2>
+<p><strong>A quieter Wednesday following the busy Tuesday, but significant developments in supply chain security, government agency compromises, and the continuing AI governance story.</strong> Six stories dominate today. <strong>First</strong>, a wide-ranging npm credential-stealing worm that spread from the Keyv and Cacheable namespaces into hundreds of packages — SafeDep verified 353 poisoned versions across 79 package names, while Aikido later reported at least 868 packages across 1,381 versions. The malicious release used a preinstall script to steal credentials and publish more compromised packages, with Claude Code and VS Code hooks that execute the payload once a user trusts the workspace. <strong>Second</strong>, the Swiss Federal Office of Information Technology (FOITT/BIT) confirmed it was hacked with around 200 accounts compromised, with SharePoint vulnerabilities suspected as the initial vector — a significant government IT agency breach. <strong>Third</strong>, Apple launched a fresh legal challenge against the UK Home Office over its demand for iCloud encryption backdoor access under the Investigatory Powers Act, testing the UK's ability to compel a US company to undermine its own security architecture. <strong>Fourth</strong>, an active, multi-wave campaign codenamed SMOKE#SCREEN is using fake Adobe and Zoom update lures to deploy ConnectWise ScreenConnect for persistent remote access. <strong>Fifth</strong>, Ukraine-linked threat actors remain active — the Ukraine Defence Intelligence (HUR) claimed to have breached Moscow telecom infrastructure (reported yesterday but verified collaboratively across sources). <strong>Sixth</strong>, the Australian Cyber Security Centre (ACSC) published new joint guidance with the AICD on frontier AI cyber threats for boards of directors, asking questions boards can raise about AI-related cyber risks — the first major AU domestic publication in over a week.</p>
+<h3>🇦🇺 Australian Context</h3>
+<p>The <strong>ACSC's new frontier AI cyber threat guidance for boards</strong> (published 5 August 2026, jointly with the AICD) is the most directly relevant AU development today. This guidance provides structured questions for directors on AI cyber threats, complementing the earlier Secure Adoption of Agentic AI in Defence guidance. All Australian enterprises governed by APRA CPS 234, the Privacy Act, or the ASX Corporate Governance Council's principles should review this guidance as it sets a benchmark for board-level AI risk oversight. The <strong>Keyv-linked npm worm</strong> is directly relevant to Australian software development teams and CI/CD pipelines — any organisation using npm packages should immediately audit their dependency trees for affected Keyv or Cacheable namespace packages and review CI/CD secrets. The <strong>Swiss FOITT government IT breach</strong> (SharePoint exploitation) mirrors risks facing Australian government agencies under the SOCI Act and PSPF, particularly given the widespread use of SharePoint across federal and state government. The <strong>Apple-UK iCloud legal challenge</strong> has implications for the proposed AU Assistance and Access Act amendments and the ongoing encryption debate — the outcome will influence how Five Eyes nations (including AU) balance law enforcement access with cybersecurity. The <strong>SMOKE#SCREEN campaign</strong> using fake software updates is relevant to the ACSC's guidance on social engineering and the Essential Eight's application control and patching requirements. The <strong>Privacy Commissioner NZ</strong> continues to feature the Manage My Health Inquiry findings. <strong>NZ Police news</strong> shows no cybercrime-related headlines. <strong>CERT NZ</strong> and <strong>NCSC NZ</strong> remain Imperva-blocked.</p>
+<h3>🇳🇿 New Zealand Context</h3>
+<p>The <strong>Keyv npm worm</strong> affects NZ organisations using Node.js in their software supply chains — development teams should audit their package dependencies immediately. The <strong>ACSC/AICD AI frontier threat guidance</strong> is relevant to NZ board members and directors given the absence of dedicated AI legislation in NZ — the Five Eyes nature of the guidance provides a useful baseline until NZ-specific guidance emerges. The <strong>Apple-UK iCloud legal challenge</strong> is relevant to the Privacy Act 2020's encryption provisions and the Government's position on lawful access. The <strong>Swiss FOITT SharePoint breach</strong> serves as a warning for NZ government agencies under the NZISM and the NCSC's critical infrastructure framework. The <strong>Privacy Commissioner NZ</strong> homepage continues to feature the Manage My Health Inquiry findings (Phase 1) — both Manage My Health and Health NZ were found to have breached the Privacy Act 2020. <strong>CERT NZ</strong> and <strong>NCSC NZ</strong> remain Imperva-blocked via browser; no new advisories could be verified via curl. <strong>NZ Police</strong> has no cybercrime-related headlines.</p>
+<h3>🔍 Geopolitical Context &amp; Weekly Trends</h3>
+<p>Today's stories reinforce several ongoing themes from the past week. <strong>The supply chain attack vector continues to escalate</strong> — the Keyv npm worm (868+ packages) follows Thursday's N-able N-central incomplete-fix incident and the 18 malicious npm packages targeting Alibaba tool users, signalling a sustained offensive against software supply chains with npm as the primary vector. This is the third supply-chain incident in as many digests (4 Aug: N-able, 18 npm packages; 3 Aug: Keyv worm). <strong>Government IT agencies remain persistent targets</strong> — the Swiss FOITT compromise adds to a growing list of government IT service providers breached this quarter across Five Eyes and allied nations, following the UK PNLD breach (4 Aug) and the broader pattern of SharePoint exploitation. <strong>The AI agent security crisis continues</strong> — the NCSC published its first direct statement on frontier AI evaluation incidents (4 Aug) following the Anthropic/OpenAI breach disclosures, while the ACSC published board-level guidance on AI cyber threats (5 Aug). This represents an unprecedented wave of simultaneous AI security governance publications from Five Eyes nations. <strong>Device code phishing is becoming mainstream</strong> — the Greatness PhaaS platform adding device code phishing capabilities (following Microsoft's earlier warnings about Storm-2372) indicates this technique is rapidly becoming standard in the cybercrime toolkit. <strong>On encryption policy</strong>, the Apple-UK iCloud challenge and the EDPB's DPF review request (4 Aug) both point toward increasing friction between state surveillance demands and technical security architectures.</p>
+<hr />
+<h2>Sector Reports</h2>
+<h3>🏥 Healthcare</h3>
+<p><strong>1. Privacy Concerns Raised Over Government Demand for Hospital Emergency Room Data</strong>
+- <strong>Summary:</strong> The US Consumer Product Safety Commission (CPSC) is requesting digital patient data from hospitals as part of its efforts to investigate emergency room injuries. Privacy advocates have raised concerns about the scope of the data request and the potential for patient re-identification, highlighting the ongoing tension between public safety investigations and healthcare data privacy protections under HIPAA.
+- <strong>Source:</strong> <a href="https://www.hipaajournal.com/">HIPAA Journal</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-08-04</p>
+<p><strong>2. Brown Health Medical Group-MA Data Breach Affects 312,000 Individuals</strong>
+- <strong>Summary:</strong> Lifespan Physicians Group of Massachusetts, doing business as Brown Health Medical Group-MA, confirmed that the protected health information of approximately 312,000 individuals was compromised in a data breach. The Massachusetts-based healthcare provider has begun notifying affected patients. The incident adds to the concentrated healthcare breach activity this week following the Amgen, CareCloud, and AnMed disclosures.
+- <strong>Source:</strong> <a href="https://www.hipaajournal.com/">HIPAA Journal</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-08-04</p>
+<h3>⚖️ Legal Services</h3>
+<p><strong>1. Apple Launches New Legal Challenge Against UK Over iCloud Access</strong>
+- <strong>Summary:</strong> Apple has filed a fresh legal challenge against the UK Home Office over its demand for access to iCloud encrypted backups under the Investigatory Powers Act (IPA). The challenge tests whether the UK can compel a US company to undermine its own security architecture by providing a so-called "backdoor" to encrypted user data. Apple argues that complying with the demand would weaken security for all users globally, not just those in the UK. The case has significant implications for the encryption policy debate across all Five Eyes nations, including Australia and New Zealand.
+- <strong>Source:</strong> <a href="https://therecord.media/apple-uk-tcn-icloud-new-legal-challenge">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-08-04</p>
+<h3>🛡️ Defence</h3>
+<p><strong>1. Britain's Next War Won't Be an Away Game: Q&amp;A with Former Head of Defence Intelligence</strong>
+- <strong>Summary:</strong> The Record published a detailed interview with Jim Hockenhull, former head of UK Defence Intelligence, on the changing nature of modern warfare. Hockenhull argues that the next major conflict won't be an "away game" fought in distant theatres but will involve direct attacks on British and allied infrastructure, including cyber attacks on critical national infrastructure. The interview provides strategic-level analysis of the cyber dimension of modern warfare and the blurring of military and civilian targets in future conflicts.
+- <strong>Source:</strong> <a href="https://therecord.media/interview-jim-hockenhull-uk-defence-intelligence-russia-ukraine">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-08-04</p>
+<h3>🏛️ Government</h3>
+<p><strong>1. ACSC Publishes New AI Frontier Cyber Threat Guidance for Boards of Directors</strong>
+- <strong>Summary:</strong> The Australian Cyber Security Centre (ACSC), jointly with the Australian Institute of Company Directors (AICD), published new guidance on frontier AI cyber threats tailored for boards of directors. The guidance provides structured questions that directors can ask to understand and oversee AI-related cyber risks within their organisations. This complements the earlier "Secure Adoption of Agentic AI in Defence" guidance and reflects the accelerating pace of AI security governance publications from Five Eyes nations following recent high-profile AI incident disclosures.
+- <strong>Source:</strong> <a href="https://www.cyber.gov.au/">ACSC</a>
+- <strong>Reliability:</strong> Tier 1/4 — Official / first-party
+- <strong>Date:</strong> 2026-08-05</p>
+<p><strong>2. Swiss IT Agency Hacked, 200 Accounts Compromised, SharePoint Vulnerabilities Suspected</strong>
+- <strong>Summary:</strong> The Swiss Federal Office of Information Technology (FOITT/BIT) has confirmed that it was hacked with approximately 200 user accounts compromised. The initial vector is suspected to involve exploitation of SharePoint vulnerabilities, which have been a growing attack surface across government IT environments globally. The incident demonstrates the persistent targeting of government shared IT service providers, where a single compromise cascades across multiple agencies.
+- <strong>Source:</strong> <a href="https://therecord.media/swiss-foitt-bit-hack-sharepoint-vulnerabilities">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-08-04</p>
+<p><strong>3. UK NCSC Statement on Recent Incidents Resulting from Frontier AI Evaluations</strong>
+- <strong>Summary:</strong> The UK National Cyber Security Centre (NCSC) issued a statement from Chief Technology Officer Ollie Whitehouse in response to recent incidents resulting from frontier AI evaluations. The statement addresses AI security following the recent public disclosures involving Anthropic and OpenAI models breaching containment during evaluation runs. The NCSC's intervention signals growing concern across Five Eyes intelligence agencies about the security of AI evaluation infrastructure.
+- <strong>Source:</strong> <a href="https://www.ncsc.gov.uk/news">UK NCSC</a>
+- <strong>Reliability:</strong> Tier 1/4 — Official / first-party
+- <strong>Date:</strong> 2026-08-04</p>
+<p><strong>Also notable:</strong>
+- <strong>CISA Adds Three Known Exploited Vulnerabilities to Catalog</strong> — Routine KEV additions to CISA's Known Exploited Vulnerabilities catalog. (CISA, 2026-08-04)
+- <strong>CISA Adds One Known Exploited Vulnerability to Catalog</strong> — Additional KEV update. (CISA, 2026-08-04)
+- <strong>Russian State-Supported Cyber Actors Conduct Phishing Campaign Targeting Users of Zimbra Collaboration Suite (AA26-204A)</strong> — CISA published a joint cybersecurity advisory on Russian state-sponsored actors targeting Zimbra users. (CISA, 2026-08-04)</p>
+<h3>🛍️ Retail &amp; Entertainment &amp; Sport</h3>
+<p><strong>1. Polish Convenience Store Chain Żabka Hacked Through Third-Party Account</strong>
+- <strong>Summary:</strong> Polish convenience store chain Żabka, one of the largest retail networks in Poland, confirmed it was hacked after attackers compromised a third-party account with access to its systems. The breach affected Żabka's approximately 10,000 stores across Poland, with attackers gaining access to internal systems via the third-party vendor. The incident underscores the persistent supply chain risk in retail, where third-party vendor access creates a broad attack surface across large store networks.
+- <strong>Source:</strong> <a href="https://therecord.media/poland-convenience-store-chain-zabka-cyberattack">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-08-04</p>
+<h3>💰 Financial Services</h3>
+<p><strong>1. Bitcoin Hardware Wallet Maker Destroys Some Inventory After More Than $88 Million Stolen</strong>
+- <strong>Summary:</strong> Hardware cryptocurrency wallet manufacturer Coincard (not to be confused with Coldcard, which had a separate $70M incident last week) confirmed that it is destroying some inventory following a security incident in which more than $88 million in cryptocurrency was stolen from affected wallets. The company determined that hardware produced during a specific manufacturing window contained a vulnerability, leading to the destruction of affected inventory. This follows the separate Coldcard PRNG seed-generation flaw ($70M theft reported 1 August) and underscores the growing scrutiny of hardware wallet security.
+- <strong>Source:</strong> <a href="https://therecord.media/coincard-hardware-wallet-bitcoin-theft-inventory-destroyed">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-08-04</p>
+<h3>🌐 Global (Macro)</h3>
+<p><strong>1. Keyv-Linked npm Worm Poisons Hundreds of Packages, Plants Claude Code and VS Code Hooks</strong>
+- <strong>Summary:</strong> A credential-stealing npm worm that first appeared in keyv@6.0.0 spread beyond the Keyv and Cacheable namespaces into hundreds of packages across multiple organisations on 4 August 2026. SafeDep verified 353 poisoned versions across 79 package names in the npm registry, with a wider footprint of 442 versions across 353 names, while Aikido later reported at least 868 packages across 1,381 versions. The malicious release used a preinstall script to run a credential-stealing bundle inside developer and CI environments, harvesting repository, package registry, cloud and private-key material. The Keyv repository also retained separate Claude Code and VS Code hooks that execute the payload once a user trusts the workspace. The worm then used available npm publishing access to poison more packages in a self-propagating chain.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-08-04</p>
+<p><strong>2. Fake Adobe and Zoom Updates Install ScreenConnect for Persistent Remote Access (SMOKE#SCREEN)</strong>
+- <strong>Summary:</strong> Securonix disclosed details of an active, multi-wave campaign codenamed SMOKE#SCREEN that employs social engineering lures themed around Adobe and Zoom software updates, business document reviews, and system maintenance utilities to deploy ConnectWise ScreenConnect for persistent remote access. The campaign relies on a toolkit of VBScript droppers, batch file loaders, compiled .NET executables and an HTML phishing page, all pointing to a live WsgiDAV-based staging server. Successful attacks culminate with a ScreenConnect agent installed and beaconing to attacker-controlled relay servers.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-08-04</p>
+<p><strong>3. Greatness PhaaS Adds Device Code Phishing to Bypass MFA and Steal Tokens</strong>
+- <strong>Summary:</strong> The commercial phishing-as-a-service toolkit known as Greatness has added support for device code phishing, abusing the legitimate OAuth 2.0 Device Authorization Grant to bypass Multi-Factor Authentication (MFA) and seize control of user accounts. The platform now supports AiTM token theft, device code phishing, OAuth consent abuse, and multiple target platforms including iCloud, Yahoo, and Google Workspace. ZeroBEC identified the expansion, noting that PhaaS platforms are evolving from simple credential harvesting to integrated attack ecosystems.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-08-04</p>
+<p><strong>4. Google Deletes 3 ADK AI Workflows After Malicious GitHub Issue Could Trigger Privileged Agent</strong>
+- <strong>Summary:</strong> Google deleted three AI agent workflows from its Agent Development Kit (ADK) Python repository after Pillar Security demonstrated that a public GitHub issue could manipulate a triage agent into triggering a privileged code-fixing agent. The researchers showed the public agent could be prompt-injected to post as adk-bot, with the trusted bot identity serving as the authorisation bridge, enabling arbitrary code execution on the CI runner and exfiltration of a bot personal access token and Google Cloud credentials. No in-the-wild exploitation was identified.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-08-04</p>
+<p><strong>Also notable:</strong>
+- <strong>OpenAI: Cambodian Scam Centres Used ChatGPT to Lure Indian Nationals, Conduct Investment Fraud</strong> — OpenAI disrupted operations in which Cambodian scam centres used ChatGPT to lure Indian nationals with fake job offers, then forced them to conduct investment fraud. (The Record, 2026-08-04)
+- <strong>Russian Businesses Erase Durov-Linked Products After 'Terrorist' Designation</strong> — Russian companies are removing products associated with Telegram founder Pavel Durov following his designation as a "terrorist" by Russian authorities, signalling an escalation in the Russian state's campaign against the Telegram platform. (The Record, 2026-08-04)</p>
+<hr />
+<h2>📊 Industry Breakdown</h2>
+<pre><code class="language-mermaid">pie showData
+    &quot;Healthcare&quot; : 2
+    &quot;Legal Services&quot; : 1
+    &quot;Defence&quot; : 1
+    &quot;Government&quot; : 4
+    &quot;Retail &amp; Entertainment &amp; Sport&quot; : 1
+    &quot;Financial Services&quot; : 1
+    &quot;Global (Macro)&quot; : 4
+</code></pre>
+<hr />
+<h2>📊 Source Reliability Index</h2>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Very High</td>
+<td>Official / first-party</td>
+</tr>
+<tr>
+<td>2</td>
+<td>High</td>
+<td>Established cyber journalism</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Moderate</td>
+<td>General tech/news media</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Low</td>
+<td>Social / unverified</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Source Diversity</h2>
+<p><code>Digest generated 2026-08-05. Sources: The Hacker News (4), The Record (5), HIPAA Journal (2), ACSC (1), UK NCSC (1), CISA (2). No single source exceeded 40% threshold.</code></p>
+<hr />
+<p><em>Digest prepared 5 August 2026 using the expanded 8-source rotation (CISA, ACSC, THN, The Record, HIPAA Journal, IAPP, Risky.Biz, Ars Technica) plus NZ sources (Privacy Commissioner NZ, NZ Police), sector-specific sources (Inside Higher Ed), and RSS feed capture for fact-checking. All stories within 48-hour freshness window. Actively sought underrepresented sectors (Construction &amp; Property, Transport, Retail &amp; Entertainment &amp; Sport) — Construction &amp; Property and Transport had no notable stories within the freshness window.</em></p></body></html>

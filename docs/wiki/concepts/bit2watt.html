@@ -1,0 +1,70 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bit2Watt — GPU Power Grid Manipulation Attack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css"></head><body>
+<nav class="topnav"><div class="inner">
+        <a class="brand" href="index.html"><span class="dot"></span>Cyber&nbsp;Digest<small>public site</small></a>
+        <div class="navlinks"><a href="index.html" class=""><span class="t">🏠 Home</span></a><a href="stories.html" class=""><span class="t">📚 Story DB</span></a><a href="daily/" class=""><span class="t">🗓️ Daily</span></a><a href="monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a></div></div></nav><main class="container">
+            <div class="container">
+            <div class="crumb"><a href="../index.html">Home</a> · <a href="../wiki/index.html">Wiki</a> · Concepts &amp; Frameworks</div>
+            <div class="wiki-body"><div class="frontmatter">created: 2026-07-22 · updated: 2026-07-22 · type: concept · tags: [attack-technique, cyber-physical, energy, ot-ics] · confidence: medium · affected_sectors: [energy, technology] · au_impact: true</div><h1>Bit2Watt — GPU Power Grid Manipulation Attack</h1>
+<p>Bit2Watt is a <strong>novel indirect cyber-physical attack technique</strong> demonstrated by researchers at Zhejiang University. An attacker with ordinary GPU compute access (as a cloud tenant) can manipulate data centre power draw to destabilise the electrical grid — without requiring any exploit, system compromise, or traditional cyberattack.</p>
+<h2>Mechanism</h2>
+<ul>
+<li>A cloud tenant provisions <strong>GPU compute instances</strong> (e.g. for AI/ML workloads)</li>
+<li>By oscillating GPU utilisation (spinning workloads up and down in coordinated patterns), the attacker creates <strong>power draw fluctuations</strong> in the data centre</li>
+<li>These fluctuations propagate back through the grid connection, introducing <strong>frequency instability</strong></li>
+<li>At sufficient scale, the oscillations can <strong>trigger protective disconnections</strong> or <strong>cascade into wider grid instability</strong></li>
+</ul>
+<h2>Key Characteristics</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>No exploit required</strong></td>
+<td>Relies on legitimate GPU usage, not a vulnerability</td>
+</tr>
+<tr>
+<td><strong>No system compromise</strong></td>
+<td>The attacker's cloud account is used as intended</td>
+</tr>
+<tr>
+<td><strong>Indirect</strong></td>
+<td>The target is the electrical grid, not the data centre operator</td>
+</tr>
+<tr>
+<td><strong>Scalable</strong></td>
+<td>Multiple cloud accounts + GPU instances amplify the effect</td>
+</tr>
+<tr>
+<td><strong>Novel class</strong></td>
+<td>No MITRE ATT&amp;CK ID fits — represents a new impact technique</td>
+</tr>
+</tbody>
+</table>
+<h2>Significance</h2>
+<p>Bit2Watt represents a <strong>new class of cyber-physical attack</strong> — indirect grid manipulation via legitimate cloud compute resource abuse. Traditional grid security focuses on OT/ICS layer attacks on SCADA systems, substations, and generation control. Bit2Watt bypasses all of that by attacking the grid from the <strong>demand side</strong> through data centre power consumption.</p>
+<h2>Mitigation Challenges</h2>
+<ul>
+<li>Cloud providers cannot easily distinguish Bit2Watt-style workloads from legitimate batch AI training</li>
+<li>Data centre operators with on-site generation or battery storage can buffer fluctuations</li>
+<li>Grid operators may need to implement <strong>demand-side anomaly detection</strong> for data centre feeds</li>
+<li>Regulatory implications for cloud resource allocation in regions with grid stability concerns</li>
+</ul>
+<h2>Australian Significance</h2>
+<p>Australian data centres (particularly in Sydney, Melbourne, and Canberra) are concentrated in regions where the grid is already under strain from renewable transition and increased electrification. The <strong>Australian Energy Market Operator (AEMO)</strong> should evaluate whether existing frequency control ancillary services (FCAS) markets can compensate for this style of demand-side manipulation. Organisations operating AI/ML training workloads in Australian cloud regions should review their resource utilisation patterns against known Bit2Watt indicators. Au Impact</p>
+<h2>Related Pages</h2>
+<ul>
+<li><a href="../incidents/cisa-acsc-russian-network-devices.html">Cisa Acsc Russian Network Devices</a> — Joint advisory on Russian network device targeting (another grid-relevant threat)</li>
+<li><a href="../entities/sandworm.html">Sandworm</a> — Russian GRU APT known for targeting Ukrainian power grid (different vector)</li>
+</ul></div>
+            </div></main>
+<div class="footer">Cyber Digest public site · built 2026-08-08 15:35 · AU security intelligence</div>
+</body></html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CylindricalCanine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css"></head><body>
+<nav class="topnav"><div class="inner">
+        <a class="brand" href="index.html"><span class="dot"></span>Cyber&nbsp;Digest<small>public site</small></a>
+        <div class="navlinks"><a href="index.html" class=""><span class="t">🏠 Home</span></a><a href="stories.html" class=""><span class="t">📚 Story DB</span></a><a href="daily/" class=""><span class="t">🗓️ Daily</span></a><a href="monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a></div></div></nav><main class="container">
+            <div class="container">
+            <div class="crumb"><a href="../index.html">Home</a> · <a href="../wiki/index.html">Wiki</a> · Entities &amp; Threat Actors</div>
+            <div class="wiki-body"><div class="frontmatter">created: 2026-07-18 · updated: 2026-07-18 · type: entity · tags: [apt-group, cybercrime-group, supply-chain] · confidence: medium · affected_sectors: [technology, sector-government] · au_impact: false</div><h1>CylindricalCanine</h1>
+<p>CylindricalCanine is a subgroup of the Chinese cybercrime group <strong>GoldenEyeDog (APT-Q-27)</strong>. The subgroup was identified by <strong>Expel researchers</strong> in July 2026 as the perpetrator of the <strong>April 2026 DigiCert security incident</strong>.</p>
+<h2>Attribution</h2>
+<ul>
+<li><strong>Parent group:</strong> GoldenEyeDog (APT-Q-27) — a Chinese cybercrime group</li>
+<li><strong>Identified by:</strong> Expel researchers (July 2026) <span class="fn">(raw/digests/Cyber-Digest-2026-07-18)</span></li>
+<li><strong>Confidence:</strong> Medium — attribution is based on a single research report (Tier 2 source)</li>
+</ul>
+<h2>Modus Operandi</h2>
+<ul>
+<li>Used a <strong>modified Gh0st RAT</strong> (remote access trojan) to access a DigiCert support member's device</li>
+<li>Stole <strong>code-signing certificates</strong> intended for DigiCert customers</li>
+<li>The operation targeted a Certificate Authority (CA) to compromise the software supply chain downstream of the CA itself</li>
+</ul>
+<h2>Significance</h2>
+<p>Compromising a Certificate Authority and stealing code-signing certificates allows threat actors to sign malicious code with trusted certificates, bypassing code integrity checks. This is a <strong>supply chain attack at the trust infrastructure layer</strong>.</p>
+<h2>Related Pages</h2>
+<ul>
+<li><a href="../incidents/digicert-breach.html">Digicert Breach</a> — The April 2026 security incident attributed to this group</li>
+<li><a href="blackcat-alphv.html">Blackcat Alphv</a> — Another group with code-signing certificate theft capabilities</li>
+<li><a href="wp-shellstorm.html">Wp Shellstorm</a> — Webshell supply chain operation</li>
+</ul></div>
+            </div></main>
+<div class="footer">Cyber Digest public site · built 2026-08-08 15:35 · AU security intelligence</div>
+</body></html>

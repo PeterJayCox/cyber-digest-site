@@ -1,0 +1,35 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SCMBANKER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css"></head><body>
+<nav class="topnav"><div class="inner">
+        <a class="brand" href="index.html"><span class="dot"></span>Cyber&nbsp;Digest<small>public site</small></a>
+        <div class="navlinks"><a href="index.html" class=""><span class="t">🏠 Home</span></a><a href="stories.html" class=""><span class="t">📚 Story DB</span></a><a href="daily/" class=""><span class="t">🗓️ Daily</span></a><a href="monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a></div></div></nav><main class="container">
+            <div class="container">
+            <div class="crumb"><a href="../index.html">Home</a> · <a href="../wiki/index.html">Wiki</a> · Entities &amp; Threat Actors</div>
+            <div class="wiki-body"><div class="frontmatter">created: 2026-07-11 · updated: 2026-07-11 · type: entity · tags: [stealer, rat, cybercrime-group] · confidence: medium · affected_sectors: [sector-finance, technology] · au_impact: false</div><h1>SCMBANKER</h1>
+<p>SCMBANKER is a banking trojan uncovered by Elastic Security Labs in a campaign tracked as <strong>REF6045</strong>. The campaign targets Mexican banks, fintech firms, and cryptocurrency exchanges using <strong>ClickFix</strong> lures — fake CAPTCHA pages that trick victims into running PowerShell commands.</p>
+<h2>Infection Chain</h2>
+<ol>
+<li>Victim visits a compromised or malicious site</li>
+<li>Fake CAPTCHA page displayed ("ClickFix" lure) <span class="fn">(raw/digests/Cyber-Digest-2026-07-09)</span></li>
+<li>Victim instructed to copy and run a PowerShell command to "verify they are human"</li>
+<li>PowerShell command downloads and executes the SCMBANKER toolkit</li>
+</ol>
+<h2>Capabilities</h2>
+<ul>
+<li><strong>Screen locking:</strong> Prevents victim from accessing their machine</li>
+<li><strong>Browser redirection:</strong> Hijacks banking sessions</li>
+<li><strong>RAT deployment:</strong> Installs remote access tools for full account takeover</li>
+<li><strong>Multi-target:</strong> Targets Mexican banks, fintech firms, and crypto exchanges</li>
+</ul>
+<h2>Related Pages</h2>
+<ul>
+<li><a href="redwing-maas.html">Redwing Maas</a> — Android-focused banking trojan (different platform)</li>
+<li><a href="o-unc-066.html">O Unc 066</a> — Vishing-based credential theft (different technique, same goal)</li>
+</ul></div>
+            </div></main>
+<div class="footer">Cyber Digest public site · built 2026-08-08 15:35 · AU security intelligence</div>
+</body></html>

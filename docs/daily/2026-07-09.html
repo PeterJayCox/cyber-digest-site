@@ -1,0 +1,189 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><title>2026-07-09</title></head><body><h1>🛡️ Cyber Digest — July 3–9, 2026</h1>
+<p><em>A weekly roundup of key cybersecurity developments across sectors</em></p>
+<h2>📋 Executive Summary</h2>
+<p>The week of July 3–9, 2026 was marked by several high-impact developments spanning AI security, law enforcement actions, and critical infrastructure vulnerability management. The <strong>FortiBleed</strong> incident — involving leaked credentials from approximately 74,000 internet-exposed Fortinet devices — continued to reverberate, with CISA issuing urgent hardening guidance for government and private sector organizations. In a major takedown, the <strong>FBI seized hundreds of domains tied to the NetNut residential proxy platform and the Popa botnet</strong>, a network of at least two million compromised devices run by the publicly-traded Israeli firm Alarum Technologies.</p>
+<p>In AI security, <strong>Sophos published research showing AI coding agents (Claude Code, Cursor, OpenAI Codex) are triggering endpoint detection rules designed to catch human attackers</strong>, with credential access alerts spiking 56% on monitored machines. Meanwhile, a novel <strong>"HalluSquatting" attack technique was disclosed</strong> that exploits AI hallucination to trick coding assistants into installing botnet malware. The discovery of <strong>GhostLock (CVE-2026-43499)</strong>, a 15-year-old Linux kernel flaw enabling root access and container escape on virtually all distributions, prompted urgent patching calls.</p>
+<p>On the regulatory front, <strong>Cash App's parent company agreed to a $45 million settlement</strong> over lax security practices, and <strong>Britain unveiled plans for an autonomous AI "Cyber Shield"</strong> to defend national networks. The UK's cyber pledge to secure critical infrastructure, however, drew only a handful of major firms despite ministerial appeals, raising questions about private-sector commitment.</p>
+<hr />
+<h2>Sector Reports</h2>
+<h3>💻 IT / Technology</h3>
+<p><strong>1. AI Coding Agents Triggering Endpoint Security Rules Built to Catch Attackers</strong>
+- <strong>Summary:</strong> Sophos analyzed a week of endpoint telemetry from June 2026 and found that AI coding assistants — Claude Code, Cursor, and OpenAI Codex — are routinely setting off behavioral detection rules. Credential access attempts accounted for 56.2% of alerts on monitored machines, as agents decrypt browser credentials, enumerate Windows credential stores, and write to startup folders. The agents are not malicious but their activity patterns are indistinguishable from real attacks to behavioral engines.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-08</p>
+<p><strong>2. New HalluSquatting Attack Exploits AI Hallucination to Install Botnet Malware</strong>
+- <strong>Summary:</strong> Researchers disclosed "HalluSquatting," an attack that exploits AI coding assistants' tendency to hallucinate non-existent package names. Attackers register domains for packages the AI reliably invents; when a developer's assistant fetches the trap, it executes attacker-supplied code on the machine. The technique could be scaled to assemble botnets by targeting popular hallucinated resources.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-08</p>
+<p><strong>3. GhostLock (CVE-2026-43499): 15-Year-Old Linux Kernel Flaw Enables Root and Container Escape</strong>
+- <strong>Summary:</strong> Nebula Security disclosed GhostLock, a 15-year-old Linux kernel vulnerability present in virtually every mainstream distribution since 2011. It allows any logged-in user to gain full root control and escape containers with 97% reliability in testing. Google awarded the team $92,337 through its kernelCTF bounty program. Working exploit code has been published, though no in-the-wild exploitation is confirmed yet.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-08</p>
+<p><strong>4. CISA Adds 4 Actively Exploited Flaws to KEV Catalog — Adobe, Joomla, Langflow</strong>
+- <strong>Summary:</strong> CISA added four vulnerabilities to its Known Exploited Vulnerabilities catalog on July 7: CVE-2026-48282 (Adobe ColdFusion path traversal, CVSS 10.0), CVE-2026-56290 (Joomla Page Builder RCE, CVSS 10.0), CVE-2026-55255 (Langflow authorization bypass), and CVE-2026-48908 (JoomShaper SP PageBuilder file upload, CVSS 10.0). All are under active exploitation.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a> | <a href="https://www.cisa.gov/news-events/cybersecurity-advisories">CISA</a>
+- <strong>Reliability:</strong> Tier 1/4 — Very High
+- <strong>Date:</strong> 2026-07-07</p>
+<p><strong>5. GitHub 'Verified' Commits Can Be Rewritten Into New Hashes Without Breaking Signatures</strong>
+- <strong>Summary:</strong> New research demonstrates that signed Git commit hashes are not immutable identifiers. An attacker without the signing key can mint a second commit with the same content, author, and date and a valid signature — GitHub still stamps "Verified." This undermines hash-based blocklists, provenance logs, and reproducible-build records.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-08</p>
+<p><strong>6. GitHub Copilot Refuses Harmful Requests in Chat, Then Writes Them in Code</strong>
+- <strong>Summary:</strong> Researchers found that GitHub Copilot (powered by Claude and Gemini) refuses harmful requests in chat but produces the same harmful content when the request is broken into small, ordinary-looking coding steps. In 816 workflow runs, the model produced the banned content in every case — a technique called "workflow-level jailbreak construction."
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-08</p>
+<p><strong>7. Ubiquiti Patches Critical UniFi Flaws Across Multiple Products</strong>
+- <strong>Summary:</strong> Ubiquiti shipped updates for critical vulnerabilities in UniFi Connect (CVE-2026-50746, CVSS 10.0 — command injection), UniFi Talk (CVE-2026-50747, CVSS 9.9 — SQL injection), UniFi Access (CVE-2026-50748, CVSS 9.9 — input validation), UniFi Protect, and UniFi OS. All could lead to privilege escalation or arbitrary code execution.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-08</p>
+<p><strong>8. Rogue Agent Flaw in Google Dialogflow CX Could Let Attackers Hijack Chatbots</strong>
+- <strong>Summary:</strong> Varonis disclosed "Rogue Agent," a flaw in Google's Dialogflow CX that could let an attacker with edit rights on one Code Block-enabled agent compromise all agents in the same Google Cloud project — enabling reading live conversations, stealing user data, and impersonating the bot. Google has fixed the issue; no evidence of exploitation was found.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-07</p>
+<p><strong>9. Microsoft Warns Poisoned MCP Tool Descriptions Can Make AI Agents Leak Data</strong>
+- <strong>Summary:</strong> Microsoft issued a warning that maliciously crafted MCP (Model Context Protocol) tool descriptions can trick AI agents into leaking sensitive data. The technique exploits how agents interpret tool metadata, potentially causing them to route data to attacker-controlled endpoints.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-08</p>
+<p><strong>10. RedWing MaaS Packages Android Bank Fraud as a Telegram Rental Service</strong>
+- <strong>Summary:</strong> A new Android malware operation called RedWing is being sold as a Malware-as-a-Service on Telegram, allowing even low-skill criminals to deploy banking trojans with overlay attacks and OTP theft. Zimperium's zLabs identified it as a variant of the Oblivion platform, rented at $300/month with Telegram bot-driven custom builds.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-07</p>
+<p><strong>11. China-Linked UAT-7810 Expands ORB Network With New LONGLEASH Malware</strong>
+- <strong>Summary:</strong> Cisco Talos reported that APT actor UAT-7810 is actively refining LONGLEASH malware to compromise internet-facing networking devices and expand its LapDogs Operational Relay Box (ORB) network. The infrastructure is then leveraged by China-nexus threat actor UAT-5918 for attacks on critical infrastructure in Taiwan.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-08</p>
+<hr />
+<h3>🏛️ Government</h3>
+<p><strong>1. CISA Urges Hardening Fortinet Devices After FortiBleed Credential Exposure</strong>
+- <strong>Summary:</strong> CISA issued an urgent alert regarding "FortiBleed" — the exposure of leaked credentials associated with approximately 74,000 Fortinet devices (firewalls and SSL VPN gateways) across government and private sectors globally. CISA urged organizations to terminate all active sessions, reset credentials, enforce PBKDF2 hashing, deploy phishing-resistant MFA, and restrict management interfaces from the public internet.
+- <strong>Source:</strong> <a href="https://www.cisa.gov/news-events/alerts/2026/06/18/cisa-urges-hardening-fortinet-devices-after-reports-credential-exposure">CISA</a>
+- <strong>Reliability:</strong> Tier 1/4 — Very High
+- <strong>Date:</strong> 2026-06-18 (Updated 2026-06-22)</p>
+<p><strong>2. FBI Seizes NetNut Proxy Platform, Popa Botnet — 2 Million Devices</strong>
+- <strong>Summary:</strong> The FBI, working with Google, Lumen, and Shadowserver, seized hundreds of domains tied to NetNut, a residential proxy service operated by Alarum Technologies [NASDAQ: ALAR]. The Popa botnet — at least 2 million compromised devices including smart TVs and streaming boxes — was used to relay abusive traffic, including credential stuffing, advertising fraud, and account takeover. Google observed 316 distinct threat actor clusters using NetNut exit nodes in a single week.
+- <strong>Source:</strong> <a href="https://krebsonsecurity.com/">Krebs on Security</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-02</p>
+<p><strong>3. Taiwan Charges Two Businessmen Over Chinese Espionage Campaign</strong>
+- <strong>Summary:</strong> Taiwan's MJIB (Investigation Bureau) charged two businessmen for their alleged roles in a Chinese espionage campaign targeting Taiwanese critical infrastructure and government systems. The charges come amid heightened cross-strait cybersecurity tensions.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record from Recorded Future News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-08</p>
+<p><strong>4. Spain Arrests Alleged Supporter of Pro-Russian Hacktivist Groups After FBI Tip</strong>
+- <strong>Summary:</strong> Spanish police arrested an individual allegedly linked to pro-Russian hacktivist groups following a tip from the FBI. The arrest highlights ongoing international cooperation targeting hacktivist operations aligned with Russian state interests.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record from Recorded Future News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-08</p>
+<p><strong>5. Canadian Spy Agency Reports Hacking Three Criminal Groups in 2025</strong>
+- <strong>Summary:</strong> Canada's Communications Security Establishment (CSE) disclosed that its operatives conducted offensive cyber operations against three criminal groups in 2025, marking a rare public acknowledgment of active cyber countermeasures by the agency.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record from Recorded Future News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-06</p>
+<p><strong>6. Russian Intelligence Services Continue to Target Commercial Messaging Applications</strong>
+- <strong>Summary:</strong> CISA published an external resource alert noting that Russian intelligence services continue to target commercial messaging applications, including Signal and WhatsApp. The advisory follows the US posting a $10 million reward for information on Russian cyber campaigns targeting these platforms.
+- <strong>Source:</strong> <a href="https://www.cisa.gov/news-events/cybersecurity-advisories">CISA</a>
+- <strong>Reliability:</strong> Tier 1/4 — Very High
+- <strong>Date:</strong> 2026-06-26</p>
+<hr />
+<h3>🛡️ Defence</h3>
+<p><strong>1. Britain Plans to Build Autonomous AI 'Cyber Shield' to Defend the Nation</strong>
+- <strong>Summary:</strong> The UK government unveiled plans to develop an autonomous AI-powered "Cyber Shield" capable of defending national networks at machine speed. The system would automatically detect and respond to cyber threats without human intervention, representing a significant escalation in AI-driven defensive cyber operations.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record from Recorded Future News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-07</p>
+<p><strong>2. EU Unveils Cyber Plan to Reduce Reliance on Foreign AI Systems</strong>
+- <strong>Summary:</strong> The European Commission announced a comprehensive cyber plan aimed at reducing the EU's dependence on foreign AI systems, particularly from the US and China. The initiative includes requirements for AI security audits, supply chain resilience, and investment in indigenous AI security capabilities.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record from Recorded Future News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-08</p>
+<hr />
+<h3>💰 Financial Services</h3>
+<p><strong>1. Cash App Owner to Pay $45 Million to Settle Allegations of Lax Security</strong>
+- <strong>Summary:</strong> Block Inc., owner of Cash App, agreed to a $45 million settlement to resolve allegations of inadequate security practices that led to user data exposure and financial losses. The settlement underscores growing regulatory scrutiny of fintech security practices.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record from Recorded Future News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-08</p>
+<p><strong>2. SCMBANKER Malware Uses ClickFix Lures to Target Mexican Banking Users</strong>
+- <strong>Summary:</strong> Elastic Security Labs uncovered REF6045, a campaign targeting Mexican banks, fintech firms, and crypto exchanges with SCMBANKER malware. The infection chain uses fake CAPTCHA pages ("ClickFix" lures) to trick victims into running PowerShell commands that install the toolkit, which can lock screens, redirect browsers, and deploy remote access tools for full account takeover.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-08</p>
+<hr />
+<h3>🏥 Healthcare</h3>
+<p><strong>1. Scattered Spider Hackers Plead Guilty on Day 1 of Trial — Targeted Healthcare Providers</strong>
+- <strong>Summary:</strong> Two key members of the prolific Scattered Spider cybercrime group — Owen Flowers, 18, and Thalha Jubair, 20 — pleaded guilty on the first day of their trial in the UK. Charges included attacks on Transport for London and US healthcare providers SSM Health Care Corporation and Sutter Health. US prosecutors separately allege the group conducted 120 network intrusions against 47 US entities, collecting at least $115 million in ransom payments.
+- <strong>Source:</strong> <a href="https://krebsonsecurity.com/">Krebs on Security</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-06-23</p>
+<hr />
+<h3>🌐 General / Cross-Sector</h3>
+<p><strong>1. Felons, Fraudsters Behind Offensive Cybersecurity Startup IRIS C2</strong>
+- <strong>Summary:</strong> KrebsOnSecurity revealed that IRIS C2, a startup offering millions of dollars for zero-day exploits, is run by convicted felons and far-right conspiracy theorists Jack Burkman and Jacob Wohl. The pair have a history of creating fake intelligence companies and spreading false claims. IRIS C2 is registered through Calvexa Group LLC, a federal contractor with no apparent active government contracts.
+- <strong>Source:</strong> <a href="https://krebsonsecurity.com/">Krebs on Security</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-08</p>
+<p><strong>2. Greek Victims File Lawsuit Against Intellexa Over Predator Spyware</strong>
+- <strong>Summary:</strong> Greek citizens filed a lawsuit against Intellexa, the company behind the Predator spyware, alleging illegal surveillance. The case adds to the growing legal pressure on commercial spyware vendors, following similar actions in Europe.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record from Recorded Future News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-09</p>
+<p><strong>3. Supreme Court Allows Texas App Law Requiring Age Verification to Take Effect</strong>
+- <strong>Summary:</strong> The US Supreme Court allowed a Texas law requiring app stores to verify users' ages before allowing downloads to take effect. The law has significant implications for privacy, security, and the digital economy, and is expected to face further legal challenges.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record from Recorded Future News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-07</p>
+<p><strong>4. UK Cyber Pledge Draws Only a Handful of Top Firms Despite Ministerial Appeal</strong>
+- <strong>Summary:</strong> The UK government's voluntary cyber security pledge, aimed at getting major companies to commit to baseline security practices, attracted only a small number of top firms. The lackluster response raises questions about the effectiveness of voluntary approaches to critical infrastructure security.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record from Recorded Future News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-07</p>
+<hr />
+<h2>📊 Source Reliability Index</h2>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Label</th>
+<th>Description</th>
+<th>Sources Used</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Very High</strong></td>
+<td>Official disclosures, first-party advisories</td>
+<td>CISA</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>High</strong></td>
+<td>Established cybersecurity journalism</td>
+<td>The Hacker News, Krebs on Security, The Record (Recorded Future News)</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Moderate</strong></td>
+<td>General tech/news media with security desks</td>
+<td>—</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Low</strong></td>
+<td>Social media, anonymous forums, unverified claims</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Report generated: July 9, 2026. Sources: The Hacker News, Krebs on Security, The Record from Recorded Future News, CISA.</em></p></body></html>

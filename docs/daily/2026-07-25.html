@@ -1,0 +1,163 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><title>2026-07-25</title></head><body><h1>🛡️ Cyber Digest — 2026-07-25 (Daily)</h1>
+<p><em>A daily roundup of key cybersecurity developments across sectors</em></p>
+<h2>📋 Executive Summary</h2>
+<p>Saturday's digest rounds up a busy Friday in cyber news. A major <strong>Aus</strong>tralian energy supplier confirmed a customer data compromise — the most directly relevant story for domestic readers. Microsoft patched a critical AD CS flaw (CVE-2026-54121, CVSS 8.8) dubbed <strong>Certighost</strong>, allowing low-privileged users to impersonate Domain Controllers. Researchers disclosed <strong>AgentForger</strong>, a CSRF vulnerability in OpenAI's ChatGPT Workspace Agents that could deploy rogue AI agents via a single phishing link. Two critical Bing Images flaws (CVE-2026-32194/32191, CVSS 9.8) allowed SVG-triggered RCE on Microsoft's production servers. In healthcare, Tennessee Pathology Group notified 170,000 patients of a breach, and a new report signals a surge in malicious insider incidents. The US State Department imposed visa restrictions on foreign cyber scammers, and the US House passed an extension of CISA's 2015 info-sharing protections.</p>
+<hr />
+<h2>Sector Reports</h2>
+<h3>🏭 Energy &amp; Utilities</h3>
+<p><strong>1. Major Australian energy supplier confirms customer data compromised</strong>
+- <strong>Summary:</strong> An unnamed major Australian energy supplier has confirmed a cyber incident that compromised customer data, as reported by The Record on 23 July. The energy sector is a critical infrastructure pillar in Australia, making this incident of particular concern for domestic readers and regulators.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — High (Established cyber journalism)
+- <strong>Date:</strong> 2026-07-23</p>
+<hr />
+<h3>🖥️ IT / Technology</h3>
+<p><strong>1. Certighost Exploit Lets Low-Privileged AD Users Impersonate a Domain Controller</strong>
+- <strong>Summary:</strong> Researchers H0j3n and Aniq Fakhrul published a working exploit (CVE-2026-54121, CVSS 8.8) allowing low-privileged Active Directory users to obtain a certificate for a Domain Controller and authenticate as that machine. This enables DCSync attacks to retrieve the krbtgt secret. Microsoft patched the AD CS issue ten days earlier.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-24</p>
+<p><strong>2. Bing Images Flaws Let Crafted SVGs Run Commands as SYSTEM on Microsoft's Servers</strong>
+- <strong>Summary:</strong> Two critical CVEs (CVE-2026-32194, CVE-2026-32191, both CVSS 9.8) in Bing's image-processing tier allowed crafted SVGs to achieve RCE as SYSTEM (Windows) or root (Linux). Discovered by XBOW and fixed server-side by Microsoft.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-24</p>
+<p><strong>3. ChatGPT AgentForger Flaw Could Deploy Rogue Workspace Agents via a Phishing Link</strong>
+- <strong>Summary:</strong> Zenity Labs disclosed a CSRF vulnerability in OpenAI's ChatGPT Workspace Agents (codenamed AgentForger) that allowed a single phishing link to build, authorise, and deploy an attacker-controlled AI agent inside a victim's organisation. Fixed by OpenAI on 8 June 2026.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-24</p>
+<p><strong>4. NodeBB Patches Eight AI-Found Flaws Exposing Admin Access and Private Chats</strong>
+- <strong>Summary:</strong> Aikido Security's AI pentest agents found eight high-severity flaws in NodeBB forum software in a six-hour source code review. Fixed in version 4.14.2. Flaws included a configuration bypass that let regular members access the admin dashboard.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-24</p>
+<p><strong>5. Kimi K3 Agents Found Redis Zero-Days and Built RCE Exploit</strong>
+- <strong>Summary:</strong> Redis shipped seven security releases on 23 July after researchers published authenticated RCE PoCs for multiple versions. Flaws include use-after-free in Streams shared-NACK and out-of-bounds writes in RedisBloom/TDigest modules. Multiple branches affected (6.2.x through 8.8.x).
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-24</p>
+<hr />
+<h3>🦠 Threat Intelligence / Malware</h3>
+<p><strong>1. BlueNoroff Zoom Phishing Kit Profiles Crypto Wallets Before Malware Delivery</strong>
+- <strong>Summary:</strong> North Korean BlueNoroff actors have operationalised an operator-driven phishing kit that profiles victims' cryptocurrency wallets before delivering malware. The campaign uses typosquatted Zoom and Microsoft Teams domains with compromised trusted contacts as initial access.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-24</p>
+<p><strong>2. Golden Chickens Resurfaces With Four New Malware Families</strong>
+- <strong>Summary:</strong> The Golden Chickens MaaS ecosystem operators (TAG-195) resurfaced with TinyEgg, ChonkyChicken, a modularised variant, and a credential theft utility called ChromEggscalator. TAG-127 observed deploying TinyEgg via ClickFix-style social engineering.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-24</p>
+<p><strong>3. Fake Notepad++ Plugin Delivers MATCHBOIL.V2 in UAC-0099 Attacks</strong>
+- <strong>Summary:</strong> CERT-UA warned of a Russia-aligned threat cluster (UAC-0099) using a malicious Notepad++ plugin to compromise Windows systems. The campaign begins with phishing emails containing image attachments that lead to a ZIP archive via file-sharing services.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-24</p>
+<hr />
+<h3>🏛️ Government &amp; Defence</h3>
+<p><strong>1. Hacker Runs Hermes AI Agent Unattended for Post-Exploitation at Thai Finance Ministry</strong>
+- <strong>Summary:</strong> Threat intelligence firm Hunt.io and researcher Bob Diachenko discovered logs from an AI assistant (Hermes, by Nous Research) running unattended in YOLO mode against Thailand's Ministry of Finance. The agent checked hosts for root access, hunted through file systems, and accessed staff personnel records.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-24</p>
+<p><strong>2. State Department imposes visa restrictions on foreign cyber scammers</strong>
+- <strong>Summary:</strong> US Secretary of State Marco Rubio announced visa restrictions targeting foreign nationals involved in cyber scams, a new diplomatic tool to combat cyber-enabled financial fraud.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-23</p>
+<p><strong>3. 'Wrench' attacks against crypto holders appear to be on the rise</strong>
+- <strong>Summary:</strong> Physical coercion attacks ("wrench attacks") targeting cryptocurrency holders are increasing, with criminals using violence or the threat of violence to force victims to transfer digital assets.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-24</p>
+<p><strong>4. Andy Burnham signals continuity on UK cyber policy, reappoints minister despite scrapping ministry</strong>
+- <strong>Summary:</strong> UK Prime Minister Andy Burnham has signalled continuity in cyber policy, reappointing the cyber minister despite restructuring that saw the dedicated ministry scrapped.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-24</p>
+<hr />
+<h3>🏥 Healthcare</h3>
+<p><strong>1. Tennessee Pathology Group Announces 170K-record Data Breach</strong>
+- <strong>Summary:</strong> Anatomic and Clinical Laboratory Associates is notifying almost 170,000 patients about a recent cybersecurity incident. The breach adds to a growing list of healthcare sector incidents this month.
+- <strong>Source:</strong> <a href="https://www.hipaajournal.com/">HIPAA Journal</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-24</p>
+<p><strong>2. Report Shows Surge in Malicious Insider Incidents; Mega Data Breaches</strong>
+- <strong>Summary:</strong> There has been a general trend of increasing data breaches over the past decade, with this year on track to exceed previous records. The report highlights a surge in malicious insider incidents alongside external attacks.
+- <strong>Source:</strong> <a href="https://www.hipaajournal.com/">HIPAA Journal</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-23</p>
+<p><strong>3. Colorado Behavioral Healthcare Provider Discovers Insider Data Breach</strong>
+- <strong>Summary:</strong> Multiple healthcare providers announced breaches including NAS Recovery Solutions, Entyre Care Massachusetts, Carle Health, and Brown Health Medical Group-MA. Insider threat remains a persistent vector in the sector.
+- <strong>Source:</strong> <a href="https://www.hipaajournal.com/">HIPAA Journal</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-23</p>
+<p><strong>4. Patient Data Exposed in Cybersecurity Incident at Ohio Revenue Cycle Management Company</strong>
+- <strong>Summary:</strong> Security incidents at United Technology Systems, Meridian Health Plan of Illinois, and others resulted in patient data exposure, underscoring the third-party risk prevalent in healthcare revenue cycle management.
+- <strong>Source:</strong> <a href="https://www.hipaajournal.com/">HIPAA Journal</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-23</p>
+<hr />
+<h3>⚖️ Legal &amp; Regulatory</h3>
+<p><strong>1. Singapore launches AI training data guidelines, expands PETs resources</strong>
+- <strong>Summary:</strong> Singapore released new guidelines on AI training data governance and expanded resources for privacy-enhancing technologies (PETs), positioning itself as a leader in AI governance in the Asia-Pacific region.
+- <strong>Source:</strong> <a href="https://www.iapp.org/news/">IAPP News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-24</p>
+<p><strong>2. Congressional stalemates take wind out of US digital policy sails</strong>
+- <strong>Summary:</strong> Ongoing congressional gridlock is stalling US digital policy initiatives, including comprehensive federal privacy legislation. The IAPP analysis notes that state-level activity continues to fill the vacuum.
+- <strong>Source:</strong> <a href="https://www.iapp.org/news/">IAPP News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-24</p>
+<p><strong>3. China's regulation on AI companions takes force</strong>
+- <strong>Summary:</strong> New Chinese regulations governing AI companion applications have taken effect, establishing requirements for content moderation, data protection, and age verification for AI-driven social and companion apps.
+- <strong>Source:</strong> <a href="https://www.iapp.org/news/">IAPP News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-24</p>
+<hr />
+<h2>📊 Industry Breakdown</h2>
+<pre><code class="language-mermaid">pie showData
+    &quot;IT / Technology&quot; : 5
+    &quot;Threat Intelligence / Malware&quot; : 3
+    &quot;Government &amp; Defence&quot; : 4
+    &quot;Healthcare&quot; : 4
+    &quot;Energy &amp; Utilities&quot; : 1
+    &quot;Legal &amp; Regulatory&quot; : 3
+</code></pre>
+<hr />
+<h2>📊 Source Reliability Index</h2>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Very High</td>
+<td>Official / first-party</td>
+</tr>
+<tr>
+<td>2</td>
+<td>High</td>
+<td>Established cyber journalism</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Moderate</td>
+<td>General tech/news media</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Low</td>
+<td>Social / unverified</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Source Diversity</h2>
+<p><em>Digest generated 2026-07-25. Sources: The Hacker News (8), The Record (4), HIPAA Journal (4), IAPP News (3). No single source exceeded 40% threshold.</em></p></body></html>

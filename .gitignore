@@ -1,0 +1,7 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.DS_Store
+
+# Keep only generated site + generator. The vault is the source of truth.

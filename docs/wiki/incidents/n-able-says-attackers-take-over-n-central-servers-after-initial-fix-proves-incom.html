@@ -1,0 +1,43 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>N-able Says Attackers Take Over N-central Servers After Initial Fix Proves Incomplete</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css"></head><body>
+<nav class="topnav"><div class="inner">
+        <a class="brand" href="index.html"><span class="dot"></span>Cyber&nbsp;Digest<small>public site</small></a>
+        <div class="navlinks"><a href="index.html" class=""><span class="t">🏠 Home</span></a><a href="stories.html" class=""><span class="t">📚 Story DB</span></a><a href="daily/" class=""><span class="t">🗓️ Daily</span></a><a href="monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a></div></div></nav><main class="container">
+            <div class="container">
+            <div class="crumb"><a href="../index.html">Home</a> · <a href="../wiki/index.html">Wiki</a> · Incidents &amp; Campaigns</div>
+            <div class="wiki-body"><div class="frontmatter">type: incident · tags:  · confidence: high · au_impact: high · affected_sectors: </div><h1>N-able Says Attackers Take Over N-central Servers After Initial Fix Proves Incomplete</h1>
+<h2>Summary</h2>
+<p>N-able disclosed that attackers exploited an authentication bypass in N-central (CVE-2026-18577) to gain remote administrative access and reach customer systems managed through those servers. Its first fix was incomplete — build 2026.3.1.7 (shipped August 2) is the first unaffected version.</p>
+<h2>Key Details</h2>
+<ul>
+<li><strong>Date:</strong> 2026-08-03</li>
+<li><strong>Vendor:</strong> N-able</li>
+<li><strong>Product:</strong> N-central RMM platform</li>
+<li><strong>Vulnerability:</strong> <a href="../vulnerabilities/cve-2026-18577.html">Cve 2026 18577</a> — Authentication bypass</li>
+<li><strong>Initial fix:</strong> Incomplete (first patch did not fully address the vulnerability)</li>
+<li><strong>Complete fix:</strong> Build 2026.3.1.7 (2026-08-02)</li>
+<li><strong>Post-compromise TTPs:</strong></li>
+<li>Take Control feature used to reach managed endpoints</li>
+<li>Cloudflare tunnels registered as services on compromised devices</li>
+<li>Persistence surviving reboots</li>
+<li><strong>Source:</strong> The Hacker News</li>
+<li><strong>Reliability:</strong> Tier 2/4 — Established cyber journalism</li>
+</ul>
+<h2>Significance</h2>
+<p>This is a significant MSP supply chain incident. N-able is widely used by managed service providers in Australia and New Zealand. The incomplete fix mirrors the SolarWinds pattern of vendors shipping patches that don't fully address the underlying vulnerability. The use of Cloudflare tunnels for persistence is a notable evasion technique — nothing in the disclosure suggests Cloudflare itself was compromised.</p>
+<h2>Related</h2>
+<ul>
+<li>Cyber Digest 2026 08 04</li>
+<li><a href="../vulnerabilities/cve-2026-18577.html">Cve 2026 18577</a> — The underlying vulnerability</li>
+</ul>
+<h2>References</h2>
+<ul>
+<li><a href="https://thehackernews.com/">The Hacker News</a></li>
+</ul></div>
+            </div></main>
+<div class="footer">Cyber Digest public site · built 2026-08-08 15:35 · AU security intelligence</div>
+</body></html>

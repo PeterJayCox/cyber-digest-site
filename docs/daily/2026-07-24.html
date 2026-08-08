@@ -1,0 +1,117 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><title>2026-07-24</title></head><body><h1>🛡️ Cyber Digest — 2026-07-24 (Daily)</h1>
+<p><em>A daily roundup of key cybersecurity developments across sectors</em></p>
+<h2>📋 Executive Summary</h2>
+<p>A major international joint cybersecurity advisory has been co-released by the United States' CISA, the NSA, and Australia's Signals Directorate (ASD/ACSC) warning of an active, highly targeted Russian espionage campaign. The campaign, attributed to Russian state-sponsored actors, exploits a newly disclosed stored cross-site scripting zero-day vulnerability in Zimbra Collaboration Suite (CVE-2025-66376) to compromise Western government, commercial, and allied critical sector networks without the need for active social engineering.</p>
+<p>In critical infrastructure and sector news, we seek representation in key domains. A major Australian energy network provider has confirmed that customer data was compromised in a serious cyber incident, drawing high-priority concern for ANZ critical resource security. Additionally, the healthcare sector is reeling from the disclosure that dental benefits administrator DentaQuest has started notifying over 15 million individuals of a massive cyber breach from May 2026, marking one of the largest healthcare security incidents this year.</p>
+<p>On the defense front, researchers have detailed significant software vulnerabilities under active exploitation. Check Point has issued urgent security patches for a critical administrative login bypass (CVE-2026-16232) in its SmartConsole management suite, while Anthropic has successfully patched a critical VM-escape vulnerability (codenamed SharedRoot) in its local Claude Cowork sessions that allowed local AI agents to escape their Linux sandboxes and read or write files any place on a host Mac.</p>
+<hr />
+<h2>Sector Reports</h2>
+<h3>🏛️ Government</h3>
+<p><strong>1. International Joint Advisory Spotlights Russia-Linked Campaign Exploiting Zimbra Webmail</strong>
+- <strong>Summary:</strong> A cooperative advisory from CISA, the NSA, and international partners including Australia’s ACSC warns that Russian state-sponsored cyber espionage groups have spent months exploiting a newly discovered zero-day stored cross-site scripting vulnerability in Zimbra's Classic UI (CVE-2025-66376). The "view-based" exploit requires no social engineering or links, triggering as soon as a victim views a malicious HTML email to steal emails, organizational directories, browser passwords, and 2FA recovery codes.
+- <strong>Source:</strong> <a href="https://www.cisa.gov/news-events/cybersecurity-advisories">CISA Advisories</a>
+- <strong>Reliability:</strong> Tier 1 — Very High
+- <strong>Date:</strong> 2026-07-23</p>
+<h3>💻 IT / Technology</h3>
+<p><strong>2. Critical SharedRoot Flaw in Claude Cowork Allowed VM Sandbox Escape on macOS</strong>
+- <strong>Summary:</strong> Security researchers from Accomplish AI disclosed details of a critical vulnerability codenamed "SharedRoot" in Anthropic's Claude Cowork desktop client that affected over 500,000 macOS users. The flaw allowed local AI sessions to break out of their Linux virtual machine sandbox to read or write files anywhere on the host Mac, exposing sensitive user credentials and SSH keys without prompting for user permission before it was patched.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2 — High
+- <strong>Date:</strong> 2026-07-23</p>
+<p><strong>3. Chaos Ransomware Uses Rust-Based msaRAT to Funnel C2 Traffic via Headless Chrome</strong>
+- <strong>Summary:</strong> Cisco Talos researchers detailed a highly sophisticated command-and-control (C2) evasion technique deployed by the Chaos ransomware syndicate via a Rust-based implant called msaRAT. Instead of making outbound C2 connections, the malware launches headless instances of Chrome or Edge and drives them via the Chrome DevTools Protocol to route all communications over WebRTC channels via Twilio TURN service, making malicious traffic indistinguishable from normal browsing on the network.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2 — High
+- <strong>Date:</strong> 2026-07-23</p>
+<p><strong>4. Check Point Patches SmartConsole Authentication Bypass Explited in the Wild</strong>
+- <strong>Summary:</strong> Check Point has rushed out hotfixes to address a critical security vulnerability (CVE-2026-16232, CVSS: 9.3) in its SmartConsole login process that has come under active in-the-wild exploitation. The vulnerability allows unauthenticated remote attackers to bypass authentication and obtain full administrative access to security policies and gateway configurations on Management Servers exposed to the internet.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2 — High
+- <strong>Date:</strong> 2026-07-23</p>
+<p><strong>5. CISA Adds Two Known Exploited Vulnerabilities to KEV Catalog</strong>
+- <strong>Summary:</strong> The US Cybersecurity and Infrastructure Security Agency (CISA) has added two new vulnerabilities to its Known Exploited Vulnerabilities (KEV) Catalog, citing active exploit activity. Federal agencies are mandated under binding operational directives to apply vendor security updates within three weeks to secure their networks.
+- <strong>Source:</strong> <a href="https://www.cisa.gov/news-events/cybersecurity-advisories">CISA Advisories</a>
+- <strong>Reliability:</strong> Tier 1 — Very High
+- <strong>Date:</strong> 2026-07-22</p>
+<h3>⚡ Energy &amp; Utilities</h3>
+<p><strong>6. Major Australian Energy Supplier Confirms Customer Data Compromised</strong>
+- <strong>Summary:</strong> One of Australia’s primary energy and electricity infrastructure suppliers has officially confirmed a data breach compromising sensitive customer records following a security incident. Cyber authorities, including the Australian Signals Directorate, are actively supporting the company as forensic teams work to outline the exact scope of the compromised administrative database.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record by Recorded Future</a>
+- <strong>Reliability:</strong> Tier 2 — High
+- <strong>Date:</strong> 2026-07-23</p>
+<p><strong>7. Federal Agencies Broaden Security Alert on Iranian State-Sponsored OT / ICS Exploitation</strong>
+- <strong>Summary:</strong> US federal agencies have expanded an active advisory warning critical infrastructure providers of heightened cyber threats from Iranian-linked actors targeting operational technology (OT). Threat groups are deploying malicious payloads against industrial control systems (ICS) and SCADA systems in energy and municipal infrastructure, necessitating immediately improved asset hygiene.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record by Recorded Future</a>
+- <strong>Reliability:</strong> Tier 2 — High
+- <strong>Date:</strong> 2026-07-23</p>
+<h3>🏭 Manufacturing</h3>
+<p><strong>8. Swiss Train Manufacturer Stadler Refuses Everest's 12 Million Ransom Demand</strong>
+- <strong>Summary:</strong> Rolling stock manufacturing giant Stadler Rail has publicly refused a $12 million ransom demand from the Everest cybercrime cartel following a ransomware attack that impacted parts of its administrative network. The Swiss railroad manufacturer maintained that it will not negotiate with the extortionists and is systematically restoring all administrative and logistical systems from secure offline backups.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record by Recorded Future</a>
+- <strong>Reliability:</strong> Tier 2 — High
+- <strong>Date:</strong> 2026-07-23</p>
+<h3>🏥 Healthcare</h3>
+<p><strong>9. Dental Benefits Giant DentaQuest Notifies 15 Million Individuals of Cyber Incident</strong>
+- <strong>Summary:</strong> Dental benefits administrator DentaQuest has commenced issuing data breach notification letters to over 15 million individuals regarding a major cybersecurity breach originally discovered in May 2026. The compromise is among the largest healthcare data disclosures reported this year, with forensic analysis confirming that extensive sensitive personal information and clinical registers were exposed to threat actors.
+- <strong>Source:</strong> <a href="https://www.hipaajournal.com/">HIPAA Journal</a>
+- <strong>Reliability:</strong> Tier 2 — High
+- <strong>Date:</strong> 2026-07-23</p>
+<h3>🎓 Education</h3>
+<p><strong>10. Canvas Temporarily Pauses Key Data Delivery System Over Potential Security Threat</strong>
+- <strong>Summary:</strong> Academic technology giant Instructure has suspended data delivery services for its Canvas learning management platform—used by millions of students globally—due to an active security threat. The emergency suspension occurs just two months after reports surfaced that the corporation had completed a private payoff deal with hacker collectives to safeguard stolen user data caches.
+- <strong>Source:</strong> <a href="https://www.insidehighered.com/news/tech-innovation">Inside Higher Ed</a>
+- <strong>Reliability:</strong> Tier 3 — Moderate
+- <strong>Date:</strong> 2026-07-23</p>
+<h3>⚖️ Legal / Regulatory</h3>
+<p><strong>11. Connecticut AG Leads 42-State Settlement with 23andMe Over Massive 2023 Breach</strong>
+- <strong>Summary:</strong> Connecticut Attorney General William Tong announced that a coalition of 42 state attorneys general has successfully brokered a settlement with the bankruptcy trustee for genetic testing corporation 23andMe. The agreement resolves numerous multistate regulatory claims arising from the company's severe 2023 security breach which exposed sensitive genetic and demographic profiles of millions of users.
+- <strong>Source:</strong> <a href="https://www.hunton.com/privacy-and-cybersecurity-law-blog/">Hunton Privacy &amp; Cybersecurity Law Blog</a>
+- <strong>Reliability:</strong> Tier 3 — Moderate
+- <strong>Date:</strong> 2026-07-23</p>
+<hr />
+<h2>📊 Industry Breakdown</h2>
+<pre><code class="language-mermaid">pie showData
+    &quot;Government&quot; : 1
+    &quot;IT / Technology&quot; : 4
+    &quot;Energy &amp; Utilities&quot; : 2
+    &quot;Manufacturing&quot; : 1
+    &quot;Healthcare&quot; : 1
+    &quot;Education&quot; : 1
+    &quot;Legal / Regulatory&quot; : 1
+</code></pre>
+<hr />
+<h2>📊 Source Reliability Index</h2>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Very High</td>
+<td>Official / first-party</td>
+</tr>
+<tr>
+<td>2</td>
+<td>High</td>
+<td>Established cyber journalism</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Moderate</td>
+<td>General tech/news media</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Low</td>
+<td>Social / unverified</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Source Diversity</h2>
+<p>Digest generated 2026-07-24. Sources: The Record (3), The Hacker News (3), CISA (2), HIPAA Journal (1), Inside Higher Ed (1), Hunton Privacy (1). No single source exceeded 40% threshold.</p></body></html>

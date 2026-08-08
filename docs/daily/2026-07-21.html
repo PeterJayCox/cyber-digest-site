@@ -1,0 +1,143 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><title>2026-07-21</title></head><body><h1>🛡️ Cyber Digest — 2026-07-21 (Daily)</h1>
+<p><em>A daily roundup of key cybersecurity developments across sectors</em></p>
+<h2>📋 Executive Summary</h2>
+<p>A surge in WordPress exploitation dominates today's threat landscape as public exploit code for the critical <strong>wp2shell</strong> vulnerability chain (CVE-2026-63030 + CVE-2026-60137) fuels mass scanning and RCE attacks across organisations of every size. Separately, the JADEPUFFER operator expanded its AI-infrastructure targeting with a new Golang ransomware called <strong>ENCFORGE</strong>, designed to encrypt AI model weights and training datasets. Healthcare faces a wave of breach disclosures: a software provider serving 2,000+ US hospitals confirmed data theft, Abbott is investigating claims from two threat actors, and Centers Laboratory disclosed a breach affecting 542,000 individuals. On the legal/regulatory front, the DOJ seized over 1,000 domains illegally streaming World Cup matches, and Illinois became the third US state to enact comprehensive frontier AI safety legislation.</p>
+<hr />
+<h2>Sector Reports</h2>
+<h3>💻 IT / Technology</h3>
+<p><strong>1. WordPress wp2shell Exploitation Grows as Public Exploit Fuels Mass Scanning</strong>
+- <strong>Summary:</strong> Attackers are actively exploiting two chained critical WordPress vulnerabilities (CVE-2026-63030, CVE-2026-60137) — codenamed wp2shell — enabling unauthenticated remote code execution. Telemetry from KEVIntel shows 13 unique IP addresses from Switzerland, Germany, the UK, Indonesia, Lithuania, the Netherlands, and Singapore conducting mass scanning. Public exploit code was released early Saturday, with credential exfiltration and RCE following rapidly.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-21</p>
+<p><strong>2. New ENCFORGE Ransomware Targets AI Model Files in Langflow RCE Attack</strong>
+- <strong>Summary:</strong> Sysdig researchers linked a second attack on the same Langflow server to the JADEPUFFER AI-agent-driven operator. The operator now deploys ENCFORGE, a compiled Go ransomware designed to encrypt model weights, vector indexes, training datasets, and other AI infrastructure files. Entry point remains CVE-2025-3248 (CVSS 9.8), in CISA's KEV catalog since May 2025.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-21</p>
+<p><strong>3. Critical ServiceNow AI Platform Flaw Exploited for Unauthenticated Code Execution</strong>
+- <strong>Summary:</strong> Threat actors are actively exploiting CVE-2026-6875 (CVSS 9.5), a sandbox escape vulnerability in the ServiceNow AI Platform. Patches were released throughout June across multiple versions. ServiceNow is restricting the type of code that can run in sandbox contexts to enhance security.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-21</p>
+<p><strong>4. FakeGit Campaign Uses 7,600 GitHub Repositories to Spread SmartLoader Malware</strong>
+- <strong>Summary:</strong> Researchers at Island discovered nearly 7,600 malicious GitHub repositories — over 800 posing as AI skills or MCP servers — delivering SmartLoader malware. The campaign uses copied projects, lookalike developer profiles, and convincing READMEs. SmartLoader establishes persistence and delivers StealC info-stealer as a secondary payload.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-20</p>
+<p><strong>5. Exposed Server Reveals AI-Assisted Phishing Toolkit Behind WebDAV Malware Campaign</strong>
+- <strong>Summary:</strong> Rapid7 discovered an open delivery server containing 1,048 files of a malware operator's development toolkit — lure templates, droppers, builder notes, and two campaign chains. One live campaign targeted Windows users in Mexico via a fake government ID-lookup site over WebDAV exploiting CVE-2025-33053. Evidence suggests generative AI was used to produce, test, and document the phishing delivery infrastructure.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-20</p>
+<blockquote>
+<p><strong>Also notable:</strong> SANS published guidance on OT security best practices (Jul 13), and the Wired Security desk reported on a device hidden in cars across the US leaving them vulnerable to hacking.</p>
+</blockquote>
+<hr />
+<h3>🏥 Healthcare</h3>
+<p><strong>1. Software Provider to More Than 2,000 US Hospitals Says Hackers Stole Employee and Customer Data</strong>
+- <strong>Summary:</strong> A software provider serving over 2,000 US hospitals confirmed that hackers stole employee and customer data in a cyber incident. The breach underscores the systemic risk of supply-chain attacks in the healthcare sector, where third-party vendor access to sensitive health information creates broad exposure.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record from Recorded Future News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-20</p>
+<p><strong>2. ApolloMD Agrees to Pay $4.02M to Settle Data Breach Lawsuit</strong>
+- <strong>Summary:</strong> ApolloMD Business Services, a practice management provider, agreed to settle a data breach class action lawsuit for $4.02 million. The settlement covers claims related to a breach of protected health information.
+- <strong>Source:</strong> <a href="https://www.hipaajournal.com/">HIPAA Journal</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-21</p>
+<p><strong>3. Abbott Investigating Cyberattack Claims From Two Threat Actors</strong>
+- <strong>Summary:</strong> Healthcare giant Abbott is investigating claims from two separate threat groups alleging cyberattacks and data theft, one involving legacy systems. The incident is ongoing with no confirmation of data exfiltration at this stage.
+- <strong>Source:</strong> <a href="https://www.hipaajournal.com/">HIPAA Journal</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-20</p>
+<p><strong>4. Centers Laboratory Discloses Data Breach Affecting 542,000 Individuals</strong>
+- <strong>Summary:</strong> Centers Lab NJ LLC disclosed a data breach affecting approximately 542,000 individuals. The New Jersey-based diagnostic testing laboratory notified affected patients and regulators.
+- <strong>Source:</strong> <a href="https://www.hipaajournal.com/">HIPAA Journal</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-20</p>
+<p><strong>5. 23andMe Pays $18 Million to Settle Multistate Data Breach Lawsuit</strong>
+- <strong>Summary:</strong> A coalition of 42 state attorneys general reached an $18 million settlement with 23andMe over its 2023 data breach that exposed genetic and personal data of millions of users.
+- <strong>Source:</strong> <a href="https://www.hipaajournal.com/">HIPAA Journal</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-20</p>
+<hr />
+<h3>🏛️ Government</h3>
+<p><strong>1. Romania Races to Restore Land Registry After Cyberattack Disrupts Property Market</strong>
+- <strong>Summary:</strong> Romania is working to restore its national land registry system after a cyberattack disrupted property transactions nationwide. The attack has created significant delays in real estate processing and legal uncertainty for property owners.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record from Recorded Future News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-21</p>
+<hr />
+<h3>🎬 Media &amp; Entertainment</h3>
+<p><strong>1. More Than 1,000 Domains Illegally Streaming World Cup Games Seized, DOJ Says</strong>
+- <strong>Summary:</strong> The US Department of Justice announced the seizure of over 1,000 domains used to illegally stream World Cup matches, in one of the largest anti-piracy operations coordinated with international law enforcement.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record from Recorded Future News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-21</p>
+<hr />
+<h3>⚖️ Legal / Regulatory</h3>
+<p><strong>1. Illinois Governor Signs Frontier AI Model Law</strong>
+- <strong>Summary:</strong> Illinois Governor JB Pritzker signed the Artificial Intelligence Safety Measures Act (SB 315) into law, making Illinois the third US state to enact comprehensive safety and transparency requirements for developers of advanced AI systems.
+- <strong>Source:</strong> <a href="https://www.hunton.com/privacy-and-cybersecurity-law-blog/">Hunton Andrews Kurth Blog</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-17</p>
+<hr />
+<h3>🌐 General / Cross-Sector</h3>
+<p><strong>1. Flock Safety Kills Acoustic System Designed to Detect 'Human Distress'</strong>
+- <strong>Summary:</strong> Flock Safety shut down its acoustic detection system following privacy and civil liberties concerns. The system was designed to detect sounds of 'human distress' but raised significant surveillance and ethical questions.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record from Recorded Future News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-21</p>
+<hr />
+<h2>📊 Industry Breakdown</h2>
+<pre><code class="language-mermaid">pie showData
+    &quot;IT / Technology&quot; : 5
+    &quot;Healthcare&quot; : 5
+    &quot;Government&quot; : 1
+    &quot;Media &amp; Entertainment&quot; : 1
+    &quot;Legal / Regulatory&quot; : 1
+    &quot;General / Cross-Sector&quot; : 1
+</code></pre>
+<hr />
+<h2>📊 Source Reliability Index</h2>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Label</th>
+<th>Description</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Very High</strong></td>
+<td>Official / first-party — government agencies, vendor PSAs, peer-reviewed papers</td>
+<td>CISA, ACSC, ASD, NCSC, ENISA, DFAT, Microsoft PSIRT, CrowdStrike, academic papers</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>High</strong></td>
+<td>Established cybersecurity journalism and research orgs</td>
+<td>Krebs on Security, The Hacker News, The Record, SANS ISC, Dark Reading, BleepingComputer, Dragos blog, ASPI research</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Moderate</strong></td>
+<td>General tech / news media with security desks</td>
+<td>Ars Technica, Wired, Reuters, Bloomberg, The Register, ABC News AU, iTnews, TechCrunch</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Low</strong></td>
+<td>Social / unverified / anonymous — leads only</td>
+<td>X/Twitter researcher posts, Reddit, Telegram, Discord, 4chan, personal blogs with no editorial oversight</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Full methodology:</strong> see <code>Cyber/Cyber Digest/Cyber Digest Sources.md</code> in the vault, or <code>references/sources.md</code> in the cyber-digest skill directory.</p>
+</blockquote>
+<hr />
+<p><em>Digest generated 2026-07-21. Sources: The Hacker News (5), The Record (4), HIPAA Journal (4), Hunton Andrews Kurth (1). No single source exceeded 40% threshold.</em></p></body></html>

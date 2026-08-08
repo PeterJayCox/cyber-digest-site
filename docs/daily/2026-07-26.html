@@ -1,0 +1,245 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><title>2026-07-26</title></head><body><h1>🛡️ Cyber Digest — 2026-07-26 (Daily)</h1>
+<p><em>A daily roundup of key cybersecurity developments across sectors — covering 25–26 July 2026 with weekend bridging to 23 July.</em></p>
+<hr />
+<h2>📋 Executive Summary</h2>
+<p>This weekend's cybersecurity landscape was dominated by a coordinated international advisory on Russian state-sponsored phishing targeting Zimbra webmail users, a critical unpatched RCE in Alibaba's Fastjson library (CVSS 9.0), and a 9.8-rated Bing Images vulnerability exposed by XBOW researchers. Healthcare saw the massive DentaQuest breach notification (15M+ individuals) and a report highlighting a surge in malicious insider incidents. Cl0p affiliates launched a new data extortion campaign against manufacturers using PTC Windchill/FlexPLM (CVE-2026-12569, CVSS 9.3). On the regulatory front, Connecticut AG led a 42-state settlement with 23andMe over its 2023 breach, CalPrivacy launched its first CCPA compliance audit targeting gig economy platforms, and the US State Department imposed visa restrictions on foreign cyber scammers. An Australian major energy supplier confirmed a customer data breach, and federal agencies broadened their advisory on Iran-linked OT attacks.</p>
+<hr />
+<h2>Sector Reports</h2>
+<h3>🏛️ Government &amp; Policy</h3>
+<p><strong>1. US State Department Imposes Visa Restrictions on Foreign Cyber Scammers</strong>
+- <strong>Summary:</strong> Secretary of State Marco Rubio announced visa restrictions targeting individuals involved in cyber scams, expanding the US government's toolkit for deterring transnational cybercrime.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-07-24</p>
+<p><strong>2. Extension of CISA 2015 Info-Sharing Protections Passes as Part of House Defence Bill</strong>
+- <strong>Summary:</strong> The US House of Representatives passed an extension of CISA's 2015 information-sharing liability protections as part of the defence authorisation bill, ensuring continued legal safe harbour for cyber threat intelligence sharing.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-07-23</p>
+<p><strong>3. Connecticut AG Leads 42-State Settlement With 23andMe Over 2023 Data Breach</strong>
+- <strong>Summary:</strong> A coalition of 42 state attorneys general reached a settlement with 23andMe's bankruptcy trustee, resolving claims from the company's 2023 data breach that exposed genetic and personal data of millions of customers.
+- <strong>Source:</strong> <a href="https://www.hunton.com/privacy-and-cybersecurity-law-blog/">Hunton Privacy &amp; Cybersecurity Law Blog</a>
+- <strong>Reliability:</strong> Tier 1/4 — Official / first-party (law firm)
+- <strong>Date:</strong> 2026-07-23</p>
+<p><strong>4. CalPrivacy Targets Gig Economy Tech Platforms in First CCPA Compliance Audit</strong>
+- <strong>Summary:</strong> The California Privacy Protection Agency launched its first formal CCPA compliance audit, targeting gig economy tech platforms operating in California.
+- <strong>Source:</strong> <a href="https://www.hunton.com/privacy-and-cybersecurity-law-blog/">Hunton Privacy &amp; Cybersecurity Law Blog</a>
+- <strong>Reliability:</strong> Tier 1/4 — Official / first-party
+- <strong>Date:</strong> 2026-07-22</p>
+<p><strong>5. UK Signals Continuity on Cyber Policy — Minister Reappointed Despite Ministry Scrapping</strong>
+- <strong>Summary:</strong> Mayor Andy Burnham signalled continuity on UK cyber policy, reappointing the cyber minister despite the government's decision to scrap the dedicated ministry.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-07-23</p>
+<p><strong>6. CISA Plans to Finalise Cyber Incident Reporting Regulations in September 2026</strong>
+- <strong>Summary:</strong> CISA continues working toward finalising regulations implementing the Cyber Incident Reporting for Critical Infrastructure Act (CIRCIA) of 2022, with a final rule now expected in September 2026.
+- <strong>Source:</strong> <a href="https://www.hunton.com/privacy-and-cybersecurity-law-blog/">Hunton Privacy &amp; Cybersecurity Law Blog</a>
+- <strong>Reliability:</strong> Tier 1/4 — Official / first-party
+- <strong>Date:</strong> 2026-07-17</p>
+<p><strong>7. French Parliament Greenlights Social Media Ban for Under-15s</strong>
+- <strong>Summary:</strong> France's National Assembly passed legislation banning social media access for children under 15, one of Europe's most restrictive digital age laws.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-07-23</p>
+<blockquote>
+<p><strong>Also notable:</strong>
+- CISA added multiple KEVs to its Known Exploited Vulnerabilities Catalog (ongoing)
+- CISA urged SharePoint hardening following new exploitations</p>
+</blockquote>
+<h3>🌐 Geopolitical &amp; State-Sponsored Activity</h3>
+<p><strong>1. CISA/FBI Joint Advisory: Russian State-Sponsored Zimbra Phishing Campaign (AA26-204A)</strong>
+- <strong>Summary:</strong> CISA and international partners released a joint cybersecurity advisory detailing a Russian state-sponsored phishing campaign targeting users of the Zimbra Collaboration Suite. The advisory provides IOCs, TTPs, and mitigation guidance for organisations using Zimbra.
+- <strong>Source:</strong> <a href="https://www.cisa.gov/news-events/cybersecurity-advisories">CISA</a>
+- <strong>Reliability:</strong> Tier 1/4 — Official / first-party
+- <strong>Date:</strong> 2026-07-25</p>
+<p><strong>2. CISA Advisory: Improve Router Hygiene to Protect Against Russian State-Sponsored Targeting (AA26-194A)</strong>
+- <strong>Summary:</strong> CISA released guidance on improving router security hygiene to defend against Russian state-sponsored targeting of network infrastructure devices.
+- <strong>Source:</strong> <a href="https://www.cisa.gov/news-events/cybersecurity-advisories">CISA</a>
+- <strong>Reliability:</strong> Tier 1/4 — Official / first-party
+- <strong>Date:</strong> 2026-07-23</p>
+<p><strong>3. BlueNoroff (North Korea) Zoom Phishing Kit Profiles Crypto Wallets Before Malware Delivery</strong>
+- <strong>Summary:</strong> North Korean threat actor BlueNoroff has operationalised a sophisticated phishing platform that profiles victims' cryptocurrency wallets before delivering malware, enabling selective targeting of high-value victims via typosquatted Zoom and Microsoft Teams domains.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-07-24</p>
+<p><strong>4. Federal Agencies Broaden Alert on Iran-Linked OT Attacks</strong>
+- <strong>Summary:</strong> US federal agencies issued a broadened alert on Iran-linked attacks targeting operational technology (OT) environments, expanding previous guidance on ICS/SCADA threats.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-07-23</p>
+<p><strong>5. New Kimsuky Campaign Compromises South Korean Software Vendors</strong>
+- <strong>Summary:</strong> The North Korean Kimsuky group conducted a new campaign compromising South Korean software vendors as part of ongoing espionage operations.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-07-23</p>
+<h3>🏭 Manufacturing &amp; Critical Infrastructure</h3>
+<p><strong>1. Cl0p Affiliates Target Internet-Exposed PTC Windchill and FlexPLM With Unauthenticated RCE (CVE-2026-12569)</strong>
+- <strong>Summary:</strong> Threat actors linked to the Cl0p ransomware campaign are exploiting internet-exposed PTC Windchill and FlexPLM deployments using CVE-2026-12569 (CVSS 9.3), chaining an information disclosure with a server-side flaw for unauthenticated RCE and JSP web shell deployment. Targets include manufacturing, automotive, aerospace, and retail sectors.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-07-25</p>
+<p><strong>2. Swiss Train Maker Stadler Refuses Everest $12 Million Ransomware Demand</strong>
+- <strong>Summary:</strong> Swiss rolling stock manufacturer Stadler Rail refused to pay a $12 million ransom demand from the Everest ransomware group following a cyberattack, choosing to restore systems from backups instead.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-07-23</p>
+<h3>⚡ Energy &amp; Utilities</h3>
+<p><strong>1. Major Australian Energy Supplier Confirms Customer Data Compromised</strong>
+- <strong>Summary:</strong> A major Australian electricity infrastructure provider confirmed that customer data was compromised in a cybersecurity incident, underscoring ongoing threats to critical energy infrastructure in the region.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-07-23</p>
+<h3>🏥 Healthcare</h3>
+<p><strong>1. DentaQuest Starts Notifying 15 Million+ Individuals About May 2026 Cyber Incident</strong>
+- <strong>Summary:</strong> Dental benefits administrator DentaQuest began issuing notification letters to over 15 million individuals affected by a May 2026 cybersecurity incident — one of the largest healthcare data breaches of the year.
+- <strong>Source:</strong> <a href="https://www.hipaajournal.com/">HIPAA Journal</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-07-23</p>
+<p><strong>2. Tennessee Pathology Group Announces 170K-Record Data Breach</strong>
+- <strong>Summary:</strong> Anatomic and Clinical Laboratory Associates (ACLA) notified almost 170,000 patients about a cybersecurity incident that exposed protected health information.
+- <strong>Source:</strong> <a href="https://www.hipaajournal.com/">HIPAA Journal</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-07-24</p>
+<p><strong>3. Report Shows Surge in Malicious Insider Incidents and Mega Data Breaches</strong>
+- <strong>Summary:</strong> A new report highlights a general trend of increasing data breaches, with this year on track to set records for malicious insider incidents and mega breaches (1M+ records).
+- <strong>Source:</strong> <a href="https://www.hipaajournal.com/">HIPAA Journal</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-07-23</p>
+<p><strong>4. Heart Care Centers of Illinois Discovers Historic Phishing Attack Exposed Patient Data</strong>
+- <strong>Summary:</strong> Cardiovascular medical practice Heart Care Centers of Illinois announced that a historic phishing attack exposed certain patients' protected health information.
+- <strong>Source:</strong> <a href="https://www.hipaajournal.com/">HIPAA Journal</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-07-23</p>
+<p><strong>5. Colorado Behavioral Healthcare Provider Discovers Insider Data Breach</strong>
+- <strong>Summary:</strong> A Colorado behavioural healthcare provider discovered an insider data breach, with patient data accessed by an employee without authorisation.
+- <strong>Source:</strong> <a href="https://www.hipaajournal.com/">HIPAA Journal</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-07-23</p>
+<h3>💻 Technology &amp; Vulnerabilities</h3>
+<p><strong>1. Fastjson 1.x RCE Vulnerability Under Active Attack — No Patch Available (CVE-2026-16723, CVSS 9.0)</strong>
+- <strong>Summary:</strong> A critical unauthenticated RCE vulnerability in Alibaba's Fastjson 1.x Java JSON library (CVE-2026-16723, CVSS 9.0) is being actively targeted. No fixed version for the 1.x branch has been released. Mitigations include enabling SafeMode or migrating to Fastjson2.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-07-25</p>
+<p><strong>2. Bing Images Flaws Let Crafted SVGs Run Commands as SYSTEM on Microsoft's Servers (CVE-2026-32194/32191, CVSS 9.8)</strong>
+- <strong>Summary:</strong> XBOW researchers demonstrated that crafted SVG images submitted to Bing Image Search could execute commands as NT AUTHORITY\SYSTEM on Microsoft's production image-processing workers. Both CVEs rated 9.8, fixed server-side by Microsoft.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-07-24</p>
+<p><strong>3. GitLab RCE PoC Published — Authenticated Users Can Run Commands as Git</strong>
+- <strong>Summary:</strong> Security researchers published exploit code for a GitLab flaw allowing any authenticated user who can push to a project to execute commands as the git user. GitLab patched it in June but did not classify it as a security fix — no CVE was assigned.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-07-25</p>
+<p><strong>4. Certighost Exploit: Low-Privileged AD Users Can Impersonate a Domain Controller (CVE-2026-54121, CVSS 8.8)</strong>
+- <strong>Summary:</strong> Researchers published exploit code for an AD CS flaw (CVE-2026-54121) that lets low-privileged Active Directory users obtain a certificate for a Domain Controller and perform DCSync attacks. Patched by Microsoft ten days prior.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-07-24</p>
+<p><strong>5. ChatGPT AgentForger Flaw Could Deploy Rogue Workspace Agents via a Single Phishing Link</strong>
+- <strong>Summary:</strong> Zenity Labs disclosed a CSRF vulnerability in OpenAI's ChatGPT Workspace Agents (dubbed AgentForger) that could allow a single phishing link to stealthily build and deploy an attacker-controlled AI agent inside a victim's organisation. Patched by OpenAI as of June 8.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-07-24</p>
+<p><strong>6. SourTrade Malvertising: Browser Builds Windows Executable Using Bun Runtime</strong>
+- <strong>Summary:</strong> A malvertising campaign dubbed SourTrade makes victims' browsers build the final Windows executable themselves using a legitimate Bun runtime. The campaign has operated since late 2024, impersonating TradingView, Solana, and Luno.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-07-25</p>
+<p><strong>7. NodeBB Patches Eight AI-Found Flaws Exposing Admin Access and Private Chats</strong>
+- <strong>Summary:</strong> Aikido Security's AI penetration testing agents found eight high-severity flaws in NodeBB forum software in a six-hour code review. All versions before 4.14.0 affected; fixed in 4.14.2.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-07-24</p>
+<h3>🦠 Cybercrime &amp; Ransomware</h3>
+<p><strong>1. DevMan RaaS Portal Centralises Payload Builds, Victim Management, and Affiliate Payouts</strong>
+- <strong>Summary:</strong> PRODAFT is tracking a centrally administered RaaS operation (Funky Mantis) with a dedicated web platform offering affiliates build generation, finance, victim chat, support, and payout functions — representing an industrialisation of the ransomware service model.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-07-25</p>
+<p><strong>2. Insurance Phishing Evolves Into Real-Time Account Hijacking</strong>
+- <strong>Summary:</strong> CTM360 research reveals a shift in insurance-focused phishing: instead of harvesting credentials for later use, attackers now synchronise activity in real time, authenticating against legitimate insurance portals as victims complete the login process within a single session.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-07-25</p>
+<p><strong>3. Golden Chickens Resurfaces With Four New Malware Families</strong>
+- <strong>Summary:</strong> The Golden Chickens MaaS ecosystem has resurfaced with four new malware families (TinyEgg, ChonkyChicken, modular ChonkyChicken, ChromEggscalator), deployed via ClickFix social engineering campaigns.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-07-24</p>
+<p><strong>4. Hermes AI Agent Used Unattended for Post-Exploitation at Thailand's Ministry of Finance</strong>
+- <strong>Summary:</strong> An operator deployed the open-source Hermes AI agent in YOLO mode against Thailand's Ministry of Finance infrastructure. The agent autonomously enumerated hosts, hunted for root access, and crawled personnel records. Hunt.io and Bob Diachenko discovered the exposed logs with 585 files and 470 MB of attack tooling.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-07-24</p>
+<p><strong>5. 'Wrench' Attacks Against Crypto Holders Appear to Be on the Rise</strong>
+- <strong>Summary:</strong> Physical coercion attacks ("wrench attacks") targeting cryptocurrency holders are reportedly increasing, where attackers use physical force or threats to compel victims to transfer digital assets.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-07-26</p>
+<h3>🚚 Transportation &amp; Logistics</h3>
+<p><strong>1. Japanese Food Logistics Giant Nichirei Recovers as Extortion Group Claims Cyberattack</strong>
+- <strong>Summary:</strong> Japanese food logistics company Nichirei recovered from a cyberattack as an extortion group claimed responsibility. The incident disrupted cold-chain logistics operations.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-07-23</p>
+<h3>⚖️ Legal &amp; Regulatory</h3>
+<p><strong>1. Spain Fines 23andMe Nearly $3 Million for Cybersecurity Failings Enabling 2023 Hack</strong>
+- <strong>Summary:</strong> Spanish data protection authorities fined 23andMe approximately $3 million for cybersecurity deficiencies that enabled the 2023 data breach exposing genetic data of millions of customers.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — Established cyber journalism
+- <strong>Date:</strong> 2026-07-22</p>
+<p><strong>2. Illinois Governor Signs Frontier AI Model Law</strong>
+- <strong>Summary:</strong> Illinois Governor JB Pritzker signed the Artificial Intelligence Safety Measures Act, making Illinois the third US state to enact comprehensive safety and transparency requirements for advanced AI systems.
+- <strong>Source:</strong> <a href="https://www.hunton.com/privacy-and-cybersecurity-law-blog/">Hunton Privacy &amp; Cybersecurity Law Blog</a>
+- <strong>Reliability:</strong> Tier 1/4 — Official / first-party
+- <strong>Date:</strong> 2026-07-17</p>
+<hr />
+<h2>📊 Industry Breakdown</h2>
+<pre><code class="language-mermaid">pie showData
+    &quot;Government &amp; Policy&quot; : 7
+    &quot;Geopolitical &amp; State-Sponsored&quot; : 5
+    &quot;Technology &amp; Vulnerabilities&quot; : 7
+    &quot;Healthcare&quot; : 5
+    &quot;Cybercrime &amp; Ransomware&quot; : 5
+    &quot;Manufacturing &amp; Critical Infrastructure&quot; : 2
+    &quot;Energy &amp; Utilities&quot; : 1
+    &quot;Transportation &amp; Logistics&quot; : 1
+    &quot;Legal &amp; Regulatory&quot; : 2
+</code></pre>
+<hr />
+<h2>📊 Source Reliability Index</h2>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Very High</td>
+<td>Official / first-party</td>
+</tr>
+<tr>
+<td>2</td>
+<td>High</td>
+<td>Established cyber journalism</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Moderate</td>
+<td>General tech/news media</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Low</td>
+<td>Social / unverified</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Source Diversity</h2>
+<p><code>Digest generated 2026-07-26. Sources: The Hacker News (11), HIPAA Journal (5), The Record (12), CISA (4), Hunton Privacy &amp; Cybersecurity Law Blog (5). No single source exceeded 40% threshold.</code></p></body></html>

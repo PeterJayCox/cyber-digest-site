@@ -1,0 +1,35 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Friendly Fire (AI Agent Hijacking)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css"></head><body>
+<nav class="topnav"><div class="inner">
+        <a class="brand" href="index.html"><span class="dot"></span>Cyber&nbsp;Digest<small>public site</small></a>
+        <div class="navlinks"><a href="index.html" class=""><span class="t">🏠 Home</span></a><a href="stories.html" class=""><span class="t">📚 Story DB</span></a><a href="daily/" class=""><span class="t">🗓️ Daily</span></a><a href="monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a></div></div></nav><main class="container">
+            <div class="container">
+            <div class="crumb"><a href="../index.html">Home</a> · <a href="../wiki/index.html">Wiki</a> · Concepts &amp; Frameworks</div>
+            <div class="wiki-body"><div class="frontmatter">created: 2026-07-11 · updated: 2026-07-11 · type: concept · tags: [technique, supply-chain, rat] · confidence: medium · affected_sectors: [technology] · au_impact: false</div><h1>Friendly Fire — AI Agent Hijacking</h1>
+<p>Friendly Fire is a proof-of-concept attack published by the Ai Now Institute demonstrating that autonomous AI coding agents (Claude Code and Openai Codex) can be hijacked to execute attacker code during vulnerability scanning of <strong>untrusted third-party code</strong>.</p>
+<h2>The Attack</h2>
+<ol>
+<li>An AI coding agent is asked to scan or review a repository for vulnerabilities</li>
+<li>The repository contains <strong>maliciously crafted code</strong> that exploits the agent's autonomy</li>
+<li>The agent executes the attacker's code instead of safely analysing it</li>
+<li>The attacker gains code execution on the agent's host</li>
+</ol>
+<h2>Implications</h2>
+<ul>
+<li>AI coding agents' <strong>autonomy becomes an attack surface</strong></li>
+<li>Reviewing untrusted code with autonomous agents creates a new risk</li>
+<li>Distinction between "reviewing" and "executing" code is blurred for AI agents <span class="fn">(raw/digests/Cyber-Digest-2026-07-10)</span></li>
+</ul>
+<h2>Related Pages</h2>
+<ul>
+<li><a href="hallusquatting.html">Hallusquatting</a> — AI coding assistant package-name hallucination attacks</li>
+<li><a href="ghostapproval.html">Ghostapproval</a> — Symlink attacks on AI coding assistants</li>
+<li><a href="mcp-tool-poisoning.html">Mcp Tool Poisoning</a> — Tool description poisoning</li>
+</ul></div>
+            </div></main>
+<div class="footer">Cyber Digest public site · built 2026-08-08 15:35 · AU security intelligence</div>
+</body></html>

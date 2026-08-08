@@ -1,0 +1,196 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><title>2026-07-10</title></head><body><h1>🛡️ Cyber Digest — 2026-07-10 (Daily)</h1>
+<p><em>A daily roundup of key cybersecurity developments across sectors</em></p>
+<h2>📋 Executive Summary</h2>
+<p>Today's news brings fresh developments in <strong>mobile privacy, authentication phishing, and malware</strong>. A University of Michigan study of 281 free Android VPN apps (MVPNalyzer) found that 29 leak traffic outside the tunnel, 61 send data in plain text, and 5 expose configuration files — all with 2.4 billion cumulative installs. Separately, Okta tracked a threat actor (O-UNC-066) using voice phishing ("vishing") to trick Microsoft 365 users into enrolling fake Entra passkeys, targeting multiple industries.</p>
+<p>On the malware front, Microsoft detailed <strong>GigaWiper</strong> (also BLUERABBIT), a destructive Windows backdoor tied to likely Iranian actors. Wiz published <strong>GhostApproval</strong> symlink attacks against six AI coding assistants. The <strong>ACSC critical alert</strong> on CMS exploitation remains active for Australian organisations. The <strong>EU took member states to court</strong> over unimplemented NIS2 cybersecurity law, and the <strong>NSA revived the Tailored Access Operations brand</strong> for its elite hacking unit.</p>
+<hr />
+<h2>Sector Reports</h2>
+<h3>💻 IT / Technology</h3>
+<p><strong>1. Study of 281 Free Android VPN Apps Finds Traffic Leaks, Unencrypted Data, and Tracking</strong>
+- <strong>Summary:</strong> Researchers at the University of Michigan, University of New Mexico, and IIT Delhi tested 281 popular free Android VPN apps using MVPNalyzer. 29 apps leak traffic outside the encrypted tunnel; 61 send data in plain text; 5 expose configuration files, enabling attacker-in-the-middle redirection. The flagged apps have been installed over 2.4 billion times. The findings were presented at NDSS 2026.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-10
+- <strong>Threat type:</strong> Privacy | <strong>Geo:</strong> Global | <strong>ANZSIC:</strong> M (Computer System Design)</p>
+<p><strong>2. Hackers Use Fake Microsoft Entra Passkey Enrollment to Gain Microsoft 365 Access</strong>
+- <strong>Summary:</strong> Okta tracked threat actor O-UNC-066 using voice phishing (vishing) to call users and persuade them to enroll a fake passkey for Microsoft 365. The phishing kit is identical to the real Microsoft Entra passkey enrollment process. Sectors targeted include food/beverage, technology, healthcare, automotive, construction, and aviation.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-10
+- <strong>Threat type:</strong> Phishing / BEC | <strong>Geo:</strong> Global | <strong>ANZSIC:</strong> M (Computer System Design)</p>
+<p><strong>3. GhostApproval: Symlink Flaws in Six AI Coding Assistants</strong>
+- <strong>Summary:</strong> Wiz disclosed GhostApproval affecting Amazon Q Developer, Claude Code, Augment, Cursor, Google Antigravity, and Windsurf. A malicious repo uses unverified symlinks so a harmless-looking approval-file write lands on a sensitive system file. Three of six shipped fixes.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-09
+- <strong>Threat type:</strong> AI Security | <strong>Geo:</strong> Global | <strong>ANZSIC:</strong> M (Computer System Design)</p>
+<p><strong>4. Friendly Fire: AI Coding Agents Can Be Tricked Into Running Malicious Code</strong>
+- <strong>Summary:</strong> AI Now Institute published a proof-of-concept showing autonomous Claude Code and OpenAI Codex can be hijacked to execute attacker code during vulnerability scanning of untrusted third-party code.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-09
+- <strong>Threat type:</strong> AI Security | <strong>Geo:</strong> US | <strong>ANZSIC:</strong> M (Computer System Design)</p>
+<p><strong>5. npm 12 Disables Install Scripts by Default to Reduce Supply Chain Risk</strong>
+- <strong>Summary:</strong> GitHub released npm 12 with lifecycle scripts, Git deps, and remote URL deps all defaulting to off. Users must explicitly approve trusted packages. Granular access tokens bypassing 2FA also deprecated.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-09
+- <strong>Threat type:</strong> Supply Chain | <strong>Geo:</strong> Global | <strong>ANZSIC:</strong> M (Computer System Design)</p>
+<p><strong>6. Microsoft Patches RoguePlanet Defender Flaw (CVE-2026-50656)</strong>
+- <strong>Summary:</strong> Microsoft patched a race condition in mpengine.dll granting SYSTEM shell. CVSS 7.8. Patched in version 1.1.26060.3008.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-09
+- <strong>Threat type:</strong> Zero-day / Vuln | <strong>Geo:</strong> US | <strong>ANZSIC:</strong> M (Computer System Design)</p>
+<p><strong>7. GigaWiper Windows Backdoor Bundles Disk Wiping, Fake Ransomware, Spyware</strong>
+- <strong>Summary:</strong> Microsoft analyzed GigaWiper (also BLUERABBIT), a destructive Windows backdoor combining three older destructive programs. Google GTIG ties to likely Iran-linked actors. No patch — defence rests on detection and offline backups.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-09
+- <strong>Threat type:</strong> Malware | <strong>Geo:</strong> Global | <strong>ANZSIC:</strong> M (Computer System Design)</p>
+<p><strong>8. Dormant GitHub Accounts Mapping Corporate Orgs</strong>
+- <strong>Summary:</strong> Datadog Security Labs warns of campaigns using 50+ dormant GitHub "ghost" accounts and compromised PATs to enumerate organisations and clone private repositories.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-09
+- <strong>Threat type:</strong> Other | <strong>Geo:</strong> Global | <strong>ANZSIC:</strong> M (Computer System Design)</p>
+<p><strong>9. GodDamn Ransomware Uses PoisonX Driver to Disable Endpoint Defenses</strong>
+- <strong>Summary:</strong> Symantec flagged GodDamn ransomware (rebrand of Beast/Monster lineage tracked as "Hyadina") using the PoisonX kernel driver for defense evasion. Used AnyDesk for remote access and NirSoft credential harvesting.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-09
+- <strong>Threat type:</strong> Ransomware | <strong>Geo:</strong> Global | <strong>ANZSIC:</strong> M (Computer System Design)</p>
+<p><strong>10. Fake 7-Zip Installers Turn Devices Into Residential Proxy Nodes</strong>
+- <strong>Summary:</strong> Infoblox disclosed "Lurking Lizard" operating a residential proxy business via 230+ lookalike domains, including trojanized 7-Zip installers. Activity dating to at least August 2022.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-09
+- <strong>Threat type:</strong> Malware | <strong>Geo:</strong> Global | <strong>ANZSIC:</strong> M (Computer System Design)</p>
+<h3>🏛️ Government</h3>
+<p><strong>1. EU Takes Member States to Court Over Unimplemented Cybersecurity Law</strong>
+- <strong>Summary:</strong> The European Commission escalated enforcement by taking member states to court for failing to transpose NIS2 cybersecurity directives into national law.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-10
+- <strong>Threat type:</strong> Regulatory / Policy | <strong>Geo:</strong> Europe | <strong>ANZSIC:</strong> O (Government Admin)</p>
+<p><strong>2. NSA Revives "Tailored Access Operations" Name for Elite Hacking Unit</strong>
+- <strong>Summary:</strong> The NSA revived the TAO branding for its elite offensive cyber unit, signalling renewed focus on computer network exploitation.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-09
+- <strong>Threat type:</strong> APT / Nation-State | <strong>Geo:</strong> US | <strong>ANZSIC:</strong> O (Defence)</p>
+<p><strong>3. CISA Adds Multiple KEVs, Urges Fortinet Hardening</strong>
+- <strong>Summary:</strong> CISA added several Known Exploited Vulnerabilities to the catalog and urged Fortinet device hardening after credential exposure reports. The Adobe ColdFusion CVE-2026-48282 (CVSS 10) KEV due date is today.
+- <strong>Source:</strong> <a href="https://www.cisa.gov/news-events/cybersecurity-advisories">CISA</a>
+- <strong>Reliability:</strong> Tier 1/4 — Very High
+- <strong>Date:</strong> 2026-07-10
+- <strong>Threat type:</strong> Zero-day / Vuln | <strong>Geo:</strong> US | <strong>ANZSIC:</strong> O (Government Admin)</p>
+<p><strong>4. Taiwan Charges Two Businessmen Over Chinese Espionage Campaign</strong>
+- <strong>Summary:</strong> Taiwan's MJIB charged two businessmen for alleged roles in a Chinese espionage campaign targeting government agencies and tech firms.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-08
+- <strong>Threat type:</strong> APT / Nation-State | <strong>Geo:</strong> APAC | <strong>ANZSIC:</strong> O (Government Admin)</p>
+<p><strong>5. Spain Arrests Alleged Supporter of Pro-Russian Hacktivist Groups</strong>
+- <strong>Summary:</strong> Spanish police arrested an individual linked to pro-Russian hacktivist activity after an FBI tip.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-08
+- <strong>Threat type:</strong> APT / Nation-State | <strong>Geo:</strong> Europe | <strong>ANZSIC:</strong> O (Government Admin)</p>
+<h3>🛡️ Defence</h3>
+<p><strong>1. Britain Plans Autonomous AI "Cyber Shield"</strong>
+- <strong>Summary:</strong> UK government unveiled plans for an autonomous AI-powered Cyber Shield to defend national infrastructure at machine speed.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-07
+- <strong>Threat type:</strong> AI Security | <strong>Geo:</strong> Europe | <strong>ANZSIC:</strong> O (Defence)</p>
+<p><strong>2. EU Unveils Cyber Plan to Reduce Reliance on Foreign AI</strong>
+- <strong>Summary:</strong> EU published a plan to reduce strategic dependence on foreign AI systems, including sovereign AI training infrastructure.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-08
+- <strong>Threat type:</strong> Regulatory / Policy | <strong>Geo:</strong> Europe | <strong>ANZSIC:</strong> O (Government Admin)</p>
+<h3>🇦🇺 Australian</h3>
+<p><strong>1. [CRITICAL] ACSC Tracks Large-Scale Exploitation Campaign Targeting CMS</strong>
+- <strong>Summary:</strong> ASD's ACSC issued a critical alert on large-scale exploitation targeting CMS vulnerabilities. Affects AU small/medium businesses, critical infrastructure, and government.
+- <strong>Source:</strong> <a href="https://www.cyber.gov.au/">ACSC / cyber.gov.au</a>
+- <strong>Reliability:</strong> Tier 1/4 — Very High
+- <strong>Date:</strong> 2026-07-09
+- <strong>Threat type:</strong> Zero-day / Vuln | <strong>Geo:</strong> Australia | <strong>ANZSIC:</strong> O (Government Admin)</p>
+<h3>💰 Financial Services</h3>
+<p><strong>1. Cash App Owner to Pay $45 Million to Settle Lax Security Allegations</strong>
+- <strong>Summary:</strong> Block Inc. (Cash App) agreed to a $45 million settlement over alleged weak security practices. (Recurring story — appears across multiple July digests.)
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-08
+- <strong>Threat type:</strong> Regulatory / Policy | <strong>Geo:</strong> US | <strong>ANZSIC:</strong> K (Finance)</p>
+<p><strong>2. Global Operation First Light 2026: ~6,000 Arrests</strong>
+- <strong>Summary:</strong> 97-country operation produced 5,811 arrests, $293M seized targeting social engineering scams and money laundering.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-09
+- <strong>Threat type:</strong> Fraud / Cybercrime | <strong>Geo:</strong> Global | <strong>ANZSIC:</strong> O (Government Admin)</p>
+<h3>🏭 Manufacturing</h3>
+<p><strong>1. Latvian Forestry Company Still Restoring Systems After Ransomware Attack</strong>
+- <strong>Summary:</strong> A Latvian forestry company continues recovery weeks after a ransomware attack, illustrating industrial sector vulnerability.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-09
+- <strong>Threat type:</strong> Ransomware | <strong>Geo:</strong> Europe | <strong>ANZSIC:</strong> C (Manufacturing)</p>
+<h3>🎬 Media &amp; Entertainment</h3>
+<p><strong>1. Greek Victims File Lawsuit Against Intellexa Over Predator Spyware</strong>
+- <strong>Summary:</strong> Greek citizens filed suit against Intellexa over Predator spyware surveillance, adding to legal pressure on spyware vendors.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-08
+- <strong>Threat type:</strong> Regulatory / Policy | <strong>Geo:</strong> Europe | <strong>ANZSIC:</strong> R (Arts &amp; Entertainment)</p>
+<h3>🌐 General / Cross-Sector</h3>
+<p><strong>1. IRIS C2 Startup Run by Felons (Krebs Investigation)</strong>
+- <strong>Summary:</strong> Krebs revealed IRIS C2 zero-day exploit acquisition startup is run by convicted felons Burkman and Wohl via Calvexa Group LLC.
+- <strong>Source:</strong> <a href="https://krebsonsecurity.com/">Krebs on Security</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-08
+- <strong>Threat type:</strong> Other | <strong>Geo:</strong> US | <strong>ANZSIC:</strong> NULL</p>
+<hr />
+<h2>📊 Source Reliability Index</h2>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Label</th>
+<th>Sources Used This Digest</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Very High</strong></td>
+<td>CISA, ACSC</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>High</strong></td>
+<td>The Hacker News, The Record, Krebs on Security</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Moderate</strong></td>
+<td>—</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Low</strong></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>📝 Methodology Notes</h2>
+<ul>
+<li><strong>Cadence:</strong> daily (focus ~last 24–48 hours; older high-signal stories retained).</li>
+<li><strong>Source diversity:</strong> 10 stories from THN, 6 from The Record, 1 from Krebs, 1 from CISA, 1 from ACSC. THN at 53% — flagged for exceeding 40% threshold.</li>
+<li><strong>New columns populated:</strong> threat_type, geo_region, anzsic_code, is_recurring (Cash App settlement marked recurring), score.</li>
+<li><strong>Overwrite:</strong> Replaces the earlier 2026-07-10 digest.</li>
+</ul>
+<hr />
+<p><em>Generated by Hermes Agent — Cyber Digest Pipeline (Daily)</em></p></body></html>

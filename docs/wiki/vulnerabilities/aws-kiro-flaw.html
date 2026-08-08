@@ -1,0 +1,72 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Kiro IDE MCP Config Flaw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css"></head><body>
+<nav class="topnav"><div class="inner">
+        <a class="brand" href="index.html"><span class="dot"></span>Cyber&nbsp;Digest<small>public site</small></a>
+        <div class="navlinks"><a href="index.html" class=""><span class="t">🏠 Home</span></a><a href="stories.html" class=""><span class="t">📚 Story DB</span></a><a href="daily/" class=""><span class="t">🗓️ Daily</span></a><a href="monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a></div></div></nav><main class="container">
+            <div class="container">
+            <div class="crumb"><a href="../index.html">Home</a> · <a href="../wiki/index.html">Wiki</a> · Vulnerabilities &amp; CVEs</div>
+            <div class="wiki-body"><div class="frontmatter">created: 2026-07-23 · updated: 2026-07-23 · type: cve · tags: [cve, mcp, ide, aws, config-poisoning, code-execution] · confidence: high · affected_sectors: [technology] · au_impact: true</div><h1>AWS Kiro IDE MCP Config Flaw</h1>
+<p>Researchers at <strong>Intezer</strong> and <strong>Kodem Security</strong> discovered that a poisoned web page could make <strong>AWS Kiro</strong> — AWS's agentic coding IDE — rewrite its configuration file (<code>mcp.json</code>) and run attacker-controlled code, with <strong>no approval step</strong> capable of stopping it. AWS has patched the issue.</p>
+<h2>Vulnerability Details</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Product</strong></td>
+<td>AWS Kiro (agentic coding IDE)</td>
+</tr>
+<tr>
+<td><strong>Weak point</strong></td>
+<td>MCP server config file (<code>mcp.json</code>)</td>
+</tr>
+<tr>
+<td><strong>Attack vector</strong></td>
+<td>Poisoned web page triggers config rewrite → arbitrary code execution</td>
+</tr>
+<tr>
+<td><strong>Approval bypass</strong></td>
+<td>No user approval step could prevent the attack</td>
+</tr>
+<tr>
+<td><strong>Discovered by</strong></td>
+<td>Intezer &amp; Kodem Security</td>
+</tr>
+<tr>
+<td><strong>Status</strong></td>
+<td>Patched by AWS</td>
+</tr>
+<tr>
+<td><strong>Disclosure date</strong></td>
+<td>2026-07-21</td>
+</tr>
+</tbody>
+</table>
+<h2>Attack Vector</h2>
+<p>The MCP (Model Context Protocol) server configuration in Kiro's <code>mcp.json</code> file was writable by the agent without user consent. A malicious web page could cause the agent to:
+1. Rewrite <code>mcp.json</code> with attacker-controlled MCP server definitions
+2. Trigger execution of arbitrary code through the poisoned MCP servers
+3. No approval prompt was shown to the user</p>
+<p>This is another example of <strong>MCP trust-boundary weaknesses</strong> in AI coding assistants.</p>
+<h2>Mitigation</h2>
+<ul>
+<li>AWS has patched the issue — Kiro users should ensure they are running the latest version</li>
+<li>Organisations using agentic IDEs should review MCP server configuration permissions</li>
+</ul>
+<h2>Related Pages</h2>
+<ul>
+<li><a href="../concepts/mcp-tool-poisoning.html">Mcp Tool Poisoning</a> — Poisoned MCP tool descriptions trick AI agents into leaking data</li>
+<li><a href="../concepts/ghostapproval.html">Ghostapproval</a> — Symlink attacks on AI coding assistants (related approval-bypass pattern)</li>
+<li><a href="../concepts/friendly-fire-ai-hijacking.html">Friendly Fire Ai Hijacking</a> — AI agent hijacking during untrusted code review</li>
+</ul></div>
+            </div></main>
+<div class="footer">Cyber Digest public site · built 2026-08-08 15:35 · AU security intelligence</div>
+</body></html>

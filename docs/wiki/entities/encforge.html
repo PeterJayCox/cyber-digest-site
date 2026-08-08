@@ -1,0 +1,37 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ENCFORGE — AI-Focused Go Ransomware</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css"></head><body>
+<nav class="topnav"><div class="inner">
+        <a class="brand" href="index.html"><span class="dot"></span>Cyber&nbsp;Digest<small>public site</small></a>
+        <div class="navlinks"><a href="index.html" class=""><span class="t">🏠 Home</span></a><a href="stories.html" class=""><span class="t">📚 Story DB</span></a><a href="daily/" class=""><span class="t">🗓️ Daily</span></a><a href="monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a></div></div></nav><main class="container">
+            <div class="container">
+            <div class="crumb"><a href="../index.html">Home</a> · <a href="../wiki/index.html">Wiki</a> · Entities &amp; Threat Actors</div>
+            <div class="wiki-body"><div class="frontmatter">created: 2026-07-21 · updated: 2026-07-21 · type: entity · tags: [ransomware, loader] · confidence: medium · affected_sectors: [technology] · au_impact: false</div><h1>ENCFORGE — AI-Focused Go Ransomware</h1>
+<p>ENCFORGE is a <strong>compiled Go ransomware</strong> specifically designed to encrypt <strong>AI infrastructure files</strong>. Discovered by Sysdig researchers in July 2026, it is deployed by the <a href="jadepuffer.html">Jadepuffer</a> AI-agent-driven operator.</p>
+<h2>Capabilities</h2>
+<ul>
+<li>Encrypts <strong>model weights</strong> (AI/ML model files)</li>
+<li>Encrypts <strong>vector Indexes</strong> (vector database files)</li>
+<li>Encrypts <strong>training datasets</strong> (structured/unstructured training data)</li>
+<li>Targets other <strong>AI infrastructure files</strong> (configuration, pipeline artifacts)</li>
+<li>Compiled in Go suggesting cross-platform capability</li>
+</ul>
+<h2>Distribution</h2>
+<ul>
+<li>Deployed via <a href="jadepuffer.html">Jadepuffer</a> attacks on Langflow servers</li>
+<li>Entry vector: CVE-2025-3248 (CVSS 9.8), a critical Langflow vulnerability</li>
+<li>Second attack on same Langflow server linked to same operator</li>
+</ul>
+<h2>Significance</h2>
+<p>ENCFORGE represents a <strong>targeted evolution in ransomware</strong> — moving beyond general-purpose encryption to specifically target the crown jewels of AI operations: trained model weights and training data. This is more destructive than general ransomware for organisations running AI workloads, as model weights may be irreplaceable if backups do not exist.</p>
+<h2>Related Pages</h2>
+<ul>
+<li><a href="jadepuffer.html">Jadepuffer</a> — The threat actor deploying ENCFORGE</li>
+<li><a href="nadmesh-botnet.html">Nadmesh Botnet</a> — Go-based botnet scanning for exposed AI services</li>
+</ul></div>
+            </div></main>
+<div class="footer">Cyber Digest public site · built 2026-08-08 15:35 · AU security intelligence</div>
+</body></html>

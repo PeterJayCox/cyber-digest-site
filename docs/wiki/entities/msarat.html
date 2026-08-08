@@ -1,0 +1,73 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>msaRAT — Chaos Ransomware Headless Browser C2 Implant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css"></head><body>
+<nav class="topnav"><div class="inner">
+        <a class="brand" href="index.html"><span class="dot"></span>Cyber&nbsp;Digest<small>public site</small></a>
+        <div class="navlinks"><a href="index.html" class=""><span class="t">🏠 Home</span></a><a href="stories.html" class=""><span class="t">📚 Story DB</span></a><a href="daily/" class=""><span class="t">🗓️ Daily</span></a><a href="monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a></div></div></nav><main class="container">
+            <div class="container">
+            <div class="crumb"><a href="../index.html">Home</a> · <a href="../wiki/index.html">Wiki</a> · Entities &amp; Threat Actors</div>
+            <div class="wiki-body"><div class="frontmatter">created: 2026-07-24 · updated: 2026-07-24 · type: entity · tags: [malware, rat, c2, ransomware, rust, chrome-devtools-protocol, evasion] · confidence: high · affected_sectors: [technology] · au_impact: false</div><h1>msaRAT — Chaos Ransomware C2 Implant</h1>
+<p><strong>msaRAT</strong> is a Rust-based remote access trojan developed and deployed by the <strong>Chaos ransomware group</strong>, detailed by <strong>Cisco Talos</strong> in July 2026. It employs a novel C2 architecture that routes all traffic through the victim's own headless browser.</p>
+<h2>Technical Details</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Language</strong></td>
+<td>Rust</td>
+</tr>
+<tr>
+<td><strong>Operator</strong></td>
+<td>Chaos ransomware group</td>
+</tr>
+<tr>
+<td><strong>Discovered by</strong></td>
+<td>Cisco Talos</td>
+</tr>
+<tr>
+<td><strong>C2 Method</strong></td>
+<td>Headless Chrome/Edge via Chrome DevTools Protocol</td>
+</tr>
+<tr>
+<td><strong>Transport</strong></td>
+<td>WebRTC data channels over Twilio TURN relay</td>
+</tr>
+</tbody>
+</table>
+<h2>Novel C2 Architecture</h2>
+<p>msaRAT's key innovation is that it:</p>
+<ol>
+<li>Launches <strong>Chrome or Edge in headless mode</strong> on the compromised machine</li>
+<li>Drives the browser programmatically via the <strong>Chrome DevTools Protocol (CDP)</strong></li>
+<li>Routes all C2 traffic through <strong>WebRTC data channels</strong></li>
+<li>Relays traffic through <strong>Twilio's TURN service</strong></li>
+</ol>
+<p>The result is that the <strong>attacker's server address never appears on the wire</strong>. Defenders see only:</p>
+<ul>
+<li>Browser-originating traffic to Cloudflare (CDN)</li>
+<li>WebRTC/STUN/TURN traffic to Twilio infrastructure</li>
+</ul>
+<h2>Implications</h2>
+<ul>
+<li><strong>Defence evasion</strong> — Traditional network monitoring tools see normal browser traffic, not C2</li>
+<li><strong>No static C2 infrastructure</strong> — The attacker's server is behind Cloudflare and Twilio</li>
+<li><strong>Hard to block</strong> — Blocking Cloudflare or Twilio would impact legitimate services</li>
+<li><strong>Cross-platform</strong> — Written in Rust, potentially portable beyond Windows</li>
+</ul>
+<h2>Related Pages</h2>
+<ul>
+<li><a href="encforge.html">Encforge</a> — <a href="encforge.html">Encforge</a> ransomware (another novel ransomware in the same period)</li>
+<li><a href="goddamn-ransomware.html">Goddamn Ransomware</a> — GodDamn ransomware with kernel driver EDR evasion (related evasion theme)</li>
+<li><a href="modbeacon-rat.html">Modbeacon Rat</a> — MODBEACON Rust-based RAT with gRPC streaming C2 (different architecture, same language)</li>
+</ul></div>
+            </div></main>
+<div class="footer">Cyber Digest public site · built 2026-08-08 15:35 · AU security intelligence</div>
+</body></html>

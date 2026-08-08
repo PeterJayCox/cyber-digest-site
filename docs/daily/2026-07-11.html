@@ -1,0 +1,155 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><title>2026-07-11</title></head><body><h1>🛡️ Cyber Digest — 2026-07-11 (Daily)</h1>
+<p><em>A daily roundup of key cybersecurity developments across sectors</em></p>
+<h2>📋 Executive Summary</h2>
+<p>A busy 48 hours in cyber: <strong>Progress Software</strong> urgently told ShareFile customers to shut down Storage Zone Controllers over a "credible external security threat" — the third major Progress incident (MOVEit, WS_FTP) in as many years. <strong>Europe revived its controversial CSAM-scanning law</strong>, pushing big tech to deploy client-side scanning. In law enforcement wins, a <strong>Ryuk ransomware operator pleaded guilty</strong> in the UK and a <strong>BlackCat/AlphV conspirator received a nearly 6-year sentence</strong>, while a former ransomware negotiator was sentenced to 70 months for feeding victim intel to the BlackCat gang. The <strong>ACSC</strong> issued a critical alert over a large-scale CMS exploitation campaign targeting Australian infrastructure. Meanwhile, the <strong>Injective Labs</strong> GitHub compromise pushed wallet-key-stealing npm packages, and researchers uncovered a massive <strong>WP-SHELLSTORM</strong> webshell brokerage that backdoored thousands of WordPress sites.</p>
+<hr />
+<h2>Sector Reports</h2>
+<h3>💻 IT / Technology</h3>
+<p><strong>1. Progress Tells ShareFile Customers to Shut Down Storage Zone Controllers Over Security Threat</strong>
+- <strong>Summary:</strong> Progress Software has told ShareFile customers to shut down the Windows servers running their Storage Zone Controllers, responding to what it described as a "credible external security threat." The company temporarily disabled affected accounts "out of an abundance of caution" while working with security experts. No unauthorized access to ShareFile accounts or data has been confirmed. The order became public after a customer posted the company's email to Reddit's r/sysadmin on July 10. This follows Progress's history of high-profile incidents including the MOVEit Transfer and WS_FTP Server breaches.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-10</p>
+<p><strong>2. Injective Labs GitHub Compromise Pushes Wallet-Key-Stealing npm Packages</strong>
+- <strong>Summary:</strong> Unknown threat actors compromised the Injective Labs SDK project's GitHub repository and published a malicious @injectivelabs/sdk-ts@1.20.21 package on npm designed to steal cryptocurrency wallet private keys and mnemonic seed phrases. The malicious code — pushed via commits from a compromised developer account — also published the tainted version across 17 additional @injective packages. Socket identified the supply chain attack, which has since been deprecated but remains downloadable from GitHub.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-10</p>
+<p><strong>3. Six New U-Boot Flaws Could Let Attackers Crash Devices or Run Code at Boot</strong>
+- <strong>Summary:</strong> Binarly researchers discovered six vulnerabilities in U-Boot, the widely-used bootloader powering everything from home routers to datacenter servers. Four can crash a device; the other two let an attacker who slips a malicious FIT image past signature verification execute arbitrary code before the OS loads. All six flaws are reachable before signature checking completes, fundamentally undermining U-Boot's secure boot guarantees.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a> (original research: Binarly)
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-10</p>
+<p><strong>4. New MODBEACON RAT Uses gRPC Streaming for Encrypted C2 Traffic</strong>
+- <strong>Summary:</strong> QiAnXin attributed a new Rust-based remote access trojan called MODBEACON to the China-linked Silver Fox cybercrime group. MODBEACON uses gRPC streaming for encrypted C2 communication, with infrastructure hosted on Amazon and Cloudflare CDN. The group distributes malware via counterfeit software installers using SEO poisoning, targeting technology, education, and state-owned enterprises across Asia.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a> (original research: QiAnXin)
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-10</p>
+<p><strong>5. Exposed Hacker Server Reveals WP-SHELLSTORM Backdooring Thousands of WordPress Sites</strong>
+- <strong>Summary:</strong> A cybercrime crew left its command server exposed for three weeks, revealing the inner workings of a webshell access brokerage tracked as WP-SHELLSTORM. The exposed server showed target lists of over 1.4 million websites, with active backdoors installed via compromised WordPress sites running outdated plugins — particularly the Breeze caching plugin and Joomla's JCE editor. SOCRadar identified the operation after spotting the exposed folder on June 11.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a> (original research: SOCRadar)
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-10</p>
+<hr />
+<h3>🏛️ Government</h3>
+<p><strong>1. Europe Revives Law Allowing Big Tech to Scan for CSAM</strong>
+- <strong>Summary:</strong> The European Parliament revived legislation that would require major technology platforms to scan private communications (including encrypted messages) for child sexual abuse material (CSAM). The revived bill rekindles the long-running debate between child safety advocates and privacy defenders, with encryption experts warning the scanning requirements would fundamentally weaken end-to-end encryption for all users.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-11</p>
+<p><strong>2. EU Takes Member States to Court Over Unimplemented Cybersecurity Law</strong>
+- <strong>Summary:</strong> The European Commission has taken several EU member states to court for failing to transpose the NIS2 cybersecurity directive into national law. The directive, which strengthens security requirements for critical infrastructure operators and expands the sectors covered, was due for implementation by October 2024. The court action signals growing EU frustration with slow member-state adoption of harmonised cyber resilience rules.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-09</p>
+<p><strong>3. ACSC Warns of Large-Scale Exploitation Campaign Targeting Website CMS</strong>
+- <strong>Summary:</strong> The Australian Signals Directorate's Australian Cyber Security Centre (ASD's ACSC) issued a critical-rated alert tracking a large-scale exploitation campaign targeting multiple vulnerabilities in web content management systems. The campaign poses a significant threat to Australian small &amp; medium businesses, organisations and critical infrastructure, and government agencies. Specific vulnerabilities and mitigations were detailed in the advisory.
+- <strong>Source:</strong> <a href="https://www.cyber.gov.au/">ACSC (Cyber.gov.au)</a>
+- <strong>Reliability:</strong> Tier 1/4 — Very High
+- <strong>Date:</strong> 2026-07-09</p>
+<p><strong>4. CISA Adds Multiple Known Exploited Vulnerabilities to Catalog</strong>
+- <strong>Summary:</strong> CISA continued updating its Known Exploited Vulnerabilities (KEV) catalog, adding several new entries requiring federal agency remediation. The agency's recent advisories also included a joint alert on Russian intelligence services targeting commercial messaging applications, and guidance urging hardening of Fortinet devices after reports of credential exposure.
+- <strong>Source:</strong> <a href="https://www.cisa.gov/news-events/cybersecurity-advisories">CISA</a>
+- <strong>Reliability:</strong> Tier 1/4 — Very High
+- <strong>Date:</strong> 2026-07-09</p>
+<hr />
+<h3>💰 Financial Services</h3>
+<p><strong>1. Ryuk Operator Pleads Guilty; BlackCat/AlphV Conspirator Gets Nearly 6-Year Sentence</strong>
+- <strong>Summary:</strong> In a major law enforcement double-header, a Ryuk ransomware operator pleaded guilty in the UK while a co-conspirator in the BlackCat/AlphV ransomware group was sentenced to nearly six years in prison. The cases demonstrate ongoing international cooperation in dismantling ransomware operations — Ryuk caused hundreds of millions in damages globally, including significant healthcare sector disruptions.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-11</p>
+<p><strong>2. Cash App Owner to Pay $45 Million to Settle Allegations of Lax Security</strong>
+- <strong>Summary:</strong> The parent company of Cash App has agreed to pay $45 million to settle regulatory allegations of inadequate security practices. The settlement comes amid broader scrutiny of financial technology companies' security postures, particularly regarding customer data protection and incident response procedures.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-09</p>
+<p><strong>3. Ransomware Negotiator Gets 70 Months in Prison for Aiding BlackCat</strong>
+- <strong>Summary:</strong> Angelo Martino, 41, of Florida was sentenced to 70 months in prison for conspiring with the BlackCat ransomware group while working as a paid ransomware negotiator. Federal prosecutors described him as a "double agent" who provided victim negotiating positions and strategies to the attackers without victim knowledge. Martino worked on behalf of five victims while covertly assisting the cybercriminals.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-10</p>
+<hr />
+<h3>🛡️ Defence</h3>
+<p><strong>1. China, India Ran Separate Spying Campaigns Against Same Pakistani Police Force</strong>
+- <strong>Summary:</strong> Researchers detailed that both Chinese and Indian state-sponsored cyber espionage groups ran separate, independent intelligence-gathering campaigns targeting the same Pakistani police force. The parallel targeting highlights the complex geopolitical dynamics in South Asia, with both nations seeking intelligence on Pakistani law enforcement operations and capabilities.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-10</p>
+<p><strong>2. NSA Revives 'Tailored Access Operations' Name for Elite Hacking Unit</strong>
+- <strong>Summary:</strong> The National Security Agency has revived its storied "Tailored Access Operations" (TAO) designation for its elite offensive hacking unit. TAO, long considered one of the US government's most advanced cyber operations units, originally operated under that name before being reorganised. The revival signals renewed emphasis on offensive cyber capabilities and sustained access operations.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-10</p>
+<hr />
+<h3>🌐 General / Cross-Sector</h3>
+<p><strong>1. Hackers Use Fake Microsoft Entra Passkey Enrollment to Gain Microsoft 365 Access</strong>
+- <strong>Summary:</strong> A threat actor tracked as O-UNC-066 by Okta is using voice-based phishing ("vishing") to trick Microsoft 365 users into enrolling a fake Entra passkey. Attackers call targets, claim they need to register a new passkey, and direct them to a phishing kit identical to the legitimate Microsoft passkey enrollment flow. The campaign targets food &amp; beverage, technology, healthcare, automotive, construction, and aviation sectors — anyone with a Microsoft 365 tenant is potentially at risk.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a> (original research: Okta)
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-10</p>
+<p><strong>2. Dutch Police Trace Odido Telco Cyberattack to Suspected Local Accomplice</strong>
+- <strong>Summary:</strong> Dutch police have identified a suspected local accomplice in connection with the cyberattack that disrupted telecommunications provider Odido. The investigation traces the intrusion — which affected mobile and fixed-line services — to a Dutch national who allegedly facilitated the attackers' access to the telco's internal systems.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-10</p>
+<hr />
+<h2>📊 Industry Breakdown</h2>
+<pre><code class="language-mermaid">pie showData
+    &quot;IT / Technology&quot; : 5
+    &quot;Government&quot; : 4
+    &quot;Financial Services&quot; : 3
+    &quot;Defence&quot; : 2
+    &quot;General / Cross-Sector&quot; : 2
+</code></pre>
+<hr />
+<h2>📊 Source Reliability Index</h2>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Label</th>
+<th>Description</th>
+<th>Sources Used</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Very High</strong></td>
+<td>Official / first-party</td>
+<td>ACSC, CISA</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>High</strong></td>
+<td>Established cybersecurity journalism &amp; research</td>
+<td>The Hacker News, The Record (Recorded Future), Binarly, QiAnXin, SOCRadar, Okta</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Moderate</strong></td>
+<td>General tech/news media</td>
+<td>—</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Low</strong></td>
+<td>Social / unverified</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Source diversity:</strong> THN 6 stories (40%), The Record 6 stories (40%), ACSC 1 story (7%), CISA 1 story (7%), Vendor research (Binarly, QiAnXin, SOCRadar, Okta) cited as original sources via THN. Distribution is balanced.</p>
+</blockquote>
+<hr />
+<h2>🔍 Notable Mentions</h2>
+<ul>
+<li><strong>Ill Bloom</strong> crypto wallet flaw — Coinspect disclosed a weak-randomness vulnerability that let attackers drain over $5M from 431+ wallets (THN, Jul 10).</li>
+<li><strong>OpenClaw AI assistant flaws</strong> — Three high-severity CVEs (CVSS 8.4–8.8) in the OpenClaw personal AI assistant could enable credential theft and RCE via WhatsApp interaction (THN, Jul 10).</li>
+<li><strong>Unpatched XRING XQUIC flaw</strong> — A single-line variable error in Alibaba's QUIC/HTTP/3 library lets remote clients crash HTTP/3 servers; no patch available (THN, Jul 10).</li>
+<li><strong>Latvian forestry company</strong> still recovering systems weeks after ransomware attack (The Record, Jul 10).</li>
+<li><strong>Greek victims sue Intellexa</strong> over Predator spyware surveillance (The Record, Jul 9).</li>
+<li><strong>Laser attack on Tangem wallets</strong> — Ledger Donjon demonstrated a $250K-lab attack resetting crypto card passwords (THN, Jul 10).</li>
+</ul></body></html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><title>2026-07-18</title></head><body><h1>🛡️ Cyber Digest — 2026-07-18 (Daily)</h1>
+<p><em>A daily roundup of key cybersecurity developments across sectors</em></p>
+<h2>📋 Executive Summary</h2>
+<p><strong>This week's standout story: Microsoft's record-breaking Patch Tuesday</strong> — Redmond patched 570 security holes (nearly triple last month's record), including three zero-days, with 60 critical-rated bugs and ~250 elevation-of-privilege flaws. Microsoft attributed the surge to AI-assisted vulnerability discovery, signaling a new normal for patch volumes.</p>
+<p><strong>The wp2shell WordPress flaw dominated open-source security</strong> — two chained vulnerabilities (CVE-2026-63030 REST API batch-route confusion + CVE-2026-60137 SQL injection) allow unauthenticated remote code execution on every WordPress 6.9 and 7.0 site. WordPress shipped emergency patches 6.9.5 and 7.0.2 on Friday, with forced auto-updates enabled. A working PoC is now public.</p>
+<p><strong>Geopolitical cyber activity intensified</strong> — CISA, ACSC, and international partners issued a joint advisory on Russian state-sponsored targeting of network devices, while Ukraine's Sandworm group was observed using CAPTCHA tricks to lure victims. In regulatory news, the EU ordered Google to open Android's camera, mic, and screen to rival AI assistants under the DMA, and Illinois became the third US state to enact comprehensive frontier AI safety legislation.</p>
+<hr />
+<h2>Sector Reports</h2>
+<h3>💻 IT / Technology</h3>
+<p><strong>1. Microsoft Patches a Record 570 Security Flaws</strong>
+- <strong>Summary:</strong> Microsoft's July 2026 Patch Tuesday fixed 570 vulnerabilities — almost triple the previous record from June. Nearly 60 were rated "critical," and three zero-days were addressed, two actively exploited. Approximately 250 of the bugs were elevation-of-privilege flaws. Executive VP Pavan Davuluri attributed the surge to AI-assisted discovery, warning users to expect higher volumes in every future release.
+- <strong>Source:</strong> <a href="https://krebsonsecurity.com/">Krebs on Security</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-14</p>
+<p><strong>2. New wp2shell WordPress Core Flaw Lets Unauthenticated Attackers Run Code</strong>
+- <strong>Summary:</strong> Two chained WordPress core vulnerabilities — CVE-2026-63030 (REST API batch-route confusion) and CVE-2026-60137 (SQL injection) — allow unauthenticated remote code execution on every 6.9 and 7.0 site. WordPress shipped emergency patches 6.9.5 and 7.0.2 with forced auto-updates. A working PoC is now public on GitHub.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-18</p>
+<p><strong>3. New NadMesh Botnet Hunts Exposed AI Services for Cloud Keys and Kubernetes Tokens</strong>
+- <strong>Summary:</strong> A Go-based botnet discovered by QiAnXin's XLab is scanning Shodan for exposed AI services (ComfyUI, Ollama, n8n, Open WebUI, Langflow, Gradio). The operator's dashboard claims 3,811 unique AWS keys harvested and 17,700 total deploys, with stolen credentials spanning DeepSeek, GLM, and Kimi model inventories.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-17</p>
+<p><strong>4. GoldenEyeDog Subgroup Linked to DigiCert Breach and Code-Signing Certificate Theft</strong>
+- <strong>Summary:</strong> Expel researchers attributed the April 2026 DigiCert security incident to CylindricalCanine, a subgroup of the Chinese cybercrime group GoldenEyeDog (APT-Q-27). The attackers used a modified Gh0st RAT to access a DigiCert support member's device and steal code-signing certificates intended for customers.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-17</p>
+<p><strong>Also notable:</strong> OpenSSL HollowByte flaw (11-byte TLS request freezes server memory, silently fixed in June); Seven malicious Vite npm packages (ViteVenom) use blockchain-based C2; ACR Stealer uses ClickFix lures to steal M365 tokens; CISA adds exploited SharePoint RCE CVE-2026-58644 to KEV catalog.</p>
+<hr />
+<h3>🛡️ Defence</h3>
+<p><strong>1. Joint Advisory: Russian State-Sponsored Cyber Actors Target Network Devices</strong>
+- <strong>Summary:</strong> CISA, ACSC (ASD), and international partners released a joint advisory detailing persistent Russian state-sponsored targeting of routers, firewalls, and other network devices. The advisory — mirrored on both CISA's site and cyber.gov.au — provides observed TTPs and recommends router hygiene improvements. CISA's advisory (AA26-194A) specifically calls for improved router hygiene to protect against Russian targeting.
+- <strong>Source:</strong> <a href="https://www.cisa.gov/news-events/cybersecurity-advisories">CISA</a> / <a href="https://www.cyber.gov.au/">ACSC</a>
+- <strong>Reliability:</strong> Tier 1/4 — Very High
+- <strong>Date:</strong> 2026-07-14</p>
+<p><strong>2. Sandworm Hackers Have a CAPTCHA Trick for Ukrainians</strong>
+- <strong>Summary:</strong> Russia's Sandworm APT group has been observed using a novel social engineering technique involving fake CAPTCHA verification pages targeting Ukrainian users. The CAPTCHA prompts trick victims into running malicious PowerShell commands, granting the attackers access to the system.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record by Recorded Future</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-16</p>
+<hr />
+<h3>⚖️ Legal / Regulatory</h3>
+<p><strong>1. EU Orders Google to Open Android Mic, Camera, and Screen to Rival AI Assistants</strong>
+- <strong>Summary:</strong> The European Commission adopted two binding specification decisions under the Digital Markets Act on July 16, ordering Google to give rival AI assistants the same system-level access to Android as Gemini — including camera, microphone, screen content, wake-word activation, and the ability to drive other apps. Google must ship these changes in Android 18 by August 2027.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-17</p>
+<p><strong>2. Illinois Governor Signs Frontier AI Model Law</strong>
+- <strong>Summary:</strong> On July 6, 2026, Governor JB Pritzker signed SB 315 (the Artificial Intelligence Safety Measures Act), making Illinois the third US state to enact comprehensive safety and transparency requirements for developers of advanced AI systems. The law imposes testing, reporting, and risk mitigation obligations on frontier AI model developers.
+- <strong>Source:</strong> <a href="https://www.hunton.com/privacy-and-cybersecurity-law-blog/">Hunton Andrews Kurth Privacy &amp; Cybersecurity Law Blog</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-17</p>
+<p><strong>3. CISA Plans to Finalize Cyber Incident Reporting Regulations in September 2026</strong>
+- <strong>Summary:</strong> CISA continues to advance the Cyber Incident Reporting for Critical Infrastructure Act (CIRCIA) rulemaking, with a final rule expected September 2026. The regulation will require critical infrastructure entities to report significant cyber incidents and ransomware payments within specified timeframes.
+- <strong>Source:</strong> <a href="https://www.hunton.com/privacy-and-cybersecurity-law-blog/">Hunton Andrews Kurth Privacy &amp; Cybersecurity Law Blog</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-17</p>
+<p><strong>4. European Commission Refers Four Member States to CJEU Over NIS2 Transposition Delays</strong>
+- <strong>Summary:</strong> The European Commission referred Ireland, Spain, France, and the Netherlands to the Court of Justice of the European Union for failing to notify full transposition of the NIS2 Directive into national law. This marks the Commission's most significant enforcement action yet on NIS2 compliance deadlines.
+- <strong>Source:</strong> <a href="https://www.hunton.com/privacy-and-cybersecurity-law-blog/">Hunton Andrews Kurth Privacy &amp; Cybersecurity Law Blog</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-09</p>
+<hr />
+<h3>🏛️ Government</h3>
+<p><strong>1. Lessons Learned from CISA's Recent GitHub Leak</strong>
+- <strong>Summary:</strong> CISA published a postmortem on a data leak in which a contractor published 844 MB of sensitive internal data — including AWS GovCloud keys and plaintext passwords for dozens of internal systems — in a public GitHub repository for nearly six months. GitGuardian had sent nine automated alerts before KrebsOnSecurity notified CISA in May 2026. CISA acknowledged it took over 48 hours to rotate keys and outlined steps to improve reporting channels.
+- <strong>Source:</strong> <a href="https://krebsonsecurity.com/">Krebs on Security</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-13</p>
+<p><strong>2. CISA Tells US Agencies to Fix Security Bugs in as Little as 3 Days Thanks to AI Threats</strong>
+- <strong>Summary:</strong> CISA has updated its Binding Operational Directive (BOD) requiring Federal Civilian Executive Branch agencies to patch critical vulnerabilities on accelerated timelines, with some bugs requiring remediation within 3 days. The faster cadence reflects the increased speed of AI-driven vulnerability discovery and exploitation.
+- <strong>Source:</strong> <a href="https://www.wired.com/tag/security/">Wired</a>
+- <strong>Reliability:</strong> Tier 3/4 — Moderate
+- <strong>Date:</strong> 2026-07-18</p>
+<hr />
+<h3>🏥 Healthcare</h3>
+<p><strong>1. All About Women's Care Data Breach Affects Up to 12,000 Patients</strong>
+- <strong>Summary:</strong> All About Women's Care in Colorado notified approximately 12,000 patients that their protected health information was compromised in a data breach. The incident adds to the growing tally of healthcare sector breaches in July 2026.
+- <strong>Source:</strong> <a href="https://www.hipaajournal.com/">HIPAA Journal</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-17</p>
+<p><strong>2. Atrium Health Pays Up to $1.8M to Resolve Pixel Lawsuit</strong>
+- <strong>Summary:</strong> Charlotte-Mecklenburg Hospital Authority (Atrium Health) agreed to pay up to $1.8 million to settle a class action lawsuit over the use of tracking pixels on its patient portal. The case highlights continued legal exposure for healthcare providers using web analytics that may disclose protected health information to third parties.
+- <strong>Source:</strong> <a href="https://www.hipaajournal.com/">HIPAA Journal</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-17</p>
+<p><strong>3. May 2026 Healthcare Data Breach Report: 61 Breaches Reported</strong>
+- <strong>Summary:</strong> According to HHS OCR breach portal data, 61 healthcare data breaches were reported in May 2026, affecting hundreds of thousands of patient records. The report underscores the persistent threat to healthcare data security.
+- <strong>Source:</strong> <a href="https://www.hipaajournal.com/">HIPAA Journal</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-14</p>
+<hr />
+<h3>💰 Financial Services</h3>
+<p><strong>1. Cash App Owner to Pay $45 Million to Settle Allegations of Lax Security</strong>
+- <strong>Summary:</strong> The owner of Cash App agreed to pay $45 million to settle allegations of inadequate security practices that led to customer data exposure. The settlement, covered in The Record's BRIEFS section, underscores regulatory scrutiny of fintech security practices.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record by Recorded Future</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-09</p>
+<p><strong>2. 23andMe Reaches $18 Million Settlement with States for Massive Breach</strong>
+- <strong>Summary:</strong> Genetic testing company 23andMe reached an $18 million settlement with multiple US states following a massive data breach that exposed sensitive genetic and personal data of millions of customers. The settlement addresses state-level consumer protection claims.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record by Recorded Future</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-16</p>
+<hr />
+<h3>🏭 Manufacturing</h3>
+<p><strong>1. Dairy Company Fairlife Suspends Production in US After Cyber Incident</strong>
+- <strong>Summary:</strong> Dairy company Fairlife suspended production at its US facilities following a cyber incident. The disruption affected supply chains, with the company working to restore operations. The incident highlights the vulnerability of food manufacturing to cyber attacks.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record by Recorded Future</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-17</p>
+<hr />
+<h3>⚡ Energy &amp; Utilities</h3>
+<p><strong>1. A Guide to OT Security Best Practices</strong>
+- <strong>Summary:</strong> SANS Institute published a comprehensive guide to operational technology (OT) security best practices, covering network segmentation, remote access controls, patch management for ICS environments, and incident response planning for industrial control systems. The guide is relevant for the energy, utilities, and manufacturing sectors.
+- <strong>Source:</strong> <a href="https://www.sans.org/blog">SANS Institute Blog</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-13</p>
+<hr />
+<h3>🎬 Media &amp; Entertainment</h3>
+<p><strong>1. Madison Square Garden Kept a List of Gay Celebrities</strong>
+- <strong>Summary:</strong> An investigation by Wired revealed that Madison Square Garden maintained a private list tracking the sexual orientation of celebrities and high-profile attendees. The revelation raises significant privacy concerns and has prompted scrutiny of MSG's data collection practices.
+- <strong>Source:</strong> <a href="https://www.wired.com/tag/security/">Wired</a>
+- <strong>Reliability:</strong> Tier 3/4 — Moderate
+- <strong>Date:</strong> 2026-07-18</p>
+<p><strong>2. Hackers Claim to Leak Stolen Madison Square Garden Data</strong>
+- <strong>Summary:</strong> Following the revelation of MSG's celebrity tracking list, hackers claimed to have leaked additional stolen data from Madison Square Garden. The incident adds a data breach dimension to the ongoing privacy controversy surrounding the venue operator.
+- <strong>Source:</strong> <a href="https://www.wired.com/tag/security/">Wired</a>
+- <strong>Reliability:</strong> Tier 3/4 — Moderate
+- <strong>Date:</strong> 2026-07-18</p>
+<hr />
+<h3>🌐 General / Cross-Sector</h3>
+<p><strong>1. Scattered Spider Hackers Sentenced to 5.5 Years for £29 Million Transport for London Hack</strong>
+- <strong>Summary:</strong> Owen Flowers (18) and Thalha Jubair (20) were each sentenced to five and a half years at Woolwich Crown Court for the 2024 cyberattack on Transport for London. The attack left 148 systems inoperable, forced all 27,000 employees to reset passwords in person, and cost £29 million. They are believed to be the first hackers successfully prosecuted under Section 3ZA of the UK Computer Misuse Act.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record by Recorded Future</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-16</p>
+<p><strong>2. FBI Seizes NetNut Proxy Platform, Popa Botnet</strong>
+- <strong>Summary:</strong> The FBI seized hundreds of domains associated with NetNut, a residential proxy service operated by Israeli company Alarum Technologies [NASDAQ: ALAR]. NetNut was linked to the Popa botnet (2 million devices) used for mass content scraping, ad fraud, and account takeover. Google's Threat Intelligence Group observed 316 threat actor clusters using NetNut exit nodes in a single week.
+- <strong>Source:</strong> <a href="https://krebsonsecurity.com/">Krebs on Security</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-02</p>
+<p><strong>3. Armenia Detains Russian Tourist on U.S. Warrant for REvil Hacker, Lawyers Say Wrong Man</strong>
+- <strong>Summary:</strong> Armenia detained a Russian tourist named Aleksandr Ermakov at Yerevan airport on a US extradition request for a REvil ransomware suspect. However, his lawyers claim the man in custody is a different Aleksandr Ermakov — a former prisoner from Omsk — while the actual REvil affiliate is under a separate Russian sentence. The case highlights the risks of name-based extradition requests.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-17</p>
+<hr />
+<h2>📊 Industry Breakdown</h2>
+<pre><code class="language-mermaid">pie showData
+    &quot;IT / Technology&quot; : 7
+    &quot;Defence&quot; : 2
+    &quot;Legal / Regulatory&quot; : 4
+    &quot;Government&quot; : 2
+    &quot;Healthcare&quot; : 3
+    &quot;Financial Services&quot; : 2
+    &quot;Manufacturing&quot; : 1
+    &quot;Energy &amp; Utilities&quot; : 1
+    &quot;Media &amp; Entertainment&quot; : 2
+    &quot;General / Cross-Sector&quot; : 3
+</code></pre>
+<hr />
+<h2>📊 Source Reliability Index</h2>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Label</th>
+<th>Description</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Very High</strong></td>
+<td>Official / first-party — government agencies, vendor PSAs, peer-reviewed papers</td>
+<td>CISA, ACSC, ASD, NCSC, ENISA, DFAT, Microsoft PSIRT, CrowdStrike, academic papers</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>High</strong></td>
+<td>Established cybersecurity journalism and research orgs</td>
+<td>Krebs on Security, The Hacker News, The Record, SANS ISC, Dark Reading, BleepingComputer, Dragos blog, ASPI research</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Moderate</strong></td>
+<td>General tech / news media with security desks</td>
+<td>Ars Technica, Wired, Reuters, Bloomberg, The Register, ABC News AU, iTnews, TechCrunch</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Low</strong></td>
+<td>Social / unverified / anonymous — leads only</td>
+<td>X/Twitter researcher posts, Reddit, Telegram, Discord, 4chan, personal blogs with no editorial oversight</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Digest generated 2026-07-18. Sources: Krebs on Security (3), The Hacker News (5), The Record (5), Wired (2), CISA/ACSC (1), Hunton Andrews Kurth (3), HIPAA Journal (3), SANS Institute (1). No single source exceeded 40% of stories. THN at 23% — within target.</em></p></body></html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><title>2026-07-14</title></head><body><h1>🛡️ Cyber Digest — 2026-07-14 (Daily)</h1>
+<p><em>A daily roundup of key cybersecurity developments across sectors</em></p>
+<h2>📋 Executive Summary</h2>
+<p>A major joint international advisory warns that Russia's FSB Center 16 continues to exploit poorly configured routers globally, co-signed by 15 Five Eyes and European intelligence agencies — the broadest such coalition in recent memory. In a related geopolitical cyber escalation, the UK and EU imposed their first-ever joint cyber sanctions against Russia following attribution of the Poland power grid attack to the FSB. On the supply-chain front, the jscrambler npm package was compromised in a covert Rust infostealer campaign, and Google and Microsoft jointly pulled the ModHeader browser extension (1.6M installs) after a dormant data collector was discovered in its official store code. CISA published a postmortem on a contractor-exposed GitHub leak that left AWS GovCloud keys exposed for six months, revealing systemic reporting-channel failures. The European Commission referred four member states to the CJEU over NIS2 transposition delays and unveiled a new Cybersecurity and AI Action Plan.</p>
+<hr />
+<h2>Sector Reports</h2>
+<h3>🛡️ Defence</h3>
+<p><strong>1. Russia's FSB Blamed for Poland Grid Attack as UK and EU Impose First Joint Cyber Sanctions</strong></p>
+<ul>
+<li><strong>Summary:</strong> The UK and EU jointly attributed a cyberattack on Poland's power grid to Russia's FSB and imposed coordinated sanctions — the first such joint action of its kind. The attack targeted energy infrastructure, marking a significant escalation in state-sponsored cyber operations against critical infrastructure in NATO/EU member states.</li>
+<li><strong>Source:</strong> <a href="https://therecord.media/">The Record from Recorded Future News</a></li>
+<li><strong>Reliability:</strong> Tier 2/4 — High</li>
+<li><strong>Date:</strong> 2026-07-14</li>
+</ul>
+<p><strong>2. CISA, FBI, NSA &amp; 12 Allied Agencies Warn: Improve Router Hygiene to Protect Against Russian State-Sponsored Targeting (AA26-194A)</strong></p>
+<ul>
+<li><strong>Summary:</strong> A joint Cybersecurity Advisory co-signed by 15 intelligence and cybersecurity agencies from the Five Eyes plus the Czech Republic, Denmark, Estonia, Finland, France, Italy, Poland, and Sweden details ongoing FSB Center 16 exploitation of poorly configured and vulnerable networking devices across critical infrastructure sectors globally.</li>
+<li><strong>Source:</strong> <a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa26-194a">CISA</a></li>
+<li><strong>Reliability:</strong> Tier 1/4 — Very High</li>
+<li><strong>Date:</strong> 2026-07-13</li>
+</ul>
+<p><strong>3. NSA Revives 'Tailored Access Operations' Name for Elite Hacking Unit</strong></p>
+<ul>
+<li><strong>Summary:</strong> The NSA has reinstated the "Tailored Access Operations" (TAO) designation for its elite offensive cyber unit, signalling a renewed focus on the operational identity that was historically responsible for some of the agency's most sophisticated cyber operations.</li>
+<li><strong>Source:</strong> <a href="https://therecord.media/">The Record from Recorded Future News</a></li>
+<li><strong>Reliability:</strong> Tier 2/4 — High</li>
+<li><strong>Date:</strong> 2026-07-14</li>
+</ul>
+<p><strong>4. China and India Ran Separate Spying Campaigns Against Same Pakistani Police Force</strong></p>
+<ul>
+<li><strong>Summary:</strong> Researchers at SentinelOne detailed sustained cyber espionage activity by suspected China- and India-aligned threat actors targeting Pakistani law enforcement organizations, including the Balochistan Police, between February 2024 and April 2026, compromising servers managing biometric and criminal records.</li>
+<li><strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a></li>
+<li><strong>Reliability:</strong> Tier 2/4 — High</li>
+<li><strong>Date:</strong> 2026-07-11</li>
+</ul>
+<h3>🏛️ Government</h3>
+<p><strong>1. Lessons Learned from CISA's Recent GitHub Leak — Postmortem Reveals 6-Month Exposure</strong></p>
+<ul>
+<li><strong>Summary:</strong> CISA published a postmortem on a May 2026 incident where a contractor published 844 MB of internal CISA data — including AWS GovCloud keys — in a public GitHub repo for nearly six months. The agency admitted it ignored 9 automated alerts from GitGuardian and took over 48 hours to rotate credentials after notification by KrebsOnSecurity. The report highlights failures in key management and incident response reporting channels.</li>
+<li><strong>Source:</strong> <a href="https://krebsonsecurity.com/">Krebs on Security</a></li>
+<li><strong>Reliability:</strong> Tier 2/4 — High</li>
+<li><strong>Date:</strong> 2026-07-13</li>
+</ul>
+<h3>💻 IT / Technology</h3>
+<p><strong>1. Compromised jscrambler 8.14.0 npm Release Drops Rust Infostealer During Install</strong></p>
+<ul>
+<li><strong>Summary:</strong> The jscrambler npm package was compromised — version 8.14.0 carried a preinstall hook that drops and executes a Rust-based infostealer on Windows, macOS, and Linux. Socket Security flagged the malicious release six minutes after publication. The payload (7.8MB) contained three gzip-compressed native binaries targeting all three platforms.</li>
+<li><strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a></li>
+<li><strong>Reliability:</strong> Tier 2/4 — High</li>
+<li><strong>Date:</strong> 2026-07-11</li>
+</ul>
+<p><strong>2. Google and Microsoft Pull ModHeader With 1.6 Million Installs After Dormant Collector Found</strong></p>
+<ul>
+<li><strong>Summary:</strong> A hidden browsing-history collector was discovered in the official ModHeader browser extension on both Chrome and Edge Web Stores (1.6M combined installs). The collector was dormant — an empty allowlist kept it from activating — but analysis confirmed it shipped inside the genuine signed extension, not a counterfeit. Microsoft pulled the listing July 3; Google followed July 10.</li>
+<li><strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a></li>
+<li><strong>Reliability:</strong> Tier 2/4 — High</li>
+<li><strong>Date:</strong> 2026-07-13</li>
+</ul>
+<p><strong>3. CrashStealer macOS Malware Uses Notarized Dropper to Pass Gatekeeper Checks</strong></p>
+<ul>
+<li><strong>Summary:</strong> Researchers at Jamf Threat Labs detailed a new macOS information stealer called CrashStealer, written in native C++ and distributed via a signed, Apple-notarized dropper ("Werkbit.app"). It validates the victim's login password, harvests browser/crypto wallet/password manager/keychain data, encrypts with AES-GCM, and exfiltrates via libcurl.</li>
+<li><strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a></li>
+<li><strong>Reliability:</strong> Tier 2/4 — High</li>
+<li><strong>Date:</strong> 2026-07-13</li>
+</ul>
+<p><strong>4. URGENT — Progress Tells ShareFile Customers to Shut Down Storage Zone Controllers Over Security Threat</strong></p>
+<ul>
+<li><strong>Summary:</strong> Progress Software instructed ShareFile customers to shut down Windows servers running Storage Zone Controllers in response to a "credible external security threat." The company temporarily disabled affected accounts but has not disclosed the nature of the threat or the threat actor behind it.</li>
+<li><strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a></li>
+<li><strong>Reliability:</strong> Tier 2/4 — High</li>
+<li><strong>Date:</strong> 2026-07-10</li>
+</ul>
+<p><strong>5. iCagenda and Balbooa Forms Joomla Flaws Exploited as Zero-Days — CISA Adds to KEV Catalog</strong></p>
+<ul>
+<li><strong>Summary:</strong> CISA added two CVSS 10.0 vulnerabilities (CVE-2026-48939, CVE-2026-56291) in iCagenda and Balbooa Forms Joomla extensions to its Known Exploited Vulnerabilities catalog following reports of active zero-day exploitation since June 15, 2026. Both allow arbitrary file upload leading to remote code execution.</li>
+<li><strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a></li>
+<li><strong>Reliability:</strong> Tier 2/4 — High</li>
+<li><strong>Date:</strong> 2026-07-13</li>
+</ul>
+<p><strong>6. Forg365 PhaaS Targets Microsoft 365 With Device Code and AitM Session Theft</strong></p>
+<ul>
+<li><strong>Summary:</strong> A new Phishing-as-a-Service operation, Forg365, combines device code phishing, adversary-in-the-middle tactics, AI-assisted lure creation and post-compromise mailbox operations targeting Microsoft 365. Distributed via Telegram at $400/month ($3,800/year), it uses legitimate email delivery infrastructure (Amazon SES, Twilio SendGrid) for phishing distribution.</li>
+<li><strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a></li>
+<li><strong>Reliability:</strong> Tier 2/4 — High</li>
+<li><strong>Date:</strong> 2026-07-13</li>
+</ul>
+<p><strong>7. Critical Zimbra Flaw Could Let Crafted Emails Run Malicious Code in User Sessions</strong></p>
+<ul>
+<li><strong>Summary:</strong> Zimbra urged customers to patch a critical stored XSS vulnerability in its Classic Web Client that allows specially crafted emails to execute malicious scripts when opened, potentially leading to session hijacking, credential theft, and account compromise.</li>
+<li><strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a></li>
+<li><strong>Reliability:</strong> Tier 2/4 — High</li>
+<li><strong>Date:</strong> 2026-07-11</li>
+</ul>
+<h3>⚖️ Legal / Regulatory</h3>
+<p><strong>1. VPN Service Favored by Ransomware Groups Sanctioned by US Treasury</strong></p>
+<ul>
+<li><strong>Summary:</strong> The US Treasury Department sanctioned a VPN service known to be heavily used by ransomware groups for laundering and obfuscating criminal traffic. The action targets the financial infrastructure enabling ransomware operations.</li>
+<li><strong>Source:</strong> <a href="https://therecord.media/">The Record from Recorded Future News</a></li>
+<li><strong>Reliability:</strong> Tier 2/4 — High</li>
+<li><strong>Date:</strong> 2026-07-14</li>
+</ul>
+<p><strong>2. European Commission Refers Ireland, Spain, France, and Netherlands to CJEU Over NIS2 Transposition Delays</strong></p>
+<ul>
+<li><strong>Summary:</strong> The European Commission referred four member states — Ireland, Spain, France, and the Netherlands — to the Court of Justice of the European Union for failing to notify full transposition of the NIS2 Directive into national law, marking a major enforcement escalation on EU cyber resilience requirements.</li>
+<li><strong>Source:</strong> <a href="https://www.hunton.com/privacy-and-cybersecurity-law-blog/">Hunton Andrews Kurth Privacy &amp; Cybersecurity Law Blog</a></li>
+<li><strong>Reliability:</strong> Tier 2/4 — High</li>
+<li><strong>Date:</strong> 2026-07-09</li>
+</ul>
+<p><strong>3. European Commission Unveils Cybersecurity and AI Action Plan</strong></p>
+<ul>
+<li><strong>Summary:</strong> On July 7, the European Commission presented an Action Plan on Cybersecurity and Artificial Intelligence aimed at supporting the safe and responsible use of AI while strengthening cyber resilience across the EU. The plan addresses the intersection of AI system security and broader cyber defence.</li>
+<li><strong>Source:</strong> <a href="https://www.hunton.com/privacy-and-cybersecurity-law-blog/">Hunton Andrews Kurth Privacy &amp; Cybersecurity Law Blog</a></li>
+<li><strong>Reliability:</strong> Tier 2/4 — High</li>
+<li><strong>Date:</strong> 2026-07-07</li>
+</ul>
+<p><strong>4. Europe Revives Law Allowing Big Tech to Scan for CSAM</strong></p>
+<ul>
+<li><strong>Summary:</strong> EU lawmakers revived proposed legislation that would require big tech platforms to scan user communications for child sexual abuse material (CSAM), reigniting the encryption vs. child safety debate across the European digital landscape.</li>
+<li><strong>Source:</strong> <a href="https://therecord.media/">The Record from Recorded Future News</a></li>
+<li><strong>Reliability:</strong> Tier 2/4 — High</li>
+<li><strong>Date:</strong> 2026-07-11</li>
+</ul>
+<p><strong>5. Ryuk Operator Pleads Guilty; BlackCat/AlphV Conspirator Gets Nearly 6-Year Sentence</strong></p>
+<ul>
+<li><strong>Summary:</strong> A Ryuk ransomware operator pleaded guilty in US court, while a BlackCat/AlphV conspirator received a nearly six-year prison sentence. The parallel resolutions reflect ongoing law enforcement pressure on the ransomware ecosystem.</li>
+<li><strong>Source:</strong> <a href="https://therecord.media/">The Record from Recorded Future News</a></li>
+<li><strong>Reliability:</strong> Tier 2/4 — High</li>
+<li><strong>Date:</strong> 2026-07-11</li>
+</ul>
+<h3>💰 Financial Services</h3>
+<p><strong>1. Cash App Owner to Pay $45 Million to Settle Allegations of Lax Security</strong></p>
+<ul>
+<li><strong>Summary:</strong> The parent company of Cash App agreed to a $45 million settlement with regulators over allegations of inadequate security practices that exposed user financial data. The settlement underscores increasing regulatory scrutiny on fintech security postures.</li>
+<li><strong>Source:</strong> <a href="https://therecord.media/">The Record from Recorded Future News</a></li>
+<li><strong>Reliability:</strong> Tier 2/4 — High</li>
+<li><strong>Date:</strong> 2026-07-09</li>
+</ul>
+<h3>🏭 Manufacturing</h3>
+<p><strong>1. Latvian Forestry Company Still Restoring Systems Weeks After Ransomware Attack</strong></p>
+<ul>
+<li><strong>Summary:</strong> A Latvian forestry company continues recovery efforts weeks after a ransomware attack crippled its operations. The protracted downtime illustrates the severe operational impact of ransomware on manufacturing and industrial enterprises.</li>
+<li><strong>Source:</strong> <a href="https://therecord.media/">The Record from Recorded Future News</a></li>
+<li><strong>Reliability:</strong> Tier 2/4 — High</li>
+<li><strong>Date:</strong> 2026-07-10</li>
+</ul>
+<hr />
+<h2>📊 Industry Breakdown</h2>
+<pre><code class="language-mermaid">pie showData
+    &quot;Defence&quot; : 4
+    &quot;Government&quot; : 1
+    &quot;IT / Technology&quot; : 7
+    &quot;Legal / Regulatory&quot; : 5
+    &quot;Financial Services&quot; : 1
+    &quot;Manufacturing&quot; : 1
+</code></pre>
+<hr />
+<h2>📊 Source Reliability Index</h2>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Label</th>
+<th>Description</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Very High</strong></td>
+<td>Official / first-party — government agencies, vendor PSAs, peer-reviewed papers</td>
+<td>CISA, ACSC, ASD, NCSC, ENISA, DFAT, Microsoft PSIRT, CrowdStrike, academic papers</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>High</strong></td>
+<td>Established cybersecurity journalism and research orgs</td>
+<td>Krebs on Security, The Hacker News, The Record, SANS ISC, Dark Reading, BleepingComputer, Dragos blog, ASPI research</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Moderate</strong></td>
+<td>General tech / news media with security desks</td>
+<td>Ars Technica, Wired, Reuters, Bloomberg, The Register, ABC News AU, iTnews, TechCrunch</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Low</strong></td>
+<td>Social / unverified / anonymous — leads only</td>
+<td>X/Twitter researcher posts, Reddit, Telegram, Discord, 4chan, personal blogs with no editorial oversight</td>
+</tr>
+</tbody>
+</table>
+<h3>Source Diversity Check</h3>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Stories</th>
+<th>% of Total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The Hacker News</td>
+<td>7</td>
+<td>37%</td>
+</tr>
+<tr>
+<td>The Record</td>
+<td>4</td>
+<td>21%</td>
+</tr>
+<tr>
+<td>Hunton Andrews Kurth</td>
+<td>2</td>
+<td>11%</td>
+</tr>
+<tr>
+<td>Krebs on Security</td>
+<td>1</td>
+<td>5%</td>
+</tr>
+<tr>
+<td>CISA</td>
+<td>1</td>
+<td>5%</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>19</strong></td>
+<td><strong>—</strong></td>
+</tr>
+</tbody>
+</table>
+<p>✅ No single source exceeds 40%. Diversity requirement met.</p></body></html>

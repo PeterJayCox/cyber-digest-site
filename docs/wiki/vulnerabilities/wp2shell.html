@@ -1,0 +1,69 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>wp2shell (WordPress Core RCE)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css"></head><body>
+<nav class="topnav"><div class="inner">
+        <a class="brand" href="index.html"><span class="dot"></span>Cyber&nbsp;Digest<small>public site</small></a>
+        <div class="navlinks"><a href="index.html" class=""><span class="t">🏠 Home</span></a><a href="stories.html" class=""><span class="t">📚 Story DB</span></a><a href="daily/" class=""><span class="t">🗓️ Daily</span></a><a href="monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a></div></div></nav><main class="container">
+            <div class="container">
+            <div class="crumb"><a href="../index.html">Home</a> · <a href="../wiki/index.html">Wiki</a> · Vulnerabilities &amp; CVEs</div>
+            <div class="wiki-body"><div class="frontmatter">created: 2026-07-18 · updated: 2026-07-21 · type: cve · tags: [cve, zero-day, web-shell, supply-chain] · confidence: high · affected_sectors: [technology, sector-government, sector-media, sector-education] · au_impact: true</div><h1>wp2shell — WordPress Core RCE</h1>
+<p>wp2shell refers to <strong>two chained vulnerabilities</strong> in WordPress core (versions 6.9 and 7.0) that allow <strong>unauthenticated remote code execution</strong> on every affected site. Emergency patches were shipped with forced auto-updates enabled.</p>
+<h2>CVEs</h2>
+<table>
+<thead>
+<tr>
+<th>CVE</th>
+<th>Type</th>
+<th>CVSS (est.)</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CVE-2026-63030</td>
+<td>REST API batch-route confusion</td>
+<td>High</td>
+<td>Allows attacker to bypass route access controls</td>
+</tr>
+<tr>
+<td>CVE-2026-60137</td>
+<td>SQL injection</td>
+<td>Critical</td>
+<td>Enables database-level exploitation when chained</td>
+</tr>
+</tbody>
+</table>
+<h2>Exploitation Status (Updated 2026-07-21)</h2>
+<ul>
+<li><strong>Mass scanning underway:</strong> Telemetry from KEVIntel shows 13 unique IP addresses conducting mass scanning</li>
+<li><strong>Geography of scanners:</strong> Switzerland, Germany, UK, Indonesia, Lithuania, Netherlands, Singapore</li>
+<li><strong>Post-exploitation:</strong> Credential exfiltration and RCE following exploitation confirmed</li>
+<li><strong>Public PoC:</strong> Released early Saturday (July 18), triggering rapid escalation <span class="fn">(raw/digests/Cyber-Digest-2026-07-21)</span></li>
+</ul>
+<h2>Impact</h2>
+<ul>
+<li><strong>Every WordPress 6.9 and 7.0 site</strong> is vulnerable prior to patching</li>
+<li>Unauthenticated RCE via <strong>chaining</strong> the two flaws</li>
+<li>A <strong>working Proof of Concept</strong> is now public on GitHub <span class="fn">(raw/digests/Cyber-Digest-2026-07-18)</span></li>
+</ul>
+<h2>Response</h2>
+<ul>
+<li><strong>WordPress shipped emergency patches</strong> 6.9.5 and 7.0.2</li>
+<li><strong>Forced auto-updates</strong> enabled to push patches to all sites</li>
+<li>Disclosure and patch timeline: July 18, 2026</li>
+</ul>
+<h2>Australian Significance</h2>
+<p>WordPress powers a significant portion of Australian government, media, and small business websites — approximately <strong>36% of Australian websites</strong> per W3Techs data. The forced auto-update mechanism helps protect the long tail of unmanaged WordPress sites, but <strong>many Australian organisations disable auto-updates</strong> due to change management policies, leaving them exposed.</p>
+<p>The ACSC has <strong>not issued a specific advisory</strong> on wp2shell as of late July 2026, but the vulnerability falls within the scope of their CMS exploitation campaign alert (AA-2026-XX), which reinforces that CMS platforms are a priority target for both cybercriminals and state-sponsored actors targeting Australian entities.</p>
+<p>The <strong>public PoC</strong> increases exploitation risk for sites that cannot receive auto-updates or have custom configurations. Australian enterprises running customised WordPress deployments should treat WordPress core updates with the same urgency as OS patches. Au Impact</p>
+<h2>Related Pages</h2>
+<ul>
+<li><a href="../incidents/acsc-cms-exploitation.html">Acsc Cms Exploitation</a> — Concurrent large-scale CMS exploitation campaign targeting AU orgs</li>
+<li><a href="../entities/wp-shellstorm.html">Wp Shellstorm</a> — Webshell brokerage exploiting outdated CMS plugins</li>
+</ul></div>
+            </div></main>
+<div class="footer">Cyber Digest public site · built 2026-08-08 15:35 · AU security intelligence</div>
+</body></html>

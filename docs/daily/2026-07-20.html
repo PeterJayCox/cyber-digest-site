@@ -1,0 +1,148 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><title>2026-07-20</title></head><body><h1>🛡️ Cyber Digest — 2026-07-20 (Daily)</h1>
+<p><em>A daily roundup of key cybersecurity developments across sectors, covering 18–20 July 2026.</em></p>
+<h2>📋 Executive Summary</h2>
+<p>The weekend's cybersecurity news was dominated by critical vulnerabilities — a CVSS 10.0 SonicWall SMA zero-day chain exploited before disclosure, a critical NGINX heap buffer overflow (CVE-2026-42533) with potential for RCE, and the ongoing fallout from the wp2shell WordPress core flaw with a working PoC now public. On the regulatory front, the EU ordered Google to open Android to rival AI assistants under the DMA, and Illinois became the third US state to enact comprehensive AI safety legislation. Healthcare saw the 23andMe $18M multi-state breach settlement finalised. <em>Ongoing context: Microsoft's July Patch Tuesday (570+ flaws), CISA's SharePoint hardening advisory, and the joint router hygiene advisory against Russian targeting remain relevant but were covered in previous digests.</em></p>
+<hr />
+<h2>Sector Reports</h2>
+<h3>💻 IT / Technology</h3>
+<p><strong>1. Critical NGINX Vulnerability (CVE-2026-42533) — Heap Buffer Overflow, DoS/RCE</strong>
+- <strong>Summary:</strong> F5 shipped fixes for a critical nginx flaw allowing unauthenticated attackers to trigger a heap buffer overflow via crafted HTTP requests. CVSS pending but rated critical. Patched July 15 in nginx 1.30.4 / 1.31.3 and NGINX Plus 37.0.3.1. The overflow lives in nginx's script engine under a specific regex-map configuration; where ASLR is disabled or can be bypassed, F5 warns of potential remote code execution.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-19</p>
+<p><strong>2. SonicWall SMA Zero-Days (CVE-2026-15409, CVE-2026-15410) — Exploited Before Disclosure</strong>
+- <strong>Summary:</strong> A previously undocumented threat actor (UTA0533, tracked by Volexity) exploited two SonicWall SMA 1000 series VPN zero-days as early as June 22, chaining CVE-2026-15409 (CVSS 10.0) and CVE-2026-15410 (CVSS 7.2) for arbitrary command execution and full device takeover. SonicWall released patches this week.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a> via Volexity analysis
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-19</p>
+<p><strong>3. wp2shell WordPress Core Flaw — Unauthenticated RCE, PoC Public</strong>
+- <strong>Summary:</strong> Two chained WordPress core vulnerabilities (CVE-2026-63030 — REST API batch-route confusion; CVE-2026-60137 — SQL injection) allow anonymous RCE on any 6.9/7.0 site. WordPress shipped 6.9.5 and 7.0.2 with forced auto-updates. A working proof-of-concept is now public on GitHub. Found by Adam Kues (Assetnote / Searchlight Cyber).
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-17</p>
+<p><strong>4. OpenSSL "HollowByte" Flaw — Memory DoS via 11-Byte TLS Request</strong></p>
+<p><em>Also notable:</em> ViteVenom supply chain attack (7 malicious npm packages using blockchain C2, tiered Tron/Aptos/Binance infrastructure); NadMesh Go botnet hunting exposed AI services for cloud keys; ACR Stealer using ClickFix lures to steal browser tokens and M365 files.</p>
+<h3>🛡️ Defence</h3>
+<p><strong>1. UAC-0145 (Sandworm) Uses ClickFix CAPTCHAs to Infect Ukrainian Devices</strong>
+- <strong>Summary:</strong> Russian GRU-affiliated Sandworm sub-cluster UAC-0145 is using fake CAPTCHA checks on compromised websites to trick Ukrainian targets into executing PowerShell commands that deploy data-stealing malware (GHETTOVIBE, SCOUTCURL). CERT-UA issued an alert detailing the campaign.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a> via CERT-UA
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-19</p>
+<h3>⚖️ Legal / Regulatory</h3>
+<p><strong>1. EU Orders Google to Open Android to Rival AI Assistants Under DMA</strong>
+- <strong>Summary:</strong> The European Commission adopted two binding specification decisions under the Digital Markets Act requiring Google to give rival AI assistants the same Android system access as Gemini (camera, microphone, screen, wake word, background automation). Google must ship by Android 18, no later than 1 August 2027. A second decision requires Google to share anonymised search query and ranking data with rival search engines and AI chatbots.
+- <strong>Source:</strong> <a href="https://thehackernews.com/">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-17</p>
+<p><strong>2. Illinois Governor Signs Frontier AI Model Law (SB 315)</strong>
+- <strong>Summary:</strong> Illinois became the third US state (after Connecticut and others) to enact comprehensive safety and transparency requirements for developers of advanced AI systems. The Artificial Intelligence Safety Measures Act imposes obligations on frontier AI model developers covering testing, reporting, and risk mitigation.
+- <strong>Source:</strong> <a href="https://www.hunton.com/privacy-and-cybersecurity-law-blog/">Hunton Andrews Kurth Privacy &amp; Cybersecurity Law Blog</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-17</p>
+<p><strong>3. CISA Plans to Finalise Cyber Incident Reporting Regulations by September 2026</strong>
+- <strong>Summary:</strong> CISA continues to finalise regulations implementing the Cyber Incident Reporting for Critical Infrastructure Act of 2022 (CIRCIA), with a final rule expected in September 2026. The rule will mandate incident reporting for critical infrastructure entities.
+- <strong>Source:</strong> <a href="https://www.hunton.com/privacy-and-cybersecurity-law-blog/">Hunton Andrews Kurth Privacy &amp; Cybersecurity Law Blog</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-17</p>
+<h3>🏥 Healthcare</h3>
+<p><strong>1. 23andMe Reaches $18 Million Settlement with States for 2023 Breach</strong>
+- <strong>Summary:</strong> 23andMe reached an $18 million settlement with multiple US states following the massive 2023 data breach that exposed genetic and personal data of millions of customers. The settlement includes security improvement requirements and consumer restitution.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record from Recorded Future News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-16</p>
+<h3>🏭 Manufacturing</h3>
+<p><strong>1. Dairy Company Fairlife Suspends US Production After Cyber Incident</strong>
+- <strong>Summary:</strong> Fairlife, a major US dairy company, suspended production at its US facilities following a cyber incident. The nature of the incident (ransomware, disruption, or data breach) has not been publicly detailed. The suspension affects supply chains for Fairlife's retail and food-service customers.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record from Recorded Future News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-17</p>
+<h3>🌐 General / Cross-Sector</h3>
+<p><strong>1. Scattered Spider Hackers Sentenced to 5.5 Years Over £29M Transport for London Hack</strong>
+- <strong>Summary:</strong> Members of the Scattered Spider cybercrime group were sentenced to 5.5 years in prison for their role in the £29 million Transport for London (TfL) hack. The sentencing marks a significant law enforcement outcome against the notorious cybercrime gang.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record from Recorded Future News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-16</p>
+<p><strong>2. Trump Administration Unveils AI-Supported Clearinghouse for Cyber Vulnerabilities</strong>
+- <strong>Summary:</strong> The White House announced a new AI-supported clearinghouse designed to aggregate and prioritise cybersecurity vulnerabilities from across government and industry sources. The initiative aims to improve vulnerability management and patch prioritisation at scale.
+- <strong>Source:</strong> <a href="https://therecord.media/">The Record from Recorded Future News</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-07-16</p>
+<hr />
+<h2>📊 Industry Breakdown</h2>
+<pre><code class="language-mermaid">pie showData
+    &quot;IT / Technology&quot; : 4
+    &quot;Defence&quot; : 1
+    &quot;Legal / Regulatory&quot; : 3
+    &quot;Healthcare&quot; : 1
+    &quot;Manufacturing&quot; : 1
+    &quot;General / Cross-Sector&quot; : 2
+</code></pre>
+<hr />
+<h2>📊 Source Reliability Index</h2>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Very High</strong></td>
+<td>Official / first-party — CISA</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>High</strong></td>
+<td>Established cybersecurity journalism — THN, Krebs, The Record, Volexity, Hunton Blog, HIPAA Journal</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Moderate</strong></td>
+<td>General tech / news media — not used in this edition</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Low</strong></td>
+<td>Social / unverified / anonymous — not used in this edition</td>
+</tr>
+</tbody>
+</table>
+<h3>Source Diversity Check</h3>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Stories</th>
+<th>Share</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The Hacker News</td>
+<td>4</td>
+<td>31% ✅</td>
+</tr>
+<tr>
+<td>The Record</td>
+<td>4</td>
+<td>31% ✅</td>
+</tr>
+<tr>
+<td>Hunton Blog</td>
+<td>2</td>
+<td>15% ✅</td>
+</tr>
+<tr>
+<td>Volexity</td>
+<td>1</td>
+<td>8% ✅</td>
+</tr>
+</tbody>
+</table>
+<p>No source exceeded the 40% threshold. ✅</p>
+<h3>Sector Coverage Notes</h3>
+<p><strong>Covered (6):</strong> IT/Technology, Defence, Legal/Regulatory, Healthcare, Manufacturing, General/Cross-Sector</p>
+<p><strong>Uncovered (5):</strong> Government, Financial Services, Energy &amp; Utilities, Media &amp; Entertainment, Education — no significant new stories found in the weekend news cycle for these sectors. <em>Government stories (CISA SharePoint hardening, router hygiene advisory) covered in previous digests, referenced in executive summary.</em></p></body></html>

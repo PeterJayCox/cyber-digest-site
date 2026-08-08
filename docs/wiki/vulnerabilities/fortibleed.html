@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FortiBleed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css"></head><body>
+<nav class="topnav"><div class="inner">
+        <a class="brand" href="index.html"><span class="dot"></span>Cyber&nbsp;Digest<small>public site</small></a>
+        <div class="navlinks"><a href="index.html" class=""><span class="t">🏠 Home</span></a><a href="stories.html" class=""><span class="t">📚 Story DB</span></a><a href="daily/" class=""><span class="t">🗓️ Daily</span></a><a href="monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a></div></div></nav><main class="container">
+            <div class="container">
+            <div class="crumb"><a href="../index.html">Home</a> · <a href="../wiki/index.html">Wiki</a> · Vulnerabilities &amp; CVEs</div>
+            <div class="wiki-body"><div class="frontmatter">created: 2026-07-11 · updated: 2026-07-11 · type: incident · tags: [cve, zero-day, incident, kev] · confidence: high · affected_sectors: [technology, sector-government, sector-finance, sector-healthcare, sector-energy] · au_impact: true</div><h1>FortiBleed</h1>
+<p>FortiBleed refers to the exposure of <strong>leaked credentials associated with approximately 74,000 internet-exposed Fortinet devices</strong> (firewalls and SSL VPN gateways) across government and private sectors globally. The incident prompted urgent action from Cisa and continues to reverberate across sectors.</p>
+<h2>Timeline</h2>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Event</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>June 18, 2026</td>
+<td>CISA initial alert on Fortinet credential exposure</td>
+</tr>
+<tr>
+<td>June 22, 2026</td>
+<td>CISA updates alert with expanded guidance</td>
+</tr>
+<tr>
+<td>July 2026</td>
+<td>FortiBleed continues to dominate sector coverage across all July digests</td>
+</tr>
+</tbody>
+</table>
+<h2>Scope</h2>
+<ul>
+<li><strong>~74,000 exposed devices</strong> globally</li>
+<li>Affects Fortinet firewalls and SSL VPN gateways</li>
+<li>Government and private sector organisations impacted</li>
+<li>Credentials leaked allowing potential unauthorised access</li>
+</ul>
+<h2>CISA Guidance</h2>
+<p>CISA urged organisations to immediately: <span class="fn">(raw/digests/Cyber-Digest-2026-07-09)</span></p>
+<ol>
+<li><strong>Terminate all active sessions</strong> on affected devices</li>
+<li><strong>Reset all credentials</strong> (passwords, API keys, certificates)</li>
+<li><strong>Enforce PBKDF2 hashing</strong> for stored credentials</li>
+<li><strong>Deploy phishing-resistant MFA</strong> on all management interfaces</li>
+<li><strong>Restrict management interfaces</strong> from the public internet</li>
+<li><strong>Harden device configs</strong> per vendor best practices</li>
+</ol>
+<h2>Australian Significance</h2>
+<p>Fortinet devices are widely deployed across Australian government and critical infrastructure. Organisations under the Soci Act should prioritise remediation per Acsc guidance. <span class="fn">(raw/digests/Cyber-Digest-2026-07-07)</span></p>
+<h2>Related Pages</h2>
+<ul>
+<li><a href="ghostlock-cve-2026-43499.html">Ghostlock Cve 2026 43499</a> — Another critical infrastructure vulnerability</li>
+<li><a href="../incidents/acsc-cms-exploitation.html">Acsc Cms Exploitation</a> — Concurrent active exploitation campaign</li>
+<li>Cisa Kev Cata[[Log — CISA's KEV tracking</li>
+</ul></div>
+            </div></main>
+<div class="footer">Cyber Digest public site · built 2026-08-08 15:35 · AU security intelligence</div>
+</body></html>
