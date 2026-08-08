@@ -327,6 +327,10 @@ render();
 def build_daily(days):
     os.makedirs(os.path.join(DOCS,"daily"),exist_ok=True)
     daily_src=os.path.join(VAULT,"Cyber Digest","Daily")
+    # Get story counts per date from DB
+    con=sqlite3.connect(DB)
+    counts={r[0]:r[1] for r in con.execute("SELECT digest_date,COUNT(*) FROM stories GROUP BY digest_date")}
+    con.close()
     for d,month in days:
         mdpath=os.path.join(daily_src,month,f"Cyber-Digest-{d}.md")
         out=os.path.join(DOCS,"daily",f"{d}.html")
@@ -344,11 +348,49 @@ def build_daily(days):
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head><body>{nav_html("", root="../")}<div class="container"><div class="crumb"><a href="../index.html">Home</a> · <a href="index.html">Daily</a></div>
 <div class="wiki-body">{h}</div></div></body></html>''')
-    # daily index
-    cards="".join(f'<a class="card" href="{d}.html"><h3>{d}</h3><span class="meta">{month} 2026</span><span class="go">Read →</span></a>' for d,month in days)
+    # Build enhanced daily index with month groups
+    month_order=["August","July","June","May","April","March","February","January"]
+    day_names=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
+    cards=""
+    for m in month_order:
+        mdays=[(d,mo) for d,mo in days if mo==m]
+        if not mdays: continue
+        cards+=f'<div class="section"><h2><span class="bar"></span>{m} 2026</h2><div class="grid cards">'
+        for d,mo in mdays:
+            from datetime import datetime
+            dt=datetime.strptime(d,"%Y-%m-%d")
+            dow=day_names[dt.weekday()]
+            story_count=counts.get(d,0)
+            latest=" latest" if d==days[0][0] else ""
+            badge=f'<span class="tag cyan">latest</span>' if d==days[0][0] else f'<span class="tag blue">{dow}</span>'
+            cards+=f'''<a class="card daily-card{latest}" href="{d}.html">
+                <div class="daily-date"><span class="daily-num">{dt.day}</span><span class="daily-dow">{dow}</span></div>
+                <div class="daily-info"><h3>{d}</h3><span class="meta">{story_count} stories</span></div>
+                {badge}
+                <span class="go">→</span>
+            </a>'''
+        cards+="</div></div>"
     html=head("Daily Editions","daily/", root="../")+f'''<div class="hero"><div class="kicker">Archive</div><h1>Daily <span class="accent">Digests</span></h1>
     <p class="sub">Every daily sector-by-sector roundup, newest first.</p></div>
-    <div class="grid cards">{cards}</div>'''+foot()
+    {cards}'''+foot()
+
+    # Add daily card CSS
+    css_path=os.path.join(DOCS,"assets","site.css")
+    css_extra='''
+/* Daily archive cards */
+.daily-card{display:flex;align-items:center;gap:12px;flex-direction:row;padding:14px 16px;border-left:3px solid transparent}
+.daily-card.latest{border-left-color:var(--accent)}
+.daily-card .daily-date{display:flex;flex-direction:column;align-items:center;min-width:52px}
+.daily-card .daily-num{font-size:28px;font-weight:800;line-height:1;letter-spacing:-.5px}
+.daily-card .daily-dow{font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+.daily-card .daily-info{flex:1;min-width:0}
+.daily-card .daily-info h3{font-size:15px;font-weight:600;margin:0}
+.daily-card .daily-info .meta{font-size:12px;color:var(--text-dim)}
+.daily-card .go{font-size:16px;color:var(--text-dim);flex-shrink:0;margin-left:auto;padding-left:8px}
+.daily-card:hover .go{color:var(--accent);transform:translateX(3px);transition:transform .15s}
+.daily-card:hover{transform:translateY(-2px);transition:all .15s}
+'''
+    with open(css_path,"a") as f: f.write(css_extra)
     open(os.path.join(DOCS,"daily","index.html"),"w",encoding="utf-8").write(html)
 
 def build_monthly(months):
