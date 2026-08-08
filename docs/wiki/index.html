@@ -10,12 +10,12 @@
     <p class="sub">Entities, threat actors, incidents, vulnerabilities and concepts — cross-linked from every digest.</p></div>
     <div class="filters">
         <input type="text" id="wikiSearch" placeholder="Search wiki…">
-        <span style="color:var(--text-dim);font-size:13px">248 pages — click a heading to collapse/expand</span>
+        <span style="color:var(--text-dim);font-size:13px">248 pages — click a heading to expand</span>
     </div>
     <div class="wiki-section collapsed">
         <h2 class="ws-head" onclick="toggleSection(this)">
-            <span class="ws-toggle">></span>
-            <span class="bar"></span>Incidents &amp; Campaigns
+            <span class="ws-toggle">▶</span>
+            <span class="bar"></span>🔥 Incidents &amp; Campaigns
             <span class="ws-count">171</span>
         </h2>
         <div class="ws-body">
@@ -193,8 +193,8 @@
 </div></div>
 <div class="wiki-section collapsed">
         <h2 class="ws-head" onclick="toggleSection(this)">
-            <span class="ws-toggle">></span>
-            <span class="bar"></span>Entities &amp; Threat Actors
+            <span class="ws-toggle">▶</span>
+            <span class="bar"></span>🦠 Entities &amp; Threat Actors
             <span class="ws-count">28</span>
         </h2>
         <div class="ws-body">
@@ -227,10 +227,10 @@
 <a class="card wiki-card" href="entities/uta0533.html" data-search="uta0533 — sonicwall zero-day exploiter "><h3>UTA0533 — SonicWall Zero-Day Exploiter</h3><p></p><span class="go">Open →</span></a>
 <a class="card wiki-card" href="entities/wp-shellstorm.html" data-search="wp-shellstorm "><h3>WP-SHELLSTORM</h3><p></p><span class="go">Open →</span></a>
 </div></div>
-<div class="wiki-section">
+<div class="wiki-section collapsed">
         <h2 class="ws-head" onclick="toggleSection(this)">
-            <span class="ws-toggle">v</span>
-            <span class="bar"></span>Concepts &amp; Frameworks
+            <span class="ws-toggle">▶</span>
+            <span class="bar"></span>💡 Concepts &amp; Frameworks
             <span class="ws-count">12</span>
         </h2>
         <div class="ws-body">
@@ -249,8 +249,8 @@
 </div></div>
 <div class="wiki-section collapsed">
         <h2 class="ws-head" onclick="toggleSection(this)">
-            <span class="ws-toggle">></span>
-            <span class="bar"></span>Vulnerabilities &amp; CVEs
+            <span class="ws-toggle">▶</span>
+            <span class="bar"></span>🛡️ Vulnerabilities &amp; CVEs
             <span class="ws-count">37</span>
         </h2>
         <div class="ws-body">
@@ -301,11 +301,11 @@ function toggleSection(heading){
     if(body.style.display==='none'){
         body.style.display='';
         sec.classList.remove('collapsed');
-        if(tog) tog.textContent='v';
+        if(tog) tog.textContent='▼';
     } else {
         body.style.display='none';
         sec.classList.add('collapsed');
-        if(tog) tog.textContent='>';
+        if(tog) tog.textContent='▶';
     }
 }
 function filterWiki(){
@@ -325,5 +325,5 @@ document.addEventListener('DOMContentLoaded',()=>{
     document.getElementById('wikiSearch').addEventListener('input',filterWiki);
 });
 </script></main>
-<div class="footer">Cyber Digest public site · built 2026-08-09 06:59 · AU security intelligence</div>
+<div class="footer">Cyber Digest public site · built 2026-08-09 07:04 · AU security intelligence</div>
 </body></html>

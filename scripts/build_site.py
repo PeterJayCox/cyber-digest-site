@@ -376,6 +376,7 @@ def build_wiki(pages):
     os.makedirs(wiki_index,exist_ok=True)
     type_order=["incidents","entities","concepts","vulnerabilities"]
     type_names={"incidents":"Incidents & Campaigns","entities":"Entities & Threat Actors","concepts":"Concepts & Frameworks","vulnerabilities":"Vulnerabilities & CVEs"}
+    type_icons={"incidents":"🔥","entities":"🦠","concepts":"💡","vulnerabilities":"🛡️"}
     # write pages
     for ptype,map_ in pages.items():
         d=os.path.join(wiki_index,ptype)
@@ -408,11 +409,12 @@ def build_wiki(pages):
         if ptype not in pages: continue
         section_items=sorted(pages[ptype].items())
         count=len(section_items)
-        collapsed=" collapsed" if count>20 else ""
+        collapsed=" collapsed"  # all start collapsed
+        icon=type_icons.get(ptype,"")
         cards+=f'''<div class="wiki-section{esc(collapsed)}">
         <h2 class="ws-head" onclick="toggleSection(this)">
-            <span class="ws-toggle">{'>' if collapsed else 'v'}</span>
-            <span class="bar"></span>{esc(type_names.get(ptype,ptype))}
+            <span class="ws-toggle">▶</span>
+            <span class="bar"></span>{icon} {esc(type_names.get(ptype,ptype))}
             <span class="ws-count">{count}</span>
         </h2>
         <div class="ws-body">\n'''
@@ -431,11 +433,11 @@ function toggleSection(heading){
     if(body.style.display==='none'){
         body.style.display='';
         sec.classList.remove('collapsed');
-        if(tog) tog.textContent='v';
+        if(tog) tog.textContent='▼';
     } else {
         body.style.display='none';
         sec.classList.add('collapsed');
-        if(tog) tog.textContent='>';
+        if(tog) tog.textContent='▶';
     }
 }
 function filterWiki(){
@@ -459,7 +461,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     <p class="sub">Entities, threat actors, incidents, vulnerabilities and concepts — cross-linked from every digest.</p></div>
     <div class="filters">
         <input type="text" id="wikiSearch" placeholder="Search wiki…">
-        <span style="color:var(--text-dim);font-size:13px">{len(all_items)} pages — click a heading to collapse/expand</span>
+        <span style="color:var(--text-dim);font-size:13px">{len(all_items)} pages — click a heading to expand</span>
     </div>
     {cards}
     '''+js+foot()
@@ -469,13 +471,14 @@ document.addEventListener('DOMContentLoaded',()=>{
     css_path=os.path.join(DOCS,"assets","site.css")
     css_extra='''
 /* Wiki index collapsible sections */
-.ws-head{cursor:pointer;display:flex;align-items:center;gap:10px;user-select:none;padding:8px 0;margin:0}
+.ws-head{cursor:pointer;display:flex;align-items:center;gap:8px;user-select:none;padding:14px 0 10px;margin:0;font-size:20px;border-top:1px solid var(--border);color:var(--text)}
 .ws-head:hover{color:var(--accent)}
-.ws-toggle{display:inline-block;width:20px;height:20px;line-height:18px;text-align:center;border-radius:4px;background:var(--surface2);font-size:12px;font-weight:700;color:var(--text-muted);flex-shrink:0}
-.ws-count{font-size:13px;color:var(--text-dim);font-weight:400;margin-left:4px}
+.ws-head:hover .ws-toggle{background:var(--accent-glow);color:var(--accent);border-color:var(--accent)}
+.ws-toggle{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:6px;background:var(--surface2);border:1px solid var(--border);font-size:11px;color:var(--text-muted);flex-shrink:0;transition:all .15s}
+.ws-count{font-size:13px;color:var(--text-dim);font-weight:400;margin-left:auto;padding:2px 10px;border-radius:999px;background:var(--surface2)}
 .ws-body{overflow:hidden;transition:max-height .25s}
 .wiki-section.collapsed .ws-body{display:none}
-.wiki-section.collapsed .ws-toggle{color:var(--accent);background:var(--accent-glow)}
+.wiki-section.collapsed .ws-toggle{color:var(--accent);background:var(--accent-glow);border-color:var(--accent)}
 '''
     with open(css_path,"a") as f: f.write(css_extra)
 
