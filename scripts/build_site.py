@@ -205,9 +205,44 @@ def build_index(stories):
     dailylist="".join(
         f'<a class="card" href="daily/{d}.html"><h3>{d}</h3><span class="meta">{month} 2026</span><span class="go">Read →</span></a>'
         for d,month in days[:12])
-    monthlist="".join(
-        f'<a class="card" href="monthly/{m}.html"><h3>Monthly · {m}</h3><span class="go">Open →</span></a>'
-        for m in months)
+    # Build rich monthly cards with story counts, date range, partial/full tag
+    monthly_src = os.path.join(VAULT,"Cyber Digest","Monthly")
+    month_cards = []
+    for m in months:
+        mdpath = os.path.join(monthly_src, f"Cyber-Digest-Monthly-{m}.md")
+        story_count = 0
+        is_partial = False
+        date_range = m
+        if os.path.exists(mdpath):
+            body = open(mdpath, encoding="utf-8").read()
+            is_partial = "Partial-month" in body
+            story_count = len(re.findall(r"^\*\*\d+\.\s+", body, re.M))
+            dm = re.search(r"(\d+)\s*(?:–|to)\s*(\d+)\s+(August|July|June|May|April|March|January|February|September|October|November|December)", body, re.I)
+            if dm:
+                start_day, end_day, month_name = dm.group(1), dm.group(2), dm.group(3)[:3]
+                date_range = f"{start_day}–{end_day} {month_name}"
+            else:
+                date_nums = re.findall(r"\b(\d{1,2})\s+(?:August|July|June|May|April|March|January|February|September|October|November|December)\b", body, re.I)
+                if date_nums:
+                    mn = re.search(r"(August|July|June|May|April|March|January|February|September|October|November|December)", body, re.I)
+                    mn = mn.group(1)[:3] if mn else m[5:]
+                    date_range = f"{date_nums[0]}–{date_nums[-1]} {mn}"
+        tag_cls = "amber" if is_partial else "green"
+        tag_lbl = "Partial" if is_partial else "Full month"
+        label = f"{story_count} {'story' if story_count == 1 else 'stories'}" if story_count else ""
+        card = f'''<a class="card" href="monthly/{m}.html">
+          <div style="display:flex;align-items:flex-start;gap:14px">
+            <div style="font-size:2rem;line-height:1;flex-shrink:0;margin-top:2px">📅</div>
+            <div style="flex:1;min-width:0">
+              <h3>Monthly · {m}</h3>
+              <div class="meta">{date_range} · {label}</div>
+            </div>
+            <span class="tag {tag_cls}" style="flex-shrink:0;margin-top:2px">{tag_lbl}</span>
+          </div>
+          <span class="go" style="margin-top:6px">Open →</span>
+        </a>'''
+        month_cards.append(card)
+    monthlist = "".join(month_cards)
 
     html= head("Cyber Digest — Home","index.html")+f'''
 <div class="hero"><div class="kicker">Independent security intelligence · updated daily</div>
@@ -450,6 +485,16 @@ def build_monthly(months, stories):
             date_range = m
         tag_cls = "amber" if is_partial else "green"
         tag_lbl = "Partial" if is_partial else "Full month"
+        # Extract a short summary blurb from the exec summary
+        blurb = ""
+        if os.path.exists(mdpath):
+            body = open(mdpath, encoding="utf-8").read()
+            es_match = re.search(r"Executive Summary\s*\n\n([^#]+?)(?:\.(?:\s|$))", body, re.I | re.DOTALL)
+            if es_match:
+                raw = es_match.group(1).strip()
+                blurb = raw.replace("\n", " ").strip()
+                if len(blurb) > 110:
+                    blurb = blurb[:110].rsplit(" ", 1)[0] + "..."
         card = f'''<a class="card" href="{m}.html">
           <div style="display:flex;align-items:flex-start;gap:14px">
             <div style="font-size:2rem;line-height:1;flex-shrink:0;margin-top:2px">📅</div>
@@ -459,6 +504,7 @@ def build_monthly(months, stories):
             </div>
             <span class="tag {tag_cls}" style="flex-shrink:0;margin-top:2px">{tag_lbl}</span>
           </div>
+          {f'<p style="font-size:13px;color:var(--text-muted);margin:2px 0 0;line-height:1.4">{esc(blurb)}</p>' if blurb else ''}
           <span class="go" style="margin-top:6px">Open →</span>
         </a>'''
         cards_parts.append(card)
