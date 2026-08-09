@@ -16,9 +16,9 @@ NASSP = os.path.expanduser("~/Desktop/Hermes/Cyber Digest/scripts")
 
 SECTOR_EMOJI = {
  "Financial Services":"💰","Legal Services":"⚖️","Defence":"🛰️","Healthcare":"🏥",
- "Education":"🎓","Government":"🏛️","Energy & Utilities":"⚡","Construction & Property":"🏗️",
+ "Education":"🎓","Government":"🏛️","Government & Policy":"🏛️","Energy & Utilities":"⚡","Construction & Property":"🏗️",
  "Retail & Entertainment & Sport":"🛍️","Global (Macro)":"🌐","Transport":"🚚",
- "Technology & AI Governance":"🤖",
+ "Technology & AI Governance":"🤖","IT / Technology":"💻","IT":"💻",
 }
 # colour tag per sector for badges
 SECTOR_TAG = {
@@ -32,6 +32,135 @@ THREAT_TAG = {
  "Phishing / BEC":"amber","Supply Chain":"purple","OT / ICS":"green","Fraud / Cybercrime":"amber",
 }
 TIER_LABEL = {1:"Very High",2:"High",3:"Moderate",4:"Low"}
+
+# ---------------- Monthly markdown parser ----------------
+MONTHLY_SRC = None  # set at runtime
+
+def parse_monthly_md(m):
+    """Extract rich metadata from a monthly markdown file.
+    Returns dict with: story_count, is_partial, date_range, blurb,
+    digest_days, raw_stories, top3_sectors, source_div_pct,
+    top3_threats, anz_direct, fact_confirmed, fact_unverifiable,
+    fact_contradicted, story_of_month, spotlight_title, sector_count,
+    source_count, tier1_count, tier2_count.
+    """
+    global MONTHLY_SRC
+    if MONTHLY_SRC is None:
+        MONTHLY_SRC = os.path.join(VAULT, "Cyber Digest", "Monthly")
+    mdpath = os.path.join(MONTHLY_SRC, f"Cyber-Digest-Monthly-{m}.md")
+    info = {
+        "story_count": 0, "is_partial": False, "date_range": m, "blurb": "",
+        "digest_days": 0, "raw_stories": 0, "top3_sectors": [],
+        "source_div_pct": 0, "top3_threats": [], "anz_direct": 0,
+        "fact_confirmed": 0, "fact_unverifiable": 0, "fact_contradicted": 0,
+        "story_of_month": "", "spotlight_title": "", "sector_count": 0,
+        "source_count": 0, "tier1_count": 0, "tier2_count": 0,
+    }
+    if not os.path.exists(mdpath):
+        return info
+    body = open(mdpath, encoding="utf-8").read()
+
+    # Basic fields
+    info["is_partial"] = "Partial-month" in body
+    info["story_count"] = len(re.findall(r"^\*\*\d+\.\s+", body, re.M))
+
+    # Date range
+    dm = re.search(r"(\d+)\s*(?:–|to)\s*(\d+)\s+(August|July|June|May|April|March|January|February|September|October|November|December)", body, re.I)
+    if dm:
+        info["date_range"] = f"{dm.group(1)}–{dm.group(2)} {dm.group(3)[:3]}"
+    else:
+        date_nums = re.findall(r"\b(\d{1,2})\s+(?:August|July|June|May|April|March|January|February|September|October|November|December)\b", body, re.I)
+        if date_nums:
+            mn = re.search(r"(August|July|June|May|April|March|January|February|September|October|November|December)", body, re.I)
+            mn = mn.group(1)[:3] if mn else m[5:]
+            info["date_range"] = f"{date_nums[0]}–{date_nums[-1]} {mn}"
+
+    # Exec summary blurb
+    es_match = re.search(r"Executive Summary\s*\n\n([^#]+?)(?:\.(?:\s|$))", body, re.I | re.DOTALL)
+    if es_match:
+        raw = es_match.group(1).strip().replace("\n", " ")
+        info["blurb"] = (raw[:120].rsplit(" ", 1)[0] + "...") if len(raw) > 120 else raw
+
+    # Story of the Month
+    som = re.search(r"## 🏆 Story of the Month\s*\n+###\s+(.+)", body)
+    if som:
+        info["story_of_month"] = som.group(1).strip()
+
+    # Spotlight title
+    sp = re.search(r"## 🔦 Spotlight\s*\n+###\s+(.+)", body)
+    if sp:
+        info["spotlight_title"] = sp.group(1).strip()
+
+    # --- "By the Numbers" section ---
+    btn = re.search(r"## 📊 By the Numbers\s*\n(.*?)(?=\n##\s|\Z)", body, re.DOTALL)
+    if btn:
+        btn_text = btn.group(1)
+        # Digest days (handles "Digest days:" and "Digest days covered:")
+        dd = re.search(r"\*\*Digest days(?:\scovered)?:\*\*\s*(\d+)", btn_text)
+        if dd: info["digest_days"] = int(dd.group(1))
+        # Raw stories (may be absent in partial-month editions)
+        rs = re.search(r"\*\*Raw stories ingested:\*\*\s*(\d+)", btn_text)
+        if rs: info["raw_stories"] = int(rs.group(1))
+        # Top sectors — handle both "(count)" and "name N · name N" formats
+        ts = re.search(r"\*\*Stories per sector.*?\):\*\*\s*(.+)", btn_text)
+        if ts:
+            txt = ts.group(1)
+            parts = re.findall(r"([^,(·\n]+?)\s*\((\d+)\)", txt)  # "Name (99)" format
+            if not parts:
+                parts = re.findall(r"([^\d·\n]+?)\s*(\d+)\s*[·|]", txt + "·")  # "Name 99 ·" format
+            for name, count in parts[:3]:
+                info["top3_sectors"].append((name.strip(), int(count)))
+        # Source diversity % — handle "37.3% ⚠️" and "37.3% — above"
+        sd = re.search(r"(\d+\.?\d*)%\s*[—–]?\s*(?:above|warning|flag|⚠️|⬆)", btn_text)
+        if sd:
+            info["source_div_pct"] = float(sd.group(1))
+        # Top threats — handle both formats
+        tt = re.search(r"\*\*Threat type distribution.*?\):\*\*\s*(.+)", btn_text)
+        if tt:
+            txt = tt.group(1)
+            parts = re.findall(r"([^,(·\n]+?)\s*\((\d+)\)", txt)
+            if not parts:
+                parts = re.findall(r"([^\d·\n]+?)\s*(\d+)\s*[·|]", txt + "·")
+            for name, count in parts[:3]:
+                info["top3_threats"].append((name.strip(), int(count)))
+        # ANZ direct — handle "Direct AU/NZ impact (18)" and "ANZ-5 (Direct) N"
+        anz = re.search(r"(?:Direct AU/NZ impact|ANZ-5\s*\(Direct\))\s*\(?(\d+)\)?", btn_text)
+        if anz: info["anz_direct"] = int(anz.group(1))
+        # Source count from source diversity line (handle both formats)
+        src_line = re.search(r".*?\*\*(?:Stories per source[^:]*|Source diversity[^:]*?):\*\*\s*(.+)", btn_text)
+        if src_line:
+            src_text = src_line.group(1)
+            # Count entries separated by · or ,
+            sep = "·" if "·" in src_text else ","
+            parts = [p.strip() for p in src_text.split(sep) if p.strip()]
+            # Filter to entries that look like source names (start with letter, have a number)
+            entries = [p for p in parts if re.match(r'[A-Za-z]', p) and re.search(r'\d', p)]
+            if entries:
+                info["source_count"] = len(entries)
+        # Tier counts
+        t1 = re.search(r"\*\*Tier breakdown.*?:\*\*\s*Tier 1\s*\((\d+)\)", btn_text)
+        if t1: info["tier1_count"] = int(t1.group(1))
+        t2 = re.search(r"\*\*Tier breakdown.*?:\*\*\s*Tier 2\s*\((\d+)\)", btn_text)
+        if t2: info["tier2_count"] = int(t2.group(1))
+
+    # --- Fact-Check section ---
+    fc = re.search(r"## 🔍 Fact-Check Verification\s*\n(.*?)(?=\n##\s|\Z)", body, re.DOTALL)
+    if fc:
+        fc_text = fc.group(1)
+        cf = re.search(r"✅ Confirmed\s*\|\s*(\d+)", fc_text)
+        if cf: info["fact_confirmed"] = int(cf.group(1))
+        uv = re.search(r"🟡 Unverifiable\s*\|\s*(\d+)", fc_text)
+        if uv: info["fact_unverifiable"] = int(uv.group(1))
+        cd = re.search(r"❌ Contradicted\s*\|\s*(\d+)", fc_text)
+        if cd: info["fact_contradicted"] = int(cd.group(1))
+
+    # --- Industry Breakdown sector count ---
+    ib = re.search(r"## 📊 Industry Breakdown\s*\n(.*?)(?=\n##\s|\Z)", body, re.DOTALL)
+    if ib:
+        ib_text = ib.group(1)
+        info["sector_count"] = len(re.findall(r'"([^"]+)"\s*:\s*\d+', ib_text))
+
+    return info
 
 def slugify(s):
     return re.sub(r"[^A-Za-z0-9]+","-",s).strip("-").lower()
@@ -205,52 +334,86 @@ def build_index(stories):
     dailylist="".join(
         f'<a class="card" href="daily/{d}.html"><h3>{d}</h3><span class="meta">{month} 2026</span><span class="go">Read →</span></a>'
         for d,month in days[:12])
-    # Build rich monthly cards with story counts, date range, partial/full tag
-    monthly_src = os.path.join(VAULT,"Cyber Digest","Monthly")
+    # Build rich monthly cards with full metadata from markdown
     month_cards = []
     for m in months:
-        mdpath = os.path.join(monthly_src, f"Cyber-Digest-Monthly-{m}.md")
-        story_count = 0
-        is_partial = False
-        date_range = m
-        if os.path.exists(mdpath):
-            body = open(mdpath, encoding="utf-8").read()
-            is_partial = "Partial-month" in body
-            story_count = len(re.findall(r"^\*\*\d+\.\s+", body, re.M))
-            dm = re.search(r"(\d+)\s*(?:–|to)\s*(\d+)\s+(August|July|June|May|April|March|January|February|September|October|November|December)", body, re.I)
-            if dm:
-                start_day, end_day, month_name = dm.group(1), dm.group(2), dm.group(3)[:3]
-                date_range = f"{start_day}–{end_day} {month_name}"
+        d = parse_monthly_md(m)
+        tag_cls = "amber" if d["is_partial"] else "green"
+        tag_lbl = "Partial" if d["is_partial"] else "Full month"
+        label = f"{d['story_count']} {'story' if d['story_count'] == 1 else 'stories'}" if d["story_count"] else ""
+
+        # Stats line
+        stats_parts = []
+        if d["digest_days"]: stats_parts.append(f"📆 {d['digest_days']} {'day' if d['digest_days'] == 1 else 'days'}")
+        if d["source_count"]: stats_parts.append(f"📡 {d['source_count']} {'source' if d['source_count'] == 1 else 'sources'}")
+        if d["sector_count"]: stats_parts.append(f"🏷️ {d['sector_count']} {'sector' if d['sector_count'] == 1 else 'sectors'}")
+        if d["anz_direct"]: stats_parts.append(f"🇦🇺 {d['anz_direct']} AU/NZ")
+        if d["raw_stories"]: stats_parts.append(f"📥 {d['raw_stories']} raw")
+        stats_line = " · ".join(stats_parts) if stats_parts else ""
+
+        # Source diversity warning
+        div_warn = ""
+        if d["source_div_pct"]:
+            pct = d["source_div_pct"]
+            if pct >= 40:
+                div_warn = f'<span class="tag red" style="font-size:11px">🚩 {pct}% concentration</span>'
+            elif pct >= 35:
+                div_warn = f'<span class="tag amber" style="font-size:11px">⚠️ {pct}% concentration</span>'
             else:
-                date_nums = re.findall(r"\b(\d{1,2})\s+(?:August|July|June|May|April|March|January|February|September|October|November|December)\b", body, re.I)
-                if date_nums:
-                    mn = re.search(r"(August|July|June|May|April|March|January|February|September|October|November|December)", body, re.I)
-                    mn = mn.group(1)[:3] if mn else m[5:]
-                    date_range = f"{date_nums[0]}–{date_nums[-1]} {mn}"
-        tag_cls = "amber" if is_partial else "green"
-        tag_lbl = "Partial" if is_partial else "Full month"
-        label = f"{story_count} {'story' if story_count == 1 else 'stories'}" if story_count else ""
-        # Extract short summary blurb from exec summary
-        blurb = ""
-        if os.path.exists(mdpath):
-            body = open(mdpath, encoding="utf-8").read()
-            es_match = re.search(r"Executive Summary\s*\n\n([^#]+?)(?:\.(?:\s|$))", body, re.I | re.DOTALL)
-            if es_match:
-                raw = es_match.group(1).strip()
-                blurb = raw.replace("\n", " ").strip()
-                if len(blurb) > 120:
-                    blurb = blurb[:120].rsplit(" ", 1)[0] + "..."
+                div_warn = f'<span class="tag blue" style="font-size:11px">📊 {pct}% top source</span>'
+
+        # Top sectors badges
+        sec_badges = ""
+        if d["top3_sectors"]:
+            badges = []
+            for name, count in d["top3_sectors"]:
+                emoji = SECTOR_EMOJI.get(name, "")
+                cls = SECTOR_TAG.get(name, "blue")
+                badges.append(f'<span class="tag {cls}" style="font-size:11px">{emoji} {count}</span>')
+            sec_badges = '<div style="display:flex;gap:4px;flex-wrap:wrap;margin:4px 0 0">' + "".join(badges) + "</div>"
+
+        # Top threats badges
+        thr_badges = ""
+        if d["top3_threats"]:
+            badges = []
+            for name, count in d["top3_threats"]:
+                cls = THREAT_TAG.get(name, "blue")
+                badges.append(f'<span class="tag {cls}" style="font-size:11px">{name} {count}</span>')
+            thr_badges = '<div style="display:flex;gap:4px;flex-wrap:wrap;margin:4px 0 0">' + "".join(badges) + "</div>"
+
+        # Spotlight / Story of Month line
+        feature = ""
+        if d["story_of_month"]:
+            s = esc(d["story_of_month"])
+            feature = f'<div style="font-size:12.5px;color:var(--text-muted);margin:4px 0 0;line-height:1.4">🏆 <strong style="color:var(--text)">Story of month:</strong> {s}</div>'
+        elif d["spotlight_title"]:
+            s = esc(d["spotlight_title"])
+            feature = f'<div style="font-size:12.5px;color:var(--text-muted);margin:4px 0 0;line-height:1.4">🔦 <strong style="color:var(--text)">Spotlight:</strong> {s}</div>'
+
+        # Fact-check summary
+        fc_line = ""
+        if d["fact_confirmed"] or d["fact_unverifiable"]:
+            fc_line = f'<div style="font-size:12px;color:var(--text-dim);margin:4px 0 0">✅ Fact-check: {d["fact_confirmed"]} confirmed · 🟡 {d["fact_unverifiable"]} unverifiable'
+            if d["fact_contradicted"]:
+                fc_line += f' · ❌ {d["fact_contradicted"]} contradicted'
+            fc_line += "</div>"
+
         card = f'''<a class="card card-monthly" href="monthly/{m}.html">
           <div style="display:flex;align-items:flex-start;gap:14px">
             <div style="font-size:2.2rem;line-height:1;flex-shrink:0;margin-top:2px">📅</div>
             <div style="flex:1;min-width:0">
               <h3>Monthly · {m}</h3>
-              <div class="meta">{date_range} · {label}</div>
+              <div class="meta">{d["date_range"]} · {label}</div>
             </div>
             <span class="tag {tag_cls}" style="flex-shrink:0;margin-top:2px">{tag_lbl}</span>
           </div>
-          {f'<p class="card-summary">{esc(blurb)}</p>' if blurb else ''}
-          <span class="go" style="margin-top:6px">Open →</span>
+          {f'<p class="card-summary">{esc(d["blurb"])}</p>' if d["blurb"] else ""}
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:4px 0 0;font-size:12px;color:var(--text-dim)">{stats_line}</div>
+          {sec_badges}
+          {thr_badges}
+          {feature}
+          {fc_line}
+          <span class="go" style="margin-top:8px">Open →</span>
         </a>'''
         month_cards.append(card)
     monthlist = "".join(month_cards)
@@ -462,61 +625,75 @@ def build_monthly(months, stories):
                 <div class="wiki-body">{h}</div>
                 {foot()}'''
                 open(out,"w",encoding="utf-8").write(page)
-    # Build enriched cards with story counts and edition type
+    # Build enriched cards with full metadata from markdown
     cards_parts = []
     for m in months:
-        # Count stories in the monthly markdown (more reliable than DB which may lag)
-        mdpath = os.path.join(monthly_src, f"Cyber-Digest-Monthly-{m}.md")
-        story_count = 0
-        is_partial = False
-        dates_found = []
-        if os.path.exists(mdpath):
-            body = open(mdpath, encoding="utf-8").read()
-            is_partial = "Partial-month" in body
-            # Count lines starting with `**N.` — these are story headlines
-            story_count = len(re.findall(r"^\*\*\d+\.\s+", body, re.M))
-            # Extract date range from exec summary mentions of digest days
-            dm = re.search(r"(\d+)\s*(?:–|to)\s*(\d+)\s+(August|July|June|May|April|March|January|February|September|October|November|December)", body, re.I)
-            if dm:
-                start_day = dm.group(1)
-                end_day = dm.group(2)
-                month_name = dm.group(3)
-                month_abbr = month_name[:3]
-                date_range = f"{start_day}–{end_day} {month_abbr}"
-            else:
-                # Fallback: extract from dates in the exec summary
-                date_nums = re.findall(r"\b(\d{1,2})\s+(?:August|July|June|May|April|March|January|February|September|October|November|December)\b", body, re.I)
-                if date_nums:
-                    month_name = re.search(r"(August|July|June|May|April|March|January|February|September|October|November|December)", body, re.I)
-                    mn = month_name.group(1)[:3] if month_name else m[5:]
-                    date_range = f"{date_nums[0]}–{date_nums[-1]} {mn}"
-                else:
-                    date_range = m
-        else:
-            date_range = m
-        tag_cls = "amber" if is_partial else "green"
-        tag_lbl = "Partial" if is_partial else "Full month"
-        # Extract a short summary blurb from the exec summary
-        blurb = ""
-        if os.path.exists(mdpath):
-            body = open(mdpath, encoding="utf-8").read()
-            es_match = re.search(r"Executive Summary\s*\n\n([^#]+?)(?:\.(?:\s|$))", body, re.I | re.DOTALL)
-            if es_match:
-                raw = es_match.group(1).strip()
-                blurb = raw.replace("\n", " ").strip()
-                if len(blurb) > 120:
-                    blurb = blurb[:120].rsplit(" ", 1)[0] + "..."
+        d = parse_monthly_md(m)
+        tag_cls = "amber" if d["is_partial"] else "green"
+        tag_lbl = "Partial" if d["is_partial"] else "Full month"
+        label = f"{d['story_count']} {'story' if d['story_count'] == 1 else 'stories'}" if d["story_count"] else ""
+
+        # Stats line
+        stats_parts = []
+        if d["digest_days"]: stats_parts.append(f"📆 {d['digest_days']} {'day' if d['digest_days'] == 1 else 'days'}")
+        if d["source_count"]: stats_parts.append(f"📡 {d['source_count']} {'source' if d['source_count'] == 1 else 'sources'}")
+        if d["sector_count"]: stats_parts.append(f"🏷️ {d['sector_count']} {'sector' if d['sector_count'] == 1 else 'sectors'}")
+        if d["anz_direct"]: stats_parts.append(f"🇦🇺 {d['anz_direct']} AU/NZ")
+        if d["raw_stories"]: stats_parts.append(f"📥 {d['raw_stories']} raw")
+        stats_line = " · ".join(stats_parts) if stats_parts else ""
+
+        # Top sectors badges
+        sec_badges = ""
+        if d["top3_sectors"]:
+            badges = []
+            for name, count in d["top3_sectors"]:
+                emoji = SECTOR_EMOJI.get(name, "")
+                cls = SECTOR_TAG.get(name, "blue")
+                badges.append(f'<span class="tag {cls}" style="font-size:11px">{emoji} {count}</span>')
+            sec_badges = '<div style="display:flex;gap:4px;flex-wrap:wrap;margin:4px 0 0">' + "".join(badges) + "</div>"
+
+        # Top threats badges
+        thr_badges = ""
+        if d["top3_threats"]:
+            badges = []
+            for name, count in d["top3_threats"]:
+                cls = THREAT_TAG.get(name, "blue")
+                badges.append(f'<span class="tag {cls}" style="font-size:11px">{name} {count}</span>')
+            thr_badges = '<div style="display:flex;gap:4px;flex-wrap:wrap;margin:4px 0 0">' + "".join(badges) + "</div>"
+
+        # Spotlight / Story of Month line
+        feature = ""
+        if d["story_of_month"]:
+            s = esc(d["story_of_month"])
+            feature = f'<div style="font-size:12.5px;color:var(--text-muted);margin:4px 0 0;line-height:1.4">🏆 <strong style="color:var(--text)">Story of month:</strong> {s}</div>'
+        elif d["spotlight_title"]:
+            s = esc(d["spotlight_title"])
+            feature = f'<div style="font-size:12.5px;color:var(--text-muted);margin:4px 0 0;line-height:1.4">🔦 <strong style="color:var(--text)">Spotlight:</strong> {s}</div>'
+
+        # Fact-check summary
+        fc_line = ""
+        if d["fact_confirmed"] or d["fact_unverifiable"]:
+            fc_line = f'<div style="font-size:12px;color:var(--text-dim);margin:4px 0 0">✅ Fact-check: {d["fact_confirmed"]} confirmed · 🟡 {d["fact_unverifiable"]} unverifiable'
+            if d["fact_contradicted"]:
+                fc_line += f' · ❌ {d["fact_contradicted"]} contradicted'
+            fc_line += "</div>"
+
         card = f'''<a class="card card-monthly" href="{m}.html">
           <div style="display:flex;align-items:flex-start;gap:14px">
             <div style="font-size:2.2rem;line-height:1;flex-shrink:0;margin-top:2px">📅</div>
             <div style="flex:1;min-width:0">
               <h3>Monthly · {m}</h3>
-              <div class="meta">{date_range} · {story_count} stories</div>
+              <div class="meta">{d["date_range"]} · {label}</div>
             </div>
             <span class="tag {tag_cls}" style="flex-shrink:0;margin-top:2px">{tag_lbl}</span>
           </div>
-          {f'<p class="card-summary">{esc(blurb)}</p>' if blurb else ''}
-          <span class="go" style="margin-top:6px">Open →</span>
+          {f'<p class="card-summary">{esc(d["blurb"])}</p>' if d["blurb"] else ""}
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:4px 0 0;font-size:12px;color:var(--text-dim)">{stats_line}</div>
+          {sec_badges}
+          {thr_badges}
+          {feature}
+          {fc_line}
+          <span class="go" style="margin-top:8px">Open →</span>
         </a>'''
         cards_parts.append(card)
     cards = "".join(cards_parts)
