@@ -180,21 +180,39 @@ def nav_html(active="", root=""):
         ls.append(f'<a href="{BASE}/{href}" class="{cls}"><span class="t">{ico} {label}</span></a>')
     return f'''<nav class="topnav"><div class="inner">
         <a class="brand" href="{BASE}/index.html"><span class="dot"></span>Cyber&nbsp;Digest<small>public site</small></a>
-        <div class="navlinks">{"".join(ls)}</div></div></nav>'''
+        <div class="navlinks">{"".join(ls)}</div>
+        <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light">\U0001f319</div></div></nav>'''
 
 SHARE_CSS = "assets/site.css"
 def head(title, active="", root=""):
-    return f'''<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+    return f'''<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{esc(title)}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{root}{SHARE_CSS}"></head><body>
 {nav_html(active, root)}<main class="container">'''
 
 def foot():
+    moon = "\U0001f319"
+    sun = "\u2600\ufe0f"
     return f'''</main>
-<div class="footer">Cyber Digest public site · built {datetime.now().strftime("%Y-%m-%d %H:%M")} · AU security intelligence</div>
+<div class="footer">
+  <div class="links">
+    <a href="https://peterjaycox.github.io/cyber-digest-site/index.html">Home</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/stories.html">Story DB</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/daily/">Daily</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/monthly/index.html">Monthly</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/wiki/index.html">Wiki</a>
+  </div>
+  Cyber Digest public site · built {datetime.now().strftime("%Y-%m-%d %H:%M")}
+</div>
+<script>
+var _t=document.documentElement;
+var _b=document.querySelector(".theme-toggle");
+function toggleTheme(){{var n=_t.getAttribute("data-theme")==="dark"?"light":"dark";_t.setAttribute("data-theme",n);if(_b)_b.textContent=n==="dark"?"{moon}":"{sun}";if(n==="dark")localStorage.removeItem("cd-theme");else localStorage.setItem("cd-theme",n)}}
+(function(){{var s=localStorage.getItem("cd-theme");if(s){{_t.setAttribute("data-theme",s);if(_b)_b.textContent="{sun}"}}}})()
+</script>
 </body></html>'''
 
 # ---------------- SQLite -> data ----------------
@@ -322,7 +340,7 @@ def build_index(stories):
     if days:
         d,month=days[0]
         latest_daily_card=f'''<a class="card" href="daily/{d}.html"><h3>Latest Daily · {d}</h3>
-        <span class="tag cyan">today</span><p>Full sector-by-sector roundup with source reliability indexing and executive summary.</p>
+        <span class="tag blue">today</span><p>Full sector-by-sector roundup with source reliability indexing and executive summary.</p>
         <span class="go">Read →</span></a>'''
 
     seccards="".join(
@@ -420,21 +438,21 @@ def build_index(stories):
     monthlist = "".join(month_cards)
 
     html= head("Cyber Digest — Home","index.html")+f'''
-<div class="hero"><div class="kicker">Independent security intelligence · updated daily</div>
+<div class="hero"><div class="kicker">// independent security intelligence</div>
 <h1>Cyber <span class="accent">Digest</span></h1>
 <p class="sub">A curated, sector-by-sector roundup of global cybersecurity developments with source-reliability indexing, Australian &amp; New Zealand context, and a searchable knowledge base of every story we've covered.</p></div>
 
 <div class="stats">
-<div class="stat"><div class="num">{n_stories}</div><div class="lbl">Stories indexed</div></div>
-<div class="stat"><div class="num">{len(days)}</div><div class="lbl">Daily editions</div></div>
-<div class="stat"><div class="num">{len(months)}</div><div class="lbl">Monthly editions</div></div>
-<div class="stat"><div class="num">{len(sources)}</div><div class="lbl">Sources</div></div>
-<div class="stat"><div class="num">{len(anzi)}</div><div class="lbl">AU/NZ-relevant</div></div>
+<div class="stat"><span class="num">{n_stories}</span> Stories</div>
+<div class="stat"><span class="num">{len(days)}</span> Daily</div>
+<div class="stat"><span class="num">{len(months)}</span> Monthly</div>
+<div class="stat"><span class="num">{len(sources)}</span> Sources</div>
+<div class="stat"><span class="num">{len(anzi)}</span> AU/NZ</div>
 </div>
 
 <div class="section"><h2><span class="bar"></span>Latest</h2><div class="grid cards">
 {latest_daily_card}
-<a class="card" href="stories.html"><h3>Story Database</h3><span class="tag cyan">searchable</span><p>Filter {n_stories} stories by sector, threat type, geography, AU/NZ relevance and date.</p><span class="go">Browse →</span></a>
+<a class="card" href="stories.html"><h3>Story Database</h3><span class="tag blue">searchable</span><p>Filter {n_stories} stories by sector, threat type, geography, AU/NZ relevance and date.</p><span class="go">Browse →</span></a>
 <a class="card" href="wiki/index.html"><h3>Cyber Wiki</h3><span class="tag purple">{len(scan_wiki()[0].get('incidents',{}))} pages</span><p>Entities, threat actors, incidents, CVEs and concepts linked from every digest.</p><span class="go">Open →</span></a>
 </div></div>
 
@@ -520,7 +538,7 @@ render();
           .replace("__THREAT_TAG__", json.dumps(THREAT_TAG)))
 
     html_top = head("Story Database","stories.html")+f'''
-<div class="hero"><div class="kicker">Searchable archive</div><h1>Story <span class="accent">Database</span></h1>
+<div class="hero"><div class="kicker">// searchable archive</div><h1>Story <span class="accent">Database</span></h1>
 <p class="sub">{len(page_data)} stories across all daily digests. Filter by keyword, sector, threat type, geography or Australian/NZ relevance (ANZ score 0–5: 5 = direct AU/NZ impact).</p></div>
 <div class="filters">
 <input type="text" id="q" placeholder="Search stories…">
@@ -582,7 +600,7 @@ def build_daily(days):
                 <span class="go">→</span>
             </a>'''
         cards+="</div></div>"
-    html=head("Daily Editions","daily/", root="../")+f'''<div class="hero"><div class="kicker">Archive</div><h1>Daily <span class="accent">Digests</span></h1>
+    html=head("Daily Editions","daily/", root="../")+f'''<div class="hero"><div class="kicker">// archive</div><h1>Daily <span class="accent">Digests</span></h1>
     <p class="sub">Every daily sector-by-sector roundup, newest first.</p></div>
     {cards}'''+foot()
 
@@ -699,7 +717,7 @@ def build_monthly(months, stories):
         </a>'''
         cards_parts.append(card)
     cards = "".join(cards_parts)
-    html=head("Monthly Editions","monthly/index.html", root="../")+f'''<div class="hero"><div class="kicker">Aggregate</div><h1>Monthly <span class="accent">Digests</span></h1>
+    html=head("Monthly Editions","monthly/index.html", root="../")+f'''<div class="hero"><div class="kicker">// aggregate</div><h1>Monthly <span class="accent">Digests</span></h1>
     <p class="sub">Monthly aggregation, spotlight stories, tradecraft and fact-check reports.</p></div>
     <div class="grid cards grid-monthly">{cards}</div>'''+foot()
     open(os.path.join(DOCS,"monthly","index.html"),"w",encoding="utf-8").write(html)
@@ -790,7 +808,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     document.getElementById('wikiSearch').addEventListener('input',filterWiki);
 });
 </script>'''
-    html=head("Cyber Wiki","wiki/index.html", root="../")+f'''<div class="hero"><div class="kicker">Knowledge base</div><h1>Cyber <span class="accent">Wiki</span></h1>
+    html=head("Cyber Wiki","wiki/index.html", root="../")+f'''<div class="hero"><div class="kicker">// knowledge base</div><h1>Cyber <span class="accent">Wiki</span></h1>
     <p class="sub">Entities, threat actors, incidents, vulnerabilities and concepts — cross-linked from every digest.</p></div>
     <div class="filters">
         <input type="text" id="wikiSearch" placeholder="Search wiki…">
