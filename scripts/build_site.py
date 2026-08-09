@@ -28,8 +28,11 @@ SECTOR_EMOJI = {
 # colour tag per sector for badges
 SECTOR_TAG = {
  "Financial Services":"cyan","Legal Services":"purple","Defence":"blue","Healthcare":"red",
- "Education":"amber","Government":"blue","Energy & Utilities":"amber","Construction & Property":"amber",
+ "Education":"amber","Government":"blue","Government & Policy":"blue","Energy & Utilities":"amber","Construction & Property":"amber",
  "Retail & Entertainment & Sport":"red","Global (Macro)":"purple","Transport":"green","Technology & AI Governance":"cyan",
+ "IT / Technology":"vuln","Legal & Regulatory":"purple","General / Cross-Sector":"blue",
+ "Manufacturing & Critical Infrastructure":"amber","Media & Entertainment":"red",
+ "Geopolitical & State-Sponsored":"vuln","Cybercrime & Ransomware":"red",
 }
 THREAT_TAG = {
  "Zero-day / Vuln":"vuln","Breach / Data Leak":"red","Ransomware":"red","Regulatory / Policy":"amber",
@@ -520,14 +523,20 @@ function render(){
    const anzdot=s.anz>=4?'<span class="tag red">AU/NZ</span>':s.anz>=3?'<span class="tag amber">ANZ</span>':'';
    const sem=s.geo?('<span class="meta" style="color:var(--text-dim)">'+esc(s.date)+' · '+esc(s.geo)+'</span>'):('<span class="meta" style="color:var(--text-dim)">'+esc(s.date)+'</span>');
    const src=s.url?('<a href="'+esc(s.url)+'" target="_blank" rel="noopener">'+esc(s.source)+'</a>'):(esc(s.source||''));
-   html+='<div class="story"><div class="row1">'
+   const tcl='tier'+((s.tier==null||s.tier>3)?0:s.tier);
+   const hlink=s.url?'<a href="'+esc(s.url)+'" target="_blank" rel="noopener" class="st-link">'+esc(s.headline)+'</a>':esc(s.headline);
+   html+='<div class="story '+tcl+'"><div class="row1">'
      +'<span class="tag '+sectag+'">'+esc(s.sector)+'</span>'
      +'<span class="tag '+ttag+'">'+esc(s.threat)+'</span>'+tiershow+anzdot+sem
-     +'</div><h3>'+esc(s.headline)+'</h3>'
-     +'<div class="sum">'+esc(s.summary)+'</div>'
+     +'</div><h3>'+hlink+'</h3>'
+     +'<div class="sum clamp">'+esc(s.summary)+'</div>'
      +'<div class="srcline">Source: '+src+' · ANZ '+s.anz+'/5 · Score '+s.score+'</div></div>';
  });
  document.getElementById('results').innerHTML=html || '<div class="empty">No stories match your filters.</div>';
+ document.querySelectorAll('.sum.clamp').forEach(el=>{
+   if(el.scrollHeight>el.clientHeight) el.classList.add('hasmore');
+   el.addEventListener('click',function(){this.classList.toggle('expanded');});
+ });
 }
 ['q','fsector','fthreat','fgeo','fanz'].forEach(id=>{
  const el=document.getElementById(id); if(el) el.addEventListener('input',render);
@@ -546,11 +555,12 @@ render();
 <div class="hero"><div class="kicker">// searchable archive</div><h1>Story <span class="accent">Database</span></h1>
 <p class="sub">{len(page_data)} stories across all daily digests. Filter by keyword, sector, threat type, geography or Australian/NZ relevance (ANZ score 0–5: 5 = direct AU/NZ impact).</p></div>
 <div class="filters">
-<input type="text" id="q" placeholder="Search stories…">
+<input type="text" id="q" placeholder="Search stories\u2026">
 <select id="fsector"><option value="">All sectors</option>{sectors_opts}</select>
 <select id="fthreat"><option value="">All threat types</option>{threats_opts}</select>
 <select id="fgeo"><option value="">All regions</option>{geos_opts}</select>
-<select id="fanz"><option value="">ANZ relevance</option><option value="5">5 · Direct AU/NZ</option><option value="4">4 · AU regulation</option><option value="3">3 · Five Eyes</option><option value="1">1+ · Any</option></select>
+<select id="fanz"><option value="">ANZ relevance</option><option value="5">5 \u00b7 Direct AU/NZ</option><option value="4">4 \u00b7 AU regulation</option><option value="3">3 \u00b7 Five Eyes</option><option value="1">1+ \u00b7 Any</option></select>
+<button id="btn-fiveeyes" class="tag red" style="cursor:pointer;border:none;font-size:13px;padding:6px 12px" onclick="document.getElementById('fanz').value='3';render()">\U0001F1E6\U0001F1FA Five Eyes</button>
 </div>
 <div class="legend" id="count"></div>
 <div id="results"></div>
