@@ -374,9 +374,14 @@ def build_index(stories):
         f'<a class="card" href="stories.html?threat={esc(k)}"><h3>{esc(k)}</h3><span class="tag {THREAT_TAG.get(k,"blue")}">{v}</span><span class="go">Explore →</span></a>'
         for k,v in top_threats)
 
-    dailylist="".join(
-        f'<a class="card" href="daily/{d}.html"><h3>{d}</h3><span class="meta">{month} 2026</span><span class="go">Read →</span></a>'
-        for d,month in days[:12])
+    def _daily_card(d,month):
+        info=daily_info.get(d,{"count":0,"top":None})
+        n=info["count"] or 0
+        tag=f'<span class="tag green">{n} {"story" if n==1 else "stories"}</span>' if n else ""
+        theme=f'<p class="daily-theme">{_trunc(info["top"])}</p>' if info.get("top") else ""
+        return f'<a class="card" href="daily/{d}.html"><h3>{d}</h3><span class="meta">{month} 2026</span>{tag}{theme}<span class="go">Read →</span></a>'
+
+    dailylist="".join(_daily_card(d,month) for d,month in days[:12])
     # Build rich monthly cards with full metadata from markdown
     month_cards = []
     for m in months:
