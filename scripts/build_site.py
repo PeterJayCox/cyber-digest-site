@@ -169,6 +169,7 @@ def esc(s):
     return html.escape(str(s), quote=True)
 
 def nav_html(active="", root=""):
+    BASE = "https://peterjaycox.github.io/cyber-digest-site"
     items = [("index.html","Home","🏠"),("stories.html","Story DB","📚"),
              ("daily/","Daily","🗓️"),("monthly/index.html","Monthly","📅"),
              ("wiki/index.html","Wiki","🧠")]
@@ -176,16 +177,15 @@ def nav_html(active="", root=""):
     for href,label,ico in items:
         cls="active" if href==active else ""
         if active=="daily/" and href=="daily/": cls="active"
-        ls.append(f'<a href="{root}{href}" class="{cls}"><span class="t">{ico} {label}</span></a>')
+        ls.append(f'<a href="{BASE}/{href}" class="{cls}"><span class="t">{ico} {label}</span></a>')
     return f'''<nav class="topnav"><div class="inner">
-        <a class="brand" href="{root}index.html"><span class="dot"></span>Cyber&nbsp;Digest<small>public site</small></a>
+        <a class="brand" href="{BASE}/index.html"><span class="dot"></span>Cyber&nbsp;Digest<small>public site</small></a>
         <div class="navlinks">{"".join(ls)}</div></div></nav>'''
 
 SHARE_CSS = "assets/site.css"
 def head(title, active="", root=""):
     return f'''<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<base href="https://peterjaycox.github.io/cyber-digest-site/">
 <title>{esc(title)}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
