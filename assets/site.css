@@ -51,6 +51,35 @@ a:hover{text-decoration:underline}
 .card p{font-size:13.5px;color:var(--text-muted);flex:1}
 .card .go{font-size:13px;font-weight:600;color:var(--accent);margin-top:4px}
 
+/* Monthly cards: bigger, wider, more prominent */
+.grid-monthly {
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)) !important;
+}
+.card-monthly {
+  border-left: 3px solid var(--accent);
+  background: linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%);
+  padding: 22px;
+  gap: 10px;
+}
+.card-monthly:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 24px var(--accent-glow), 0 4px 20px rgba(0,0,0,.3);
+  transform: translateY(-3px);
+}
+.card-monthly h3 {
+  font-size: 17px;
+}
+.card-summary {
+  font-size: 13.5px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 4px 0 0;
+}
+
+@media(max-width:620px){
+  .grid-monthly{grid-template-columns:1fr !important}
+}
+
 /* Tag/badge */
 .tag{display:inline-block;font-size:11px;font-weight:600;padding:3px 8px;border-radius:6px;letter-spacing:.3px}
 .tag.cyan{background:rgba(0,180,216,.14);color:#22d3ee}

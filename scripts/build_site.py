@@ -230,15 +230,26 @@ def build_index(stories):
         tag_cls = "amber" if is_partial else "green"
         tag_lbl = "Partial" if is_partial else "Full month"
         label = f"{story_count} {'story' if story_count == 1 else 'stories'}" if story_count else ""
-        card = f'''<a class="card" href="monthly/{m}.html">
+        # Extract short summary blurb from exec summary
+        blurb = ""
+        if os.path.exists(mdpath):
+            body = open(mdpath, encoding="utf-8").read()
+            es_match = re.search(r"Executive Summary\s*\n\n([^#]+?)(?:\.(?:\s|$))", body, re.I | re.DOTALL)
+            if es_match:
+                raw = es_match.group(1).strip()
+                blurb = raw.replace("\n", " ").strip()
+                if len(blurb) > 120:
+                    blurb = blurb[:120].rsplit(" ", 1)[0] + "..."
+        card = f'''<a class="card card-monthly" href="monthly/{m}.html">
           <div style="display:flex;align-items:flex-start;gap:14px">
-            <div style="font-size:2rem;line-height:1;flex-shrink:0;margin-top:2px">📅</div>
+            <div style="font-size:2.2rem;line-height:1;flex-shrink:0;margin-top:2px">📅</div>
             <div style="flex:1;min-width:0">
               <h3>Monthly · {m}</h3>
               <div class="meta">{date_range} · {label}</div>
             </div>
             <span class="tag {tag_cls}" style="flex-shrink:0;margin-top:2px">{tag_lbl}</span>
           </div>
+          {f'<p class="card-summary">{esc(blurb)}</p>' if blurb else ''}
           <span class="go" style="margin-top:6px">Open →</span>
         </a>'''
         month_cards.append(card)
@@ -266,8 +277,8 @@ def build_index(stories):
 <div class="section"><h2><span class="bar"></span>Top Sectors</h2><div class="grid cards">{seccards}</div></div>
 <div class="section"><h2><span class="bar"></span>Top Threat Types</h2><div class="grid cards">{threatcards}</div></div>
 
+<div class="section"><h2><span class="bar"></span>Monthly Editions</h2><div class="grid cards grid-monthly">{monthlist}</div></div>
 <div class="section"><h2><span class="bar"></span>Daily Editions</h2><div class="grid cards">{dailylist}</div></div>
-<div class="section"><h2><span class="bar"></span>Monthly Editions</h2><div class="grid cards">{monthlist}</div></div>
 '''+ foot()
     os.makedirs(DOCS,exist_ok=True)
     open(os.path.join(DOCS,"index.html"),"w",encoding="utf-8").write(html)
@@ -493,25 +504,25 @@ def build_monthly(months, stories):
             if es_match:
                 raw = es_match.group(1).strip()
                 blurb = raw.replace("\n", " ").strip()
-                if len(blurb) > 110:
-                    blurb = blurb[:110].rsplit(" ", 1)[0] + "..."
-        card = f'''<a class="card" href="{m}.html">
+                if len(blurb) > 120:
+                    blurb = blurb[:120].rsplit(" ", 1)[0] + "..."
+        card = f'''<a class="card card-monthly" href="{m}.html">
           <div style="display:flex;align-items:flex-start;gap:14px">
-            <div style="font-size:2rem;line-height:1;flex-shrink:0;margin-top:2px">📅</div>
+            <div style="font-size:2.2rem;line-height:1;flex-shrink:0;margin-top:2px">📅</div>
             <div style="flex:1;min-width:0">
               <h3>Monthly · {m}</h3>
               <div class="meta">{date_range} · {story_count} stories</div>
             </div>
             <span class="tag {tag_cls}" style="flex-shrink:0;margin-top:2px">{tag_lbl}</span>
           </div>
-          {f'<p style="font-size:13px;color:var(--text-muted);margin:2px 0 0;line-height:1.4">{esc(blurb)}</p>' if blurb else ''}
+          {f'<p class="card-summary">{esc(blurb)}</p>' if blurb else ''}
           <span class="go" style="margin-top:6px">Open →</span>
         </a>'''
         cards_parts.append(card)
     cards = "".join(cards_parts)
     html=head("Monthly Editions","monthly/index.html", root="../")+f'''<div class="hero"><div class="kicker">Aggregate</div><h1>Monthly <span class="accent">Digests</span></h1>
     <p class="sub">Monthly aggregation, spotlight stories, tradecraft and fact-check reports.</p></div>
-    <div class="grid cards">{cards}</div>'''+foot()
+    <div class="grid cards grid-monthly">{cards}</div>'''+foot()
     open(os.path.join(DOCS,"monthly","index.html"),"w",encoding="utf-8").write(html)
 
 def build_wiki(pages):
