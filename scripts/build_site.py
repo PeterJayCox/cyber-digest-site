@@ -339,6 +339,22 @@ def build_index(stories):
     sources=set(s.get("source_name") for s in stories if s.get("source_name"))
     anzi=[s for s in stories if (s.get("anz_relevance") or 0)>=3]
 
+    # Per-day aggregation: story count + top-scoring headline, keyed by digest_date
+    daily_info={}
+    for s in stories:
+        dd=s.get("digest_date")
+        if not dd: continue
+        info=daily_info.setdefault(dd,{"count":0,"top":None,"score":-1})
+        info["count"]+=1
+        sc=s.get("score") or 0
+        if sc>info["score"]:
+            info["score"]=sc
+            info["top"]=(s.get("headline") or "").strip()
+    def _trunc(s,n=82):
+        s=(s or "").strip()
+        if len(s)<=n: return s
+        return s[:n].rsplit(" ",1)[0]+"…"
+
     # latest digest card
     if months:
         latest_mo=months[0]
