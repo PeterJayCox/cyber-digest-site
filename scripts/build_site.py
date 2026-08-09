@@ -210,8 +210,8 @@ def foot():
 <script>
 var _t=document.documentElement;
 var _b=document.querySelector(".theme-toggle");
-function toggleTheme(){{var n=_t.getAttribute("data-theme")==="dark"?"light":"dark";_t.setAttribute("data-theme",n);if(_b)_b.textContent=n==="dark"?"{moon}":"{sun}";if(n==="dark")localStorage.removeItem("cd-theme");else localStorage.setItem("cd-theme",n)}}
-(function(){{var s=localStorage.getItem("cd-theme");if(s){{_t.setAttribute("data-theme",s);if(_b)_b.textContent="{sun}"}}}})()
+function toggleTheme(){{var n=_t.getAttribute("data-theme")==="dark"?"light":"dark";_t.setAttribute("data-theme",n);if(_b)_b.textContent=n==="dark"?"{moon}":"{sun}";try{{if(n==="dark")localStorage.removeItem("cd-theme");else localStorage.setItem("cd-theme",n)}}catch(e){{}}}}
+(function(){{try{{var s=localStorage.getItem("cd-theme");if(s){{_t.setAttribute("data-theme",s);if(_b)_b.textContent="{sun}"}}}}catch(e){{}}}})()
 </script>
 </body></html>'''
 
