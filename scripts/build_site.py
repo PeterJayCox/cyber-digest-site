@@ -437,10 +437,11 @@ def build_index(stories):
 <a class="card" href="wiki/index.html"><h3>Cyber Wiki</h3><span class="tag purple">{len(scan_wiki()[0].get('incidents',{}))} pages</span><p>Entities, threat actors, incidents, CVEs and concepts linked from every digest.</p><span class="go">Open →</span></a>
 </div></div>
 
+<div class="section"><h2><span class="bar"></span>Monthly Editions</h2><div class="grid cards grid-monthly">{monthlist}</div></div>
+
 <div class="section"><h2><span class="bar"></span>Top Sectors</h2><div class="grid cards">{seccards}</div></div>
 <div class="section"><h2><span class="bar"></span>Top Threat Types</h2><div class="grid cards">{threatcards}</div></div>
 
-<div class="section"><h2><span class="bar"></span>Monthly Editions</h2><div class="grid cards grid-monthly">{monthlist}</div></div>
 <div class="section"><h2><span class="bar"></span>Daily Editions</h2><div class="grid cards">{dailylist}</div></div>
 '''+ foot()
     os.makedirs(DOCS,exist_ok=True)
