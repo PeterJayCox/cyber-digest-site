@@ -487,8 +487,8 @@ def build_index(stories):
 
 <div class="section"><h2><span class="bar"></span>Monthly Editions</h2><div class="grid cards grid-monthly">{monthlist}</div></div>
 
-<div class="section"><h2><span class="bar"></span>Top Sectors</h2><div class="grid cards">{seccards}</div></div>
-<div class="section"><h2><span class="bar"></span>Top Threat Types</h2><div class="grid cards">{threatcards}</div></div>
+<div class="section"><div class="sec-head"><h2><span class="bar"></span>Top Sectors</h2><a class="seeall" href="stories.html">See all →</a></div><div class="grid cards">{seccards}</div></div>
+<div class="section"><div class="sec-head"><h2><span class="bar"></span>Top Threat Types</h2><a class="seeall" href="stories.html">See all →</a></div><div class="grid cards">{threatcards}</div></div>
 
 <div class="section"><h2><span class="bar"></span>Daily Editions</h2><div class="grid cards">{dailylist}</div></div>
 '''+ foot()
