@@ -19,6 +19,11 @@ SECTOR_EMOJI = {
  "Education":"🎓","Government":"🏛️","Government & Policy":"🏛️","Energy & Utilities":"⚡","Construction & Property":"🏗️",
  "Retail & Entertainment & Sport":"🛍️","Global (Macro)":"🌐","Transport":"🚚",
  "Technology & AI Governance":"🤖","IT / Technology":"💻","IT":"💻",
+ "Legal & Regulatory":"⚖️","General / Cross-Sector":"🌐",
+ "Manufacturing & Critical Infrastructure":"🏭","Media & Entertainment":"🎬",
+ "Geopolitical & State-Sponsored":"🌐","Cybercrime & Ransomware":"🦠",
+ "Transportation & Logistics":"🚚","Government, Policy & Infrastructure Security":"🏛️",
+ "Cybercrime & Website Security":"🦠",
 }
 # colour tag per sector for badges
 SECTOR_TAG = {
