@@ -843,6 +843,10 @@ def main():
     os.makedirs(DOCS,exist_ok=True)
     os.makedirs(os.path.join(DOCS,"assets"),exist_ok=True)
     shutil.copy(os.path.join(ROOT,"assets","site.css"), os.path.join(DOCS,"assets","site.css"))
+    # preserve CNAME for custom domain (git-tracked at repo root)
+    cname_src=os.path.join(ROOT,"CNAME")
+    if os.path.exists(cname_src):
+        shutil.copy(cname_src, os.path.join(DOCS,"CNAME"))
 
     stories=load_db()
     pages,linkmap=scan_wiki()
