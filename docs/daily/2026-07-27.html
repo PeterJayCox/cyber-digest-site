@@ -297,6 +297,7 @@ body.exec-view .story-card.expanded p.summary{margin-bottom:10px}
             inRange:{color:[payload.minColor,payload.maxColor]}},
           series:[{
             name:'Incidents',type:'map',map:'world',roam:true,
+            scaleLimit:{min:1,max:12},
             label:{show:false},
             emphasis:{label:{show:true,color:'var(--text,#e2e8f0)'},
               itemStyle:{areaColor:'var(--accent,#00b4d8)',borderColor:'#fff'}},
