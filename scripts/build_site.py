@@ -40,6 +40,26 @@ THREAT_TAG = {
  "Phishing / BEC":"amber","Supply Chain":"purple","OT / ICS":"green","Fraud / Cybercrime":"amber",
 }
 TIER_LABEL = {1:"Very High",2:"High",3:"Moderate",4:"Low"}
+TIER_LBL = TIER_LABEL
+CHG_CLS = {"Regulatory":"blue","Technology":"cyan","Thematic":"purple"}
+
+def _reports_load():
+    """Scan VAULT/Cyber Digest/Reports/*.json -> list of report dicts (newest first)."""
+    rdir = os.path.join(VAULT, "Cyber Digest", "Reports")
+    reports = []
+    if not os.path.isdir(rdir):
+        return reports
+    for fn in sorted(os.listdir(rdir)):
+        if not fn.endswith(".json"): continue
+        try:
+            d = json.load(open(os.path.join(rdir, fn), encoding="utf-8"))
+        except Exception:
+            continue
+        d["_slug"] = fn[:-5]
+        d["_file"] = fn
+        reports.append(d)
+    reports.sort(key=lambda r: r.get("_file", ""), reverse=True)
+    return reports
 
 # ---------------- Monthly markdown parser ----------------
 MONTHLY_SRC = None  # set at runtime
@@ -180,7 +200,7 @@ def nav_html(active="", root=""):
     BASE = "https://peterjaycox.com"
     items = [("index.html","Home","🏠"),("stories.html","Story DB","📚"),
              ("daily/","Daily","🗓️"),("monthly/index.html","Monthly","📅"),
-             ("wiki/index.html","Wiki","🧠")]
+             ("reports/index.html","Reports","📑"),("wiki/index.html","Wiki","🧠")]
     ls=[]
     for href,label,ico in items:
         cls="active" if href==active else ""
@@ -222,6 +242,7 @@ def foot():
     <a href="https://peterjaycox.github.io/cyber-digest-site/stories.html">Story DB</a>
     <a href="https://peterjaycox.github.io/cyber-digest-site/daily/">Daily</a>
     <a href="https://peterjaycox.github.io/cyber-digest-site/monthly/index.html">Monthly</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/reports/index.html">Reports</a>
     <a href="https://peterjaycox.github.io/cyber-digest-site/wiki/index.html">Wiki</a>
   </div>
   Cyber Digest public site · built {datetime.now().strftime("%Y-%m-%d %H:%M")}
@@ -477,6 +498,24 @@ def build_index(stories):
         month_cards.append(card)
     monthlist = "".join(month_cards)
 
+    # Reports section on homepage (rich cards linking to /reports/)
+    rpt_cards = []
+    for r in _reports_load():
+        rninc = sum(len(s.get("incidents", [])) for s in r.get("sectors", []))
+        rnsec = len(r.get("sectors", []))
+        rpt_cards.append(
+            '<a class="card" href="reports/' + esc(r["_slug"]) + '.html">'
+            '<div style="display:flex;align-items:flex-start;gap:14px">'
+            '<div style="font-size:2.2rem;line-height:1;flex-shrink:0;margin-top:2px">📑</div>'
+            '<div style="flex:1;min-width:0"><h3>' + esc(r["report_title"]) + '</h3>'
+            '<div class="meta">' + esc(r.get("period", "")) + ' · ' + str(rnsec) + ' sectors · ' + str(rninc) + ' incidents</div></div>'
+            '<span class="tag blue" style="flex-shrink:0;margin-top:2px">Report</span></div>'
+            '<p class="card-summary">' + esc(r.get("subtitle", "")) + '</p>'
+            '<span class="go">Open →</span></a>'
+        )
+    rptsec = ('<div class="section"><h2><span class="bar"></span>Reports</h2>'
+              '<div class="grid cards grid-monthly">' + "".join(rpt_cards) + '</div></div>') if rpt_cards else ""
+
     html= head("Cyber Digest — Home","index.html")+f'''
 <div class="hero"><div class="kicker">// independent security intelligence</div>
 <h1>Cyber <span class="accent">Digest</span></h1>
@@ -497,6 +536,7 @@ def build_index(stories):
 </div></div>
 
 <div class="section"><h2><span class="bar"></span>Monthly Editions</h2><div class="grid cards grid-monthly">{monthlist}</div></div>
+{rptsec}
 
 <div class="section"><div class="sec-head"><h2><span class="bar"></span>Top Sectors</h2><a class="seeall" href="stories.html">See all →</a></div><div class="grid cards">{seccards}</div></div>
 <div class="section"><div class="sec-head"><h2><span class="bar"></span>Top Threat Types</h2><a class="seeall" href="stories.html">See all →</a></div><div class="grid cards">{threatcards}</div></div>
@@ -881,6 +921,150 @@ document.addEventListener('DOMContentLoaded',()=>{
     with open(css_path,"a") as f: f.write(css_extra)
 
 FLAT_LINKMAP={}
+def themes_html(r):
+    """Render the cross-sector themes list at the end of a report page."""
+    themes = r.get("cross_sector_themes", [])
+    if not themes:
+        return ""
+    parts = []
+    for i, t in enumerate(themes, 1):
+        badges = "".join(
+            '<span class="tag ' + SECTOR_TAG.get(s, "blue") + '" style="font-size:11px;margin:0 3px 3px 0">'
+            + SECTOR_EMOJI.get(s, "") + ' ' + esc(s) + '</span>'
+            for s in t.get("sectors", [])
+        )
+        parts.append(
+            '<div class="story" style="margin-bottom:0;padding:14px 0;border-bottom:1px solid var(--border-light)">'
+            '<div style="display:flex;gap:12px;align-items:flex-start">'
+            '<span class="tag purple" style="flex-shrink:0;margin-top:2px;border-radius:50%;width:28px;height:28px;justify-content:center;align-items:center;display:inline-flex;font-weight:700">' + str(i) + '</span>'
+            '<div style="flex:1;min-width:0">'
+            '<h3 style="margin:0 0 5px;font-size:15.5px;font-weight:650">' + esc(t.get("title", "")) + '</h3>'
+            '<p style="margin:0 0 8px;font-size:13px;color:var(--text-secondary);line-height:1.5">' + esc(t.get("desc", "")) + '</p>'
+            '<div style="display:flex;gap:4px;flex-wrap:wrap">' + badges + '</div>'
+            '</div></div></div>'
+        )
+    intro = r.get("theme_intro", "Ten themes cut across the sector-specific incidents above, each listing the sectors it touches.")
+    return ('<div class="section" id="cross-sector-themes">'
+            '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">'
+            '<span style="font-size:1.6rem">\U0001F3AF</span>'
+            '<h2 style="margin:0;font-size:22px"><span class="bar"></span>Cross-Sector Themes</h2>'
+            '<span class="tag blue" style="margin-left:auto">' + str(len(themes)) + ' themes</span></div>'
+            '<p style="margin:0 0 6px;font-size:13.5px;color:var(--text-secondary)">' + esc(intro) + '</p>'
+            + "".join(parts) + '</div>')
+
+def build_reports(reports):
+    """Build /reports/ section: index.html + one styled page per report JSON."""
+    if not reports:
+        return
+    os.makedirs(os.path.join(DOCS, "reports"), exist_ok=True)
+
+    # ---- Individual report pages ----
+    for r in reports:
+        slug = r["_slug"]
+        sectors = r.get("sectors", [])
+        total_inc = sum(len(s.get("incidents", [])) for s in sectors)
+        full = sum(1 for s in sectors if len(s.get("incidents", [])) >= 3)
+
+        sec_html = []
+        for sec in sectors:
+            emoji = SECTOR_EMOJI.get(sec["name"], "\U0001F4CB")
+            cls = SECTOR_TAG.get(sec["name"], "blue")
+            badge_cls = SECTOR_TAG.get(sec["name"], "blue")
+            incs_parts = []
+            for i, inc in enumerate(sec.get("incidents", []), 1):
+                url = inc.get("url", "")
+                tier = int(inc.get("tier", 2))
+                tlabel = TIER_LBL.get(tier, "")
+                datebit = (' \u00b7 ' + esc(inc.get("date", ""))) if inc.get("date") else ""
+                scorebit = (' \u00b7 Score ' + esc(str(inc.get("score", "")))) if inc.get("score") is not None else ""
+                incs_parts.append(
+                    '<div class="story" style="margin-bottom:0;padding:12px 0;border-bottom:1px solid var(--border-light)">'
+                    '<div style="display:flex;gap:10px;align-items:flex-start">'
+                    '<span class="tag ' + badge_cls + '" style="flex-shrink:0;margin-top:2px;border-radius:50%;width:26px;height:26px;justify-content:center;align-items:center;display:inline-flex;font-weight:700">' + str(i) + '</span>'
+                    '<div style="flex:1;min-width:0">'
+                    '<h3 style="margin:0 0 4px;font-size:15px;font-weight:600">' + esc(inc["headline"]) + '</h3>'
+                    '<p style="margin:0 0 6px;font-size:13px;color:var(--text-secondary);line-height:1.45">' + esc(inc["summary"]) + '</p>'
+                    '<div style="font-size:12px;color:var(--text-dim)">Source: '
+                    '<a href="' + esc(url) + '" target="_blank" rel="noopener" style="color:var(--accent)">' + esc(inc.get("source", "")) + '</a>'
+                    ' \u00b7 Tier ' + str(tier) + '/4 \u2014 ' + tlabel + datebit + scorebit +
+                    '</div></div></div></div>'
+                )
+            incs = "".join(incs_parts)
+
+            chg = sec.get("change", {})
+            chg_type = chg.get("type", "Thematic")
+            chg_cls = CHG_CLS.get(chg_type, "blue")
+            chg_html = ""
+            if chg.get("change"):
+                chg_src = ('<p style="margin:8px 0 0;font-size:11.5px;font-style:italic;color:var(--text-dim)">Source: ' + esc(chg.get("source", "")) + '</p>') if chg.get("source") else ""
+                chg_html = ('<div class="card" style="align-self:start;padding:16px 18px;border-left:3px solid var(--accent)">'
+                    '<div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-dim);margin-bottom:6px">'
+                    '<span class="tag ' + chg_cls + '" style="margin-right:6px">' + esc(chg_type) + '</span>Top ' + esc(chg_type.lower()) + ' change</div>'
+                    '<h4 style="margin:0 0 6px;font-size:15px;font-weight:650;color:var(--text)">' + esc(chg.get("change", "")) + '</h4>'
+                    '<p style="margin:0;font-size:13px;color:var(--text-secondary);line-height:1.5">' + esc(chg.get("detail", "")) + '</p>'
+                    + chg_src + '</div>')
+
+            anchor = sec["name"].lower().replace(" & ", "-").replace(" ", "-")
+            sec_html.append(
+                '<div class="section" id="' + esc(anchor) + '">'
+                '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">'
+                '<span style="font-size:1.6rem">' + emoji + '</span>'
+                '<h2 style="margin:0;font-size:22px"><span class="bar"></span>' + esc(sec["name"]) + '</h2>'
+                '<span class="tag ' + cls + '" style="margin-left:auto">' + str(len(sec.get("incidents", []))) + ' incident' + ('s' if len(sec.get("incidents", [])) != 1 else '') + '</span></div>'
+                '<div class="grid" style="grid-template-columns:1.9fr 1fr;gap:20px;align-items:start">'
+                '<div>' + incs + '</div>' + chg_html + '</div></div>'
+            )
+        sec_html_s = "".join(sec_html)
+
+        toc_parts = []
+        for s in sectors:
+            anchor = s["name"].lower().replace(" & ", "-").replace(" ", "-")
+            toc_parts.append(
+                '<a href="#' + esc(anchor) + '" class="tag ' + SECTOR_TAG.get(s["name"], "blue") + '" style="text-decoration:none;margin:0 4px 4px 0;display:inline-block">'
+                + SECTOR_EMOJI.get(s["name"], "\U0001F4CB") + ' ' + esc(s["name"]) + '</a>'
+            )
+        toc = "".join(toc_parts)
+
+        page = head(esc(r["report_title"]), "reports/", root="../") + (
+            '<div class="hero"><div class="kicker">// incident review</div>'
+            '<h1>' + esc(r["report_title"]) + '</h1>'
+            '<p class="sub">' + esc(r.get("subtitle", "")) + '</p>'
+            '<div class="stats">'
+            '<div class="stat"><span class="num">' + str(len(sectors)) + '</span> Sectors</div>'
+            '<div class="stat"><span class="num">' + str(total_inc) + '</span> Incidents</div>'
+            '<div class="stat"><span class="num">' + str(full) + '</span> With 3+</div>'
+            '</div>'
+            '<div class="crumb"><a href="../index.html">Home</a> \u00b7 <a href="index.html">Reports</a> \u00b7 ' + esc(r["report_title"]) + '</div>'
+            '<div class="section" style="margin-top:6px"><div style="display:flex;gap:6px;flex-wrap:wrap">' + toc + '</div></div>'
+            '</div>'
+            + sec_html_s
+            + themes_html(r)
+            + foot()
+        )
+        open(os.path.join(DOCS, "reports", slug + ".html"), "w", encoding="utf-8").write(page)
+
+    # ---- Reports index page ----
+    cards_parts = []
+    for r in reports:
+        ninc = sum(len(s.get("incidents", [])) for s in r.get("sectors", []))
+        nsect = len(r.get("sectors", []))
+        cards_parts.append(
+            '<a class="card" href="' + esc(r["_slug"]) + '.html">'
+            '<h3>' + esc(r["report_title"]) + '</h3>'
+            '<div class="meta">' + esc(r.get("period", "")) + ' \u00b7 ' + str(nsect) + ' sectors \u00b7 ' + str(ninc) + ' incidents</div>'
+            '<p class="card-summary">' + esc(r.get("subtitle", "")) + '</p>'
+            '<span class="go">Open \u2192</span></a>'
+        )
+    cards = "".join(cards_parts)
+    html = head("Reports", "reports/", root="../") + (
+        '<div class="hero"><div class="kicker">// insights</div>'
+        '<h1>Reports</h1>'
+        '<p class="sub">Sector incident reviews and analysis editions beyond the daily and monthly digests.</p></div>'
+        '<div class="grid cards">' + cards + '</div>'
+        + foot()
+    )
+    open(os.path.join(DOCS, "reports", "index.html"), "w", encoding="utf-8").write(html)
+
 def main():
     global FLAT_LINKMAP
     ap=argparse.ArgumentParser()
@@ -903,6 +1087,7 @@ def main():
     build_stories(stories)
     build_daily(days)
     build_monthly(months, stories)
+    build_reports(_reports_load())
     build_wiki(pages)
     print(f"✅ Site built -> {DOCS}")
     print(f"   {len(stories)} stories, {len(days)} daily, {len(months)} monthly, {sum(len(v) for v in pages.values())} wiki pages")
