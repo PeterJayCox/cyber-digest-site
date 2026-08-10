@@ -42,6 +42,10 @@ THREAT_TAG = {
 TIER_LABEL = {1:"Very High",2:"High",3:"Moderate",4:"Low"}
 TIER_LBL = TIER_LABEL
 CHG_CLS = {"Regulatory":"blue","Technology":"cyan","Thematic":"purple"}
+# Threat-rating Layer-1 badge colours (severity / urgency / confidence)
+SEV_CLS = {"Low": "green", "Guarded": "amber", "Elevated": "vuln", "Severe": "red", "Critical": "red"}
+URG_CLS = {"Observed": "red", "Probable": "vuln", "Possible": "amber", "Not yet observed": "blue"}
+CONF_CLS = {"Verified": "green", "Reported": "cyan", "Unverified": "amber"}
 
 def _reports_load():
     """Scan VAULT/Cyber Digest/Reports/*.json -> list of report dicts (newest first)."""
@@ -260,7 +264,8 @@ def load_db():
     con=sqlite3.connect(DB); con.row_factory=sqlite3.Row
     stories=[dict(r) for r in con.execute(
         "SELECT digest_date,headline,sector,summary,source_name,source_url,reliability_tier,"
-        "story_date,threat_type,geo_region,anz_relevance,score,is_recurring,include_in_monthly "
+        "story_date,threat_type,geo_region,anz_relevance,score,is_recurring,include_in_monthly,"
+        "severity_band,urgency_status,confidence_label "
         "FROM stories ORDER BY digest_date DESC, score DESC")]
     con.close()
     for s in stories:
@@ -340,6 +345,45 @@ def md_to_html(md, linkmap, mdpath=""):
     body_html=mdk.markdown(md, extensions=["extra","sane_lists","tables","fenced_code"])
     # light CSS for .fn
     return body_html
+
+# ---------------- Threat-rating engine (Layer 2 panel) ----------------
+def threat_panel_html():
+    """Layer-2 Reported Threat Activity index over a 14-day window + momentum.
+    Returns '' if the engine isn't available."""
+    try:
+        sys.path.insert(0, os.path.expanduser("~/Desktop/Hermes/Cyber Digest/scripts"))
+        import threat_rating as tr
+        idx = tr.compute_index(tr.load_stories(DB), window_days=14)
+    except Exception as e:
+        print(f"[threat_panel] engine unavailable: {e}")
+        return ""
+    band = idx["band"]; pct = idx["pct"]; mom = idx.get("momentum_pct")
+    conf_cls = {"Low":"green","Guarded":"amber","Elevated":"red","Severe":"red","Critical":"red"}[band]
+    mom_html = ""
+    if mom is not None:
+        arrow = "▲" if mom > 0 else "▼"
+        mcol = "var(--tag-red-text)" if abs(mom) >= 15 else "var(--text-dim)"
+        mom_html = (f'<span style="font-size:13px;color:{mcol}">{arrow} {abs(mom):.0f}% '
+                    f'{"rise" if mom>0 else "fall"} vs prior 14 days</span>')
+    return f'''
+<div class="section" style="margin-top:6px">
+<h2><span class="bar"></span>Reported Threat Activity <span style="font-size:13px;font-weight:400;color:var(--text-dim)">· 14-day window · as of {idx["as_of"]}</span></h2>
+<div class="threat-panel" style="display:flex;flex-wrap:wrap;gap:22px;align-items:center;background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:20px 24px">
+  <div style="display:flex;align-items:center;gap:16px">
+    <span class="tag {conf_cls}" style="font-size:15px;padding:6px 14px;border-radius:16px"><strong>{band}</strong> · {pct}/100</span>
+    <div style="min-width:170px">
+      <div style="height:10px;border-radius:6px;background:var(--tag-amber-bg);overflow:hidden">
+        <div style="height:100%;width:{pct}%;background:{ "var(--tag-red-text)" if pct>=55 else "var(--tag-amber-text)" }"></div>
+      </div>
+      <div style="font-size:11px;color:var(--text-dim);margin-top:4px">weighted severity × exploitation × confidence, decayed over 14 days</div>
+    </div>
+  </div>
+  <div style="font-size:13px;color:var(--text-dim);line-height:1.5;flex:1;min-width:220px">
+    {mom_html}
+    <div style="margin-top:2px">{idx['current_count']} stories rated this window. This measures <strong>reported</strong> activity — frequency and severity of publicly reported incidents — not a prediction of attack, and only as current as the last digest. <a href="methodology.html" style="color:var(--cyan);font-weight:600">Methodology &amp; caveats →</a></div>
+  </div>
+</div>
+</div>'''
 
 # ---------------- Page builders ----------------
 def build_index(stories):
@@ -529,6 +573,8 @@ def build_index(stories):
 <div class="stat"><span class="num">{len(anzi)}</span> AU/NZ</div>
 </div>
 
+{threat_panel_html()}
+
 <div class="section"><h2><span class="bar"></span>Latest</h2><div class="grid cards">
 {latest_daily_card}
 <a class="card" href="stories.html"><h3>Story Database</h3><span class="tag blue">searchable</span><p>Filter {n_stories} stories by sector, threat type, geography, AU/NZ relevance and date.</p><span class="go">Browse →</span></a>
@@ -553,7 +599,9 @@ def build_stories(stories):
         "tier":s.get("reliability_tier"),"tier_label":s.get("tier_label"),
         "story_date":s.get("story_date"),"threat":s.get("threat_type"),
         "geo":s.get("geo_region"),"anz":s.get("anz_relevance") or 0,
-        "score":s.get("score") or 0} for s in stories]
+        "score":s.get("score") or 0,
+        "severity":s.get("severity_band") or "","urgency":s.get("urgency_status") or "",
+        "confidence":s.get("confidence_label") or ""} for s in stories]
     # write data json for client-side filtering
     os.makedirs(os.path.join(DOCS,"data"),exist_ok=True)
     open(os.path.join(DOCS,"data","stories.json"),"w",encoding="utf-8").write(json.dumps(page_data))
@@ -570,6 +618,9 @@ def build_stories(stories):
 const DATA = __DATA__;
 const SECTOR_TAG = __SECTOR_TAG__;
 const THREAT_TAG = __THREAT_TAG__;
+const SEV_CLS = __SEV_CLS__;
+const URG_CLS = __URG_CLS__;
+const CONF_CLS = __CONF_CLS__;
 function tiercol(t){return t<=1?"green":t===2?"cyan":t===3?"amber":"red";}
 function esc(s){const d=document.createElement('div');d.textContent=(s==null?'':String(s));return d.innerHTML;}
 function render(){
@@ -578,12 +629,14 @@ function render(){
  const thr=document.getElementById('fthreat').value;
  const geo=document.getElementById('fgeo').value;
  const anz=document.getElementById('fanz').value;
+ const fsev=document.getElementById('fsev').value;
  let rows=DATA.filter(s=>{
    if(q && !(s.headline+' '+s.summary+' '+s.source).toLowerCase().includes(q)) return false;
    if(sec && s.sector!==sec) return false;
    if(thr && s.threat!==thr) return false;
    if(geo && s.geo!==geo) return false;
    if(anz && !(anz==='1'? (s.anz>=1): (s.anz===+anz))) return false;
+   if(fsev && s.severity!==fsev) return false;
    return true;
  });
  const n=rows.length;
@@ -591,6 +644,10 @@ function render(){
  let html='';
  rows.forEach(s=>{
    const sectag=SECTOR_TAG[s.sector]||'blue', ttag=THREAT_TAG[s.threat]||'blue';
+   const sevcls=SEV_CLS[s.severity]||'blue', urgcls=URG_CLS[s.urgency]||'blue', conff=CONF_CLS[s.confidence]||'amber';
+   const sevtag=(s.severity&&s.severity!=='')?('<span class="tag '+sevcls+'" title="Severity">'+esc(s.severity)+'</span>'):'';
+   const urgtag=(s.urgency&&s.urgency!=='')?('<span class="tag '+urgcls+'" title="Exploitation status">'+esc(s.urgency)+'</span>'):'';
+   const conftag=(s.confidence&&s.confidence!=='')?('<span class="tag '+conff+'" title="Confidence">'+esc(s.confidence)+'</span>'):'';
    const tiershow=s.tier_label?('<span class="tag '+tiercol(s.tier)+'">Tier '+s.tier+' · '+esc(s.tier_label)+'</span>'):'';
    const anzdot=s.anz>=4?'<span class="tag red">AU/NZ</span>':s.anz>=3?'<span class="tag amber">ANZ</span>':'';
    const sem=s.geo?('<span class="meta" style="color:var(--text-dim)">'+esc(s.date)+' · '+esc(s.geo)+'</span>'):('<span class="meta" style="color:var(--text-dim)">'+esc(s.date)+'</span>');
@@ -599,10 +656,14 @@ function render(){
    const hlink=s.url?'<a href="'+esc(s.url)+'" target="_blank" rel="noopener" class="st-link">'+esc(s.headline)+'</a>':esc(s.headline);
    html+='<div class="story '+tcl+'"><div class="row1">'
      +'<span class="tag '+sectag+'">'+esc(s.sector)+'</span>'
-     +'<span class="tag '+ttag+'">'+esc(s.threat)+'</span>'+tiershow+anzdot+sem
+     +'<span class="tag '+ttag+'">'+esc(s.threat)+'</span>'
+     +'<span class="tag sep">·</span>'
+     +sevtag+urgtag+conftag
+     +'<span class="tag sep">·</span>'
+     +tiershow+anzdot+sem
      +'</div><h3>'+hlink+'</h3>'
      +'<div class="sum clamp">'+esc(s.summary)+'</div>'
-     +'<div class="srcline">Source: '+src+' · ANZ '+s.anz+'/5 · Score '+s.score+'</div></div>';
+     +'<div class="srcline">Source: '+src+' · ANZ '+s.anz+'/5</div></div>';
  });
  document.getElementById('results').innerHTML=html || '<div class="empty">No stories match your filters.</div>';
  document.querySelectorAll('.sum.clamp').forEach(el=>{
@@ -610,28 +671,33 @@ function render(){
    el.addEventListener('click',function(){this.classList.toggle('expanded');});
  });
 }
-['q','fsector','fthreat','fgeo','fanz'].forEach(id=>{
- const el=document.getElementById(id); if(el) el.addEventListener('input',render);
+['q','fsector','fthreat','fgeo','fanz','fsev'].forEach(id=>{
+const el=document.getElementById(id); if(el) el.addEventListener('input',render);
 });
 const p=new URLSearchParams(location.search);
 if(p.get('sector')) document.getElementById('fsector').value=p.get('sector');
 if(p.get('threat')) document.getElementById('fthreat').value=p.get('threat');
+if(p.get('severity')) document.getElementById('fsev').value=p.get('severity');
 render();
 </script>"""
     js = (js_template
           .replace("__DATA__", json.dumps(page_data))
           .replace("__SECTOR_TAG__", json.dumps(SECTOR_TAG))
-          .replace("__THREAT_TAG__", json.dumps(THREAT_TAG)))
+          .replace("__THREAT_TAG__", json.dumps(THREAT_TAG))
+          .replace("__SEV_CLS__", json.dumps(SEV_CLS))
+          .replace("__URG_CLS__", json.dumps(URG_CLS))
+          .replace("__CONF_CLS__", json.dumps(CONF_CLS)))
 
     html_top = head("Story Database","stories.html")+f'''
 <div class="hero"><div class="kicker">// searchable archive</div><h1>Story <span class="accent">Database</span></h1>
-<p class="sub">{len(page_data)} stories across all daily digests. Filter by keyword, sector, threat type, geography or Australian/NZ relevance (ANZ score 0–5: 5 = direct AU/NZ impact).</p></div>
+<p class="sub">{len(page_data)} stories across all daily digests, each rated for severity, exploitation status and confidence. Filter by keyword, sector, threat type, geography or Australian/NZ relevance (ANZ score 0–5: 5 = direct AU/NZ impact).</p></div>
 <div class="filters">
 <input type="text" id="q" placeholder="Search stories\u2026">
 <select id="fsector"><option value="">All sectors</option>{sectors_opts}</select>
 <select id="fthreat"><option value="">All threat types</option>{threats_opts}</select>
 <select id="fgeo"><option value="">All regions</option>{geos_opts}</select>
 <select id="fanz"><option value="">ANZ relevance</option><option value="5">5 \u00b7 Direct AU/NZ</option><option value="4">4 \u00b7 AU regulation</option><option value="3">3 \u00b7 Five Eyes</option><option value="1">1+ \u00b7 Any</option></select>
+<select id="fsev"><option value="">Severity</option><option value="Critical">Critical</option><option value="Severe">Severe</option><option value="Elevated">Elevated</option><option value="Guarded">Guarded</option><option value="Low">Low</option></select>
 <button id="btn-fiveeyes" class="tag red" style="cursor:pointer;border:none;font-size:13px;padding:6px 12px" onclick="document.getElementById('fanz').value='3';render()">\U0001F1E6\U0001F1FA Five Eyes</button>
 </div>
 <div class="legend" id="count"></div>

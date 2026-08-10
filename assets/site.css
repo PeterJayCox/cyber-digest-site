@@ -158,6 +158,7 @@ a:hover{text-decoration:underline}
 .tag.amber{background:var(--tag-amber-bg);color:var(--tag-amber-text)}
 .tag.red{background:var(--tag-red-bg);color:var(--tag-red-text)}
 .tag.vuln{background:var(--tag-red-bg);color:var(--tag-red-text)}
+.tag.sep{background:transparent;color:var(--text-dim);padding:0 2px;font-weight:400}
 
 /* ===== FOOTER ===== */
 .footer{margin-top:56px;padding:24px 0;color:var(--footer-text);font-size:12px;text-align:center;border-top:1px solid var(--border);transition:border .25s,color .25s}
