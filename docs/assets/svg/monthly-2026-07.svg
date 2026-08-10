@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400">
+  <defs>
+    <linearGradient id="july-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0e1a" />
+      <stop offset="100%" stop-color="#111827" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="400" fill="url(#july-bg)"/>
+  <rect width="1200" height="400" fill="none" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- World Grid Lines -->
+  <g stroke="#8b5cf6" stroke-width="1" opacity="0.2">
+    <circle cx="950" cy="200" r="150" fill="none"/>
+    <ellipse cx="950" cy="200" rx="150" ry="60" fill="none"/>
+    <ellipse cx="950" cy="200" rx="60" ry="150" fill="none"/>
+    <line x1="800" y1="200" x2="1100" y2="200"/>
+    <line x1="950" y1="50" x2="950" y2="350"/>
+  </g>
+
+  <!-- Threat Attack Vectors / Nodes -->
+  <g stroke="#22d3ee" stroke-width="1.5" opacity="0.6">
+    <line x1="750" y1="120" x2="900" y2="180"/>
+    <line x1="900" y1="180" x2="1020" y2="130"/>
+    <line x1="900" y1="180" x2="980" y2="270"/>
+    <circle cx="750" cy="120" r="5" fill="#8b5cf6"/>
+    <circle cx="900" cy="180" r="7" fill="#f43f5e"/>
+    <circle cx="1020" cy="130" r="4" fill="#00b4d8"/>
+    <circle cx="980" cy="270" r="5" fill="#22d3ee"/>
+  </g>
+
+  <!-- Typography -->
+  <g transform="translate(80, 120)">
+    <rect x="0" y="0" width="180" height="28" rx="14" fill="rgba(139, 92, 246, 0.15)" stroke="rgba(139, 92, 246, 0.4)" stroke-width="1"/>
+    <text x="14" y="18" font-family="-apple-system, sans-serif" font-weight="700" font-size="12" fill="#a78bfa" letter-spacing="1">FULL MONTH EDITION</text>
+
+    <text x="0" y="80" font-family="-apple-system, sans-serif" font-weight="800" font-size="42" fill="#e2e8f0">CYBER DIGEST · <tspan fill="#00b4d8">JULY 2026</tspan></text>
+    <text x="0" y="120" font-family="-apple-system, sans-serif" font-weight="400" font-size="20" fill="#b0c0d0">State-Sponsored Operations &amp; Zimbra Zero-Day Response</text>
+    <text x="0" y="160" font-family="SFMono-Regular, Consolas, monospace" font-size="14" fill="#64748b">32 Key Stories · 385 Ingested · 12 Sources · 18 AU/NZ Direct</text>
+  </g>
+</svg>

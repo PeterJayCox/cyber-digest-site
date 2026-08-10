@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 60" width="320" height="60">
+  <defs>
+    <linearGradient id="cyan-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22d3ee" />
+      <stop offset="100%" stop-color="#00b4d8" />
+    </linearGradient>
+  </defs>
+  <!-- Mark -->
+  <g transform="translate(5, 5)">
+    <path d="M 25 6 L 41 13 C 41 29 34 39 25 45 C 16 39 9 29 9 13 Z" 
+          fill="none" stroke="url(#cyan-grad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 25 14 A 11 11 0 0 1 36 25" fill="none" stroke="#00b4d8" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+    <path d="M 25 18 A 7 7 0 0 1 32 25" fill="none" stroke="#22d3ee" stroke-width="1.8" stroke-linecap="round"/>
+    <line x1="25" y1="10" x2="25" y2="41" stroke="#00b4d8" stroke-width="1.2" stroke-dasharray="2 2" opacity="0.5"/>
+    <line x1="12" y1="25" x2="38" y2="25" stroke="#00b4d8" stroke-width="1.2" stroke-dasharray="2 2" opacity="0.5"/>
+    <circle cx="25" cy="25" r="2" fill="#22d3ee"/>
+  </g>
+  <!-- Wordmark Text -->
+  <text x="62" y="36" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-weight="700" font-size="22" letter-spacing="2.5" fill="#e2e8f0">CYBER</text>
+  <text x="175" y="36" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-weight="700" font-size="22" letter-spacing="2.5" fill="#00b4d8">DIGEST</text>
+  <!-- Tagline -->
+  <text x="63" y="49" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-weight="500" font-size="8.5" letter-spacing="1.2" fill="#64748b">SECURITY INTELLIGENCE &amp; ARCHIVE</text>
+</svg>

@@ -177,7 +177,7 @@ def esc(s):
     return html.escape(str(s), quote=True)
 
 def nav_html(active="", root=""):
-    BASE = "https://peterjaycox.github.io/cyber-digest-site"
+    BASE = "https://peterjaycox.com"
     items = [("index.html","Home","🏠"),("stories.html","Story DB","📚"),
              ("daily/","Daily","🗓️"),("monthly/index.html","Monthly","📅"),
              ("wiki/index.html","Wiki","🧠")]
@@ -187,7 +187,7 @@ def nav_html(active="", root=""):
         if active=="daily/" and href=="daily/": cls="active"
         ls.append(f'<a href="{BASE}/{href}" class="{cls}"><span class="t">{ico} {label}</span></a>')
     return f'''<nav class="topnav"><div class="inner">
-        <a class="brand" href="{BASE}/index.html"><span class="dot"></span>Cyber&nbsp;Digest<small>public site</small></a>
+        <a class="brand" href="{BASE}/index.html"><img src="{root}assets/svg/logo-mark.svg" alt="" style="height:22px;width:22px;vertical-align:middle"> Cyber&nbsp;Digest<small>public site</small></a>
         <div class="navlinks">{"".join(ls)}</div>
         <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light">\U0001f319</div></div></nav>'''
 
@@ -196,6 +196,17 @@ def head(title, active="", root=""):
     return f'''<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{esc(title)}</title>
+<link rel="icon" type="image/svg+xml" href="{root}assets/svg/favicon.svg">
+<link rel="icon" type="image/x-icon" href="{root}assets/img/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="{root}assets/img/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{esc(title)}">
+<meta property="og:description" content="Curated sector-by-sector roundup of global cybersecurity developments with source-reliability indexing, AU/NZ context, and searchable knowledge base.">
+<meta property="og:url" content="https://peterjaycox.com/">
+<meta property="og:image" content="https://peterjaycox.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{root}{SHARE_CSS}?v={datetime.now().strftime('%Y%m%d')}"></head><body>
@@ -878,7 +889,8 @@ def main():
     if a.fresh and os.path.isdir(DOCS): shutil.rmtree(DOCS)
     os.makedirs(DOCS,exist_ok=True)
     os.makedirs(os.path.join(DOCS,"assets"),exist_ok=True)
-    shutil.copy(os.path.join(ROOT,"assets","site.css"), os.path.join(DOCS,"assets","site.css"))
+    if os.path.exists(os.path.join(ROOT,"assets")):
+        shutil.copytree(os.path.join(ROOT,"assets"), os.path.join(DOCS,"assets"), dirs_exist_ok=True)
     # preserve CNAME for custom domain (git-tracked at repo root)
     cname_src=os.path.join(ROOT,"CNAME")
     if os.path.exists(cname_src):
