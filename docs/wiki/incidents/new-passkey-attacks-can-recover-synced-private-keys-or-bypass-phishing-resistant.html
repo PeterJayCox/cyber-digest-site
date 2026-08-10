@@ -1,0 +1,93 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Passkey Attacks Can Recover Synced Private Keys or Bypass Phishing-Resistant MFA</title>
+<link rel="icon" type="image/svg+xml" href="../../assets/svg/favicon.svg">
+<link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="New Passkey Attacks Can Recover Synced Private Keys or Bypass Phishing-Resistant MFA">
+<meta property="og:description" content="Curated sector-by-sector roundup of global cybersecurity developments with source-reliability indexing, AU/NZ context, and searchable knowledge base.">
+<meta property="og:url" content="https://peterjaycox.com/">
+<meta property="og:image" content="https://peterjaycox.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/site.css?v=20260811"></head><body>
+<nav class="topnav"><div class="inner">
+        <a class="brand" href="https://peterjaycox.com/index.html"><img src="../../assets/svg/logo-mark.svg" alt="" style="height:22px;width:22px;vertical-align:middle"> Cyber&nbsp;Digest<small>public site</small></a>
+        <div class="navlinks"><a href="https://peterjaycox.com/index.html" class=""><span class="t">🏠 Home</span></a><a href="https://peterjaycox.com/stories.html" class=""><span class="t">📚 Story DB</span></a><a href="https://peterjaycox.com/daily/" class=""><span class="t">🗓️ Daily</span></a><a href="https://peterjaycox.com/monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="https://peterjaycox.com/reports/index.html" class=""><span class="t">📑 Reports</span></a><a href="https://peterjaycox.com/wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a></div>
+        <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light">🌙</div></div></nav><main class="container">
+            <div class="container">
+            <div class="crumb"><a href="../../index.html">Home</a> · <a href="../../wiki/index.html">Wiki</a> · Incidents &amp; Campaigns</div>
+            <div class="wiki-body"><div class="frontmatter">created: 2026-08-11 · updated: 2026-08-11 · type: incident · tags: [incident, technique, passkey, mfa, phishing-resistant-mfa, mfa-bypass, research, entraid, sector-technology] · confidence: high · affected_sectors: [technology] · au_impact: false</div><h1>New Passkey Attacks Can Recover Synced Private Keys or Bypass Phishing-Resistant MFA</h1>
+<p>Three research efforts (<strong>SpecterOps</strong>, <strong>Palo Alto Networks Unit 42</strong>, and a <strong>Windows Hello for Business chain</strong>) demonstrated that passkey protections can be defeated <strong>without breaking the underlying cryptography</strong> — by reusing signed authentication material Windows had exposed, abusing cloud-synced passkey systems from malware already on a victim machine, and using a Windows Hello for Business key from a compromised user session without a fresh PIN or biometric check.</p>
+<h2>Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Researchers</strong></td>
+<td>SpecterOps, Palo Alto Networks Unit 42, Windows Hello for Business chain</td>
+</tr>
+<tr>
+<td><strong>Target</strong></td>
+<td>Passkey protections (synced private keys, phishing-resistant MFA)</td>
+</tr>
+<tr>
+<td><strong>Mechanism</strong></td>
+<td>Reuse of exposed signed authentication material; abuse of cloud-synced passkey systems from on-device malware; WHfB key use without fresh PIN/biometric check</td>
+</tr>
+<tr>
+<td><strong>Notable result</strong></td>
+<td>SpecterOps: Windows/Entra ID chain can impersonate privileged users while satisfying phishing-resistant MFA</td>
+</tr>
+<tr>
+<td><strong>Confidence</strong></td>
+<td>Confirmed (published technical research, not yet observed in the wild)</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td>2026-08-10</td>
+</tr>
+</tbody>
+</table>
+<h2>Key Details</h2>
+<ul>
+<li><strong>SpecterOps</strong> showed a <strong>Windows/Entra ID chain</strong> that can impersonate privileged users while satisfying <strong>phishing-resistant MFA</strong>.</li>
+<li>One attack path <strong>reuses signed authentication material</strong> Windows had exposed, without breaking the underlying cryptography.</li>
+<li>Another path <strong>abuses cloud-synced passkey systems</strong> from malware already running on a victim machine.</li>
+<li>A <strong>Windows Hello for Business</strong> key can be used from a compromised user session <strong>without a fresh PIN or biometric check</strong>.</li>
+</ul>
+<h2>Significance</h2>
+<p>The research demonstrates that phishing-resistant MFA mechanisms are not immune to compromise — the attacks bypass the protections without defeating the cryptography itself, typically requiring prior device compromise. Reinforces the week's priority ordering: patch velocity on internet-exposed surfaces and human review of AI-driven remediation alongside phishing-resistant MFA deployment.</p>
+<h2>Source</h2>
+<ul>
+<li><a href="https://thehackernews.com/2026/08/new-passkey-attacks-can-recover-synced.html">The Hacker News</a> — 2026-08-10</li>
+</ul>
+<p><strong>Sources:</strong> raw/digests/Cyber-Digest-2026-08-11</p></div>
+            </div></main>
+<div class="footer">
+  <div class="links">
+    <a href="https://peterjaycox.github.io/cyber-digest-site/index.html">Home</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/stories.html">Story DB</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/daily/">Daily</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/monthly/index.html">Monthly</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/reports/index.html">Reports</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/wiki/index.html">Wiki</a>
+  </div>
+  Cyber Digest public site · built 2026-08-11 07:18
+</div>
+<script>
+var _t=document.documentElement;
+var _b=document.querySelector(".theme-toggle");
+function toggleTheme(){var n=_t.getAttribute("data-theme")==="dark"?"light":"dark";_t.setAttribute("data-theme",n);if(_b)_b.textContent=n==="dark"?"🌙":"☀️";try{if(n==="dark")localStorage.removeItem("cd-theme");else localStorage.setItem("cd-theme",n)}catch(e){}}
+(function(){try{var s=localStorage.getItem("cd-theme");if(s){_t.setAttribute("data-theme",s);if(_b)_b.textContent="☀️"}}catch(e){}})()
+</script>
+</body></html>

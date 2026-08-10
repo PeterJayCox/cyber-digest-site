@@ -162,6 +162,9 @@ body.exec-view .story-card.expanded h3{margin-bottom:6px;font-size:1rem}
 body.exec-view .story-card.expanded p.summary{margin-bottom:10px}
 /* Analytics grid */
 .analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.incident-map{overflow:hidden}
+.incident-map .map-fallback{padding-top:4px}
+.incident-map .map-fallback .bar-label{width:150px}
 @media(max-width:860px){.wrap{flex-direction:column}#toc{position:static;width:100%;max-height:unset;margin-bottom:20px}.pie-container{flex-direction:column;align-items:center;gap:16px}.stats-row{gap:8px}.header h1{font-size:1.5rem}.analytics-grid{grid-template-columns:1fr}}
 @media(max-width:620px){.navlinks a span.t{display:none}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important;scroll-behavior:auto!important}}
@@ -258,6 +261,74 @@ body.exec-view .story-card.expanded p.summary{margin-bottom:10px}
 <div class="bar-row bar-cyan"><span class="bar-label">CISA</span><div class="bar-track"><div class="bar-fill" style="width:12%"></div></div><span class="bar-val">1</span></div>
 <div class="bar-row bar-cyan"><span class="bar-label">HIPAA Journal</span><div class="bar-track"><div class="bar-fill" style="width:12%"></div></div><span class="bar-val">1</span></div></div></div>
 <div class="pie-container"><div class="pie" style="background:conic-gradient(var(--accent) 0deg 180deg,var(--purple) 180deg 270deg,var(--govt) 270deg 315deg,var(--vuln) 315deg 315deg,var(--crime) 315deg 360deg,var(--govt) 360deg 360deg);"></div><div class="pie-legend"><div class="legend-item"><span class="dot" style="background:var(--accent)"></span> Global (Macro) <span class="val">4</span></div><div class="legend-item"><span class="dot" style="background:var(--purple)"></span> Government <span class="val">2</span></div><div class="legend-item"><span class="dot" style="background:var(--govt)"></span> Energy &amp; Utilities <span class="val">1</span></div><div class="legend-item"><span class="dot" style="background:var(--vuln)"></span> Defence <span class="val">0</span></div><div class="legend-item"><span class="dot" style="background:var(--crime)"></span> Healthcare <span class="val">1</span></div><div class="legend-item"><span class="dot" style="background:var(--govt)"></span> Legal Services <span class="val">0</span></div></div></div>
+<div class="bar-chart incident-map"><h3>🗺️ Incident Map <span id="incident-map-status" style="font-size:11px;color:var(--text-dim);font-weight:400">(static view)</span></h3><div id="incident-map-chart" style="height:420px;width:100%;display:block"></div><div id="incident-map-fallback"><div class="map-fallback"><div class="bar-row bar-cyan"><span class="bar-label" title="FBI, CISA and International Partners Warn of Gunra Ransomware Targeting Critical Infrastructure">United States</span><div class="bar-track"><div class="bar-fill" style="width:12%"></div></div><span class="bar-val">1</span></div><div class="bar-row bar-cyan"><span class="bar-label" title="China-Linked Hackers Deploy New StormEncryptor Ransomware, Likely via N-central Flaw">China</span><div class="bar-track"><div class="bar-fill" style="width:12%"></div></div><span class="bar-val">1</span></div><div class="bar-row bar-cyan"><span class="bar-label" title="Kimsuky Builds Offline AI Stack to Boost Phishing and Automate Malware Development">Korea</span><div class="bar-track"><div class="bar-fill" style="width:12%"></div></div><span class="bar-val">1</span></div><div class="bar-row bar-cyan"><span class="bar-label" title="New Zealand Sanctions Russian Hackers, Propaganda Groups Over Ukraine War">New Zealand</span><div class="bar-track"><div class="bar-fill" style="width:12%"></div></div><span class="bar-val">1</span></div><div class="bar-row bar-cyan"><span class="bar-label" title="Senate Democrats Introduce Bill Distributing $300 Million Annually for Water System Cybersecurity">Iran</span><div class="bar-track"><div class="bar-fill" style="width:12%"></div></div><span class="bar-val">1</span></div><div class="bar-row bar-cyan"><span class="bar-label" title="Poland Uncovers Second Heat Plant Cyberattack That Went Hidden for Months">Poland</span><div class="bar-track"><div class="bar-fill" style="width:12%"></div></div><span class="bar-val">1</span></div><p style="color:var(--text-dim);font-size:12px;margin-top:8px">Pan-regional / unlocated: 🌐 Global: 2</p><p style="color:var(--text-dim);font-size:11px;margin-top:6px">6 countries · 8 stories. Interactive map loads on the hosted site.</p></div></div>
+<script>
+(function(){
+  var payload = {"countries": [{"name": "United States", "value": 1, "stories": [{"headline": "FBI, CISA and International Partners Warn of Gunra Ransomware Targeting Critical Infrastructure", "sector": "Global (Macro)", "threat": "Ransomware", "url": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa26-222a", "date": "2026-08-11"}]}, {"name": "China", "value": 1, "stories": [{"headline": "China-Linked Hackers Deploy New StormEncryptor Ransomware, Likely via N-central Flaw", "sector": "Global (Macro)", "threat": "Ransomware", "url": "https://thehackernews.com/2026/08/china-linked-hackers-deploy-new.html", "date": "2026-08-11"}]}, {"name": "Korea", "value": 1, "stories": [{"headline": "Kimsuky Builds Offline AI Stack to Boost Phishing and Automate Malware Development", "sector": "Global (Macro)", "threat": "Malware", "url": "https://thehackernews.com/2026/08/kimsuky-builds-offline-ai-stack-that.html", "date": "2026-08-11"}]}, {"name": "New Zealand", "value": 1, "stories": [{"headline": "New Zealand Sanctions Russian Hackers, Propaganda Groups Over Ukraine War", "sector": "Government \u0026 Policy", "threat": "APT / Nation-State", "url": "", "date": "2026-08-11"}]}, {"name": "Iran", "value": 1, "stories": [{"headline": "Senate Democrats Introduce Bill Distributing $300 Million Annually for Water System Cybersecurity", "sector": "Government \u0026 Policy", "threat": "APT / Nation-State", "url": "", "date": "2026-08-11"}]}, {"name": "Poland", "value": 1, "stories": [{"headline": "Poland Uncovers Second Heat Plant Cyberattack That Went Hidden for Months", "sector": "Energy \u0026 Utilities", "threat": "Breach / Data Leak", "url": "https://therecord.media/poland-uncovers-critical-infrastructure-attack-hidden", "date": "2026-08-11"}]}], "pan": [{"Global": 2}], "minColor": "#9be1f7", "maxColor": "#0d4f7a"};
+  function renderMap(){
+    if(!window.echarts) return;
+    var host=document.getElementById('incident-map-chart');
+    if(!host) return;
+    fetch("https://cdn.jsdelivr.net/npm/echarts@4.9.0/map/json/world.json")
+      .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+      .then(function(world){
+        window.echarts.registerMap('world', world);
+        var chart=window.echarts.init(host);
+        // Theme-aware base fill: match the page surface (light grey on light
+        // theme, slate on dark theme) via the same CSS var the layout uses.
+        var base=document.createElement('div');
+        base.style.cssText='position:absolute;visibility:hidden;width:0;height:0';
+        document.body.appendChild(base);
+        var baseCol = getComputedStyle(document.body).getPropertyValue('--surface2').trim() || '#1a2332';
+        base.remove();
+        var n2v={};
+        payload.countries.forEach(function(c){ n2v[c.name]={value:c.value,stories:c.stories}; });
+        chart.setOption({
+          tooltip:{
+            trigger:'item',
+            backgroundColor:'var(--surface2,#111827)',
+            borderColor:'var(--border,rgba(255,255,255,.1))',
+            textStyle:{color:'var(--text,#e2e8f0)',fontSize:12},
+            formatter:function(p){
+              var d=n2v[p.name]; if(!d) return p.name;
+              var s=d.stories.slice(0,4).map(function(x,ix){
+                return (ix+1)+'. '+x.headline;
+              }).join('<br/>');
+              return '<b>'+p.name+'</b> — '+d.value+' incident'+(d.value>1?'s':'')+
+                     (s?'<br/>'+s:'');
+            }
+          },
+          visualMap:{min:0,max:Math.max(1,payload.countries.reduce(function(a,c){return Math.max(a,c.value)},0)),
+            calculable:true,orient:'horizontal',left:'center',bottom:4,
+            textStyle:{color:'var(--text-muted,#b0c0d0)',fontSize:11},
+            inRange:{color:[payload.minColor,payload.maxColor]}},
+          series:[{
+            name:'Incidents',type:'map',map:'world',roam:true,
+            label:{show:false},
+            emphasis:{label:{show:true,color:'var(--text,#e2e8f0)'},
+              itemStyle:{areaColor:'var(--accent,#00b4d8)',borderColor:'#fff'}},
+            itemStyle:{borderColor:'rgba(0,0,0,.25)',borderWidth:.5,areaColor:baseCol},
+            data:payload.countries
+          }]
+        });
+        window.addEventListener('resize',function(){ chart.resize(); });
+        var fb=document.getElementById('incident-map-fallback');
+        if(fb) fb.style.display='none';
+        var done=document.getElementById('incident-map-status');
+        if(done) done.textContent='✓ interactive map ready';
+      }).catch(function(){});
+  }
+  var done=document.getElementById('incident-map-status');
+  if(window.echarts){ renderMap(); }
+  else{
+    var s=document.createElement('script');
+    s.src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js";
+    s.onload=renderMap;
+    document.head.appendChild(s);
+  }
+})();
+</script>
+</div>
 <h3 style="font-size:14px;color:var(--text);margin-bottom:10px">Source Reliability Index</h3>
 <table class="data-table">
 <thead><tr><th>Tier</th><th>Label</th><th>Description</th></tr></thead>

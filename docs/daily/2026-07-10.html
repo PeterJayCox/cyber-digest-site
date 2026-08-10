@@ -162,6 +162,9 @@ body.exec-view .story-card.expanded h3{margin-bottom:6px;font-size:1rem}
 body.exec-view .story-card.expanded p.summary{margin-bottom:10px}
 /* Analytics grid */
 .analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.incident-map{overflow:hidden}
+.incident-map .map-fallback{padding-top:4px}
+.incident-map .map-fallback .bar-label{width:150px}
 @media(max-width:860px){.wrap{flex-direction:column}#toc{position:static;width:100%;max-height:unset;margin-bottom:20px}.pie-container{flex-direction:column;align-items:center;gap:16px}.stats-row{gap:8px}.header h1{font-size:1.5rem}.analytics-grid{grid-template-columns:1fr}}
 @media(max-width:620px){.navlinks a span.t{display:none}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important;scroll-behavior:auto!important}}
@@ -277,6 +280,74 @@ body.exec-view .story-card.expanded p.summary{margin-bottom:10px}
 <div class="bar-row bar-cyan"><span class="bar-label">CISA</span><div class="bar-track"><div class="bar-fill" style="width:5%"></div></div><span class="bar-val">1</span></div>
 <div class="bar-row bar-cyan"><span class="bar-label">ACSC / Cyber.gov.au</span><div class="bar-track"><div class="bar-fill" style="width:5%"></div></div><span class="bar-val">1</span></div></div></div>
 <div class="pie-container"><div class="pie" style="background:conic-gradient(var(--accent) 0deg 108deg,var(--purple) 108deg 144deg,var(--govt) 144deg 162deg,var(--vuln) 162deg 180deg,var(--crime) 180deg 234deg,var(--govt) 234deg 306deg,var(--crime) 306deg 324deg,var(--crime) 324deg 342deg,var(--vuln) 342deg 360deg);"></div><div class="pie-legend"><div class="legend-item"><span class="dot" style="background:var(--accent)"></span> IT / Technology <span class="val">6</span></div><div class="legend-item"><span class="dot" style="background:var(--purple)"></span> Defence <span class="val">2</span></div><div class="legend-item"><span class="dot" style="background:var(--govt)"></span> General / Cross-Sector <span class="val">1</span></div><div class="legend-item"><span class="dot" style="background:var(--vuln)"></span> Financial Services <span class="val">1</span></div><div class="legend-item"><span class="dot" style="background:var(--crime)"></span> Government <span class="val">3</span></div><div class="legend-item"><span class="dot" style="background:var(--govt)"></span> IT / Technology (Vulnerabilities) <span class="val">4</span></div><div class="legend-item"><span class="dot" style="background:var(--crime)"></span> Government (Australia) <span class="val">1</span></div><div class="legend-item"><span class="dot" style="background:var(--crime)"></span> Manufacturing <span class="val">1</span></div><div class="legend-item"><span class="dot" style="background:var(--vuln)"></span> Media &amp; Entertainment <span class="val">1</span></div></div></div>
+<div class="bar-chart incident-map"><h3>🗺️ Incident Map <span id="incident-map-status" style="font-size:11px;color:var(--text-dim);font-weight:400">(static view)</span></h3><div id="incident-map-chart" style="height:420px;width:100%;display:block"></div><div id="incident-map-fallback"><div class="map-fallback"><div class="bar-row bar-cyan"><span class="bar-label" title="CISA Adds Multiple KEVs, Urges Fortinet Hardening">United States</span><div class="bar-track"><div class="bar-fill" style="width:15%"></div></div><span class="bar-val">3</span></div><div class="bar-row bar-cyan"><span class="bar-label" title="Taiwan Charges Two Businessmen in Chinese Espionage Campaign">China</span><div class="bar-track"><div class="bar-fill" style="width:10%"></div></div><span class="bar-val">2</span></div><div class="bar-row bar-cyan"><span class="bar-label" title="ACSC Critical Alert: Large-Scale Exploitation Campaign Targeting CMS">Australia</span><div class="bar-track"><div class="bar-fill" style="width:5%"></div></div><span class="bar-val">1</span></div><div class="bar-row bar-cyan"><span class="bar-label" title="Britain Plans to Build Autonomous AI &#x27;Cyber Shield&#x27; to Defend Nation">United Kingdom</span><div class="bar-track"><div class="bar-fill" style="width:5%"></div></div><span class="bar-val">1</span></div><div class="bar-row bar-cyan"><span class="bar-label" title="New GigaWiper Windows Backdoor Bundles Disk Wiping, Fake Ransomware, Spyware">Iran</span><div class="bar-track"><div class="bar-fill" style="width:5%"></div></div><span class="bar-val">1</span></div><div class="bar-row bar-cyan"><span class="bar-label" title="Greek Victims File Lawsuit Against Intellexa Over Predator Spyware">Greece</span><div class="bar-track"><div class="bar-fill" style="width:5%"></div></div><span class="bar-val">1</span></div><p style="color:var(--text-dim);font-size:12px;margin-top:8px">Pan-regional / unlocated: 🌐 Global: 10 · 🇪🇺 Europe: 1</p><p style="color:var(--text-dim);font-size:11px;margin-top:6px">6 countries · 20 stories. Interactive map loads on the hosted site.</p></div></div>
+<script>
+(function(){
+  var payload = {"countries": [{"name": "United States", "value": 3, "stories": [{"headline": "CISA Adds Multiple KEVs, Urges Fortinet Hardening", "sector": "IT / Technology", "threat": "Zero-day / Vuln", "url": "https://www.cisa.gov/news-events/cybersecurity-advisories", "date": "2026-07-10"}, {"headline": "Friendly Fire: AI Coding Agents Can Be Tricked Into Running Malicious Code", "sector": "IT / Technology", "threat": "Phishing / BEC", "url": "", "date": "2026-07-10"}, {"headline": "NSA Revives 'Tailored Access Operations' Name for Elite Hacking Unit", "sector": "Defence", "threat": "Zero-day / Vuln", "url": "", "date": "2026-07-10"}]}, {"name": "China", "value": 2, "stories": [{"headline": "Taiwan Charges Two Businessmen in Chinese Espionage Campaign", "sector": "Government \u0026 Policy", "threat": "APT / Nation-State", "url": "", "date": "2026-07-10"}, {"headline": "EU Unveils Cyber Plan to Reduce Reliance on Foreign AI Systems", "sector": "Government \u0026 Policy", "threat": "AI Security", "url": "", "date": "2026-07-10"}]}, {"name": "Australia", "value": 1, "stories": [{"headline": "ACSC Critical Alert: Large-Scale Exploitation Campaign Targeting CMS", "sector": "Government \u0026 Policy", "threat": "Zero-day / Vuln", "url": "", "date": "2026-07-10"}]}, {"name": "United Kingdom", "value": 1, "stories": [{"headline": "Britain Plans to Build Autonomous AI 'Cyber Shield' to Defend Nation", "sector": "Defence", "threat": "AI Security", "url": "", "date": "2026-07-10"}]}, {"name": "Iran", "value": 1, "stories": [{"headline": "New GigaWiper Windows Backdoor Bundles Disk Wiping, Fake Ransomware, Spyware", "sector": "IT / Technology", "threat": "Ransomware", "url": "", "date": "2026-07-10"}]}, {"name": "Greece", "value": 1, "stories": [{"headline": "Greek Victims File Lawsuit Against Intellexa Over Predator Spyware", "sector": "Media \u0026 Entertainment", "threat": "Regulatory / Policy", "url": "", "date": "2026-07-10"}]}], "pan": [{"Global": 10}, {"Europe": 1}], "minColor": "#9be1f7", "maxColor": "#0d4f7a"};
+  function renderMap(){
+    if(!window.echarts) return;
+    var host=document.getElementById('incident-map-chart');
+    if(!host) return;
+    fetch("https://cdn.jsdelivr.net/npm/echarts@4.9.0/map/json/world.json")
+      .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+      .then(function(world){
+        window.echarts.registerMap('world', world);
+        var chart=window.echarts.init(host);
+        // Theme-aware base fill: match the page surface (light grey on light
+        // theme, slate on dark theme) via the same CSS var the layout uses.
+        var base=document.createElement('div');
+        base.style.cssText='position:absolute;visibility:hidden;width:0;height:0';
+        document.body.appendChild(base);
+        var baseCol = getComputedStyle(document.body).getPropertyValue('--surface2').trim() || '#1a2332';
+        base.remove();
+        var n2v={};
+        payload.countries.forEach(function(c){ n2v[c.name]={value:c.value,stories:c.stories}; });
+        chart.setOption({
+          tooltip:{
+            trigger:'item',
+            backgroundColor:'var(--surface2,#111827)',
+            borderColor:'var(--border,rgba(255,255,255,.1))',
+            textStyle:{color:'var(--text,#e2e8f0)',fontSize:12},
+            formatter:function(p){
+              var d=n2v[p.name]; if(!d) return p.name;
+              var s=d.stories.slice(0,4).map(function(x,ix){
+                return (ix+1)+'. '+x.headline;
+              }).join('<br/>');
+              return '<b>'+p.name+'</b> — '+d.value+' incident'+(d.value>1?'s':'')+
+                     (s?'<br/>'+s:'');
+            }
+          },
+          visualMap:{min:0,max:Math.max(1,payload.countries.reduce(function(a,c){return Math.max(a,c.value)},0)),
+            calculable:true,orient:'horizontal',left:'center',bottom:4,
+            textStyle:{color:'var(--text-muted,#b0c0d0)',fontSize:11},
+            inRange:{color:[payload.minColor,payload.maxColor]}},
+          series:[{
+            name:'Incidents',type:'map',map:'world',roam:true,
+            label:{show:false},
+            emphasis:{label:{show:true,color:'var(--text,#e2e8f0)'},
+              itemStyle:{areaColor:'var(--accent,#00b4d8)',borderColor:'#fff'}},
+            itemStyle:{borderColor:'rgba(0,0,0,.25)',borderWidth:.5,areaColor:baseCol},
+            data:payload.countries
+          }]
+        });
+        window.addEventListener('resize',function(){ chart.resize(); });
+        var fb=document.getElementById('incident-map-fallback');
+        if(fb) fb.style.display='none';
+        var done=document.getElementById('incident-map-status');
+        if(done) done.textContent='✓ interactive map ready';
+      }).catch(function(){});
+  }
+  var done=document.getElementById('incident-map-status');
+  if(window.echarts){ renderMap(); }
+  else{
+    var s=document.createElement('script');
+    s.src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js";
+    s.onload=renderMap;
+    document.head.appendChild(s);
+  }
+})();
+</script>
+</div>
 <h3 style="font-size:14px;color:var(--text);margin-bottom:10px">Source Reliability Index</h3>
 <table class="data-table">
 <thead><tr><th>Tier</th><th>Label</th><th>Description</th></tr></thead>
