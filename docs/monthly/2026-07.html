@@ -266,9 +266,11 @@ body.exec-view .story-card.expanded p.summary{margin-bottom:10px}
         chart.setOption({
           tooltip:{
             trigger:'item',
+            confine:true,
             backgroundColor:'var(--surface2,#111827)',
             borderColor:'var(--border,rgba(255,255,255,.1))',
             textStyle:{color:'var(--text,#e2e8f0)',fontSize:12},
+            extraCssText:'max-width:65vw;',
             formatter:function(p){
               var d=n2v[p.name]; if(!d) return p.name;
               var s=d.stories.slice(0,4).map(function(x,ix){
