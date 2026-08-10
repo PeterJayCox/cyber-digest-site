@@ -254,11 +254,19 @@ On the mobile threat front, the <strong>RedWing Malware-as-a-Service</strong> em
         chart.setOption({
           tooltip:{
             trigger:'item',
-            confine:true,
             backgroundColor:'var(--surface2,#111827)',
             borderColor:'var(--border,rgba(255,255,255,.1))',
             textStyle:{color:'var(--text,#e2e8f0)',fontSize:12},
             extraCssText:'max-width:65vw;',
+            appendToBody:true,
+            position:function(pt,params,dom,rect,size){
+              var cw=size.contentSize[0]||0, ch=size.contentSize[1]||0;
+              var x=pt[0]+12, y=pt[1]+12;
+              if(x+cw>window.innerWidth){ x=Math.max(4,window.innerWidth-cw-8); }
+              if(y+ch>window.innerHeight){ y=Math.max(4,window.innerHeight-ch-8); }
+              if(x<4){ x=4; } if(y<4){ y=4; }
+              return [x,y];
+            },
             formatter:function(p){
               var d=n2v[p.name]; if(!d) return p.name;
               var s=d.stories.slice(0,4).map(function(x,ix){
