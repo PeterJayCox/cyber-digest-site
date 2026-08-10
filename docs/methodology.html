@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Threat Rating — Methodology · Cyber Digest</title>
+<link rel="icon" type="image/svg+xml" href="assets/svg/favicon.svg">
+<link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+<style>
+  :root{--navy:#0D1B3E;--cyan:#0096C7;--lcyan:#00B4D8;--pale:#E8F0FE;--ink:#0b1630;--muted:#5a6b8c;--line:#dbe3f2;--good:#1a9e5b;--warn:#e8a13a;--crit:#e0524a;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);line-height:1.6;background:#f6f8fc;padding:40px 20px 80px;}
+  .wrap{max-width:860px;margin:0 auto;}
+  .crumb{font-size:12.5px;color:var(--muted);margin-bottom:14px;}
+  .crumb a{color:var(--cyan);text-decoration:none;}
+  h1{font-size:27px;color:var(--navy);margin-bottom:6px;}
+  .updated{font-size:12.5px;color:var(--muted);margin-bottom:22px;}
+  h2{font-size:18px;color:var(--navy);margin:28px 0 10px;border-bottom:2px solid var(--pale);padding-bottom:6px;}
+  p{margin-bottom:11px;font-size:14.5px;}
+  ul{margin:0 0 12px 20px;font-size:14px;}
+  li{margin-bottom:6px;}
+  .badge{display:inline-block;padding:2px 10px;border-radius:14px;font-size:12px;font-weight:700;}
+  .b-low{background:#e2f5ec;color:#14613f;}
+  .b-guarded{background:#fdf0da;color:#8a5a10;}
+  .b-elevated{background:#fbe3e0;color:#9c3a34;}
+  .b-severe{background:#5b1212;color:#ffd9d6;}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0 16px;}
+  th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);}
+  th{background:var(--pale);color:var(--navy);font-weight:700;}
+  .note{background:var(--pale);border-left:4px solid var(--cyan);padding:12px 16px;border-radius:0 8px 8px 0;font-size:13.5px;margin:14px 0;}
+  code{background:var(--pale);padding:1px 5px;border-radius:4px;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;}
+  a{color:var(--cyan);}
+  small{color:var(--muted);}
+</style></head><body><div class="wrap">
+  <div class="crumb"><a href="index.html">← Home</a> · <a href="stories.html">Story DB</a></div>
+  <h1>Threat Rating — Methodology</h1>
+  <div class="updated">Cyber Digest public site · how the per-story threat rating and the homepage threat index are computed.</div>
+
+  <p>Current (window ending 2026-08-11): <span class="badge b-guarded">Guarded · 48/100</span></p><p>133 stories in this window. <b>Momentum:</b> ▼ 31.1% (fall) vs the prior 14 days.</p>
+
+  <h2>What this measures (and what it does not)</h2>
+  <p>The threat rating reflects the <b>severity and urgency of publicly reported security incidents</b> in the Cyber Digest corpus. It is a measure of <b>reported threat activity</b>, derived from the same story database that powers the Story DB and monthly editions. It is <b>not</b> a prediction of future attacks, and it is only as current as the last published digest — a quiet score may mean incidents went undetected or unreported, not that none occurred.</p>
+  <div class="note">It is an <b>ordinal heuristic</b> using banded words, not a probability and not a measurement of real-world danger. The scale is deliberately coarse, in line with how national threat levels (e.g. Australia’s terrorism threat levels, the UK’s MI5 levels) are presented — banded likelihood words rather than precise numbers.</div>
+
+  <h2>Two layers</h2>
+  <p><b>Layer 1 — per-story rating.</b> Every story gets three independent labels, mirroring how CVSS separates intrinsic severity from exploitation status, and how ICD 203 separates likelihood from confidence:</p>
+  <table>
+    <tr><th>Label</th><th>Values</th><th>What drives it</th></tr>
+    <tr><td>Severity</td><td>Guarded · Elevated · Severe · Critical</td><td>CVSS band if cited, kill-chain phase reached, impact class (operational disruption, data exposure volume, OT/physical impact), sector criticality</td></tr>
+    <tr><td>Urgency (exploitation)</td><td>Not yet observed · Possible · Probable · Observed</td><td>Observed exploitation (e.g. CISA KEV mentions, "exploited in the wild") overrides static severity, per CISA KEV doctrine</td></tr>
+    <tr><td>Confidence</td><td>Verified · Reported · Unverified</td><td>Source reliability tier (1 = official/first-party → Verified; 2 = established journalism → Reported; 3+ or single-source → Unverified)</td></tr>
+  </table>
+  <p><b>Confidence is the gate:</b> an <code>Unverified</code> story can never be rated <code>Critical</code> severity or <code>Observed</code> urgency — analysts never round up on an unattributed single-source claim.</p>
+
+  <h2>Layer 2 — the homepage threat index</h2>
+  <p>A <b>14-day rolling window</b>. Each story’s weight = <code>severity_weight × urgency_weight × confidence_weight × (1 + 0.12 × ANZ relevance) × recency decay</code>, summed per day and averaged across the days covered. The result maps onto a coarse band:</p>
+  <table>
+    <tr><th>Band</th><th>Meter /100</th><th>Meaning</th></tr>
+    <tr><td>Low</td><td>0–39</td><td>Little severe, actively-exploited reporting</td></tr>
+    <tr><td>Guarded</td><td>40–54</td><td>Elevated routine reporting, nothing exceptional</td></tr>
+    <tr><td>Elevated</td><td>55–69</td><td>Notable severe / active-incident reporting</td></tr>
+    <tr><td>Severe</td><td>70–84</td><td>Widespread critical or observed-exploitation activity</td></tr>
+    <tr><td>Critical</td><td>85–100</td><td>Sustained critical-incident reporting</td></tr>
+  </table>
+  <p><b>Momentum</b> compares the current window against the prior 14 days (each window decayed relative to its own end, so it is a real trend, not a recency artefact).</p>
+
+  <h2>How the labels are assigned (auditable rubric)</h2>
+  <p>The rules live in <code>threat_rating.py</code> (Cyber Digest project). Signals are matched against headline + summary text; the highest-matching severity band wins, then confidence caps it. Examples: a KEV-listed bug “exploited in the wild” → <code>Critical / Observed</code>; a new zero-day with no exploitation reported → <code>Severe–Elevated / Not yet observed</code>; an unconfirmed single-source claim stays <code>Elevated / Unverified</code>.</p>
+  <p>Severity currently starts at <code>Guarded</code> for any reported story (everything in a cybersecurity digest is at least noteworthy). High-severity key signals include: CVSS ≥ 7, “exploited in the wild”, “millions of records”, ransomware, supply-chain compromise, nation-state/APT attribution, and OT/ICS physical impact.</p>
+
+  <h2>Basis in assessment practice</h2>
+  <ul>
+    <li>Threat / vulnerability / risk definitions and the capability × intent × targeting rating scales — <a href="https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-30r1.pdf" target="_blank" rel="noopener">NIST SP 800-30 Rev 1</a>; opportunity per <a href="https://www.itu.int/rec/T-REC-X.1205-200804-I/en" target="_blank" rel="noopener">ITU-T X.1205</a></li>
+    <li>Intrusion event framing with confidence per event — <a href="https://www.activeresponse.org/wp-content/uploads/2013/07/diamond.pdf" target="_blank" rel="noopener">Diamond Model</a> (Caltagirone et al., 2013)</li>
+    <li>Severity vs exploitation separation — <a href="https://www.first.org/cvss/v4.0/specification-document" target="_blank" rel="noopener">CVSS v4</a> (FIRST.org); observed-exploitation override — <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener">CISA KEV</a></li>
+    <li>Band-based risk language and the warnings against false precision — <a href="https://owasp.org/www-community/OWASP_Risk_Rating_Methodology" target="_blank" rel="noopener">OWASP Risk Rating Methodology</a></li>
+    <li>Ability to estimate / confidence discipline and banded estimative language — <a href="https://www.dni.gov/files/documents/ICD/ICD%20203%20Analytic%20Standards.pdf" target="_blank" rel="noopener">ODNI ICD 203 Analytic Standards</a></li>
+    <li>National threat-level presentation style — <a href="https://www.nationalsecurity.gov.au/national-threat-level/threat-advisory-system" target="_blank" rel="noopener">Australia’s threat advisory system</a>; <a href="https://www.cyber.gov.au/about-us/reports-and-statistics/asd-cyber-threat-report-july-2022-june-2023" target="_blank" rel="noopener">ASD/ACSC Cyber Threat Report</a></li>
+    <li>Kill-chain phase as severity — Lockheed Martin, <a href="https://www.lockheedmartin.com/en-us/capabilities/cyber/cyber-kill-chain.html" target="_blank" rel="noopener">Cyber Kill Chain</a>; TTP vocabulary — <a href="https://attack.mitre.org/" target="_blank" rel="noopener">MITRE ATT&amp;CK</a></li>
+  </ul>
+
+  <h2>Revision discipline</h2>
+  <p>This index is recomputed from the database on every site build. As the corpus grows the calibrations (band thresholds, decay half-life, weights) may be re-tuned — when that happens the values on this page and the homepage will change together, and the change is disclosed here. If a rating looks wrong, the relevant story card links to its source for verification.</p>
+
+  <p class="updated" style="margin-top:22px">Cyber Digest public site · <a href="index.html">Home</a> · <a href="stories.html">Story DB</a></p>
+</div></body></html>
