@@ -1,44 +1,26 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="dark"><head><meta charset="UTF-8">
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Threat Rating — Methodology · Cyber Digest</title>
+<title>Threat Rating — Methodology</title>
 <link rel="icon" type="image/svg+xml" href="assets/svg/favicon.svg">
 <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
-<style>
-  :root{--navy:#0D1B3E;--cyan:#0096C7;--lcyan:#00B4D8;--pale:#E8F0FE;--ink:#0b1630;--muted:#5a6b8c;--line:#dbe3f2;--good:#1a9e5b;--warn:#e8a13a;--crit:#e0524a;}
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);line-height:1.6;background:#f6f8fc;padding:40px 20px 80px;}
-  .wrap{max-width:860px;margin:0 auto;}
-  .crumb{font-size:12.5px;color:var(--muted);margin-bottom:14px;}
-  .crumb a{color:var(--cyan);text-decoration:none;}
-  h1{font-size:27px;color:var(--navy);margin-bottom:6px;}
-  .updated{font-size:12.5px;color:var(--muted);margin-bottom:22px;}
-  h2{font-size:18px;color:var(--navy);margin:28px 0 10px;border-bottom:2px solid var(--pale);padding-bottom:6px;}
-  p{margin-bottom:11px;font-size:14.5px;}
-  ul{margin:0 0 12px 20px;font-size:14px;}
-  li{margin-bottom:6px;}
-  .badge{display:inline-block;padding:2px 10px;border-radius:14px;font-size:12px;font-weight:700;}
-  .b-low{background:#e2f5ec;color:#14613f;}
-  .b-guarded{background:#fdf0da;color:#8a5a10;}
-  .b-elevated{background:#fbe3e0;color:#9c3a34;}
-  .b-severe{background:#5b1212;color:#ffd9d6;}
-  table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0 16px;}
-  th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);}
-  th{background:var(--pale);color:var(--navy);font-weight:700;}
-  .note{background:var(--pale);border-left:4px solid var(--cyan);padding:12px 16px;border-radius:0 8px 8px 0;font-size:13.5px;margin:14px 0;}
-  code{background:var(--pale);padding:1px 5px;border-radius:4px;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;}
-  a{color:var(--cyan);}
-  small{color:var(--muted);}
-</style></head><body><div class="wrap">
-  <div class="crumb"><a href="index.html">← Home</a> · <a href="stories.html">Story DB</a></div>
-  <h1>Threat Rating — Methodology</h1>
-  <div class="updated">Cyber Digest public site · how the per-story threat rating and the homepage threat index are computed.</div>
-
-  <p>Current (window ending 2026-08-11): <span class="badge b-guarded">Guarded · 48/100</span></p><p>133 stories in this window. <b>Momentum:</b> ▼ 31.1% (fall) vs the prior 14 days.</p>
-
-  <h2>What this measures (and what it does not)</h2>
+<link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Threat Rating — Methodology">
+<meta property="og:description" content="Curated sector-by-sector roundup of global cybersecurity developments with source-reliability indexing, AU/NZ context, and searchable knowledge base.">
+<meta property="og:url" content="https://peterjaycox.com/">
+<meta property="og:image" content="https://peterjaycox.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=20260812"></head><body>
+<nav class="topnav"><div class="inner">
+        <a class="brand" href="https://peterjaycox.com/index.html"><img src="assets/svg/logo-mark.svg" alt="" style="height:22px;width:22px;vertical-align:middle"> Cyber&nbsp;Digest<small>public site</small></a>
+        <div class="navlinks"><a href="https://peterjaycox.com/index.html" class=""><span class="t">🏠 Home</span></a><a href="https://peterjaycox.com/stories.html" class="active"><span class="t">📚 Story DB</span></a><a href="https://peterjaycox.com/daily/" class=""><span class="t">🗓️ Daily</span></a><a href="https://peterjaycox.com/monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="https://peterjaycox.com/reports/index.html" class=""><span class="t">📑 Reports</span></a><a href="https://peterjaycox.com/wiki/index.html" class=""><span class="t">🧠 Wiki</span></a></div>
+        <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light">🌙</div></div></nav><main class="container"><div class="crumb"><a href="index.html">← Home</a> · <a href="stories.html">Story DB</a></div><div class="wiki-body"><h1>Threat Rating — Methodology</h1><p>Cyber Digest public site · how the per-story threat rating and the homepage threat index are computed.</p><p>Current (window ending 2026-08-12): <span class="tag amber">Guarded · 44/100</span></p><p>133 stories in this window. <b>Momentum:</b> ▼ 34.4% (fall) vs the prior 14 days.</p><h2>What this measures (and what it does not)</h2>
   <p>The threat rating reflects the <b>severity and urgency of publicly reported security incidents</b> in the Cyber Digest corpus. It is a measure of <b>reported threat activity</b>, derived from the same story database that powers the Story DB and monthly editions. It is <b>not</b> a prediction of future attacks, and it is only as current as the last published digest — a quiet score may mean incidents went undetected or unreported, not that none occurred.</p>
-  <div class="note">It is an <b>ordinal heuristic</b> using banded words, not a probability and not a measurement of real-world danger. The scale is deliberately coarse, in line with how national threat levels (e.g. Australia’s terrorism threat levels, the UK’s MI5 levels) are presented — banded likelihood words rather than precise numbers.</div>
+  <blockquote>It is an <b>ordinal heuristic</b> using banded words, not a probability and not a measurement of real-world danger. The scale is deliberately coarse, in line with how national threat levels (e.g. Australia’s terrorism threat levels, the UK’s MI5 levels) are presented — banded likelihood words rather than precise numbers.</blockquote>
 
   <h2>Two layers</h2>
   <p><b>Layer 1 — per-story rating.</b> Every story gets three independent labels, mirroring how CVSS separates intrinsic severity from exploitation status, and how ICD 203 separates likelihood from confidence:</p>
@@ -79,6 +61,22 @@
 
   <h2>Revision discipline</h2>
   <p>This index is recomputed from the database on every site build. As the corpus grows the calibrations (band thresholds, decay half-life, weights) may be re-tuned — when that happens the values on this page and the homepage will change together, and the change is disclosed here. If a rating looks wrong, the relevant story card links to its source for verification.</p>
-
-  <p class="updated" style="margin-top:22px">Cyber Digest public site · <a href="index.html">Home</a> · <a href="stories.html">Story DB</a></p>
-</div></body></html>
+</div></main>
+<div class="footer">
+  <div class="links">
+    <a href="https://peterjaycox.github.io/cyber-digest-site/index.html">Home</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/stories.html">Story DB</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/daily/">Daily</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/monthly/index.html">Monthly</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/reports/index.html">Reports</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/wiki/index.html">Wiki</a>
+  </div>
+  Cyber Digest public site · built 2026-08-12 08:16
+</div>
+<script>
+var _t=document.documentElement;
+var _b=document.querySelector(".theme-toggle");
+function toggleTheme(){var n=_t.getAttribute("data-theme")==="dark"?"light":"dark";_t.setAttribute("data-theme",n);if(_b)_b.textContent=n==="dark"?"🌙":"☀️";try{if(n==="dark")localStorage.removeItem("cd-theme");else localStorage.setItem("cd-theme",n)}catch(e){}}
+(function(){try{var s=localStorage.getItem("cd-theme");if(s){_t.setAttribute("data-theme",s);if(_b)_b.textContent="☀️"}}catch(e){}})()
+</script>
+</body></html>

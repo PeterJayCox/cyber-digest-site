@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Digest — 2026-08-12</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0e1a;--surface:#111827;--surface2:#1a2332;--surface-hover:#1e293b;--text:#e2e8f0;--text-secondary:#b0c0d0;--text-muted:#8a9cb6;--text-dim:#64748b;--border:rgba(255,255,255,0.06);--border-light:rgba(255,255,255,0.1);--accent:#00b4d8;--accent-glow:rgba(0,180,216,.08);--accent-bg:rgba(0,180,216,.1);--vuln:#f43f5e;--geo:#8b5cf6;--crime:#f59e0b;--iot:#10b981;--govt:#3b82f6;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--purple:#8b5cf6;--nav-blur:rgba(10,14,26,.88);--kicker-color:#22d3ee;--kicker-bg:rgba(0,180,216,.08);--kicker-border:rgba(0,180,216,.2)}
+[data-theme="light"]{--bg:#ffffff;--surface:#fafafa;--surface2:#f3f4f5;--surface-hover:#ebebeb;--text:#171717;--text-secondary:#4d4d4d;--text-muted:#666666;--text-dim:#808080;--border:rgba(0,0,0,0.06);--border-light:rgba(0,0,0,0.1);--accent:#0072f5;--accent-glow:rgba(0,114,245,.06);--accent-bg:#ebf5ff;--vuln:#f43f5e;--geo:#8b5cf6;--crime:#f59e0b;--iot:#10b981;--govt:#3b82f6;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--purple:#8b5cf6;--nav-blur:rgba(255,255,255,.88);--kicker-color:#0068d6;--kicker-bg:#ebf5ff;--kicker-border:rgba(0,114,245,.2)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:Inter,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;min-height:100vh;transition:background .25s,color .25s}
+.skip-link{position:absolute;left:-9999px;top:0;z-index:2000;background:var(--accent);color:#fff;padding:8px 14px;border-radius:0 0 8px 0;font-size:13px;font-weight:600}
+.skip-link:focus{left:0}
+#progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--purple));z-index:10000;width:0%;transition:width .15s}
+/* Top nav */
+.topnav{position:sticky;top:0;z-index:9999;background:var(--nav-blur);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);-webkit-transform:translateZ(0);transform:translateZ(0);will-change:transform;transition:background .25s,border .25s}
+.topnav .inner{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;align-items:center;height:56px;gap:8px}
+.brand{font-size:16px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:8px;letter-spacing:-.3px}
+.brand .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);flex-shrink:0;transition:background .25s}
+.brand small{font-size:10px;color:var(--text-dim);font-weight:400;letter-spacing:1px;text-transform:uppercase}
+.navlinks{display:flex;gap:2px;margin-left:auto;align-items:center}
+.navlinks a{color:var(--text-muted);font-size:13px;font-weight:500;padding:6px 12px;border-radius:6px;transition:all .12s}
+.navlinks a:hover{color:var(--text);background:var(--surface2);text-decoration:none}
+.navlinks a.active{color:var(--text);background:var(--surface-hover);font-weight:600}
+.theme-toggle{display:flex;align-items:center;justify-content:center;margin-left:8px;width:34px;height:34px;border-radius:8px;background:var(--surface2);cursor:pointer;border:1px solid var(--border);transition:all .25s;user-select:none;flex-shrink:0;font-size:16px}
+.theme-toggle:hover{background:var(--surface-hover);border-color:var(--border-light)}
+/* Layout */
+.wrap{max-width:1100px;margin:auto;padding:0 28px 60px;display:flex;gap:32px;position:relative;z-index:1}
+#toc{position:sticky;top:80px;width:210px;flex-shrink:0;height:fit-content;max-height:calc(100vh-100px);overflow-y:auto;padding:18px 14px;background:var(--surface);border:1px solid var(--border);border-radius:10px;font-size:12px;transition:background .25s,border .25s}
+#toc h3{color:var(--accent);font-size:10px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px}
+#toc a{display:block;color:var(--text-muted);text-decoration:none;padding:3px 8px;border-radius:6px;margin-bottom:2px;transition:all .2s;border-left:2px solid transparent;font-size:12px}
+#toc a:hover{color:var(--text);background:var(--accent-bg)}
+#toc a.active{color:var(--accent);border-left-color:var(--accent);background:var(--accent-bg)}
+.main{flex:1;min-width:0}
+/* Header / Hero */
+.header{padding:32px 0 20px;text-align:center;border-bottom:1px solid var(--border);margin-bottom:28px}
+.header .kicker{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;letter-spacing:1px;color:var(--kicker-color);margin-bottom:14px;padding:5px 16px;border-radius:6px;display:inline-block;background:var(--kicker-bg);border:1px solid var(--kicker-border);transition:all .25s}
+.header h1{font-size:clamp(1.5rem,4vw,2rem);font-weight:800;letter-spacing:-.03em;color:var(--text);margin-bottom:4px}
+.header .subtitle{color:var(--text-secondary);font-size:14px}
+/* Sections */
+.section{margin-bottom:28px;scroll-margin-top:80px}
+.section h2{font-size:1.15rem;font-weight:600;color:var(--text);margin-bottom:14px;border-bottom:1px solid var(--border);padding-bottom:10px;display:flex;align-items:center;gap:10px}
+.section h2 .icon{font-size:1.3rem;line-height:1}
+.section h2 .count{margin-left:auto;background:var(--surface2);color:var(--text-muted);padding:2px 10px;border-radius:100px;font-size:11px;font-weight:600;white-space:nowrap}
+/* Exec summary */
+.exec-summary{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px 30px;margin-bottom:28px;position:relative;overflow:hidden;transition:background .25s,border .25s}
+.exec-summary::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--vuln),var(--purple))}
+.exec-summary h2{font-size:11px;text-transform:uppercase;letter-spacing:.15em;color:var(--accent);font-weight:700;margin-bottom:14px;border:none;padding:0}
+.exec-summary p{color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:14px}
+.exec-summary p:last-child{margin-bottom:0}
+.exec-summary p strong{color:var(--text);font-weight:600}
+/* AU context */
+.au-context-box{background:linear-gradient(135deg,rgba(0,180,216,.06),rgba(59,130,246,.06));border:1px solid rgba(0,180,216,.15);border-radius:10px;padding:18px 22px;margin:14px 0;position:relative}
+.au-context-box::before{content:'AU';position:absolute;top:-8px;right:14px;background:var(--accent);color:#fff;font-size:10px;font-weight:800;padding:1px 7px;border-radius:4px;letter-spacing:.05em}
+.au-context-box p{color:var(--text-muted);font-size:13px;line-height:1.65}
+/* Stats */
+.stats-row{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap;justify-content:center}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:8px 18px;text-align:center;font-size:13px;color:var(--text-muted);transition:background .25s,border .25s}
+.stat-card .stat-num{font-weight:700;color:var(--text);font-size:16px;font-feature-settings:'tnum'}
+.stat-card .stat-label{font-size:11px;color:var(--text-dim)}
+/* Bar charts */
+.bar-chart{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:18px;transition:background .25s,border .25s}
+.bar-chart h3{font-size:13px;font-weight:600;color:var(--text);margin-bottom:12px}
+.bar-row{display:flex;align-items:center;margin-bottom:6px;gap:8px}
+.bar-row .bar-label{font-size:12px;color:var(--text-muted);width:130px;flex-shrink:0;text-align:right}
+.bar-row .bar-track{flex:1;height:16px;background:var(--surface2);border-radius:99px;overflow:hidden}
+.bar-row .bar-fill{height:100%;border-radius:99px;transition:width .6s ease;min-width:4px}
+.bar-row .bar-val{font-size:11px;font-weight:600;color:var(--text);width:36px;flex-shrink:0;font-family:'JetBrains Mono',monospace}
+.bar-cyan .bar-fill{background:linear-gradient(90deg,var(--accent),#0096c7)}
+.bar-purple .bar-fill{background:linear-gradient(90deg,var(--purple),#a78bfa)}
+.bar-amber .bar-fill{background:linear-gradient(90deg,var(--amber),#fbbf24)}
+.bar-red .bar-fill{background:linear-gradient(90deg,var(--vuln),#fb7185)}
+.bar-green .bar-fill{background:linear-gradient(90deg,var(--green),#4ade80)}
+.bar-blue .bar-fill{background:linear-gradient(90deg,var(--govt),#60a5fa)}
+/* Pie */
+.pie-container{display:flex;align-items:center;gap:28px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px 28px;margin:18px 0;transition:background .25s,border .25s}
+.pie{width:140px;height:140px;border-radius:50%;flex-shrink:0}
+.pie-legend{display:flex;flex-direction:column;gap:6px;flex:1}
+.pie-legend .legend-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-muted)}
+.pie-legend .legend-item .dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.pie-legend .legend-item .val{margin-left:auto;font-weight:600;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:12px}
+/* Table */
+.data-table{width:100%;border-collapse:collapse;font-size:13px;background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:18px 0;transition:background .25s,border .25s}
+.data-table th{background:var(--surface2);color:var(--text-muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.08em;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border)}
+.data-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-muted)}
+.data-table tr:last-child td{border-bottom:none}
+.data-table .tier-badge{display:inline-flex;align-items:center;gap:6px;padding:2px 8px;border-radius:100px;font-size:11px;font-weight:600}
+.data-table .tier-1{background:rgba(34,197,94,.1);color:var(--green)}
+.data-table .tier-2{background:rgba(245,158,11,.1);color:var(--amber)}
+.data-table .tier-3{background:rgba(148,163,184,.1);color:var(--text-muted)}
+.data-table .tier-4{background:rgba(239,68,68,.1);color:var(--red)}
+/* Story cards */
+.story-grid{display:flex;flex-direction:column;gap:14px}
+.story-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 22px;transition:all .2s ease;position:relative;overflow:hidden}
+.story-card:hover{border-color:var(--border-light);transform:translateY(-1px)}
+.story-card .card-accent{position:absolute;top:0;left:0;bottom:0;width:3px;border-radius:0 3px 3px 0}
+.story-card.num-1 .card-accent{background:var(--vuln)}.story-card.num-2 .card-accent{background:var(--purple)}.story-card.num-3 .card-accent{background:var(--crime)}.story-card.num-4 .card-accent{background:var(--green)}.story-card.num-5 .card-accent{background:var(--govt)}
+.story-number{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);font-weight:500;margin-bottom:4px}
+.story-card h3{font-size:1rem;font-weight:600;color:var(--text);margin-bottom:6px;line-height:1.4}
+.story-card p.summary{color:var(--text-muted);font-size:13px;line-height:1.65;margin-bottom:10px}
+.story-card .meta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:12px}
+.story-card .meta .source{color:var(--accent);text-decoration:none;font-weight:500}
+.story-card .meta .source:hover{text-decoration:underline}
+.story-card .meta .reliability{display:inline-flex;align-items:center;gap:4px;color:var(--text-dim)}
+.story-card .meta .reliability .tier-1{color:var(--green)}
+.story-card .meta .reliability .tier-2{color:var(--amber)}
+.story-card .meta .reliability .tier-3{color:var(--text-muted)}
+.story-card .meta .reliability .tier-4{color:var(--red)}
+.story-card .meta .date{color:var(--text-dim);margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px}
+/* Tag badge */
+.tag{display:inline-block;font-size:11px;font-weight:500;padding:3px 10px;border-radius:999px;letter-spacing:.3px}
+.tag.blue{background:var(--accent-bg);color:var(--accent)}
+.tag.cyan{background:var(--accent-bg);color:var(--accent)}
+.tag.purple{background:rgba(139,92,246,.1);color:#a78bfa}
+.tag.green{background:rgba(34,197,94,.1);color:#4ade80}
+.tag.amber{background:rgba(245,158,11,.1);color:#fbbf24}
+.tag.red{background:rgba(239,68,68,.1);color:#f87171}
+/* Also notable */
+.bundle-box{background:var(--surface);border:1px dashed var(--border);border-radius:8px;padding:14px 18px;margin-top:6px}
+.bundle-box .bundle-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);font-weight:600;margin-bottom:6px}
+.bundle-box ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+.bundle-box ul li{font-size:13px;color:var(--text-muted);padding-left:12px;position:relative;line-height:1.5}
+.bundle-box ul li::before{content:'\25B8';position:absolute;left:0;color:var(--text-dim)}
+/* Controls */
+.controls{display:flex;gap:10px;margin-bottom:20px}
+.btn{font-size:12px;font-weight:600;padding:6px 16px;border-radius:99px;border:1px solid var(--border);background:var(--surface);color:var(--text-muted);cursor:pointer;transition:all .2s;font-family:inherit}
+.btn:hover{background:var(--surface2);color:var(--text)}
+.btn.active{background:var(--accent-bg);border-color:var(--accent);color:var(--accent)}
+#back-top{position:fixed;bottom:28px;right:28px;width:42px;height:42px;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--accent);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;z-index:9000;font-family:inherit}
+#back-top.visible{opacity:1}
+#back-top:hover{background:var(--surface2)}
+/* Footer */
+.footer{text-align:center;padding:28px 0 10px;border-top:1px solid var(--border);margin-top:32px;transition:border .25s}
+.footer .source-line{font-size:12px;color:var(--text-dim);font-family:'JetBrains Mono',monospace;margin-bottom:6px}
+.footer .note{font-size:11px;color:var(--text-dim);font-style:italic}
+.footer .links{display:flex;justify-content:center;gap:20px;margin-bottom:12px}
+.footer .links a{color:var(--text-dim);font-size:12px;font-weight:500;transition:color .15s}
+.footer .links a:hover{color:var(--text-secondary)}
+/* Executive view */
+body.exec-view .hide-exec,
+body.exec-view .story-card .meta,
+body.exec-view .story-card p.summary,
+body.exec-view .bundle-box,
+body.exec-view .bar-chart,
+body.exec-view .pie-container,
+body.exec-view .data-table,
+body.exec-view #incident-map{display:none!important}
+body.exec-view .story-card{padding:10px 18px;margin-bottom:4px;cursor:pointer}
+body.exec-view .story-card h3{font-size:14px;margin-bottom:0}
+body.exec-view .story-number{display:none}
+body.exec-view .story-grid{gap:6px}
+body.exec-view .story-card::after{content:'\25B6 Click to expand';display:block;font-size:10px;color:var(--text-dim);margin-top:4px;opacity:.5;transition:opacity .2s}
+body.exec-view .story-card:hover::after{opacity:1}
+body.exec-view .story-card.expanded::after{content:'\25BC Click to collapse'}
+body.exec-view .story-card.expanded .meta,
+body.exec-view .story-card.expanded p.summary{display:block!important}
+body.exec-view .story-card.expanded{padding:14px 18px}
+body.exec-view .story-card.expanded .story-number{display:block}
+body.exec-view .story-card.expanded h3{margin-bottom:6px;font-size:1rem}
+body.exec-view .story-card.expanded p.summary{margin-bottom:10px}
+/* Analytics grid */
+.analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.incident-map{overflow:hidden}
+.incident-map .map-fallback{padding-top:4px}
+.incident-map .map-fallback .bar-label{width:150px}
+@media(max-width:860px){.wrap{flex-direction:column}#toc{position:static;width:100%;max-height:unset;margin-bottom:20px}.pie-container{flex-direction:column;align-items:center;gap:16px}.stats-row{gap:8px}.header h1{font-size:1.5rem}.analytics-grid{grid-template-columns:1fr}}
+@media(max-width:620px){.navlinks a span.t{display:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important;scroll-behavior:auto!important}}
+@media print{body{background:#fff!important;color:#111!important;font-size:11pt}body::before:before,.orb{display:none}#toc{display:none}.wrap{display:block;max-width:100%;padding:0}.main{width:100%}.exec-summary p,.story-card p.summary,.bar-chart,.au-context-box p,.bundle-box ul li{color:#333!important}.exec-summary,.story-card,.bar-chart,.pie-container{break-inside:avoid}@page{margin:2cm 2.5cm;@bottom-right{content:counter(page)" / "counter(pages);font-size:9pt;color:#999}}}
+</style>
+</head>
+<body>
+<nav class="topnav"><div class="inner">
+  <a class="brand" href="https://peterjaycox.github.io/cyber-digest-site/index.html"><span class="dot"></span>Cyber&nbsp;Digest<small>daily</small></a>
+  <div class="navlinks">
+    <a href="https://peterjaycox.github.io/cyber-digest-site/index.html"><span class="t">Home</span></a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/stories.html"><span class="t">Story DB</span></a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/daily/" class="active"><span class="t">Daily</span></a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/monthly/index.html"><span class="t">Monthly</span></a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/wiki/index.html"><span class="t">Wiki</span></a>
+  </div>
+  <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light">🌙</div>
+</div></nav>
+
+<a href="#main" class="skip-link">Skip to content</a>
+<div id="progress"></div>
+<div class="wrap">
+<nav id="toc" aria-label="Table of contents">
+<h3>Daily Digest</h3>
+<a href="#exec" data-section="exec">Executive summary</a>
+<a href="#incident-map" data-section="incident-map">🗺️ Incident Map</a>
+<a href="#sector-global-macro" data-section="sector-global-macro">🌐 Global (Macro)</a>
+<a href="#sector-government" data-section="sector-government">🏛️ Government</a>
+<a href="#sector-healthcare" data-section="sector-healthcare">🏥 Healthcare</a>
+<a href="#sector-transport" data-section="sector-transport">🚚 Transport</a>
+<a href="#sector-legal-services" data-section="sector-legal-services">⚖️ Legal Services</a>
+<a href="#analytics" data-section="analytics">📊 Analytics</a>
+</nav>
+<main id="main" class="main">
+
+<header class="header">
+<div class="kicker">// daily digest · 2026-08-12</div>
+<h1>Cyber Digest</h1>
+<p class="subtitle">A daily roundup of key cybersecurity developments across sectors</p>
+</header>
+
+<div class="controls">
+<button class="btn active" id="btn-full" onclick="setView('full')">Full report</button>
+<button class="btn" id="btn-exec" onclick="setView('exec')">Executive view</button>
+</div>
+
+<section id="exec" class="exec-summary">
+<h2>📋 Executive Summary</h2>
+<p><strong>A Wednesday digest led by the largest Patch Tuesday in recent memory, a logistics-supply-chain breach rippling across European retailers, and a ransomware week that is consolidating into two architectural themes. First</strong>, Microsoft&#x27;s August patch release closed 398 flaws — the biggest monthly count in years by ZDI&#x27;s tally, 62 rated Critical — and flagged a single zero-day as under active attack: CVE-2026-68820, a use-after-free in the `afd.sys` WinSock driver that lets an attacker with code on the box escalate to SYSTEM. Check Point Research attributes that exploit to the Lazarus Group&#x27;s Operation Dream Job. The release also ships four unauthenticated remote-code-execution flaws at CVSS 9.8 — Windows DNS Server (described by ZDI as wormable), Windows Deployment Services, Microsoft&#x27;s QUIC stack and HPC Pack — plus the RCE half of an on-premises SharePoint chain whose authentication bypass was patched in July. <strong>Second</strong>, CISA added three vulnerabilities to its KEV catalogue, among them the same `afd.sys` driver, a Cisco Secure Firewall ASA/FTD heap-inspection flaw, and the Metabase SQL-injection bug whose in-the-wild exploitation was disclosed over the weekend. <strong>Third</strong>, a cyberattack on global freight firm Ceva Logistics has disrupted shipments across eight European warehouses and potentially exposed customer data held for Dutch e-commerce giant Bol, De Bijenkorf, Ace &amp; Tate, Ajax and Steam&#x27;s European hardware business — a supply-chain breach the company has yet to disclose itself. <strong>Fourth</strong>, the day after the joint Gunra ransomware advisory, new reporting details the Conti-derived RaaS&#x27;s exploitation of Schneider Electric and Fortinet flaws, with 51 listed victims concentrated in Australia, East Asia and Europe.</p>
+<div class="au-context-box"><p><strong>Gunra&#x27;s victim geography is the most Australian-relevant signal of the day</strong>: Ransomware.Live data counts 51 listed victims since April 2025, with the majority in South Korea, Brazil, Spain, Thailand and Hong Kong — and, by the threat actor&#x27;s own targeting profile, most victims located in <strong>Australia, East Asia and Europe</strong>, versus only three in Canada and the US. The advisory&#x27;s named targets (healthcare, financial services, government, professional services) map directly onto ASIC/APRA-regulated sectors, and the FBI now reports Gunra recruiting penetration testers and &quot;ethical hackers&quot; as initial-access brokers under new branding aliases including Golden Community — meaning Australian organisations should expect initial-access tradecraft against exposed Fortinet and Schneider Electric appliances. The <strong>Meta evidence-destruction ruling in Andrew Forrest&#x27;s California suit</strong> is a direct Australian regulatory/commercial development: a US judge found Meta deliberately allowed its systems to wipe evidence central to claims that scam crypto ads run rampant on its platforms, an outcome Fortune 500 and AU marketing teams should watch as fraud-litigation precedent. The <strong>Ceva attack</strong> is a reminder that Australian e-commerce and logistics operators hold equivalent third-party data estates in warehouses abroad; Australian Retailers Association members dealing in EU stock should check whether Ceva is in their supply chain. <strong>ACSC</strong> has published no new advisories since the weekend — homepage focus remains frontier-AI board guidance, CI Fortify OT isolation and secure agentic-AI adoption — and its mid-week posture continues to point AU organisations at Essential Eight patching discipline, which is exactly the control class the 398-flaw Patch Tuesday and the two KEV-added Windows/Cisco bugs demand.</p></div>
+<p>Today tightens four themes running through the first half of August. <strong>Patch volume and internet-exposed management surfaces keep escalating</strong>: the 398-flaw release (62 Critical, four 9.8 unauthenticated RCEs including a ZDI-describing-wormable DNS Server bug) follows the week&#x27;s N-able N-central, Progress LoadMaster and TeamCity KEV additions, and the CISA KEV adds the same `afd.sys` driver plus a Cisco ASA/FTD heap issue and Metabase — a consistent admonition that flaw-reach on VPN, DNS and management consoles is the dominant attack surface, not novel TTPs. <strong>Ransomware-as-a-service is converging on appliance exploitation and monetised access</strong>: Gunra&#x27;s documented use of CVE-2024-5559 (Schneider Electric PowerLogic P5) and CVE-2025-24472 (Fortinet FortiOS/FortiProxy), alongside The Gentlemen&#x27;s claimed escalation to 332+ victims in early 2026 and its hijacking of a US hospital&#x27;s Facebook page, shows established RaaS brands professionalising — building IAB recruitment, rebranding (Golden Community), and smart-contract extortion infrastructure (DeadLock on Polygon) to make disruption harder. <strong>Logistics and retail supply chains are now mainstream targets</strong>: the Ceva attack disrupting Bol, De Bijenkorf, Ace &amp; Tate, Ajax and Steam hardware across Europe follows a week in which logistics and retail featured repeatedly, pointing CISOs at third-party warehousing and drop-ship data flows as a genuine control gap. <strong>AI-cyber permissiveness is a live policy thread</strong>: OpenAI&#x27;s GPT‑5.6‑Cyber (95% completion on exploit-development prompts vs 1.5% for the base model) lands days after OpenAI&#x27;s Astra pause and ACSC&#x27;s frontier-AI board guidance, while NIST looks to overhaul its vulnerability database for the AI age and the FTC eyes AI regulation — signalling that authorised-offensive-use AI is being productised precisely as regulators converge on it. For Australian and NZ CISOs the priority ordering is unchanged but sharpened: patch internet-exposed appliances and Windows servers ahead of everything, treat third-party logistics/e-commerce data flows as breach surfaces, and audit RaaS initial-access posture (VPN/MFA, OT appliances) before Thursday&#x27;s round of advisories.</p>
+</section>
+
+<div class="stats-row"><div class="stat-card stat-geo"><div class="stat-num">5</div><div class="stat-label">Global (Macro)</div></div>
+<div class="stat-card stat-govt"><div class="stat-num">3</div><div class="stat-label">Government</div></div>
+<div class="stat-card stat-crime"><div class="stat-num">2</div><div class="stat-label">Healthcare</div></div>
+<div class="stat-card stat-iot"><div class="stat-num">2</div><div class="stat-label">Transport</div></div>
+<div class="stat-card stat-vuln"><div class="stat-num">0</div><div class="stat-label">Legal Services</div></div></div>
+
+<section id="incident-map" class="section"><h2><span class="icon">🗺️</span> Incident Map</h2><div class="bar-chart incident-map"><div id="incident-map-status" style="font-size:11px;color:var(--text-dim);font-weight:400;margin-bottom:8px">(static view)</div><div id="incident-map-chart" style="height:400px;width:100%;display:block"></div><div id="incident-map-fallback"><div class="map-fallback"><div class="bar-row bar-cyan"><span class="bar-label" title="CISA Adds Three Known Exploited Vulnerabilities to Catalog">United States</span><div class="bar-track"><div class="bar-fill" style="width:42%"></div></div><span class="bar-val">5</span></div><div class="bar-row bar-cyan"><span class="bar-label" title="Cyberattack on Logistics Giant Ceva Hits Retailers and Steam Customers Across Europe">Netherlands</span><div class="bar-track"><div class="bar-fill" style="width:8%"></div></div><span class="bar-val">1</span></div><p style="color:var(--text-dim);font-size:12px;margin-top:8px">Pan-regional / unlocated: 🌐 Global: 6</p><p style="color:var(--text-dim);font-size:11px;margin-top:6px">2 countries · 12 stories. Interactive map loads on the hosted site.</p></div></div>
+<script>
+(function(){
+  var payload = {"countries": [{"name": "United States", "value": 5, "stories": [{"headline": "CISA Adds Three Known Exploited Vulnerabilities to Catalog", "sector": "Government \u0026 Policy", "threat": "Zero-day / Vuln", "url": "https://www.cisa.gov/news-events/alerts/2026/08/04/cisa-adds-three-known-exploited-vulnerabilities-catalog", "date": "2026-08-12"}, {"headline": "Microsoft Patches 398 Flaws Including a Windows Driver Zero-Day Under Active Attack", "sector": "Global (Macro)", "threat": "Zero-day / Vuln", "url": "https://thehackernews.com/2026/08/microsoft-patches-398-flaws-including.html", "date": "2026-08-12"}, {"headline": "Gunra Ransomware Exploits Fortinet and Schneider Electric Flaws to Breach Networks", "sector": "Global (Macro)", "threat": "Ransomware", "url": "https://thehackernews.com/2026/08/gunra-ransomware-exploits-fortinet-and.html", "date": "2026-08-12"}, {"headline": "OpenAI Launches GPT-5.6-Cyber with Reduced Safeguards for Exploit Development", "sector": "Global (Macro)", "threat": "Zero-day / Vuln", "url": "https://thehackernews.com/2026/08/openai-launches-gpt-56-cyber-with.html", "date": "2026-08-12"}, {"headline": "Local Governments in Four States Dealing with Cyberattacks That Have Shut Down Services", "sector": "Government \u0026 Policy", "threat": "Ransomware", "url": "https://therecord.media/cyberattacks-ransomware-local-governments", "date": "2026-08-12"}]}, {"name": "Netherlands", "value": 1, "stories": [{"headline": "Cyberattack on Logistics Giant Ceva Hits Retailers and Steam Customers Across Europe", "sector": "Transport", "threat": "Breach / Data Leak", "url": "https://therecord.media/ceva-logistics-cyberattack-bol-steam-debijenkorf-ace-tate", "date": "2026-08-12"}]}], "pan": [{"Global": 6}], "minColor": "#9be1f7", "maxColor": "#0d4f7a"};
+  function renderMap(){
+    if(!window.echarts) return;
+    var host=document.getElementById('incident-map-chart');
+    if(!host) return;
+    fetch("https://cdn.jsdelivr.net/npm/echarts@4.9.0/map/json/world.json")
+      .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+      .then(function(world){
+        window.echarts.registerMap('world', world);
+        var chart=window.echarts.init(host);
+        // Theme-aware base fill: match the page surface (light grey on light
+        // theme, slate on dark theme) via the same CSS var the layout uses.
+        var base=document.createElement('div');
+        base.style.cssText='position:absolute;visibility:hidden;width:0;height:0';
+        document.body.appendChild(base);
+        var baseCol = getComputedStyle(document.body).getPropertyValue('--surface2').trim() || '#1a2332';
+        base.remove();
+        var n2v={};
+        payload.countries.forEach(function(c){ n2v[c.name]={value:c.value,stories:c.stories}; });
+        chart.setOption({
+          tooltip:{
+            trigger:'item',
+            backgroundColor:'var(--surface2,#111827)',
+            borderColor:'var(--border,rgba(255,255,255,.1))',
+            textStyle:{color:'var(--text,#e2e8f0)',fontSize:12},
+            extraCssText:'max-width:65vw;',
+            appendToBody:true,
+            position:function(pt,params,dom,rect,size){
+              var cw=size.contentSize[0]||0, ch=size.contentSize[1]||0;
+              var x=pt[0]+12, y=pt[1]+12;
+              if(x+cw>window.innerWidth){ x=Math.max(4,window.innerWidth-cw-8); }
+              if(y+ch>window.innerHeight){ y=Math.max(4,window.innerHeight-ch-8); }
+              if(x<4){ x=4; } if(y<4){ y=4; }
+              return [x,y];
+            },
+            formatter:function(p){
+              var d=n2v[p.name]; if(!d) return p.name;
+              var s=d.stories.slice(0,4).map(function(x,ix){
+                return (ix+1)+'. '+x.headline;
+              }).join('<br/>');
+              return '<b>'+p.name+'</b> — '+d.value+' incident'+(d.value>1?'s':'')+
+                     (s?'<br/>'+s:'');
+            }
+          },
+          visualMap:{min:0,max:Math.max(1,payload.countries.reduce(function(a,c){return Math.max(a,c.value)},0)),
+            calculable:true,orient:'horizontal',left:'center',bottom:4,
+            textStyle:{color:'var(--text-muted,#b0c0d0)',fontSize:11},
+            inRange:{color:[payload.minColor,payload.maxColor]}},
+          series:[{
+            name:'Incidents',type:'map',map:'world',roam:true,
+            scaleLimit:{min:1,max:12},
+            label:{show:false},
+            emphasis:{label:{show:true,color:'var(--text,#e2e8f0)'},
+              itemStyle:{areaColor:'var(--accent,#00b4d8)',borderColor:'#fff'}},
+            itemStyle:{borderColor:'rgba(0,0,0,.25)',borderWidth:.5,areaColor:baseCol},
+            data:payload.countries
+          }]
+        });
+        window.addEventListener('resize',function(){ chart.resize(); });
+        var fb=document.getElementById('incident-map-fallback');
+        if(fb) fb.style.display='none';
+        var done=document.getElementById('incident-map-status');
+        if(done) done.textContent='✓ interactive map ready';
+      }).catch(function(){});
+  }
+  var done=document.getElementById('incident-map-status');
+  if(window.echarts){ renderMap(); }
+  else{
+    var s=document.createElement('script');
+    s.src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js";
+    s.onload=renderMap;
+    document.head.appendChild(s);
+  }
+})();
+</script>
+</div></section>
+<section id="sector-global-macro" class="section"><h2><span class="icon">🌐</span> Global (Macro) <span class="count">5 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Microsoft Patches 398 Flaws Including a Windows Driver Zero-Day Under Active Attack</h3><p class="summary">Microsoft&#x27;s August security release closes 398 CVEs — 62 rated Critical per ZDI — including CVE-2026-68820 (CVSS 7.0), a use-after-free in `afd.sys`, the Ancillary Function Driver for WinSock, that lets an attacker with code already running on a machine escalate to SYSTEM; it is the only bug Microsoft flags as under active exploitation, with Check Point Research attributing it to the Lazarus Group&#x27;s Operation Dream Job campaign. The release also ships four unauthenticated RCE flaws at CVSS 9.8 — CVE-2026-62878 (Windows DNS Server, a stack buffer overflow ZDI describes as wormable), CVE-2026-62893 (Windows Deployment Services via TFTP), CVE-2026-62815 (Microsoft QUIC) and CVE-2026-59124 (HPC Pack) — plus the RCE half of an on-premises SharePoint chain whose authentication bypass was fixed in July, which must be installed together. **Confidence: Confirmed** (Microsoft disclosure; ZDI count).</p><div class="meta"><a class="source" href="https://thehackernews.com/2026/08/microsoft-patches-398-flaws-including.html" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-11</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>Gunra Ransomware Exploits Fortinet and Schneider Electric Flaws to Breach Networks</h3><p class="summary">New reporting extends yesterday&#x27;s joint FBI/CISA advisory with exploitation detail: Gunra, the Conti-derived RaaS, is gaining initial access via CVE-2024-5559 (Schneider Electric PowerLogic P5) and CVE-2025-24472 (Fortinet FortiOS/FortiProxy), then deploying its double-extortion locker with data published on a leak site within five to seven days of non-payment. Ransomware.Live counts 51 listed victims since April 2025, most in South Korea, Brazil, Spain, Thailand and Hong Kong — and most located in Australia, East Asia and Europe, with only three in Canada and the US. The FBI says Gunra is adopting new branding aliases such as Golden Community and recruiting penetration testers and ethical hackers as initial-access brokers; its Linux builds carry a known &quot;catastrophic cryptographic weakness&quot; that lets victims recover the encryption key. **Confidence: Confirmed** (advisories plus Ransomware.Live victim data; exploitation technique reported, not independently verified in each case).</p><div class="meta"><a class="source" href="https://thehackernews.com/2026/08/gunra-ransomware-exploits-fortinet-and.html" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-11</span></div></div>
+<div class="story-card num-3"><div class="card-accent"></div><div class="story-number">3</div><h3>Kimwolf v7 Android Botnet Makes HTTP/2 DDoS Traffic Look Like Legitimate Browsing</h3><p class="summary">Palo Alto Networks Unit 42&#x27;s analysis of the evolving Kimwolf Android botnet&#x27;s v7 shows it using HTTP/2-based DDoS that mimics legitimate browser traffic to evade detection and filtering, advancing the family&#x27;s stealth and amplification capability. The research is the primary analysis of a live threat and predates general press coverage. **Confidence: Confirmed** (vendor telemetry based on live infrastructure analysis).</p><div class="meta"><a class="source" href="https://unit42.paloaltonetworks.com/kimwolf-v7-botnet-malware/" target="_blank" rel="noopener">Unit 42</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-11</span></div></div>
+<div class="story-card num-4"><div class="card-accent"></div><div class="story-number">4</div><h3>OpenAI Launches GPT-5.6-Cyber with Reduced Safeguards for Exploit Development</h3><p class="summary">OpenAI unveiled GPT‑5.6‑Cyber, a cyber-permissive model built on GPT‑5.6 Sol and available through a new &quot;Daybreak Red&quot; tier for authorised vulnerability research, exploit validation and security testing. Internal evaluations show it completes 95.0% of advanced-cybersecurity requests (exploit-chain development, authentication bypass, privilege escalation) versus 1.5% for the base model, and it outperforms its June predecessor GPT‑5.5‑Cyber (57.3%). The release deliberately lowers refusals for dual-use cyber tasks, arriving days after OpenAI paused some internal activity following an Astra evaluation that found significant agentic-cyber capability gains. **Confidence: Confirmed** (vendor announcement with published evaluations).</p><div class="meta"><a class="source" href="https://thehackernews.com/2026/08/openai-launches-gpt-56-cyber-with.html" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-11</span></div></div>
+<div class="story-card num-5"><div class="card-accent"></div><div class="story-number">5</div><h3>DeadLock Ransomware Uses Polygon Smart Contracts to Make Extortion Infra Harder to Disrupt</h3><p class="summary">Researchers detail DeadLock, a ransomware operation that has moved parts of its extortion infrastructure onto Polygon blockchain smart contracts, making payment flows and victim-negotiation infrastructure more resilient to traditional takedown. The shift continues a trend of ransomware groups co-opting public blockchains for C2 and payment orchestration. **Confidence: Confirmed** (technical research published on the operation&#x27;s infrastructure).</p><div class="meta"><a class="source" href="https://thehackernews.com/2026/08/deadlock-ransomware-uses-polygon-smart.html" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-11</span></div></div>
+<div class="bundle-box"><div class="bundle-label">Also notable</div><ul><li><strong>BdThemes Supply Chain Attack Poisons JSON to Create Rogue WordPress Admins</strong> — A supply-chain compromise of the BdThemes ecosystem used tampered JSON payloads to inject rogue WordPress administrator accounts, a reminder of the persistent risk in the theme/plugin distribution chain. (The Hacker News, 2026-08-11)</li><li><strong>Mozilla Revokes Firefox and Thunderbird Linux Signing Key After Key Lands in Private Repo</strong> — Mozilla revoked the signing key used for Firefox and Thunderbird Linux builds after it was accidentally exposed in a private repository, an incident with downstream implications for verified-update integrity on Linux. (The Hacker News, 2026-08-11)</li></ul></div>
+</div>
+</section>
+<section id="sector-government" class="section"><h2><span class="icon">🏛️</span> Government <span class="count">3 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>CISA Adds Three Known Exploited Vulnerabilities to Catalog</h3><p class="summary">CISA added three actively exploited vulnerabilities to its KEV Catalogue under BOD 26-04: CVE-2026-20349 (Cisco Secure Firewall ASA/FTD, an unauthenticated heap-inspection vulnerability allowing remote compromise), CVE-2026-68820 (Microsoft Windows Ancillary Function Driver for WinSock, the `afd.sys` use-after-free that is also this month&#x27;s Patch Tuesday zero-day) and CVE-2026-72898 (Metabase, an unauthenticated SQL-injection giving administrator access, disclosed in the wild over the weekend). Federal civilian agencies must prioritise remediation; CISA urges all organisations to adopt the same risk-based patching posture. **Confidence: Confirmed** (official catalogue).</p><div class="meta"><a class="source" href="https://www.cisa.gov/news-events/alerts/2026/08/11/cisa-adds-three-known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener">CISA</a><span class="reliability"><span class="tier-2">●</span> Tier 1/4 — Official / first-party</span><span class="date">2026-08-11</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>Local Governments in Four States Dealing with Cyberattacks That Have Shut Down Services</h3><p class="summary">A string of municipal cyber incidents over the past week has shut public services across the US. Suisun City, California (~30,000 residents), took its IT network down on Friday after malware hit critical public-safety operations including 911 routing and police/fire dispatch, declared a state of emergency on Saturday and is now getting FBI help. Coweta, Oklahoma, suffered a ransomware attack affecting all its computers and files last Wednesday, restoring from off-site backups with federal and state assistance. Multiple other cities and counties reported similar ransomware incidents in the same window. **Confidence: Confirmed** (official local-government notices).</p><div class="meta"><a class="source" href="https://therecord.media/cyberattacks-ransomware-local-governments" target="_blank" rel="noopener">The Record</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-11</span></div></div>
+<div class="story-card num-3"><div class="card-accent"></div><div class="story-number">3</div><h3>NIST Wants to Overhaul Its Vulnerability Database for the AI Age</h3><p class="summary">NIST is exploring a modernisation of the National Vulnerability Database, aiming to make CVE enrichment and vulnerability data machine-consumable by AI agents and automated tooling. The effort addresses growing concerns that the NVD&#x27;s curation model — and the enrichment backlog — cannot keep pace with AI-accelerated vulnerability discovery and automated patching. **Confidence: Confirmed** (announcement).</p><div class="meta"><a class="source" href="https://cyberscoop.com/nist-national-vulnerability-database-ai-overhaul/" target="_blank" rel="noopener">CyberScoop</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-11</span></div></div>
+</div>
+</section>
+<section id="sector-healthcare" class="section"><h2><span class="icon">🏥</span> Healthcare <span class="count">2 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Data Breaches Reported by Sunshine Health; Health Payment Systems</h3><p class="summary">Florida-based Medicaid and health insurer Sunshine Health disclosed a vishing incident in which an employee was tricked on 6 May into sharing health-plan files with a caller posing as a trusted individual, exposing the PHI of 41,569 people (names, dates of birth, medical histories and coverage information); no evidence of misuse has been found. Wisconsin healthcare billing company Health Payment Systems separately reported an email-security incident affecting more than 8,000 patients. **Breach Triage: Confirmed** — both are first-party disclosures to regulators with specific affected counts.</p><div class="meta"><a class="source" href="https://www.hipaajournal.com/data-breaches-sunshine-health-health-payment-systems/" target="_blank" rel="noopener">HIPAA Journal</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-11</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>Ransomware Group Hijacks Hospital System&#x27;s Facebook Page Amid Ongoing Cyberattack Fallout</h3><p class="summary">The Gentlemen ransomware group took over the Facebook page of AnMed, a nonprofit medical chain in Georgia and South Carolina, posting ransom demands claiming to have exfiltrated 6 terabytes including records relating to sexual assault, mental health, abortion and sexual harassment — claims for which no evidence has been provided. The incident stems from the malware disruption AnMed first disclosed on 26 July; as of Monday 10 of its facilities remained closed to appointments, and AnMed says it has not confirmed the scope of any impact on patient information. The Gentlemen, founded by a former Qilin affiliate, is one of the most prolific RaaS groups, with Check Point counting 332 extorted victims in the first five months of 2026. **Breach Triage: Incident Confirmed** (AnMed disclosure); **data-loss claims Unverified** (no evidence produced).</p><div class="meta"><a class="source" href="https://therecord.media/ransomware-group-hijacks-hospital-facebook-amid-cyberattack-response" target="_blank" rel="noopener">The Record</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-11</span></div></div>
+</div>
+</section>
+<section id="sector-transport" class="section"><h2><span class="icon">🚚</span> Transport <span class="count">2 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Cyberattack on Logistics Giant Ceva Hits Retailers and Steam Customers Across Europe</h3><p class="summary">A cyberattack on global freight company Ceva Logistics has disrupted operations at eight European warehouses, delaying shipments for retail customers including Dutch e-commerce giant Bol, luxury department store De Bijenkorf, eyewear firm Ace &amp; Tate, Amsterdam football club Ajax and Steam&#x27;s European hardware business. Bol — informed by Ceva on 1 August — told affected customers that two Ceva order-processing systems may have been exposed, with potentially viewed or copied data including names, addresses, emails, phone numbers, order numbers, tracking details and gift-card messages; Bol has suspended data exchanges with Ceva pending its own investigation. Ceva has not publicly disclosed the attack and did not respond to comment requests. **Breach Triage: Probable breach** — customer confirmations and notifications corroborate compromise, but no first-party Ceva disclosure or confirmed data-exposure estimate.</p><div class="meta"><a class="source" href="https://therecord.media/ceva-logistics-cyberattack-bol-steam-debijenkorf-ace-tate" target="_blank" rel="noopener">The Record</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-11</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>Delta Investigates In-Flight Wi-Fi Spoofing on Post-DEF CON Flight from Las Vegas</h3><p class="summary">Delta is investigating an incident on flight 591 (Las Vegas to Atlanta) where a passenger reportedly used an unidentified device to spoof the airline&#x27;s in-flight Wi-Fi, creating a rogue network named &quot;Delta WiFi Fast&quot; apparently intended to scam fellow passengers. ACARS messages captured crew reporting the fake network, cabin crew deactivated Wi-Fi for about 30 minutes, and Delta is partnering with federal law enforcement and aviation regulators. Delta says flight safety was never in question and no aircraft operating systems were affected. **Confidence: Confirmed** (first-party airline statements).</p><div class="meta"><a class="source" href="https://cyberscoop.com/delta-flight-rogue-wifi-investigation-def-con-las-vegas/" target="_blank" rel="noopener">CyberScoop</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-11</span></div></div>
+</div>
+</section>
+<section id="sector-legal-services" class="section"><h2><span class="icon">⚖️</span> Legal Services <span class="count">0 stories</span></h2><div class="story-grid"><div class="bundle-box"><div class="bundle-label">Also notable</div><ul><li><strong>Meta Wiped Key Scam Evidence in Andrew Forrest Suit, US Judge Rules</strong> — A US judge ruled that Meta deliberately allowed its systems to wipe evidence central to Fortescue chairman Andrew Forrest&#x27;s California suit alleging Facebook-owner Meta lets scam crypto ads using his likeness run rampant on its platforms — a finding that could scupper Meta&#x27;s defence in one of the highest-profile scam-litigation cases with direct Australian significance. (The Australian Financial Review, 2026-08-11)</li></ul></div>
+</div>
+</section>
+
+<!-- Analytics Section -->
+<section id="analytics" class="section">
+<h2><span class="icon">📊</span> Analytics</h2>
+<div class="analytics-grid"><div class="bar-chart"><h3>Sector distribution</h3><div class="bar-row bar-cyan"><span class="bar-label">Global (Macro)</span><div class="bar-track"><div class="bar-fill" style="width:42%"></div></div><span class="bar-val">5</span></div>
+<div class="bar-row bar-blue"><span class="bar-label">Government</span><div class="bar-track"><div class="bar-fill" style="width:25%"></div></div><span class="bar-val">3</span></div>
+<div class="bar-row bar-red"><span class="bar-label">Healthcare</span><div class="bar-track"><div class="bar-fill" style="width:17%"></div></div><span class="bar-val">2</span></div>
+<div class="bar-row bar-green"><span class="bar-label">Transport</span><div class="bar-track"><div class="bar-fill" style="width:17%"></div></div><span class="bar-val">2</span></div>
+<div class="bar-row bar-purple"><span class="bar-label">Legal Services</span><div class="bar-track"><div class="bar-fill" style="width:0%"></div></div><span class="bar-val">0</span></div></div><div class="bar-chart"><h3>Source breakdown</h3><div class="bar-row bar-cyan"><span class="bar-label">The Hacker News</span><div class="bar-track"><div class="bar-fill" style="width:33%"></div></div><span class="bar-val">4</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">The Record</span><div class="bar-track"><div class="bar-fill" style="width:25%"></div></div><span class="bar-val">3</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">CyberScoop</span><div class="bar-track"><div class="bar-fill" style="width:17%"></div></div><span class="bar-val">2</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">Unit 42</span><div class="bar-track"><div class="bar-fill" style="width:8%"></div></div><span class="bar-val">1</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">CISA</span><div class="bar-track"><div class="bar-fill" style="width:8%"></div></div><span class="bar-val">1</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">HIPAA Journal</span><div class="bar-track"><div class="bar-fill" style="width:8%"></div></div><span class="bar-val">1</span></div></div></div>
+<div class="pie-container"><div class="pie" style="background:conic-gradient(var(--accent) 0deg 150deg,var(--purple) 150deg 240deg,var(--govt) 240deg 300deg,var(--vuln) 300deg 360deg,var(--crime) 360deg 360deg);"></div><div class="pie-legend"><div class="legend-item"><span class="dot" style="background:var(--accent)"></span> Global (Macro) <span class="val">5</span></div><div class="legend-item"><span class="dot" style="background:var(--purple)"></span> Government <span class="val">3</span></div><div class="legend-item"><span class="dot" style="background:var(--govt)"></span> Healthcare <span class="val">2</span></div><div class="legend-item"><span class="dot" style="background:var(--vuln)"></span> Transport <span class="val">2</span></div><div class="legend-item"><span class="dot" style="background:var(--crime)"></span> Legal Services <span class="val">0</span></div></div></div>
+<h3 style="font-size:14px;color:var(--text);margin-bottom:10px">Source Reliability Index</h3>
+<table class="data-table">
+<thead><tr><th>Tier</th><th>Label</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><span class="tier-badge tier-1">● Tier 1</span></td><td>Very High</td><td>Official / first-party</td></tr>
+<tr><td><span class="tier-badge tier-2">● Tier 2</span></td><td>High</td><td>Established cyber journalism</td></tr>
+<tr><td><span class="tier-badge tier-3">● Tier 3</span></td><td>Moderate</td><td>General tech/news media</td></tr>
+<tr><td><span class="tier-badge tier-4">● Tier 4</span></td><td>Low</td><td>Social / unverified</td></tr>
+</tbody>
+</table>
+</section>
+
+<footer class="footer">
+<div class="links">
+  <a href="https://peterjaycox.github.io/cyber-digest-site/index.html">Home</a>
+  <a href="https://peterjaycox.github.io/cyber-digest-site/stories.html">Story DB</a>
+  <a href="https://peterjaycox.github.io/cyber-digest-site/daily/">Daily</a>
+  <a href="https://peterjaycox.github.io/cyber-digest-site/monthly/index.html">Monthly</a>
+  <a href="https://peterjaycox.github.io/cyber-digest-site/wiki/index.html">Wiki</a>
+</div>
+<div class="source-line">Digest generated 2026-08-12. Full entries: The Hacker News (4), The Record (3), CISA (1), HIPAA Journal (1), Unit 42 (1), CyberScoop (2). No single source exceeded 40% threshold (The Hacker News 33.3%). Briefs span The Hacker News and The Australian Financial Review; diversity comfortably inside the cap on a heavy Patch Tuesday news day.</div>
+<div class="note">Digest prepared 12 August 2026. 48-hour freshness window (72-hour max for weekend bridging).</div>
+</footer>
+</main>
+</div>
+
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+
+<script>
+var _t=document.documentElement;
+var _b=document.querySelector(".theme-toggle");
+function toggleTheme(){var n=_t.getAttribute("data-theme")==="dark"?"light":"dark";_t.setAttribute("data-theme",n);if(_b)_b.textContent=n==="dark"?"🌙":"☀️";try{if(n==="dark")localStorage.removeItem("cd-theme");else localStorage.setItem("cd-theme",n)}catch(e){}}
+(function(){try{var s=localStorage.getItem("cd-theme");if(s){_t.setAttribute("data-theme",s);if(_b)_b.textContent="☀️"}}catch(e){}})();
+
+window.addEventListener('scroll',function(){
+var h=document.documentElement;
+var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+document.getElementById('progress').style.width=Math.min(p,100)+'%';
+var bt=document.getElementById('back-top');
+bt.classList.toggle('visible',(h.scrollTop||document.body.scrollTop)>300);
+var sections=document.querySelectorAll('section[id],.exec-summary');
+var links=document.querySelectorAll('#toc a');
+var cur='';
+sections.forEach(function(s){
+var t=s.getBoundingClientRect().top;
+if(t<250) cur=s.id;
+});
+links.forEach(function(l){
+l.classList.toggle('active',l.dataset.section===cur);
+});
+});
+function setView(m){
+document.body.classList.toggle('exec-view',m==='exec');
+document.getElementById('btn-full').classList.toggle('active',m==='full');
+document.getElementById('btn-exec').classList.toggle('active',m==='exec');
+document.querySelectorAll('.story-card').forEach(function(c){
+var interactive=m==='exec';
+c.setAttribute('role',interactive?'button':null);
+c.setAttribute('tabindex',interactive?'0':null);
+c.setAttribute('aria-expanded',interactive?(c.classList.contains('expanded')?'true':'false'):null);
+});
+}
+document.addEventListener('keydown',function(e){
+if(e.key==='Escape') setView('full');
+});
+function toggleCard(c){ if(!document.body.classList.contains('exec-view'))return; c.classList.toggle('expanded'); c.setAttribute('aria-expanded',c.classList.contains('expanded')?'true':'false'); }
+document.querySelectorAll('.story-card').forEach(function(c){
+c.addEventListener('click',function(e){
+if(e.target.closest('a')) return;
+toggleCard(this);
+});
+c.addEventListener('keydown',function(e){
+if(e.target.closest('a')) return;
+if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggleCard(this); }
+});
+});
+document.querySelectorAll('#toc a').forEach(function(l){
+l.setAttribute('role','navigation');
+});
+var _tocObs=new MutationObserver(function(){
+document.querySelectorAll('#toc a.active').forEach(function(a){a.setAttribute('aria-current','location');});
+document.querySelectorAll('#toc a:not(.active)').forEach(function(a){a.removeAttribute('aria-current');});
+});
+_tocObs.observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['class']});
+</script>
+</body>
+</html>

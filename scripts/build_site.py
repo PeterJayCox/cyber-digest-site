@@ -1144,62 +1144,36 @@ def build_methodology():
         print(f"[methodology] engine unavailable: {e}")
     band_html = ""
     if idx:
-        band = idx["band"]; pct = idx["pct"]; mom = idx.get("momentum_pct")
-        bcls = {"Low": "b-low", "Guarded": "b-guarded", "Elevated": "b-elevated",
-                "Severe": "b-severe", "Critical": "b-severe"}[band]
+        mom = idx.get("momentum_pct")
         mom_s = ""
         if mom is not None:
-            arrow = "▲" if mom > 0 else "▼"
+            arrow = "\u25b2" if mom > 0 else "\u25bc"
             mom_s = f"<b>Momentum:</b> {arrow} {abs(mom):.1f}% ({'rise' if mom>0 else 'fall'}) vs the prior 14 days."
-        band_html = (f'<p>Current (window ending {idx["as_of"]}): <span class="badge {bcls}">{band} · {pct}/100</span></p>'
-                     f'<p>{idx["current_count"]} stories in this window. {mom_s}</p>')
-
-    page = METHODOLOGY_PAGE.replace("__BAND__", band_html)
+        band_html = (
+            f'<p>Current (window ending {esc(idx["as_of"])}): '
+            f'<span class="tag amber">{esc(idx["band"])} · {idx["pct"]:.0f}/100</span></p>'
+            f'<p>{idx["current_count"]} stories in this window. {mom_s}</p>'
+        )
+    page = head("Threat Rating — Methodology", "stories.html", root="")
+    page += (
+        '<div class="crumb"><a href="index.html">← Home</a> · '
+        '<a href="stories.html">Story DB</a></div>'
+        '<div class="wiki-body">'
+        '<h1>Threat Rating — Methodology</h1>'
+        '<p>Cyber Digest public site · how the per-story threat rating and the homepage '
+        'threat index are computed.</p>'
+        + band_html
+        + METHODOLOGY_BODY
+        + "</div>"
+        + foot()
+    )
     os.makedirs(DOCS, exist_ok=True)
     open(os.path.join(DOCS, "methodology.html"), "w", encoding="utf-8").write(page)
     return "methodology.html"
 
-METHODOLOGY_PAGE = """<!DOCTYPE html>
-<html lang="en" data-theme="dark"><head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Threat Rating — Methodology · Cyber Digest</title>
-<link rel="icon" type="image/svg+xml" href="assets/svg/favicon.svg">
-<link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
-<style>
-  :root{--navy:#0D1B3E;--cyan:#0096C7;--lcyan:#00B4D8;--pale:#E8F0FE;--ink:#0b1630;--muted:#5a6b8c;--line:#dbe3f2;--good:#1a9e5b;--warn:#e8a13a;--crit:#e0524a;}
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);line-height:1.6;background:#f6f8fc;padding:40px 20px 80px;}
-  .wrap{max-width:860px;margin:0 auto;}
-  .crumb{font-size:12.5px;color:var(--muted);margin-bottom:14px;}
-  .crumb a{color:var(--cyan);text-decoration:none;}
-  h1{font-size:27px;color:var(--navy);margin-bottom:6px;}
-  .updated{font-size:12.5px;color:var(--muted);margin-bottom:22px;}
-  h2{font-size:18px;color:var(--navy);margin:28px 0 10px;border-bottom:2px solid var(--pale);padding-bottom:6px;}
-  p{margin-bottom:11px;font-size:14.5px;}
-  ul{margin:0 0 12px 20px;font-size:14px;}
-  li{margin-bottom:6px;}
-  .badge{display:inline-block;padding:2px 10px;border-radius:14px;font-size:12px;font-weight:700;}
-  .b-low{background:#e2f5ec;color:#14613f;}
-  .b-guarded{background:#fdf0da;color:#8a5a10;}
-  .b-elevated{background:#fbe3e0;color:#9c3a34;}
-  .b-severe{background:#5b1212;color:#ffd9d6;}
-  table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0 16px;}
-  th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);}
-  th{background:var(--pale);color:var(--navy);font-weight:700;}
-  .note{background:var(--pale);border-left:4px solid var(--cyan);padding:12px 16px;border-radius:0 8px 8px 0;font-size:13.5px;margin:14px 0;}
-  code{background:var(--pale);padding:1px 5px;border-radius:4px;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;}
-  a{color:var(--cyan);}
-  small{color:var(--muted);}
-</style></head><body><div class="wrap">
-  <div class="crumb"><a href="index.html">← Home</a> · <a href="stories.html">Story DB</a></div>
-  <h1>Threat Rating — Methodology</h1>
-  <div class="updated">Cyber Digest public site · how the per-story threat rating and the homepage threat index are computed.</div>
-
-  __BAND__
-
-  <h2>What this measures (and what it does not)</h2>
+METHODOLOGY_BODY = """<h2>What this measures (and what it does not)</h2>
   <p>The threat rating reflects the <b>severity and urgency of publicly reported security incidents</b> in the Cyber Digest corpus. It is a measure of <b>reported threat activity</b>, derived from the same story database that powers the Story DB and monthly editions. It is <b>not</b> a prediction of future attacks, and it is only as current as the last published digest — a quiet score may mean incidents went undetected or unreported, not that none occurred.</p>
-  <div class="note">It is an <b>ordinal heuristic</b> using banded words, not a probability and not a measurement of real-world danger. The scale is deliberately coarse, in line with how national threat levels (e.g. Australia’s terrorism threat levels, the UK’s MI5 levels) are presented — banded likelihood words rather than precise numbers.</div>
+  <blockquote>It is an <b>ordinal heuristic</b> using banded words, not a probability and not a measurement of real-world danger. The scale is deliberately coarse, in line with how national threat levels (e.g. Australia’s terrorism threat levels, the UK’s MI5 levels) are presented — banded likelihood words rather than precise numbers.</blockquote>
 
   <h2>Two layers</h2>
   <p><b>Layer 1 — per-story rating.</b> Every story gets three independent labels, mirroring how CVSS separates intrinsic severity from exploitation status, and how ICD 203 separates likelihood from confidence:</p>
@@ -1240,9 +1214,6 @@ METHODOLOGY_PAGE = """<!DOCTYPE html>
 
   <h2>Revision discipline</h2>
   <p>This index is recomputed from the database on every site build. As the corpus grows the calibrations (band thresholds, decay half-life, weights) may be re-tuned — when that happens the values on this page and the homepage will change together, and the change is disclosed here. If a rating looks wrong, the relevant story card links to its source for verification.</p>
-
-  <p class="updated" style="margin-top:22px">Cyber Digest public site · <a href="index.html">Home</a> · <a href="stories.html">Story DB</a></p>
-</div></body></html>
 """
 
 def main():
