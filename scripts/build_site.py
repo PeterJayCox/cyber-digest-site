@@ -263,13 +263,17 @@ function toggleTheme(){{var n=_t.getAttribute("data-theme")==="dark"?"light":"da
 def load_db():
     con=sqlite3.connect(DB); con.row_factory=sqlite3.Row
     stories=[dict(r) for r in con.execute(
-        "SELECT digest_date,headline,sector,summary,source_name,source_url,reliability_tier,"
+        "SELECT digest_date,headline,sector,summary,source_name,source_url,story_url,reliability_tier,"
         "story_date,threat_type,geo_region,anz_relevance,score,is_recurring,include_in_monthly,"
         "severity_band,urgency_status,confidence_label "
         "FROM stories ORDER BY digest_date DESC, score DESC")]
     con.close()
     for s in stories:
         s["tier_label"]=TIER_LABEL.get(s.get("reliability_tier"),"")
+        # Prefer the backfilled article URL (story_url) over the homepage
+        # source_url captured at digest time. story_url is the deep link the
+        # user wants on the site.
+        s["source_url"] = (s.get("story_url") or "").strip() or (s.get("source_url") or "")
     return stories
 
 # ---------------- Wiki conversion ----------------
