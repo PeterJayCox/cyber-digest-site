@@ -40,6 +40,15 @@
     border:1px solid var(--border);border-radius:14px;padding:12px 16px;color:var(--text);
     font-size:13px;font-weight:600;cursor:pointer;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
   .sidebtn:hover{border-color:var(--cyan)}
+  /* ---- Site nav (back to the rest of the site) ---- */
+  #sitenav{position:fixed;top:86px;right:16px;z-index:10;display:flex;gap:4px;flex-wrap:wrap;
+    justify-content:flex-end;background:rgba(13,27,62,.72);border:1px solid var(--border);
+    border-radius:12px;padding:6px 8px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    pointer-events:auto;max-width:min(640px,calc(100vw - 380px))}
+  #sitenav a{color:var(--muted);text-decoration:none;font-size:11.5px;font-weight:600;padding:4px 9px;
+    border-radius:8px;white-space:nowrap;transition:all .15s}
+  #sitenav a:hover{color:var(--text);background:rgba(255,255,255,.06)}
+  #sitenav a.act{color:#0d1b3e;background:var(--cyan)}
   /* ---- Sidebar: filters + story list ---- */
   #side{position:fixed;left:16px;top:86px;bottom:16px;width:330px;z-index:12;
     background:rgba(13,27,62,.88);border:1px solid var(--border);border-radius:16px;
@@ -79,6 +88,13 @@
   .pill.Guarded{background:rgba(155,225,247,.12);color:var(--sky);border:1px solid rgba(155,225,247,.35)}
   .item .sector{color:var(--dim);font-size:10px}
   .empty{padding:30px 12px;text-align:center;color:var(--dim);font-size:12px}
+  /* ---- Footer links ---- */
+  #sitefoot{position:fixed;left:50%;transform:translateX(-50%);bottom:10px;z-index:9;
+    display:flex;gap:14px;background:rgba(13,27,62,.6);border:1px solid var(--border);
+    border-radius:10px;padding:6px 14px;pointer-events:auto}
+  #sitefoot a{color:var(--dim);text-decoration:none;font-size:10.5px;transition:color .15s}
+  #sitefoot a:hover{color:var(--cyan)}
+  @media (max-width:760px){#sitefoot{display:none}}
   /* ---- Detail panel (click a story) ---- */
   #panel{position:fixed;right:16px;bottom:16px;width:min(380px,calc(100vw - 32px));z-index:11;
     background:rgba(13,27,62,.92);border:1px solid var(--border);border-radius:16px;
@@ -95,7 +111,7 @@
   #panel .prev,#panel .next{position:absolute;bottom:14px;border:none;background:none;color:var(--cyan);
     font-size:20px;cursor:pointer;padding:4px 8px}
   #panel .prev{right:64px}#panel .next{right:14px}
-  .hint{position:fixed;right:16px;top:86px;z-index:9;font-size:10.5px;color:var(--dim);
+  .hint{position:fixed;right:16px;bottom:48px;z-index:9;font-size:10.5px;color:var(--dim);
     background:rgba(13,27,62,.6);border:1px solid var(--border);border-radius:10px;padding:7px 11px;
     pointer-events:none}
   .legend{position:fixed;right:16px;bottom:16px;z-index:9;display:none;flex-direction:column;gap:4px;
@@ -115,6 +131,8 @@
     #side{width:min(330px,calc(100vw - 32px));left:16px;top:86px;bottom:16px}
     header{flex-direction:column}
     .hint{display:none}
+    #sitenav{max-width:calc(100vw - 32px);right:16px;top:86px;justify-content:flex-start;
+      overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch}
   }
 </style>
 </head>
@@ -135,6 +153,17 @@
   <button class="sidebtn" id="side-toggle">☰ Stories</button>
 </header>
 
+<!-- Site navigation: back to the rest of the site -->
+<nav id="sitenav">
+  <a href="index.html">🏠 Home</a>
+  <a href="stories.html">📚 Story DB</a>
+  <a href="globe.html" class="act">🌍 Globe</a>
+  <a href="daily/">🗓️ Daily</a>
+  <a href="monthly/index.html">📅 Monthly</a>
+  <a href="reports/index.html">📑 Reports</a>
+  <a href="wiki/index.html">🧠 Wiki</a>
+</nav>
+
 <!-- Sidebar: filters + story list -->
 <aside id="side">
   <div class="filters">
@@ -148,6 +177,12 @@
 </aside>
 
 <div class="hint">Drag to rotate · scroll to zoom · click a dot or a story</div>
+
+<div id="sitefoot">
+  <a href="index.html">Home</a><a href="stories.html">Story DB</a>
+  <a href="daily/">Daily</a><a href="monthly/index.html">Monthly</a>
+  <a href="reports/index.html">Reports</a><a href="wiki/index.html">Wiki</a>
+</div>
 
 <div id="panel">
   <button class="x" id="panel-x" aria-label="Close">✕</button>
