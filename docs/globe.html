@@ -540,6 +540,28 @@
         if(e.key==="ArrowLeft" && $("panel").style.display==="block") stepPanel(-1);
         if(e.key==="ArrowRight" && $("panel").style.display==="block") stepPanel(1);
       });
+      // Deep-linking from the daily/monthly incident maps: ?country=&date=/month=&sev=
+      (function applyParams(){
+        var sp=new URLSearchParams(location.search);
+        var c=sp.get('country'); if(c) $('cou').value=c;
+        var sev=sp.get('sev');
+        if(sev && SEV_ORDER.indexOf(sev)>=0){
+          active=new Set([sev]);
+          document.querySelectorAll('#sev-chips .chip').forEach(function(x){
+            x.classList.toggle('on', x.dataset.k===sev);
+          });
+        }
+        var seek=function(d){
+          if(!dates.length) return;
+          var i=dates.indexOf(d);
+          if(i<0){ for(i=0;i<dates.length;i++){ if(dates[i]>=d) break; }
+                   if(i>=dates.length) i=dates.length-1; }
+          var r=$('time-range'); r.value=i;
+          maxDate=dates[i]||null; $('time-label').textContent=maxDate||'all dates';
+        };
+        var m=sp.get('month'); if(m) seek(m+'-31');
+        var dt=sp.get('date'); if(dt) seek(dt);
+      })();
       refresh();
     }catch(err){
       console.error(err);

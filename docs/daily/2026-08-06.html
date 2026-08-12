@@ -166,6 +166,32 @@ body.exec-view .story-card.expanded p.summary{margin-bottom:10px}
 .incident-map{overflow:hidden}
 .incident-map .map-fallback{padding-top:4px}
 .incident-map .map-fallback .bar-label{width:150px}
+.incident-map .map-fallback{border:1px solid var(--border);border-radius:12px;padding:12px 14px;background:var(--surface2)}
+.incident-map .bar-row{cursor:pointer;transition:opacity .15s}
+.incident-map .bar-row:hover{opacity:.85}
+.incident-map .bar-crit .bar-fill{background:linear-gradient(90deg,#ff4d5a,#fb7185)}
+.incident-map .bar-sev  .bar-fill{background:linear-gradient(90deg,#ffa62b,#fbbf24)}
+.incident-map .bar-elev .bar-fill{background:linear-gradient(90deg,#0096c7,#35c6e8)}
+.incident-map .bar-guard .bar-fill{background:linear-gradient(90deg,#5aa9e6,#7cc4f0)}
+.incident-map .bar-unknown .bar-fill{background:var(--surface2)}
+.incident-map .im-legend{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 8px}
+.incident-map .im-lg{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;color:var(--text-muted);padding:2px 9px;border:1px solid var(--border);border-radius:99px;background:var(--surface2)}
+.incident-map .im-lg i{width:9px;height:9px;border-radius:2px;display:inline-block}
+.incident-map .im-note{font-size:10.5px;color:var(--text-dim);margin-left:auto}
+.incident-map .im-attr{font-size:10.5px;color:var(--text-dim);margin-top:8px;line-height:1.5}
+.incident-map .pan-chip{display:inline-block;font-size:11px;padding:2px 10px;margin:0 6px 4px 0;border-radius:99px;border:1px dashed var(--border);color:var(--text-muted);background:repeating-linear-gradient(45deg,var(--surface2),var(--surface2)4px,rgba(127,127,127,.08)4px,rgba(127,127,127,.08)6px)}
+.incident-map .im-story-panel{margin-top:12px;border:1px solid var(--border);border-radius:12px;padding:14px 16px;background:var(--surface2);display:none}
+.incident-map .im-story-panel.open{display:block}
+.incident-map .im-story-panel .im-shot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.incident-map .im-story-panel h4{margin:0;font-size:14px;color:var(--text)}
+.incident-map .im-globe-btn{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;color:#0d1b3e;background:var(--accent);border-radius:99px;padding:6px 14px;text-decoration:none;white-space:nowrap}
+.incident-map .im-globe-btn:hover{filter:brightness(1.08)}
+.incident-map .im-story-panel ul{margin:0;padding:0;list-style:none}
+.incident-map .im-story-panel li{padding:7px 0;border-bottom:1px solid var(--border);font-size:12.5px}
+.incident-map .im-story-panel li:last-child{border-bottom:none}
+.incident-map .im-story-panel a{color:var(--accent);text-decoration:none;font-weight:600}
+.incident-map .im-story-panel a:hover{text-decoration:underline}
+.incident-map .im-tag{font-size:9.5px;padding:1px 7px;border-radius:99px;margin-left:8px;font-weight:700;border:1px solid}
 @media(max-width:860px){.wrap{flex-direction:column}#toc{position:static;width:100%;max-height:unset;margin-bottom:20px}.pie-container{flex-direction:column;align-items:center;gap:16px}.stats-row{gap:8px}.header h1{font-size:1.5rem}.analytics-grid{grid-template-columns:1fr}}
 @media(max-width:620px){.navlinks a span.t{display:none}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important;scroll-behavior:auto!important}}
@@ -226,10 +252,57 @@ body.exec-view .story-card.expanded p.summary{margin-bottom:10px}
 <div class="stat-card stat-iot"><div class="stat-num">1</div><div class="stat-label">Retail &amp; Entertainment &amp; Sport</div></div>
 <div class="stat-card stat-vuln"><div class="stat-num">2</div><div class="stat-label">Healthcare</div></div></div>
 
-<section id="incident-map" class="section"><h2><span class="icon">🗺️</span> Incident Map</h2><div class="bar-chart incident-map"><div id="incident-map-status" style="font-size:11px;color:var(--text-dim);font-weight:400;margin-bottom:8px">(static view)</div><div id="incident-map-chart" style="height:400px;width:100%;display:block"></div><div id="incident-map-fallback"><div class="map-fallback"><div class="bar-row bar-cyan"><span class="bar-label" title="CISA Flags TeamCity CVE-2026-63077 RCE Flaw Under Active Exploitation in the Wild">United States</span><div class="bar-track"><div class="bar-fill" style="width:25%"></div></div><span class="bar-val">3</span></div><div class="bar-row bar-cyan"><span class="bar-label" title="Trojaniased npm Packages Use &quot;NullReceiver&quot; to Conceal C2 IP in Blockchain">Dem. Rep. Korea</span><div class="bar-track"><div class="bar-fill" style="width:8%"></div></div><span class="bar-val">1</span></div><div class="bar-row bar-cyan"><span class="bar-label" title="Anthropic AI Agent Faked Identities and Phished Real Developers in UK Government Hacking Test">United Kingdom</span><div class="bar-track"><div class="bar-fill" style="width:8%"></div></div><span class="bar-val">1</span></div><div class="bar-row bar-cyan"><span class="bar-label" title="Chinese Telcos Maintain Deep US Presence Despite Salt Typhoon Links, House Committee Says">New Zealand</span><div class="bar-track"><div class="bar-fill" style="width:8%"></div></div><span class="bar-val">1</span></div><div class="bar-row bar-cyan"><span class="bar-label" title="Dutch Retailer De Bijenkorf Warns Customer Data May Be Exposed After Cyber Incident">Netherlands</span><div class="bar-track"><div class="bar-fill" style="width:8%"></div></div><span class="bar-val">1</span></div><div class="bar-row bar-cyan"><span class="bar-label" title="Chinese-Made Zbtlink Routers Ship With Backdoor That Opens Unauthenticated Root Shells (ENDLESSDOORS)">China</span><div class="bar-track"><div class="bar-fill" style="width:8%"></div></div><span class="bar-val">1</span></div><p style="color:var(--text-dim);font-size:12px;margin-top:8px">Pan-regional / unlocated: 🌐 Global: 4</p><p style="color:var(--text-dim);font-size:11px;margin-top:6px">6 countries · 12 stories. Interactive map loads on the hosted site.</p></div></div>
+<section id="incident-map" class="section"><h2><span class="icon">🗺️</span> Incident Map</h2><div class="bar-chart incident-map"><div id="incident-map-status" style="font-size:11px;color:var(--text-dim);font-weight:400;margin-bottom:8px">(static view)</div><div class="im-legend"><span class="im-lg"><i style="background:#ff4d5a"></i>Critical</span><span class="im-lg"><i style="background:#ffa62b"></i>Severe</span><span class="im-lg"><i style="background:#0096c7"></i>Elevated</span><span class="im-lg"><i style="background:#5aa9e6"></i>Guarded</span><span class="im-note">darker = more incidents</span></div><div id="incident-map-chart" style="height:400px;width:100%;display:block"></div><div id="incident-map-fallback"><div class="map-fallback"><div class="bar-row bar-crit im-row" data-name="United States" title="severity: Critical — top story: CISA Flags TeamCity CVE-2026-63077 RCE Flaw Under Active Exploitation in the Wild"><span class="bar-label">United States</span><div class="bar-track"><div class="bar-fill" style="width:16.6667%"></div></div><span class="bar-val">2</span></div><div class="bar-row bar-sev im-row" data-name="China" title="severity: Severe — top story: Chinese Telcos Maintain Deep US Presence Despite Salt Typhoon Links, House Committee Says"><span class="bar-label">China</span><div class="bar-track"><div class="bar-fill" style="width:16.6667%"></div></div><span class="bar-val">2</span></div><div class="bar-row bar-guard im-row" data-name="Dem. Rep. Korea" title="severity: Guarded — top story: Trojaniased npm Packages Use &quot;NullReceiver&quot; to Conceal C2 IP in Blockchain"><span class="bar-label">Dem. Rep. Korea</span><div class="bar-track"><div class="bar-fill" style="width:8.33333%"></div></div><span class="bar-val">1</span></div><div class="bar-row bar-guard im-row" data-name="United Kingdom" title="severity: Guarded — top story: Anthropic AI Agent Faked Identities and Phished Real Developers in UK Government Hacking Test"><span class="bar-label">United Kingdom</span><div class="bar-track"><div class="bar-fill" style="width:8.33333%"></div></div><span class="bar-val">1</span></div><div class="bar-row bar-sev im-row" data-name="Netherlands" title="severity: Severe — top story: Dutch Retailer De Bijenkorf Warns Customer Data May Be Exposed After Cyber Incident"><span class="bar-label">Netherlands</span><div class="bar-track"><div class="bar-fill" style="width:8.33333%"></div></div><span class="bar-val">1</span></div><div class="bar-row bar-guard im-row" data-name="New Zealand" title="severity: Guarded — top story: FTC, Utah, California Sue Him &amp; Hers Over Business and Data Sharing Practices"><span class="bar-label">New Zealand</span><div class="bar-track"><div class="bar-fill" style="width:8.33333%"></div></div><span class="bar-val">1</span></div><p class="im-pan-note" style="margin:8px 0 0;color:var(--text-dim);font-size:11.5px">Pan-regional / not map-pinned: <span class="pan-chip">🌐 Global: 4</span></p><p style="color:var(--text-dim);font-size:11px;margin-top:8px;line-height:1.5">6 countries · 12 stories · click a country for its stories. Interactive map loads on the hosted site.</p><p class="im-attr" style="font-size:10.5px;color:var(--text-dim);margin-top:5px;line-height:1.5">🎯 Geo-attribution: <b>8</b>/12 stories located directly from text (67%).</p></div></div><div id="incident-map-stories" class="im-story-panel"></div><div class="im-attr"><p class="im-attr" style="font-size:10.5px;color:var(--text-dim);margin-top:5px;line-height:1.5">🎯 Geo-attribution: <b>8</b>/12 stories located directly from text (67%).</p></div>
 <script>
 (function(){
-  var payload = {"countries": [{"name": "United States", "value": 3, "stories": [{"headline": "CISA Flags TeamCity CVE-2026-63077 RCE Flaw Under Active Exploitation in the Wild", "sector": "Government \u0026 Policy", "threat": "Zero-day / Vuln", "url": "https://thehackernews.com/2026/08/cisa-flags-teamcity-cve-2026-63077-rce.html", "date": "2026-08-06"}, {"headline": "Cyberattacks on Water Systems Expand to 12 States as South Dakota and Georgia Announce Incidents", "sector": "Energy \u0026 Utilities", "threat": "APT / Nation-State", "url": "https://therecord.media/iran-cyberattacks-water-treatment", "date": "2026-08-06"}, {"headline": "FTC, Utah, California Sue Him \u0026 Hers Over Business and Data Sharing Practices", "sector": "Healthcare", "threat": "Breach / Data Leak", "url": "", "date": "2026-08-06"}]}, {"name": "Dem. Rep. Korea", "value": 1, "stories": [{"headline": "Trojaniased npm Packages Use \"NullReceiver\" to Conceal C2 IP in Blockchain", "sector": "Global (Macro)", "threat": "Malware", "url": "", "date": "2026-08-06"}]}, {"name": "United Kingdom", "value": 1, "stories": [{"headline": "Anthropic AI Agent Faked Identities and Phished Real Developers in UK Government Hacking Test", "sector": "Global (Macro)", "threat": "Phishing / BEC", "url": "", "date": "2026-08-06"}]}, {"name": "New Zealand", "value": 1, "stories": [{"headline": "Chinese Telcos Maintain Deep US Presence Despite Salt Typhoon Links, House Committee Says", "sector": "Government \u0026 Policy", "threat": "APT / Nation-State", "url": "https://therecord.media/chinese-hackers-telecoms-house", "date": "2026-08-06"}]}, {"name": "Netherlands", "value": 1, "stories": [{"headline": "Dutch Retailer De Bijenkorf Warns Customer Data May Be Exposed After Cyber Incident", "sector": "Retail \u0026 Entertainment \u0026 Sport", "threat": "Breach / Data Leak", "url": "https://therecord.media/de-bijenkorf-luxury-retailer-third-party-cyber-incident", "date": "2026-08-06"}]}, {"name": "China", "value": 1, "stories": [{"headline": "Chinese-Made Zbtlink Routers Ship With Backdoor That Opens Unauthenticated Root Shells (ENDLESSDOORS)", "sector": "Defence", "threat": "Malware", "url": "https://thehackernews.com/2026/08/chinese-made-zbtlink-routers-ship-with.html", "date": "2026-08-06"}]}], "pan": [{"Global": 4}], "minColor": "#9be1f7", "maxColor": "#0d4f7a"};
+  var payload = {"date": "2026-08-06", "mode": "daily", "title": "Incident Map", "countries": [{"name": "United States", "value": 2, "sev": "Critical", "color": "#ff4d5a", "alpha": 0.96, "secs": [["Government \u0026 Policy", 1], ["Energy \u0026 Utilities", 1]], "topThreat": "Zero-day / Vuln", "top": {"headline": "CISA Flags TeamCity CVE-2026-63077 RCE Flaw Under Active Exploitation in the Wild", "url": "https://thehackernews.com/2026/08/cisa-flags-teamcity-cve-2026-63077-rce.html", "sev": "Critical"}, "stories": [{"headline": "CISA Flags TeamCity CVE-2026-63077 RCE Flaw Under Active Exploitation in the Wild", "sector": "Government \u0026 Policy", "threat": "Zero-day / Vuln", "url": "https://thehackernews.com/2026/08/cisa-flags-teamcity-cve-2026-63077-rce.html", "date": "2026-08-06", "sev": "Critical"}, {"headline": "Cyberattacks on Water Systems Expand to 12 States as South Dakota and Georgia Announce Incidents", "sector": "Energy \u0026 Utilities", "threat": "APT / Nation-State", "url": "https://therecord.media/iran-cyberattacks-water-treatment", "date": "2026-08-06", "sev": "Guarded"}], "attrDirect": 2, "attrRegion": 0}, {"name": "China", "value": 2, "sev": "Severe", "color": "#ffa62b", "alpha": 0.96, "secs": [["Government \u0026 Policy", 1], ["Defence", 1]], "topThreat": "APT / Nation-State", "top": {"headline": "Chinese Telcos Maintain Deep US Presence Despite Salt Typhoon Links, House Committee Says", "url": "https://therecord.media/chinese-hackers-telecoms-house", "sev": "Severe"}, "stories": [{"headline": "Chinese Telcos Maintain Deep US Presence Despite Salt Typhoon Links, House Committee Says", "sector": "Government \u0026 Policy", "threat": "APT / Nation-State", "url": "https://therecord.media/chinese-hackers-telecoms-house", "date": "2026-08-06", "sev": "Severe"}, {"headline": "Chinese-Made Zbtlink Routers Ship With Backdoor That Opens Unauthenticated Root Shells (ENDLESSDOORS)", "sector": "Defence", "threat": "Malware", "url": "https://thehackernews.com/2026/08/chinese-made-zbtlink-routers-ship-with.html", "date": "2026-08-06", "sev": "Severe"}], "attrDirect": 2, "attrRegion": 0}, {"name": "Dem. Rep. Korea", "value": 1, "sev": "Guarded", "color": "#5aa9e6", "alpha": 0.67, "secs": [["Global (Macro)", 1]], "topThreat": "Malware", "top": {"headline": "Trojaniased npm Packages Use \"NullReceiver\" to Conceal C2 IP in Blockchain", "url": "", "sev": "Guarded"}, "stories": [{"headline": "Trojaniased npm Packages Use \"NullReceiver\" to Conceal C2 IP in Blockchain", "sector": "Global (Macro)", "threat": "Malware", "url": "", "date": "2026-08-06", "sev": "Guarded"}], "attrDirect": 1, "attrRegion": 0}, {"name": "United Kingdom", "value": 1, "sev": "Guarded", "color": "#5aa9e6", "alpha": 0.67, "secs": [["Global (Macro)", 1]], "topThreat": "Phishing / BEC", "top": {"headline": "Anthropic AI Agent Faked Identities and Phished Real Developers in UK Government Hacking Test", "url": "", "sev": "Guarded"}, "stories": [{"headline": "Anthropic AI Agent Faked Identities and Phished Real Developers in UK Government Hacking Test", "sector": "Global (Macro)", "threat": "Phishing / BEC", "url": "", "date": "2026-08-06", "sev": "Guarded"}], "attrDirect": 1, "attrRegion": 0}, {"name": "Netherlands", "value": 1, "sev": "Severe", "color": "#ffa62b", "alpha": 0.67, "secs": [["Retail \u0026 Entertainment \u0026 Sport", 1]], "topThreat": "Breach / Data Leak", "top": {"headline": "Dutch Retailer De Bijenkorf Warns Customer Data May Be Exposed After Cyber Incident", "url": "https://therecord.media/de-bijenkorf-luxury-retailer-third-party-cyber-incident", "sev": "Severe"}, "stories": [{"headline": "Dutch Retailer De Bijenkorf Warns Customer Data May Be Exposed After Cyber Incident", "sector": "Retail \u0026 Entertainment \u0026 Sport", "threat": "Breach / Data Leak", "url": "https://therecord.media/de-bijenkorf-luxury-retailer-third-party-cyber-incident", "date": "2026-08-06", "sev": "Severe"}], "attrDirect": 1, "attrRegion": 0}, {"name": "New Zealand", "value": 1, "sev": "Guarded", "color": "#5aa9e6", "alpha": 0.67, "secs": [["Healthcare", 1]], "topThreat": "Breach / Data Leak", "top": {"headline": "FTC, Utah, California Sue Him \u0026 Hers Over Business and Data Sharing Practices", "url": "", "sev": "Guarded"}, "stories": [{"headline": "FTC, Utah, California Sue Him \u0026 Hers Over Business and Data Sharing Practices", "sector": "Healthcare", "threat": "Breach / Data Leak", "url": "", "date": "2026-08-06", "sev": "Guarded"}], "attrDirect": 1, "attrRegion": 0}], "pan": {"Global": 4}, "attrs": {"direct": 8, "region": 4, "total": 12, "weak": {}}, "sevColor": {"Critical": "#ff4d5a", "Severe": "#ffa62b", "Elevated": "#0096c7", "Guarded": "#5aa9e6"}};
+  var panel  = document.getElementById('incident-map-stories');
+  if(!panel) return;
+
+  // -------- Click-through: show a country's stories in the inline panel -------
+  var GLOBE_BASE = '../globe.html';  // deployed daily/ & monthly/ both sit one
+                                     // level below the root where globe.html lives
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function sevClass(s){return esc(s||'Guarded');}
+  function showCountry(name){
+    var c=null;
+    payload.countries.forEach(function(x){ if(x.name===name) c=x; });
+    if(!c||!c.stories.length) return;
+    var globeParams='?country='+encodeURIComponent(c.name);
+    if(payload.mode==='daily'){ globeParams+='&date='+encodeURIComponent(payload.date);
+    }else{ globeParams+='&month='+encodeURIComponent(payload.date); }
+    var rows=c.stories.map(function(s,ix){
+      var link=s.url
+        ? '<a href="'+esc(s.url)+'" target="_blank" rel="noopener">'+esc(s.headline)+'</a>'
+        : esc(s.headline);
+      var tag=s.sev
+        ? '<span class="im-tag" style="color:'+esc(payload.sevColor[s.sev])+'">'+esc(s.sev)+'</span>'
+        : '';
+      return '<li>'+link+tag+'<div style="font-size:10px;color:var(--text-dim);margin-top:1px">'+
+             esc(s.sector||'')+(s.date?' · '+esc(s.date):'')+'</div></li>';
+    }).join('');
+    panel.innerHTML =
+      '<div class="im-shot">'+
+        '<h4>'+esc(c.name)+' — '+c.value+' incident'+(c.value>1?'s':'')+'</h4>'+
+        '<a class="im-globe-btn" href="'+GLOBE_BASE+globeParams+'">🌍 Open in 3D globe</a>'+
+      '</div>'+
+      (c.sev?'<div style="font-size:11px;color:var(--text-muted);margin-bottom:6px">'+
+        'Worst severity: <b style="color:'+esc(payload.sevColor[c.sev])+'">'+esc(c.sev)+
+        '</b>'+(c.topThreat?' · top actor: '+esc(c.topThreat):'')+'</div>':'')+
+      '<ul>'+rows+'</ul>';
+    panel.classList.add('open');
+    panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+
+  // Static-fallback bars are clickable too.
+  var fallback=document.getElementById('incident-map-fallback');
+  if(fallback){ fallback.addEventListener('click',function(e){
+    var row=e.target.closest('.im-row');
+    if(row) showCountry(row.getAttribute('data-name'));
+  }); }
+
+  // -------- ECharts interactive map ----------
   function renderMap(){
     if(!window.echarts) return;
     var host=document.getElementById('incident-map-chart');
@@ -239,22 +312,30 @@ body.exec-view .story-card.expanded p.summary{margin-bottom:10px}
       .then(function(world){
         window.echarts.registerMap('world', world);
         var chart=window.echarts.init(host);
-        // Theme-aware base fill: match the page surface (light grey on light
-        // theme, slate on dark theme) via the same CSS var the layout uses.
+        // Theme-aware base fill for unpopulated countries.
         var base=document.createElement('div');
         base.style.cssText='position:absolute;visibility:hidden;width:0;height:0';
         document.body.appendChild(base);
-        var baseCol = getComputedStyle(document.body).getPropertyValue('--surface2').trim() || '#1a2332';
+        var baseCol=getComputedStyle(document.body).getPropertyValue('--surface2').trim()||'#1a2332';
         base.remove();
-        var n2v={};
-        payload.countries.forEach(function(c){ n2v[c.name]={value:c.value,stories:c.stories}; });
+        // Merge per-country overrides (severity colour + alpha intensity).
+        var data=payload.countries.map(function(c){
+          var rgb = c.color.replace('#','');
+          var r=parseInt(rgb.substring(0,2),16), g=parseInt(rgb.substring(2,4),16);
+          var b=parseInt(rgb.substring(4,6),16);
+          return {
+            name:c.name, value:c.value,
+            itemStyle:{areaColor:'rgba('+r+','+g+','+b+','+c.alpha+')'}
+          };
+        });
+        var max=payload.countries.reduce(function(a,c){return Math.max(a,c.value)},0)||1;
         chart.setOption({
           tooltip:{
             trigger:'item',
             backgroundColor:'var(--surface2,#111827)',
             borderColor:'var(--border,rgba(255,255,255,.1))',
             textStyle:{color:'var(--text,#e2e8f0)',fontSize:12},
-            extraCssText:'max-width:65vw;',
+            extraCssText:'max-width:70vw;',
             appendToBody:true,
             position:function(pt,params,dom,rect,size){
               var cw=size.contentSize[0]||0, ch=size.contentSize[1]||0;
@@ -265,33 +346,39 @@ body.exec-view .story-card.expanded p.summary{margin-bottom:10px}
               return [x,y];
             },
             formatter:function(p){
-              var d=n2v[p.name]; if(!d) return p.name;
-              var s=d.stories.slice(0,4).map(function(x,ix){
-                return (ix+1)+'. '+x.headline;
-              }).join('<br/>');
-              return '<b>'+p.name+'</b> — '+d.value+' incident'+(d.value>1?'s':'')+
-                     (s?'<br/>'+s:'');
+              var c=null; payload.countries.forEach(function(x){ if(x.name===p.name) c=x; });
+              if(!c) return p.name;
+              var h='<b>'+esc(p.name)+'</b> — '+c.value+' incident'+(c.value>1?'s':'');
+              if(c.sev) h+='<br/><span style="color:'+esc(payload.sevColor[c.sev])+
+                       ';font-weight:700">● '+esc(c.sev)+'</span> worst';
+              if(c.secs.length) h+='<br/><div style="color:var(--text-muted);margin-top:4px">'+
+                 c.secs.map(function(s){return esc(s[0])+' <b>('+s[1]+')</b>'}).join(' · ')+'</div>';
+              if(c.topThreat && c.topThreat!==c.sev)
+                h+='<br/><div style="color:var(--text-muted)">Top actor: <b>'+esc(c.topThreat)+'</b></div>';
+              if(c.top && c.top.url)
+                h+='<br/><a href="'+esc(c.top.url)+'" target="_blank" rel="noopener" '+
+                   'style="color:var(--accent);font-weight:600">'+esc(c.top.headline)+' ↗</a>';
+              h+='<div style="color:var(--text-dim);font-size:10px;margin-top:6px">Click for all stories</div>';
+              return h;
             }
           },
-          visualMap:{min:0,max:Math.max(1,payload.countries.reduce(function(a,c){return Math.max(a,c.value)},0)),
-            calculable:true,orient:'horizontal',left:'center',bottom:4,
-            textStyle:{color:'var(--text-muted,#b0c0d0)',fontSize:11},
-            inRange:{color:[payload.minColor,payload.maxColor]}},
           series:[{
-            name:'Incidents',type:'map',map:'world',roam:true,
+            name:'Incidents', type:'map', map:'world', roam:true,
             scaleLimit:{min:1,max:12},
             label:{show:false},
             emphasis:{label:{show:true,color:'var(--text,#e2e8f0)'},
               itemStyle:{areaColor:'var(--accent,#00b4d8)',borderColor:'#fff'}},
             itemStyle:{borderColor:'rgba(0,0,0,.25)',borderWidth:.5,areaColor:baseCol},
-            data:payload.countries
+            data:data
           }]
         });
+        chart.on('click',function(params){
+          if(params && params.componentType==='series') showCountry(params.name);
+        });
         window.addEventListener('resize',function(){ chart.resize(); });
-        var fb=document.getElementById('incident-map-fallback');
-        if(fb) fb.style.display='none';
+        if(fallback) fallback.style.display='none';
         var done=document.getElementById('incident-map-status');
-        if(done) done.textContent='✓ interactive map ready';
+        if(done) done.textContent='✓ interactive map ready — click a country';
       }).catch(function(){});
   }
   var done=document.getElementById('incident-map-status');
