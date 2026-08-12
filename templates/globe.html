@@ -505,11 +505,20 @@
       globe.controls().autoRotate=true;
       globe.controls().autoRotateSpeed=0.6;
       globeInstance=globe;
+      // Size the renderer to the #globe container (which is pulled 160px above
+      // the viewport so the globe sits centred in the visible frame), not the
+      // window — otherwise the canvas is viewport-sized and the globe renders
+      // off-centre.
+      function sizeGlobe(){
+        var el=$("globe");
+        globe.width(el.clientWidth).height(el.clientHeight);
+      }
+      sizeGlobe();
       var c=globe.controls();
       c.addEventListener('start',function(){c.autoRotate=false});
       var t=null;
       c.addEventListener('end',function(){ clearTimeout(t); t=setTimeout(function(){c.autoRotate=true},2500); });
-      window.addEventListener('resize',function(){globe.width(window.innerWidth); globe.height(window.innerHeight)});
+      window.addEventListener('resize',function(){ sizeGlobe(); });
       $("side-toggle").onclick=function(){ $("side").classList.toggle("closed"); };
       $("side").classList.remove("closed");
       $("q").addEventListener('input',refresh);
