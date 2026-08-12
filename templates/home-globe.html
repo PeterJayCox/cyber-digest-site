@@ -1,0 +1,99 @@
+<style>
+  .globe-card{position:relative;border:1px solid var(--border);border-radius:16px;overflow:hidden;
+    background:radial-gradient(800px 400px at 70% 20%,rgba(0,180,216,.12),transparent 60%),#0d1b3e;
+    cursor:pointer;transition:border-color .2s,box-shadow .2s}
+  .globe-card:hover{border-color:var(--accent,#00b4d8);box-shadow:0 12px 40px rgba(0,180,216,.18)}
+  .globe-card-caption{position:absolute;left:0;right:0;bottom:0;z-index:2;
+    display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
+    padding:10px 16px;font-size:11.5px;color:var(--text-muted,#8a9cb6);
+    background:linear-gradient(transparent,rgba(9,18,40,.85));pointer-events:none}
+  .globe-card-caption b{color:var(--text,#e2e8f0)}
+  .globe-card-caption .go{color:var(--accent,#00b4d8);font-weight:600}
+  .globe-badge{position:absolute;top:12px;left:14px;z-index:2;font-size:10.5px;font-weight:700;
+    text-transform:uppercase;letter-spacing:.06em;color:#9be1f7;background:rgba(13,27,62,.7);
+    border:1px solid rgba(255,255,255,.1);border-radius:999px;padding:3px 10px;backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);pointer-events:none}
+  .globe-static{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+    justify-content:center;gap:8px;color:var(--text-muted,#9be1f7);text-align:center;padding:20px}
+  .globe-static .big{font-size:44px;line-height:1}
+  #home-globe{height:280px;width:100%}
+  @media (max-width:760px){#home-globe{height:220px}}
+</style>
+<!-- 3D incident globe teaser: interactive/spinnable, links through to /globe.html.
+     Progressive enhancement: static caption + link always present; the interactive
+     mini-globe replaces it when WebGL + CDN are available (hosted site). -->
+<div class="section"><div class="sec-head"><h2><span class="bar"></span>3D Incident Globe</h2><a class="seeall" href="globe.html">Open full globe →</a></div>
+<div class="globe-card" id="home-globe-card">
+  <div class="globe-badge">🌍 all stories · 3D</div>
+  <div id="home-globe"></div>
+  <div class="globe-static" id="home-globe-static" style="display:none">
+    <div class="big">🌐</div>
+    <div>Every story in the database plotted by country &amp; severity.<br>Drag the globe to spin it, or open the full page.</div>
+  </div>
+  <div class="globe-card-caption">
+    <span>Drag to spin · <b id="home-globe-count">490 stories</b> · click to open</span>
+    <span class="go">Open full globe ↗</span>
+  </div>
+</div></div>
+<script>
+(function(){
+  var host=document.getElementById('home-globe');
+  var stat=document.getElementById('home-globe-static');
+  function fail(){ if(stat) stat.style.display='flex'; }
+  if(!host || !window.WebGLRenderingContext){ fail(); return; }
+  var pending=true;
+  function boot(){
+    if(!pending) return; pending=false;
+    var s=document.createElement('script');
+    s.src='https://cdn.jsdelivr.net/npm/globe.gl/dist/globe.gl.min.js';
+    s.integrity='sha384-fS13P48RBFel+cPUp5960AhzvtEr64LerQ00neZuM+Hi/VDxxemdQnN7IcWPYvPb';
+    s.crossOrigin='anonymous';
+    s.onload=render; s.onerror=fail;
+    document.head.appendChild(s);
+  }
+  function render(){
+    try{
+      if(!window.Globe) throw new Error('no globe.gl');
+      fetch('data/globe.json').then(function(r){ return r.json(); }).then(function(data){
+        if(!data || !data.points || !data.points.length) throw new Error('empty');
+        var el=host;
+        var globe=new Globe(el)
+          .globeImageUrl('//cdn.jsdelivr.net/npm/three-globe/example/img/earth-night.jpg')
+          .backgroundColor('rgba(0,0,0,0)')
+          .atmosphereColor('#00b4d8').atmosphereAltitude(0.15)
+          .pointsData(data.points.slice(0,600))
+          .pointLat('lat').pointLng('lon')
+          .pointColor(function(p){ return p.kind==='region' ? '#9aa7bd' :
+            ({Guarded:'#5aa9e6',Elevated:'#0096c7',Severe:'#ffa62b',Critical:'#ff4d5a'})[p.severity]||'#fff'; })
+          .pointAltitude(function(p){ return p.kind==='region'?0.012:0.03; })
+          .pointRadius(function(p){ return p.kind==='region'?0.16:0.3; })
+          .pointResolution(4);
+        globe.pointOfView({lat:22,lng:14,alt:2.2});
+        globe.controls().autoRotate=true;
+        globe.controls().autoRotateSpeed=0.45;
+        var card=document.getElementById('home-globe-card');
+        var press=null;
+        card.addEventListener('pointerdown',function(e){ press=[e.clientX,e.clientY]; });
+        card.addEventListener('pointerup',function(e){
+          if(!press) return;
+          var dx=e.clientX-press[0], dy=e.clientY-press[1];
+          var moved=Math.sqrt(dx*dx+dy*dy)>6;
+          press=null;
+          if(!moved){ window.location.href='globe.html'; }
+        });
+        var cap=document.getElementById('home-globe-count');
+        if(cap) cap.textContent=data.total+' stories';
+        if(stat) stat.style.display='none';
+      }).catch(fail);
+    }catch(e){ fail(); }
+  }
+  // lazy-boot when the card scrolls into view (or after 1.5s as fallback)
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(en){ if(en[0].isIntersecting){ boot(); io.disconnect(); } },{rootMargin:'200px'});
+    io.observe(host);
+    setTimeout(function(){ io.disconnect(); boot(); }, 4000);
+  } else {
+    setTimeout(boot, 300);
+  }
+})();
+</script>

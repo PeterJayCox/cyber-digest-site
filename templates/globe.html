@@ -442,6 +442,7 @@
   function countries(pts){
     var o={}; pts.forEach(function(p){ if(p.kind==="country") o[p.country]=(o[p.country]||0)+1; }); return o;
   }
+  function countryStoryCount(pts){ var n=0; pts.forEach(function(p){ if(p.kind==="country") n++; }); return n; }
 
   function renderStatic(data){
     $("fallback").style.display="flex";
@@ -465,10 +466,10 @@
   fetch('data/globe.json').then(function(r){ return r.json(); }).then(function(data){
     all=data.points;
     $("st-total").textContent=data.total;
-    $("st-plotted").textContent=Object.keys(countries(data.points)).length;
+    $("st-plotted").textContent=countryStoryCount(data.points);
     $("st-country").textContent=Object.keys(countries(data.points)).length;
     $("show-total").textContent=data.plotted;
-    $("sub").textContent=data.total+" stories plotted · "+data.plotted+" located · "+
+    $("sub").textContent=data.total+" stories plotted · "+countryStoryCount(data.points)+" located · "+
       data.pan+" pan-region · generated "+data.generated;
     buildSeverityChips(); buildSelects(); buildDates();
 

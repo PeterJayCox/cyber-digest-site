@@ -560,6 +560,14 @@ def build_index(stories):
     rptsec = ('<div class="section"><h2><span class="bar"></span>Reports</h2>'
               '<div class="grid cards grid-monthly">' + "".join(rpt_cards) + '</div></div>') if rpt_cards else ""
 
+    # Homepage 3D globe teaser (interactive mini-globe -> full globe.html)
+    home_globe = ""
+    try:
+        home_globe = open(os.path.join(ROOT, "templates", "home-globe.html"),
+                          encoding="utf-8").read()
+    except OSError:
+        print("⚠️ templates/home-globe.html missing; homepage globe skipped")
+
     html= head("Cyber Digest — Home","index.html")+f'''
 <div class="hero"><div class="kicker">// independent security intelligence</div>
 <h1>Cyber <span class="accent">Digest</span></h1>
@@ -580,6 +588,8 @@ def build_index(stories):
 <a class="card" href="stories.html"><h3>Story Database</h3><span class="tag blue">searchable</span><p>Filter {n_stories} stories by sector, threat type, geography, AU/NZ relevance and date.</p><span class="go">Browse →</span></a>
 <a class="card" href="wiki/index.html"><h3>Cyber Wiki</h3><span class="tag purple">{len(scan_wiki()[0].get('incidents',{}))} pages</span><p>Entities, threat actors, incidents, CVEs and concepts linked from every digest.</p><span class="go">Open →</span></a>
 </div></div>
+
+{home_globe}
 
 <div class="section"><h2><span class="bar"></span>Monthly Editions</h2><div class="grid cards grid-monthly">{monthlist}</div></div>
 {rptsec}
