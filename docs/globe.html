@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Digest — 3D Incident Globe</title>
+<link rel="icon" type="image/svg+xml" href="assets/svg/favicon.svg">
+<meta property="og:title" content="Cyber Digest — 3D Incident Globe">
+<meta property="og:description" content="Every story in the Cyber Digest database plotted on a 3D globe, coloured by reported threat severity.">
+<style>
+  :root{
+    --bg:#0d1b3e; --panel:#0f1d44; --panel2:#131f4a;
+    --cyan:#00b4d8; --cyan2:#0096c7; --sky:#9be1f7;
+    --text:#e2e8f0; --muted:#8a9cb6; --dim:#64748b;
+    --border:rgba(255,255,255,.08); --red:#ff4d5a; --amber:#ffa62b;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;height:100%;background:var(--bg);
+    color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    overflow:hidden;-webkit-font-smoothing:antialiased}
+  #globe{position:fixed;inset:0;width:100%;height:100%;display:block;background:
+      radial-gradient(1200px 700px at 70% 20%,rgba(0,180,216,.10),transparent 60%),
+      radial-gradient(900px 600px at 15% 85%,rgba(0,150,199,.08),transparent 55%),var(--bg)}
+  .bar{position:fixed;top:0;left:0;right:0;height:3px;z-index:20;
+    background:linear-gradient(90deg,var(--cyan2),var(--cyan) 40%,var(--sky))}
+  header{position:fixed;top:14px;left:16px;right:16px;z-index:10;
+    display:flex;flex-wrap:wrap;align-items:flex-start;gap:10px;pointer-events:none}
+  .brand{background:rgba(13,27,62,.72);border:1px solid var(--border);
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    border-radius:14px;padding:12px 16px;pointer-events:auto}
+  .brand h1{margin:0;font-size:16px;font-weight:700;letter-spacing:.2px}
+  .brand h1 .dot{color:var(--cyan)}
+  .brand .sub{font-size:11.5px;color:var(--muted);margin-top:3px;line-height:1.5}
+  .stats{display:flex;gap:10px;pointer-events:auto}
+  .stat{background:rgba(13,27,62,.72);border:1px solid var(--border);border-radius:14px;
+    padding:10px 14px;text-align:center;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+  .stat b{display:block;font-size:19px;font-weight:700;color:var(--sky)}
+  .stat span{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--dim)}
+  .filters{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap;background:rgba(13,27,62,.72);
+    border:1px solid var(--border);border-radius:14px;padding:8px;pointer-events:auto;
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+  .chip{border:1px solid var(--border);background:rgba(255,255,255,.03);color:var(--muted);
+    border-radius:999px;padding:4px 11px;font-size:11.5px;cursor:pointer;transition:all .15s;user-select:none}
+  .chip:hover{border-color:var(--cyan);color:var(--text)}
+  .chip.on{background:var(--cyan);color:#fff;border-color:var(--cyan);font-weight:600}
+  .chip[data-k="Critical"].on{background:var(--red);border-color:var(--red)}
+  .chip[data-k="Severe"].on{background:var(--amber);border-color:var(--amber);color:#1a1002}
+  .chip[data-k="Elevated"].on{background:var(--cyan2);border-color:var(--cyan2)}
+  #panel{position:fixed;right:16px;bottom:16px;width:min(380px,calc(100vw - 32px));z-index:11;
+    background:rgba(13,27,62,.9);border:1px solid var(--border);border-radius:16px;
+    padding:16px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    box-shadow:0 18px 50px rgba(0,0,0,.5);display:none;max-height:70vh;overflow:auto}
+  #panel h2{margin:0 0 6px;font-size:15.5px;line-height:1.4;font-weight:600}
+  .meta{font-size:11.5px;color:var(--muted);margin-bottom:8px;line-height:1.6}
+  .pill{display:inline-block;border-radius:999px;padding:2px 10px;font-size:10.5px;font-weight:700;
+    text-transform:uppercase;letter-spacing:.05em;margin-right:6px}
+  .pill.Critical{background:rgba(255,77,90,.16);color:var(--red);border:1px solid rgba(255,77,90,.4)}
+  .pill.Severe{background:rgba(255,166,43,.14);color:var(--amber);border:1px solid rgba(255,166,43,.4)}
+  .pill.Elevated{background:rgba(0,180,216,.14);color:var(--cyan);border:1px solid rgba(0,180,216,.4)}
+  .pill.Guarded{background:rgba(155,225,247,.12);color:var(--sky);border:1px solid rgba(155,225,247,.35)}
+  .pill.sector{background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border);text-transform:none;font-weight:600}
+  #panel a.go{display:inline-block;margin-top:10px;text-decoration:none;font-size:12.5px;font-weight:600;
+    color:#0d1b3e;background:var(--cyan);border-radius:10px;padding:8px 14px}
+  #panel a.go:hover{background:var(--sky)}
+  #panel .x{position:absolute;top:10px;right:12px;border:none;background:none;color:var(--muted);
+    font-size:18px;cursor:pointer}
+  .hint{position:fixed;left:16px;bottom:16px;z-index:9;font-size:10.5px;color:var(--dim);
+    background:rgba(13,27,62,.6);border:1px solid var(--border);border-radius:10px;padding:7px 11px;
+    pointer-events:none}
+  #fallback{position:fixed;inset:0;overflow:auto;padding:60px 24px 40px;display:flex;justify-content:center;background:var(--bg)}
+  #fallback .fb-in{max-width:720px;width:100%}
+  #fallback h2{margin:0 0 4px} #fallback .sub{color:var(--muted);font-size:13px;margin-bottom:20px}
+  .fb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+  .fb-c{border:1px solid var(--border);background:rgba(255,255,255,.02);border-radius:12px;padding:12px 14px}
+  .fb-c b{font-size:15px;color:var(--sky)} .fb-c p{margin:2px 0 0;font-size:11px;color:var(--dim)}
+  .bar-row{display:flex;align-items:center;gap:10px;margin:6px 0;font-size:12px}
+  .bar-track{flex:1;height:8px;background:rgba(255,255,255,.06);border-radius:6px;overflow:hidden}
+  .bar-fill{height:100%;background:linear-gradient(90deg,var(--cyan2),var(--cyan))}
+  .legend{position:fixed;bottom:52px;left:16px;z-index:9;display:flex;flex-direction:column;gap:4px;
+    background:rgba(13,27,62,.7);border:1px solid var(--border);border-radius:12px;padding:10px 12px;pointer-events:none}
+  .lg{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted)}
+  .lg i{width:10px;height:10px;border-radius:50%;display:inline-block}
+  @media (max-width:760px){header{flex-direction:column} .filters{margin-left:0}}
+</style>
+</head>
+<body>
+<div class="bar"></div>
+<div id="globe"></div>
+
+<header>
+  <div class="brand">
+    <h1>Cyber Digest <span class="dot">·</span> Incident Globe</h1>
+    <div class="sub" id="sub">Plotting every story from the database…</div>
+  </div>
+  <div class="stats">
+    <div class="stat"><b id="st-total">·</b><span>stories</span></div>
+    <div class="stat"><b id="st-plotted">·</b><span>plotted</span></div>
+    <div class="stat"><b id="st-country">·</b><span>countries</span></div>
+  </div>
+  <div class="filters" id="filters"></div>
+</header>
+
+<div class="legend" id="legend"></div>
+<div class="hint">Drag to rotate · scroll to zoom · click a point for details</div>
+
+<div id="panel">
+  <button class="x" id="panel-x" aria-label="Close">✕</button>
+  <h2 id="p-title"></h2>
+  <div class="meta" id="p-meta"></div>
+  <a class="go" id="p-go" href="#" target="_blank" rel="noopener">Read the story ↗</a>
+</div>
+
+<div id="fallback" style="display:none">
+  <div class="fb-in">
+    <h2>🌐 Cyber Digest — Incident Globe</h2>
+    <div class="sub">The 3D globe needs WebGL and the CDN libraries. On a hosted page it renders here; if you're reading this you're offline or in a non-WebGL browser. Static country view below instead.</div>
+    <div id="fb-bars"></div>
+  </div>
+</div>
+
+<!-- globe.gl bundles its own three.js (>=0.179) — loading a separate older
+     three.min.js triggers "Multiple instances of Three.js" and breaks the
+     factory. Single script, matching the library's own basic example. -->
+<script src="https://cdn.jsdelivr.net/npm/globe.gl/dist/globe.gl.min.js" integrity="sha384-fS13P48RBFel+cPUp5960AhzvtEr64LerQ00neZuM+Hi/VDxxemdQnN7IcWPYvPb" crossorigin="anonymous"></script>
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  // escape dynamic text before it reaches innerHTML (headlines/country names are
+  // our own curated DB strings, but keep defence-in-depth regardless)
+  function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]});}
+  var SEV_COLOR={Guarded:"#5aa9e6",Elevated:"#0096c7",Severe:"#ffa62b",Critical:"#ff4d5a"};
+  var SEV_ORDER=["Guarded","Elevated","Severe","Critical"];
+  var active=new Set(SEV_ORDER);
+  var globeInstance=null;
+
+  function buildLegend(){
+    var L=$("legend"); L.innerHTML="";
+    SEV_ORDER.forEach(function(k){
+      var d=document.createElement("div"); d.className="lg";
+      d.innerHTML='<i style="background:'+SEV_COLOR[k]+'"></i>'+k;
+      L.appendChild(d);
+    });
+  }
+  function buildFilters(){
+    var f=$("filters");
+    SEV_ORDER.forEach(function(k){
+      var c=document.createElement("div");
+      c.className="chip on"; c.dataset.k=k; c.textContent=k;
+      c.onclick=function(){
+        active.has(k)?active.delete(k):active.add(k);
+        c.classList.toggle("on");
+        applyFilter();
+      };
+      f.appendChild(c);
+    });
+  }
+  function applyFilter(){
+    if(!globeInstance) return;
+    globeInstance.pointsData(all.filter(function(p){return active.has(p.severity)}));
+  }
+
+  function renderStatic(data){
+    $("fallback").style.display="flex";
+    $("sub").textContent=data.total+" stories · "+data.points.length+" located · "+
+      Object.keys(countries(data.points)).length+" countries. 3D unavailable here.";
+    var sev=Object.keys(SEV_COLOR);
+    var html="";
+    sev.forEach(function(s){
+      var n=data.severity[s]||0;
+      if(!n) return;
+      html+='<div class="bar-row"><span style="width:96px;color:'+SEV_COLOR[s]+';font-weight:700">'+s+
+        '</span><div class="bar-track"><div class="bar-fill" style="width:'+(n/data.total*100)+'%;background:'+SEV_COLOR[s]+'"></div></div>'+
+        '<span>'+n+'</span></div>';
+    });
+    var top=Object.entries(countries(data.points)).sort(function(a,b){return b[1]-a[1]}).slice(0,10);
+    html+='<div class="fb-grid">';
+    top.forEach(function(e){ html+='<div class="fb-c"><b>'+esc(e[0])+'</b><p>'+e[1]+' story'+(e[1]>1?"s":"")+'</p></div>'; });
+    html+='</div>';
+    $("fb-bars").innerHTML=html;
+  }
+
+  function countries(pts){
+    var o={}; pts.forEach(function(p){o[p.country]=(o[p.country]||0)+1}); return o;
+  }
+
+  function showPanel(p){
+    $("p-title").textContent=p.headline;
+    var meta='<span class="pill '+esc(p.severity)+'">'+esc(p.severity)+'</span>'+
+      (p.sector?'<span class="pill sector">'+esc(p.sector)+'</span>':'')+
+      '<br><b>'+esc(p.country)+'</b> · '+esc(p.date);
+    $("p-meta").innerHTML=meta;
+    var go=$("p-go");
+    if(p.url){go.href=p.url; go.style.display="inline-block";}
+    else{go.style.display="none";}
+    $("panel").style.display="block";
+  }
+
+  fetch('data/globe.json').then(function(r){ return r.json(); }).then(function(data){
+    all=data.points;
+    $("st-total").textContent=data.total;
+    $("st-plotted").textContent=data.plotted;
+    $("st-country").textContent=Object.keys(countries(data.points)).length;
+    $("sub").textContent=data.total+" stories · "+data.plotted+" located · "+
+      (data.total-data.plotted)+" pan-regional/unlocated · generated "+data.generated;
+    buildLegend(); buildFilters();
+
+    try{
+      if(!window.Globe) throw new Error("globe.gl not loaded");
+      var globe=new Globe($("globe"))
+        .globeImageUrl('//cdn.jsdelivr.net/npm/three-globe/example/img/earth-night.jpg')
+        .backgroundColor('rgba(0,0,0,0)')
+        .atmosphereColor('#00b4d8')
+        .atmosphereAltitude(0.18)
+        .pointsData(data.points)
+        .pointLat('lat').pointLng('lon')
+        .pointColor(function(p){return SEV_COLOR[p.severity]||"#fff"})
+        .pointAltitude(function(p){return p.severity==="Critical"?0.06:(p.severity==="Severe"?0.045:0.028)})
+        .pointRadius(function(p){return p.severity==="Critical"?0.55:(p.severity==="Severe"?0.45:0.34)})
+        .pointResolution(5)
+        .onPointClick(showPanel)
+        .pointLabel(function(p){
+          return "<div style='font-size:12px;max-width:260px;line-height:1.4'>"+
+            "<b>"+esc(p.headline)+"</b><br><span style='opacity:.7'>"+esc(p.severity)+" · "+esc(p.country)+" · "+esc(p.date)+"</span></div>";
+        });
+      globe.pointOfView({lat:18,lng:12,alt:2.0});
+      globe.controls().autoRotate=true;
+      globe.controls().autoRotateSpeed=0.6;
+      globeInstance=globe;
+      // pause rotation while dragging
+      var c=globe.controls();
+      c.addEventListener('start',function(){c.autoRotate=false});
+      // resume shortly after interaction ends
+      var t=null;
+      c.addEventListener('end',function(){ clearTimeout(t); t=setTimeout(function(){c.autoRotate=true},2500); });
+      window.addEventListener('resize',function(){globe.width(window.innerWidth); globe.height(window.innerHeight)});
+      $("panel-x").onclick=function(){ $("panel").style.display="none"; };
+      document.addEventListener('keydown',function(e){ if(e.key==="Escape")$("panel").style.display="none"; });
+    }catch(err){
+      console.error(err);
+      renderStatic(data);
+    }
+  }).catch(function(err){
+    // data/globe.json missing -> static banner
+    $("fallback").style.display="flex";
+    $("sub").textContent="Could not load story data.";
+    $("fb-bars").innerHTML="<p style='color:var(--muted)'>data/globe.json not found.</p>";
+  });
+})();
+</script>
+</body>
+</html>

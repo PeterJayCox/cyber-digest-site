@@ -203,7 +203,7 @@ def esc(s):
 def nav_html(active="", root=""):
     BASE = "https://peterjaycox.com"
     items = [("index.html","Home","🏠"),("stories.html","Story DB","📚"),
-             ("daily/","Daily","🗓️"),("monthly/index.html","Monthly","📅"),
+             ("globe.html","Globe","🌍"),("daily/","Daily","🗓️"),("monthly/index.html","Monthly","📅"),
              ("reports/index.html","Reports","📑"),("wiki/index.html","Wiki","🧠")]
     ls=[]
     for href,label,ico in items:
@@ -1216,6 +1216,35 @@ METHODOLOGY_BODY = """<h2>What this measures (and what it does not)</h2>
   <p>This index is recomputed from the database on every site build. As the corpus grows the calibrations (band thresholds, decay half-life, weights) may be re-tuned — when that happens the values on this page and the homepage will change together, and the change is disclosed here. If a rating looks wrong, the relevant story card links to its source for verification.</p>
 """
 
+def build_globe():
+    """Emit docs/data/globe.json (all stories -> lat/lon) + docs/globe.html.
+
+    globe-data.py lives in the project scripts dir (NASSP) and reads DB from
+    --db (we point it at the same vault DB the rest of the site uses). The
+    page template is a static file in templates/globe.html.
+    """
+    os.makedirs(os.path.join(DOCS, "data"), exist_ok=True)
+    # all args are internal constants (project scripts dir + vault DB path)
+    import subprocess
+    r = subprocess.run(
+        [sys.executable, os.path.join(NASSP, "globe-data.py"),
+         "--db", DB, "--out", os.path.join(DOCS, "data", "globe.json")],
+        capture_output=True, text=True)
+    if r.returncode != 0:
+        print("⚠️ globe-data.py failed; globe page will lack data")
+        print(r.stderr[-500:] if r.stderr else "")
+        return False
+    tpl = os.path.join(ROOT, "templates", "globe.html")
+    if os.path.exists(tpl):
+        html = open(tpl, encoding="utf-8").read()
+        open(os.path.join(DOCS, "globe.html"), "w", encoding="utf-8").write(html)
+        print("✅ Globe page -> docs/globe.html (from template)")
+    else:
+        print("⚠️ templates/globe.html missing; globe page not written")
+        return False
+    return True
+
+
 def main():
     global FLAT_LINKMAP
     ap=argparse.ArgumentParser()
@@ -1241,6 +1270,7 @@ def main():
     build_methodology()
     build_reports(_reports_load())
     build_wiki(pages)
+    build_globe()
     print(f"✅ Site built -> {DOCS}")
     print(f"   {len(stories)} stories, {len(days)} daily, {len(months)} monthly, {sum(len(v) for v in pages.values())} wiki pages")
 
