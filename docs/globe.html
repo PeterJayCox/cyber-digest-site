@@ -13,6 +13,7 @@
     --cyan:#00b4d8; --cyan2:#0096c7; --sky:#9be1f7;
     --text:#e2e8f0; --muted:#8a9cb6; --dim:#64748b;
     --border:rgba(255,255,255,.08); --red:#ff4d5a; --amber:#ffa62b;
+    --region:#9aa7bd;
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0;height:100%;background:var(--bg);
@@ -41,35 +42,62 @@
     font-size:13px;font-weight:600;cursor:pointer;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
   .sidebtn:hover{border-color:var(--cyan)}
   /* ---- Site nav (back to the rest of the site) ---- */
-  #sitenav{position:fixed;top:86px;right:16px;z-index:10;display:flex;gap:4px;flex-wrap:wrap;
+  #sitenav{position:fixed;top:86px;right:16px;z-index:10;display:flex;gap:2px;flex-wrap:wrap;
     justify-content:flex-end;background:rgba(13,27,62,.72);border:1px solid var(--border);
-    border-radius:12px;padding:6px 8px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    border-radius:12px;padding:5px 7px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
     pointer-events:auto;max-width:min(640px,calc(100vw - 380px))}
   #sitenav a{color:var(--muted);text-decoration:none;font-size:11.5px;font-weight:600;padding:4px 9px;
-    border-radius:8px;white-space:nowrap;transition:all .15s}
+    border-radius:8px;white-space:nowrap;transition:all .15s;position:relative}
+  #sitenav a::after{content:"";position:absolute;left:9px;right:9px;bottom:2px;height:1.5px;
+    background:var(--cyan);border-radius:2px;transform:scaleX(0);transform-origin:left;transition:transform .18s}
   #sitenav a:hover{color:var(--text);background:rgba(255,255,255,.06)}
+  #sitenav a:hover::after{transform:scaleX(1)}
   #sitenav a.act{color:#0d1b3e;background:var(--cyan)}
+  #sitenav a.act::after{display:none}
   /* ---- Sidebar: filters + story list ---- */
-  #side{position:fixed;left:16px;top:86px;bottom:16px;width:330px;z-index:12;
+  #side{position:fixed;left:16px;top:86px;bottom:16px;width:340px;z-index:12;
     background:rgba(13,27,62,.88);border:1px solid var(--border);border-radius:16px;
     backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
     display:flex;flex-direction:column;overflow:hidden;
     box-shadow:0 18px 50px rgba(0,0,0,.45);transition:transform .2s}
-  #side.closed{transform:translateX(-360px)}
-  #side .filters{padding:14px 14px 10px;border-bottom:1px solid var(--border)}
-  #side .f-row{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+  #side.closed{transform:translateX(-370px)}
+  #side .filters{padding:12px 14px 8px;border-bottom:1px solid var(--border)}
+  #side .f-row{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
   .chip{border:1px solid var(--border);background:rgba(255,255,255,.03);color:var(--muted);
-    border-radius:999px;padding:4px 11px;font-size:11px;cursor:pointer;transition:all .15s;user-select:none}
+    border-radius:999px;padding:3px 10px;font-size:11px;cursor:pointer;transition:all .15s;user-select:none}
   .chip:hover{border-color:var(--cyan);color:var(--text)}
   .chip.on{background:var(--cyan);color:#fff;border-color:var(--cyan);font-weight:600}
   .chip[data-k="Critical"].on{background:var(--red);border-color:var(--red)}
   .chip[data-k="Severe"].on{background:var(--amber);border-color:var(--amber);color:#1a1002}
   .chip[data-k="Elevated"].on{background:var(--cyan2);border-color:var(--cyan2)}
-  #side select,#side input{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--border);
-    border-radius:10px;color:var(--text);font-size:12px;padding:8px 10px;margin-top:6px;outline:none}
-  #side select:focus,#side input:focus{border-color:var(--cyan)}
+  #side select,#side input[type=search]{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--border);
+    border-radius:10px;color:var(--text);font-size:12px;padding:7px 10px;margin-top:5px;outline:none}
+  #side select:focus,#side input[type=search]:focus{border-color:var(--cyan)}
   #side select option{background:#131f4a;color:var(--text)}
-  #side .count{font-size:11px;color:var(--muted);margin-top:8px}
+  /* time scrubber */
+  .timebar{display:flex;align-items:center;gap:8px;margin-top:8px}
+  #time-range{flex:1;height:4px;accent-color:var(--cyan);cursor:pointer;background:rgba(255,255,255,.08);
+    border-radius:4px;-webkit-appearance:none;appearance:none}
+  #time-range::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;
+    background:var(--cyan);border:2px solid #0d1b3e;cursor:pointer}
+  #time-range::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:var(--cyan);border:2px solid #0d1b3e}
+  #time-label{font-size:10.5px;color:var(--muted);white-space:nowrap;min-width:78px;text-align:right}
+  #play-btn{background:var(--cyan);border:none;color:#0d1b3e;width:26px;height:26px;border-radius:8px;
+    font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0}
+  #play-btn:hover{background:var(--sky)}
+  /* analysis */
+  .analysis{margin-top:8px;border:1px solid var(--border);background:rgba(255,255,255,.02);
+    border-radius:12px;padding:9px 11px}
+  .analysis .a-title{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);margin-bottom:6px}
+  .a-bars{display:flex;gap:3px;height:26px;border-radius:6px;overflow:hidden;margin-bottom:7px}
+  .a-bars div{height:100%}
+  .a-sev{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px;font-size:11px;color:var(--muted)}
+  .a-sev span b{color:var(--text)}
+  .a-top{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.55}
+  .a-top b{color:var(--sky)}
+  .a-top .rg,.a-top .ct{display:inline}
+  .a-hint{font-size:9.5px;color:var(--dim);margin-top:4px}
+  #side .count{font-size:11px;color:var(--muted);margin-top:7px}
   #side .count b{color:var(--sky)}
   #side .clear{float:right;font-size:11px;color:var(--cyan);cursor:pointer;text-decoration:none}
   #list{flex:1;overflow-y:auto;padding:10px 10px 14px}
@@ -86,6 +114,7 @@
   .pill.Severe{background:rgba(255,166,43,.14);color:var(--amber);border:1px solid rgba(255,166,43,.4)}
   .pill.Elevated{background:rgba(0,180,216,.14);color:var(--cyan);border:1px solid rgba(0,180,216,.4)}
   .pill.Guarded{background:rgba(155,225,247,.12);color:var(--sky);border:1px solid rgba(155,225,247,.35)}
+  .pill.region{background:rgba(154,167,189,.12);color:var(--region);border:1px solid rgba(154,167,189,.35);text-transform:none}
   .item .sector{color:var(--dim);font-size:10px}
   .empty{padding:30px 12px;text-align:center;color:var(--dim);font-size:12px}
   /* ---- Footer links ---- */
@@ -114,10 +143,6 @@
   .hint{position:fixed;right:16px;bottom:48px;z-index:9;font-size:10.5px;color:var(--dim);
     background:rgba(13,27,62,.6);border:1px solid var(--border);border-radius:10px;padding:7px 11px;
     pointer-events:none}
-  .legend{position:fixed;right:16px;bottom:16px;z-index:9;display:none;flex-direction:column;gap:4px;
-    background:rgba(13,27,62,.7);border:1px solid var(--border);border-radius:12px;padding:10px 12px;pointer-events:none}
-  .lg{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted)}
-  .lg i{width:10px;height:10px;border-radius:50%;display:inline-block}
   #fallback{position:fixed;inset:0;overflow:auto;padding:60px 24px 40px;display:flex;justify-content:center;background:var(--bg)}
   #fallback .fb-in{max-width:720px;width:100%}
   #fallback h2{margin:0 0 4px} #fallback .sub{color:var(--muted);font-size:13px;margin-bottom:20px}
@@ -128,7 +153,7 @@
   .bar-track{flex:1;height:8px;background:rgba(255,255,255,.06);border-radius:6px;overflow:hidden}
   .bar-fill{height:100%;background:linear-gradient(90deg,var(--cyan2),var(--cyan))}
   @media (max-width:760px){
-    #side{width:min(330px,calc(100vw - 32px));left:16px;top:86px;bottom:16px}
+    #side{width:min(340px,calc(100vw - 32px));left:16px;top:86px;bottom:16px}
     header{flex-direction:column}
     .hint{display:none}
     #sitenav{max-width:calc(100vw - 32px);right:16px;top:86px;justify-content:flex-start;
@@ -147,30 +172,41 @@
   </div>
   <div class="stats">
     <div class="stat"><b id="st-total">·</b><span>stories</span></div>
-    <div class="stat"><b id="st-plotted">·</b><span>plotted</span></div>
+    <div class="stat"><b id="st-plotted">·</b><span>located</span></div>
     <div class="stat"><b id="st-country">·</b><span>countries</span></div>
   </div>
   <button class="sidebtn" id="side-toggle">☰ Stories</button>
 </header>
 
 <!-- Site navigation: back to the rest of the site -->
-<nav id="sitenav">
+<nav id="sitenav" aria-label="Main">
   <a href="index.html">🏠 Home</a>
   <a href="stories.html">📚 Story DB</a>
-  <a href="globe.html" class="act">🌍 Globe</a>
+  <a href="globe.html" class="act" aria-current="page">🌍 Globe</a>
   <a href="daily/">🗓️ Daily</a>
   <a href="monthly/index.html">📅 Monthly</a>
   <a href="reports/index.html">📑 Reports</a>
   <a href="wiki/index.html">🧠 Wiki</a>
 </nav>
 
-<!-- Sidebar: filters + story list -->
+<!-- Sidebar: filters + analysis + story list -->
 <aside id="side">
   <div class="filters">
-    <input id="q" type="search" placeholder="🔍 Search headlines or countries…" autocomplete="off">
+    <input id="q" type="search" placeholder="🔍 Search headlines, countries, regions…" autocomplete="off">
     <div class="f-row" id="sev-chips"></div>
     <select id="sec"><option value="">All sectors</option></select>
-    <select id="cou"><option value="">All countries</option></select>
+    <select id="cou"><option value="">All countries / regions</option><option value="__region__">🌐 Pan-region stories</option></select>
+    <div class="timebar">
+      <button id="play-btn" title="Play through time">▶</button>
+      <input type="range" id="time-range" min="0" max="100" value="100">
+      <span id="time-label">all dates</span>
+    </div>
+    <div class="analysis">
+      <div class="a-title">● Live analysis &nbsp; <span id="a-window"></span></div>
+      <div class="a-bars" id="a-bars"></div>
+      <div class="a-sev" id="a-sev"></div>
+      <div class="a-top" id="a-top"></div>
+    </div>
     <div class="count"><b id="show-n">·</b> of <span id="show-total">·</span> stories <a class="clear" id="clear-f">clear filters</a></div>
   </div>
   <div id="list"></div>
@@ -213,12 +249,21 @@
   function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]});}
   var SEV_COLOR={Guarded:"#5aa9e6",Elevated:"#0096c7",Severe:"#ffa62b",Critical:"#ff4d5a"};
   var SEV_ORDER=["Guarded","Elevated","Severe","Critical"];
+  var REGION_COLOR="#9aa7bd";
   var active=new Set(SEV_ORDER);
   var globeInstance=null;
   var all=[];
   var filtered=[];
   var hoverHeadline=null;
   var panelIdx=0;
+  var dates=[];
+  var maxDate=null;
+  var timer=null;
+
+  function pColor(p){
+    if(p.kind==="region") return REGION_COLOR;
+    return SEV_COLOR[p.severity]||"#fff";
+  }
 
   function buildSeverityChips(){
     var f=$("sev-chips");
@@ -238,7 +283,7 @@
     var secs=[],cous=[];
     all.forEach(function(p){
       if(p.sector && secs.indexOf(p.sector)<0) secs.push(p.sector);
-      if(p.country && cous.indexOf(p.country)<0) cous.push(p.country);
+      if(p.kind==="country" && cous.indexOf(p.country)<0) cous.push(p.country);
     });
     secs.sort(); cous.sort();
     var s=$("sec"),c=$("cou");
@@ -247,16 +292,47 @@
     s.onchange=refresh; c.onchange=refresh;
   }
 
+  function buildDates(){
+    var set={};
+    all.forEach(function(p){ set[p.date]=true; });
+    dates=Object.keys(set).sort();
+    var r=$("time-range");
+    r.min=0; r.max=dates.length-1; r.value=r.max;
+    maxDate=dates[r.max];
+    r.oninput=function(){ maxDate=dates[+r.value]||null; $("time-label").textContent=maxDate||"all dates"; refresh(); };
+    $("play-btn").onclick=togglePlay;
+  }
+
+  function togglePlay(){
+    if(timer){ clearInterval(timer); timer=null; $("play-btn").textContent="▶"; return; }
+    var r=$("time-range");
+    if(+r.value>=+r.max) r.value=r.min;
+    $("play-btn").textContent="⏸";
+    timer=setInterval(function(){
+      var v=+r.value;
+      if(v>=+r.max){ clearInterval(timer); timer=null; $("play-btn").textContent="▶"; return; }
+      r.value=v+1;
+      maxDate=dates[v+1]||null; $("time-label").textContent=maxDate||"all dates";
+      refresh();
+    },450);
+  }
+
   function query(){
     var q=$("q").value.toLowerCase().trim();
     var sec=$("sec").value, cou=$("cou").value;
     filtered=all.filter(function(p){
       if(!active.has(p.severity)) return false;
       if(sec && p.sector!==sec) return false;
-      if(cou && p.country!==cou) return false;
+      if(cou){
+        if(cou==="__region__"){ if(p.kind!=="region") return false; }
+        else if(p.kind!="country" || p.country!==cou) return false;
+      }
+      if(maxDate && p.date>maxDate) return false;
       if(q){
-        var h=p.headline.toLowerCase(),cn=p.country.toLowerCase();
-        if(h.indexOf(q)<0 && cn.indexOf(q)<0) return false;
+        var h=p.headline.toLowerCase();
+        var g=(p.geo_label||"").toLowerCase();
+        var k=(p.kind==="region"?("pan "+p.region):"country").toLowerCase();
+        if(h.indexOf(q)<0 && g.indexOf(q)<0 && k.indexOf(q)<0) return false;
       }
       return true;
     });
@@ -266,6 +342,7 @@
     query();
     globeInstance.pointsData(filtered);
     renderList();
+    renderAnalysis();
     $("show-n").textContent=filtered.length;
   }
 
@@ -274,19 +351,21 @@
   function renderList(){
     var L=$("list"); L.innerHTML="";
     if(!filtered.length){
-      L.innerHTML='<div class="empty">No stories match the current filters.</div>';
+      L.innerHTML='<div class="empty">No stories match the current filters / time.</div>';
       return;
     }
-    // newest first, then most severe
     var sorted=filtered.slice().sort(function(a,b){
       var d=b.date.localeCompare(a.date); if(d) return d;
       return severityRank(b.severity)-severityRank(a.severity);
     });
     sorted.forEach(function(p){
       var it=document.createElement("div"); it.className="item";
+      var geoPill=p.kind==="region"
+        ? '<span class="pill region">🌐 '+esc(p.region)+'</span>'
+        : '<span class="pill '+esc(p.severity)+'">'+esc(p.severity)+'</span>';
+      var geo=p.kind==="region"?("Pan-region · "+esc(p.region)):esc(p.country);
       it.innerHTML='<div class="h">'+esc(p.headline)+'</div>'+
-        '<div class="m"><span class="pill '+esc(p.severity)+'">'+esc(p.severity)+'</span>'+
-        '<span>'+esc(p.country)+' · '+esc(p.date)+'</span>'+
+        '<div class="m">'+geoPill+'<span>'+geo+' · '+esc(p.date)+'</span>'+
         (p.sector?'<span class="sector">'+esc(p.sector)+'</span>':'')+'</div>';
       it.onclick=function(){ openStory(p); };
       it.onmouseenter=function(){ hoverHeadline=p.headline; paintPoints(); it.classList.add("hovered"); };
@@ -297,23 +376,61 @@
 
   function paintPoints(){
     globeInstance.pointColor(function(p){
-      return p.headline===hoverHeadline ? "#ffffff" : (SEV_COLOR[p.severity]||"#fff");
+      return p.headline===hoverHeadline ? "#ffffff" : pColor(p);
     });
+  }
+
+  function renderAnalysis(){
+    var total=filtered.length;
+    var sev={Guarded:0,Elevated:0,Severe:0,Critical:0};
+    var country={},region={};
+    filtered.forEach(function(p){
+      sev[p.severity]=(sev[p.severity]||0)+1;
+      if(p.kind==="region") region[p.region]=(region[p.region]||0)+1;
+      else country[p.country]=(country[p.country]||0)+1;
+    });
+    // stacked bar
+    var bar=$("a-bars"); bar.innerHTML="";
+    SEV_ORDER.forEach(function(k){
+      var n=sev[k]||0; if(!n) return;
+      var d=document.createElement("div");
+      d.style.width=(n/total*100)+"%"; d.style.background=SEV_COLOR[k];
+      d.title=k+": "+n; bar.appendChild(d);
+    });
+    // severity grid
+    var sv=$("a-sev"); sv.innerHTML="";
+    SEV_ORDER.forEach(function(k){
+      var span=document.createElement("span");
+      span.innerHTML='<i style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+SEV_COLOR[k]+';margin-right:4px"></i>'+k+' <b>'+(sev[k]||0)+'</b>';
+      sv.appendChild(span);
+    });
+    // top countries + regions
+    var top=Object.entries(country).sort(function(a,b){return b[1]-a[1]}).slice(0,4);
+    var html="";
+    if(top.length) html+='Top: '+top.map(function(e){return '<span class="ct"><b>'+esc(e[0])+'</b> '+e[1]+'</span>'}).join(" &nbsp;·&nbsp; ");
+    if(Object.keys(region).length){
+      var rl=Object.entries(region).sort(function(a,b){return b[1]-a[1]}).map(function(e){return '<span class="rg">🌐 <b>'+esc(e[0])+'</b> '+e[1]+'</span>'}).join(" · ");
+      html+= (html?"<br>":"")+rl;
+    }
+    $("a-top").innerHTML=html||'<span style="color:var(--dim)">No stories in window</span>';
+    $("a-window").textContent="("+total+" stories)";
   }
 
   function openStory(p){
     panelIdx=filtered.indexOf(p);
     if(panelIdx<0) panelIdx=0;
     $("p-title").textContent=p.headline;
-    var meta='<span class="pill '+esc(p.severity)+'">'+esc(p.severity)+'</span>'+
+    var sevPill=p.kind==="region"
+      ? '<span class="pill region">🌐 '+esc(p.region)+'</span>'
+      : '<span class="pill '+esc(p.severity)+'">'+esc(p.severity)+'</span>';
+    var meta=sevPill+
       (p.sector?'<span class="pill sector">'+esc(p.sector)+'</span>':'')+
-      '<br><b>'+esc(p.country)+'</b> · '+esc(p.date);
+      '<br><b>'+esc(p.geo_label||p.country||p.region)+'</b> · '+esc(p.date);
     $("p-meta").innerHTML=meta;
     var go=$("p-go");
     if(p.url){go.href=p.url; go.style.display="inline-block";}
     else{go.style.display="none";}
     $("panel").style.display="block";
-    // fly the globe to the story (alt = distance in globe radii; closer = bigger)
     globeInstance.pointOfView({lat:p.lat, lng:p.lon, altitude:0.9}, 900);
   }
   function stepPanel(delta){
@@ -323,12 +440,12 @@
   }
 
   function countries(pts){
-    var o={}; pts.forEach(function(p){o[p.country]=(o[p.country]||0)+1}); return o;
+    var o={}; pts.forEach(function(p){ if(p.kind==="country") o[p.country]=(o[p.country]||0)+1; }); return o;
   }
 
   function renderStatic(data){
     $("fallback").style.display="flex";
-    $("sub").textContent=data.total+" stories · "+data.points.length+" located · "+
+    $("sub").textContent=data.total+" stories · "+data.plotted+" located · "+
       Object.keys(countries(data.points)).length+" countries. 3D unavailable here.";
     var html="";
     SEV_ORDER.forEach(function(s){
@@ -348,12 +465,12 @@
   fetch('data/globe.json').then(function(r){ return r.json(); }).then(function(data){
     all=data.points;
     $("st-total").textContent=data.total;
-    $("st-plotted").textContent=data.plotted;
+    $("st-plotted").textContent=Object.keys(countries(data.points)).length;
     $("st-country").textContent=Object.keys(countries(data.points)).length;
     $("show-total").textContent=data.plotted;
-    $("sub").textContent=data.total+" stories · "+data.plotted+" located · "+
-      (data.total-data.plotted)+" pan-regional/unlocated · generated "+data.generated;
-    buildSeverityChips(); buildSelects();
+    $("sub").textContent=data.total+" stories plotted · "+data.plotted+" located · "+
+      data.pan+" pan-region · generated "+data.generated;
+    buildSeverityChips(); buildSelects(); buildDates();
 
     try{
       if(!window.Globe) throw new Error("globe.gl not loaded");
@@ -364,31 +481,38 @@
         .atmosphereAltitude(0.18)
         .pointsData(all)
         .pointLat('lat').pointLng('lon')
-        .pointColor(function(p){return SEV_COLOR[p.severity]||"#fff"})
-        .pointAltitude(function(p){return p.severity==="Critical"?0.06:(p.severity==="Severe"?0.045:0.028)})
-        .pointRadius(function(p){return p.severity==="Critical"?0.55:(p.severity==="Severe"?0.45:0.34)})
+        .pointColor(function(p){return pColor(p)})
+        .pointAltitude(function(p){
+          if(p.kind==="region") return 0.015;
+          return p.severity==="Critical"?0.06:(p.severity==="Severe"?0.045:0.028);
+        })
+        .pointRadius(function(p){
+          if(p.kind==="region") return 0.22;
+          return p.severity==="Critical"?0.55:(p.severity==="Severe"?0.45:0.34);
+        })
         .pointResolution(5)
         .onPointClick(openStory)
         .pointLabel(function(p){
+          var sev=p.kind==="region"?("🌐 "+p.region):(p.severity+" · "+p.country);
           return "<div style='font-size:12px;max-width:260px;line-height:1.4'>"+
-            "<b>"+esc(p.headline)+"</b><br><span style='opacity:.7'>"+esc(p.severity)+" · "+esc(p.country)+" · "+esc(p.date)+"</span></div>";
+            "<b>"+esc(p.headline)+"</b><br><span style='opacity:.7'>"+esc(sev)+" · "+esc(p.date)+"</span></div>";
         });
       globe.pointOfView({lat:18,lng:12,alt:2.0});
       globe.controls().autoRotate=true;
       globe.controls().autoRotateSpeed=0.6;
       globeInstance=globe;
-      // pause rotation while dragging
       var c=globe.controls();
       c.addEventListener('start',function(){c.autoRotate=false});
       var t=null;
       c.addEventListener('end',function(){ clearTimeout(t); t=setTimeout(function(){c.autoRotate=true},2500); });
       window.addEventListener('resize',function(){globe.width(window.innerWidth); globe.height(window.innerHeight)});
-      // sidebar controls
       $("side-toggle").onclick=function(){ $("side").classList.toggle("closed"); };
       $("side").classList.remove("closed");
       $("q").addEventListener('input',refresh);
       $("clear-f").onclick=function(){
         $("q").value=""; $("sec").value=""; $("cou").value="";
+        var r=$("time-range"); r.value=r.max;
+        maxDate=dates[+r.value]||null; $("time-label").textContent=maxDate||"all dates";
         active=new Set(SEV_ORDER);
         document.querySelectorAll("#sev-chips .chip").forEach(function(c){c.classList.add("on");});
         refresh();

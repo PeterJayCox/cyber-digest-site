@@ -623,15 +623,61 @@ const URG_CLS = __URG_CLS__;
 const CONF_CLS = __CONF_CLS__;
 function tiercol(t){return t<=1?"green":t===2?"cyan":t===3?"amber":"red";}
 function esc(s){const d=document.createElement('div');d.textContent=(s==null?'':String(s));return d.innerHTML;}
+function tokSearch(q){
+ const t=[];let i=0;
+ while(i<q.length){
+  const c=q[i];
+  if(/\s/.test(c)){i++;continue;}
+  if(c==='('||c===')'){t.push({p:c});i++;continue;}
+  if(c==='"'){let j=i+1,s='';while(j<q.length&&q[j]!=='"'){s+=q[j];j++;}t.push({phrase:s.toLowerCase()});i=j+1;continue;}
+  let j=i,s='';
+  while(j<q.length&&!/\s/.test(q[j])&&q[j]!=='('&&q[j]!==')'){s+=q[j];j++;}
+  i=j;const lc=s.toLowerCase();
+  if(lc==='or'||lc==='and')t.push({op:lc});else t.push({word:lc});
+ }
+ return t;
+}
+function buildMatcher(q){
+ q=(q||'').trim();if(!q)return null;
+ const t=tokSearch(q);let pos=0;
+ function parseOr(){
+  const parts=[];let f=parseAnd();if(f)parts.push(f);
+  while(pos<t.length&&t[pos].op==='or'){pos++;const r=parseAnd();if(r)parts.push(r);}
+  if(!parts.length)return()=>true;
+  if(parts.length===1)return parts[0];
+  return h=>parts.some(f=>f(h));
+ }
+ function parseAnd(){
+  const terms=[];
+  while(pos<t.length){
+   const x=t[pos];
+   if(x.p===')')break;
+   if(x.op==='and'){pos++;continue;}
+   if(x.op==='or')break;
+   pos++;
+   if(x.p==='('){terms.push(parseOr());if(t[pos]&&t[pos].p===')')pos++;continue;}
+   if(x.phrase!==undefined){const P=x.phrase;terms.push(h=>h.includes(P));continue;}
+   let w=x.word;
+   if(w.startsWith('-')){
+    w=w.slice(1);if(w)terms.push(h=>!h.includes(w));
+   }else if(w){terms.push(h=>h.includes(w));}
+  }
+  if(!terms.length)return null;
+  if(terms.length===1)return terms[0];
+  return h=>terms.every(f=>f(h));
+ }
+ return parseOr();
+}
 function render(){
- const q=(document.getElementById('q').value||'').toLowerCase();
+ const q=(document.getElementById('q').value||'');
+ const matcher=buildMatcher(q);
  const sec=document.getElementById('fsector').value;
  const thr=document.getElementById('fthreat').value;
  const geo=document.getElementById('fgeo').value;
  const anz=document.getElementById('fanz').value;
  const fsev=document.getElementById('fsev').value;
  let rows=DATA.filter(s=>{
-   if(q && !(s.headline+' '+s.summary+' '+s.source).toLowerCase().includes(q)) return false;
+   if(matcher && !matcher((s.headline+' '+s.summary+' '+s.source).toLowerCase())) return false;
    if(sec && s.sector!==sec) return false;
    if(thr && s.threat!==thr) return false;
    if(geo && s.geo!==geo) return false;
@@ -701,6 +747,7 @@ render();
 <button id="btn-fiveeyes" class="tag red" style="cursor:pointer;border:none;font-size:13px;padding:6px 12px" onclick="document.getElementById('fanz').value='3';render()">\U0001F1E6\U0001F1FA Five Eyes</button>
 </div>
 <div class="legend" id="count"></div>
+<div class="srcline" style="margin:0 0 14px;font-size:12px;color:var(--text-dim)">Boolean search: space = <code>AND</code> &middot; <code>OR</code> &middot; <code>-word</code> excludes &middot; <code>&quot;exact phrase&quot;</code> &middot; <code>( )</code> group</div>
 <div id="results"></div>
 '''
     html = html_top + js + foot()
