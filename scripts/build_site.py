@@ -749,7 +749,7 @@ render();
           .replace("__CONF_CLS__", json.dumps(CONF_CLS)))
 
     html_top = head("Story Database","stories.html")+f'''
-<div class="hero"><div class="kicker">// searchable archive</div><h1>Story <span class="accent">Database</span></h1>
+<div class="hero hero-band"><div class="kicker">// searchable archive</div><h1>Story <span class="accent">Database</span></h1>
 <p class="sub">{len(page_data)} stories across all daily digests, each rated for severity, exploitation status and confidence. Filter by keyword, sector, threat type, geography or Australian/NZ relevance (ANZ score 0–5: 5 = direct AU/NZ impact).</p></div>
 <div class="filters">
 <input type="text" id="q" placeholder="Search stories\u2026">
@@ -814,7 +814,7 @@ def build_daily(days):
                 <span class="go">→</span>
             </a>'''
         cards+="</div></div>"
-    html=head("Daily Editions","daily/", root="../")+f'''<div class="hero"><div class="kicker">// archive</div><h1>Daily <span class="accent">Digests</span></h1>
+    html=head("Daily Editions","daily/", root="../")+f'''<div class="hero hero-band"><div class="kicker">// archive</div><h1>Daily <span class="accent">Digests</span></h1>
     <p class="sub">Every daily sector-by-sector roundup, newest first.</p></div>
     {cards}'''+foot()
 
@@ -931,7 +931,7 @@ def build_monthly(months, stories):
         </a>'''
         cards_parts.append(card)
     cards = "".join(cards_parts)
-    html=head("Monthly Editions","monthly/index.html", root="../")+f'''<div class="hero"><div class="kicker">// aggregate</div><h1>Monthly <span class="accent">Digests</span></h1>
+    html=head("Monthly Editions","monthly/index.html", root="../")+f'''<div class="hero hero-band"><div class="kicker">// aggregate</div><h1>Monthly <span class="accent">Digests</span></h1>
     <p class="sub">Monthly aggregation, spotlight stories, tradecraft and fact-check reports.</p></div>
     <div class="grid cards grid-monthly">{cards}</div>'''+foot()
     open(os.path.join(DOCS,"monthly","index.html"),"w",encoding="utf-8").write(html)
@@ -1022,7 +1022,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     document.getElementById('wikiSearch').addEventListener('input',filterWiki);
 });
 </script>'''
-    html=head("Cyber Wiki","wiki/index.html", root="../")+f'''<div class="hero"><div class="kicker">// knowledge base</div><h1>Cyber <span class="accent">Wiki</span></h1>
+    html=head("Cyber Wiki","wiki/index.html", root="../")+f'''<div class="hero hero-band"><div class="kicker">// knowledge base</div><h1>Cyber <span class="accent">Wiki</span></h1>
     <p class="sub">Entities, threat actors, incidents, vulnerabilities and concepts — cross-linked from every digest.</p></div>
     <div class="filters">
         <input type="text" id="wikiSearch" placeholder="Search wiki…">
@@ -1153,7 +1153,7 @@ def build_reports(reports):
         toc = "".join(toc_parts)
 
         page = head(esc(r["report_title"]), "reports/", root="../") + (
-            '<div class="hero"><div class="kicker">// incident review</div>'
+            '<div class="hero hero-band"><div class="kicker">// incident review</div>'
             '<h1>' + esc(r["report_title"]) + '</h1>'
             '<p class="sub">' + esc(r.get("subtitle", "")) + '</p>'
             '<div class="stats">'
@@ -1184,7 +1184,7 @@ def build_reports(reports):
         )
     cards = "".join(cards_parts)
     html = head("Reports", "reports/", root="../") + (
-        '<div class="hero"><div class="kicker">// insights</div>'
+        '<div class="hero hero-band"><div class="kicker">// insights</div>'
         '<h1>Reports</h1>'
         '<p class="sub">Sector incident reviews and analysis editions beyond the daily and monthly digests.</p></div>'
         '<div class="grid cards">' + cards + '</div>'
