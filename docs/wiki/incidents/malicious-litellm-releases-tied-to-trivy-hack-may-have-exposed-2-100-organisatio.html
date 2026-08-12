@@ -1,0 +1,83 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Malicious LiteLLM Releases Tied to Trivy Hack May Have Exposed 2,100+ Organisations</title>
+<link rel="icon" type="image/svg+xml" href="../../assets/svg/favicon.svg">
+<link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Malicious LiteLLM Releases Tied to Trivy Hack May Have Exposed 2,100+ Organisations">
+<meta property="og:description" content="Curated sector-by-sector roundup of global cybersecurity developments with source-reliability indexing, AU/NZ context, and searchable knowledge base.">
+<meta property="og:url" content="https://peterjaycox.com/">
+<meta property="og:image" content="https://peterjaycox.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="1024">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/site.css?v=20260813"></head><body>
+<nav class="topnav"><div class="inner">
+        <a class="brand" href="https://peterjaycox.com/index.html"><img src="../../assets/svg/logo-mark.svg" alt="" style="height:22px;width:22px;vertical-align:middle"> Cyber&nbsp;Digest<small>public site</small></a>
+        <div class="navlinks"><a href="https://peterjaycox.com/index.html" class=""><span class="t">🏠 Home</span></a><a href="https://peterjaycox.com/stories.html" class=""><span class="t">📚 Story DB</span></a><a href="https://peterjaycox.com/globe.html" class=""><span class="t">🌍 Globe</span></a><a href="https://peterjaycox.com/daily/" class=""><span class="t">🗓️ Daily</span></a><a href="https://peterjaycox.com/monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="https://peterjaycox.com/reports/index.html" class=""><span class="t">📑 Reports</span></a><a href="https://peterjaycox.com/wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a></div>
+        <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light">🌙</div></div></nav><main class="container">
+            <div class="container">
+            <div class="crumb"><a href="../../index.html">Home</a> · <a href="../../wiki/index.html">Wiki</a> · Incidents &amp; Campaigns</div>
+            <div class="wiki-body"><div class="frontmatter">created: 2026-08-13 · updated: 2026-08-13 · type: incident · tags: [incident, supply-chain, pypi, litellm, ai, credentials, malware, cloudsek] · confidence: probable · affected_sectors: [technology, ai, finance, government, healthcare] · au_impact: true</div><h1>Malicious LiteLLM Releases Tied to Trivy Hack May Have Exposed 2,100+ Organisations</h1>
+<p>Two <strong>malicious LiteLLM releases</strong> sat on <strong>PyPI</strong> for roughly 40 minutes in March carrying <strong>credential-stealing code</strong> capable of harvesting cloud keys, SSH keys, Kubernetes tokens and database passwords. Threat intelligence firm <strong>CloudSEK</strong> says a dataset it obtained — built from roughly <strong>434,000 files</strong> scraped and exfiltrated from about <strong>2,500 users</strong> of the compromised AI package — has exposed gigabytes to terabytes of credentials and may affect <strong>2,100+ organisations</strong>.</p>
+<h2>Key Facts</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Vector</strong></td>
+<td>Malicious PyPI releases (LiteLLM, ~40 minutes exposure, March 2026)</td>
+</tr>
+<tr>
+<td><strong>Link</strong></td>
+<td>Associated with the earlier Trivy hack (access to trusted tooling release chain)</td>
+</tr>
+<tr>
+<td><strong>Harvested</strong></td>
+<td>Cloud keys, SSH keys, Kubernetes tokens, database passwords</td>
+</tr>
+<tr>
+<td><strong>Scope</strong></td>
+<td>~434,000 files, ~2,500 package users, 2,100+ organisations potentially exposed</td>
+</tr>
+<tr>
+<td><strong>Confidence</strong></td>
+<td>Probable — package-code analysis plus dataset corroboration; affected-org scope is an estimate</td>
+</tr>
+</tbody>
+</table>
+<h2>Context</h2>
+<p>The incident is the sharpest example this week of attackers targeting the <strong>AI tooling and identity estate</strong> rather than endpoints: LiteLLM is a widely deployed AI gateway, so a poisoned release sits at a trusted position in the machine-learning supply chain. Ars Technica frames it as part of the ongoing <strong>TeamPCP</strong> credential-theft wave (see <a href="long-running-data-theft-campaign-targeting-salesforce-and-servicenow.html">Long Running Data Theft Campaign Targeting Salesforce And Servicenow</a>). Australian and NZ organisations running LiteLLM should audit installations and rotate secrets exposed during the affected window, consistent with ASD supply-chain guidance.</p>
+<h2>Related Pages</h2>
+<ul>
+<li><a href="long-running-data-theft-campaign-targeting-salesforce-and-servicenow.html">Long Running Data Theft Campaign Targeting Salesforce And Servicenow</a> — SaaS credential theft</li>
+<li><a href="737-chrome-vpn-extensions-caught-routing-traffic-through-single-proxy-infrastruc.html">737 Chrome Vpn Extensions Caught Routing Traffic Through Single Proxy Infrastruc</a> — extension supply-chain abuse</li>
+</ul>
+<p><strong>Sources:</strong> raw/digests/Cyber-Digest-2026-08-13</p></div>
+            </div></main>
+<div class="footer">
+  <div class="links">
+    <a href="https://peterjaycox.github.io/cyber-digest-site/index.html">Home</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/stories.html">Story DB</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/daily/">Daily</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/monthly/index.html">Monthly</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/reports/index.html">Reports</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/wiki/index.html">Wiki</a>
+  </div>
+  Cyber Digest public site · built 2026-08-13 08:33
+</div>
+<script>
+var _t=document.documentElement;
+var _b=document.querySelector(".theme-toggle");
+function toggleTheme(){var n=_t.getAttribute("data-theme")==="dark"?"light":"dark";_t.setAttribute("data-theme",n);if(_b)_b.textContent=n==="dark"?"🌙":"☀️";try{if(n==="dark")localStorage.removeItem("cd-theme");else localStorage.setItem("cd-theme",n)}catch(e){}}
+(function(){try{var s=localStorage.getItem("cd-theme");if(s){_t.setAttribute("data-theme",s);if(_b)_b.textContent="☀️"}}catch(e){}})()
+</script>
+</body></html>
