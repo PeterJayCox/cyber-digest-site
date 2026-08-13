@@ -4,8 +4,8 @@ Cyber workspace (daily/monthly digests, story SQLite DB, wiki pages).
 
 Output: <repo>/docs/  (GitHub Pages publishes from the /docs folder of main)
 """
-import argparse, base64, html, json, os, re, shutil, sqlite3, sys
-from datetime import datetime
+import argparse, base64, calendar, email.utils, html, json, os, re, shutil, sqlite3, sys, time
+from datetime import datetime, date, timedelta
 
 VAULT = "/Users/petercox/Library/Mobile Documents/iCloud~md~obsidian/Documents/Peter's Vault/Cyber"
 ROOT  = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # <repo>/
@@ -13,6 +13,17 @@ DOCS  = os.path.join(ROOT, "docs")
 DB    = os.path.join(VAULT, "Cyber Digest", "cyber-digest.db")
 
 NASSP = os.path.expanduser("~/Desktop/Hermes/Cyber Digest/scripts")
+
+SITE_BASE = "https://peterjaycox.com"
+
+def xml_esc(s):
+    """Escape a string for XML text/attributes (fuller than html.escape: also \n)."""
+    return html.escape(str(s), quote=True).replace("\n", "&#10;").replace("\r", "&#13;")
+
+def _rfc822(datestr):
+    """ISO date -> RFC-822 pubDate ('Wed, 13 Aug 2026 00:00:00 GMT')."""
+    t = time.mktime(datetime.strptime(datestr, "%Y-%m-%d").timetuple())
+    return email.utils.formatdate(t, usegmt=True)
 
 SECTOR_EMOJI = {
  "Financial Services":"💰","Legal Services":"⚖️","Defence":"🛰️","Healthcare":"🏥",
@@ -223,6 +234,7 @@ def head(title, active="", root=""):
 <link rel="icon" type="image/svg+xml" href="{root}assets/svg/favicon.svg">
 <link rel="icon" type="image/x-icon" href="{root}assets/img/favicon.ico">
 <link rel="apple-touch-icon" sizes="180x180" href="{root}assets/img/apple-touch-icon.png">
+<link rel="alternate" type="application/rss+xml" title="Cyber Digest" href="https://peterjaycox.com/feed.xml">
 <meta property="og:type" content="website">
 <meta property="og:title" content="{esc(title)}">
 <meta property="og:description" content="Curated sector-by-sector roundup of global cybersecurity developments with source-reliability indexing, AU/NZ context, and searchable knowledge base.">
@@ -248,6 +260,7 @@ def foot():
     <a href="https://peterjaycox.github.io/cyber-digest-site/monthly/index.html">Monthly</a>
     <a href="https://peterjaycox.github.io/cyber-digest-site/reports/index.html">Reports</a>
     <a href="https://peterjaycox.github.io/cyber-digest-site/wiki/index.html">Wiki</a>
+    <a href="https://peterjaycox.com/feed.xml">RSS</a>
   </div>
   Cyber Digest public site · built {datetime.now().strftime("%Y-%m-%d %H:%M")}
 </div>
@@ -389,7 +402,152 @@ def threat_panel_html():
 </div>
 </div>'''
 
-# ---------------- Page builders ----------------
+# ---------------- Threat-index trend series (homepage chart) ----------------
+def threat_trend(max_points=45):
+    """Daily 14-day rolling threat index over time -> [{date, pct, band}, ...]."""
+    try:
+        sys.path.insert(0, os.path.expanduser("~/Desktop/Hermes/Cyber Digest/scripts"))
+        import threat_rating as tr
+        st = tr.load_stories(DB)
+    except Exception as e:
+        print(f"[threat_trend] engine unavailable: {e}")
+        return []
+    dates = sorted({s["_date"] for s in st})
+    if not dates:
+        return []
+    dates = dates[-max_points:]
+    series = []
+    for d in dates:
+        idx = tr.compute_index(st, window_days=14, asof=d)
+        series.append({"date": d.isoformat(), "pct": idx["pct"], "band": idx["band"]})
+    # append today's point so the chart's last value matches the panel above it
+    tod = date.today()
+    if not series or series[-1]["date"] != tod.isoformat():
+        idx = tr.compute_index(st, window_days=14, asof=tod)
+        series.append({"date": tod.isoformat(), "pct": idx["pct"], "band": idx["band"]})
+    return series
+
+def threat_trend_html(series):
+    """Inline SVG area chart of the daily 14-day rolling threat index."""
+    if not series:
+        return ""
+    n = len(series)
+    W, H, pad = 800, 230, 40
+    iw, ih = W - 2 * pad, H - 2 * pad
+    xstep = 0 if n <= 1 else iw / (n - 1)
+    def X(i): return pad + i * xstep
+    def Y(p): return pad + ih - ih * (max(0.0, min(100.0, p)) / 100.0)
+
+    bands = [("Low", "#22c55e", 40), ("Guarded", "#f59e0b", 55),
+             ("Elevated", "#f97316", 70), ("Severe", "#ef4444", 85), ("Critical", "#dc2626", 100)]
+    grid = "".join(
+        f'<line x1="{pad}" y1="{Y(b):.1f}" x2="{pad+iw}" y2="{Y(b):.1f}" '
+        f'stroke="currentColor" stroke-opacity="0.07" stroke-dasharray="3 4"/>'
+        for _, _, b in bands if b < 100)
+
+    pts = " ".join(f"{X(i):.1f},{Y(s['pct']):.1f}" for i, s in enumerate(series))
+    area = (f'<polygon points="{pad},{Y(0):.1f} {pts} {pad+iw:.1f},{Y(0):.1f}" '
+            'fill="var(--accent-glow)"/>') if n > 1 else ""
+    line = (f'<polyline points="{pts}" fill="none" stroke="var(--accent)" stroke-width="2.5" '
+            'stroke-linejoin="round" stroke-linecap="round"/>') if n > 1 else ""
+    dot = f'<circle cx="{X(n-1):.1f}" cy="{Y(series[-1]["pct"]):.1f}" r="4" fill="var(--accent)"/>'
+
+    step = max(1, n // 7)
+    xticks = "".join(
+        f'<text x="{X(i):.1f}" y="{H-12}" fill="currentColor" opacity="0.5" font-size="11" '
+        f'text-anchor="middle">{int(s["date"][8:10])}/{int(s["date"][5:7])}</text>'
+        for i, s in enumerate(series[::step]))
+    blab = "".join(
+        f'<text x="{pad+iw+6}" y="{Y(b)+3:.1f}" fill="{col}" font-size="10" opacity="0.75">{label}</text>'
+        for label, col, b in bands[:-1])
+    last = series[-1]
+    return f'''<div class="section" style="margin-top:6px">
+<h2><span class="bar"></span>Reported Threat Activity <span style="font-size:13px;font-weight:400;color:var(--text-dim)">· trend · 14-day rolling window</span></h2>
+<div style="background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:16px 20px;overflow-x:auto">
+<svg viewBox="0 0 {W} {H}" width="100%" role="img" aria-label="Reported threat activity index over time" style="display:block;max-width:820px;margin:0 auto;color:var(--text-secondary)">
+  <rect x="{pad}" y="{pad}" width="{iw}" height="{ih}" fill="none" stroke="currentColor" stroke-opacity="0.06"/>
+  {grid}
+  {area}{line}{dot}
+  {xticks}
+  {blab}
+</svg>
+<div style="font-size:12px;color:var(--text-dim);margin-top:6px;text-align:center">Daily 14-day rolling threat index · as of {last["date"]} · latest <strong>{last["band"]}</strong> · {last["pct"]:.0f}/100</div>
+</div></div>'''
+
+# ---------------- RSS feed + sitemap ----------------
+def build_feed(stories, days):
+    """Atom/RSS 2.0 feed of recent daily digests -> docs/feed.xml."""
+    from collections import OrderedDict
+    by_day = OrderedDict()
+    for s in stories:
+        d = s.get("digest_date")
+        if d:
+            by_day.setdefault(d, []).append(s)
+    day_dates = sorted(by_day.keys(), reverse=True)[:40]  # newest 40 day-editions
+    items = []
+    today = email.utils.formatdate(time.time(), usegmt=True)
+    for d in day_dates:
+        ds = by_day[d]
+        top = ""
+        best = -1
+        for s in ds:
+            sc = s.get("score") or 0
+            if sc > best:
+                best, top = sc, (s.get("headline") or "").strip()
+        lis = []
+        for s in ds:
+            title = (s.get("headline") or "").strip()
+            src = (s.get("source_name") or "").strip()
+            url = (s.get("source_url") or "").strip()
+            link = (f'<a href="{xml_esc(url)}">{xml_esc(src or title)}</a>') if url else xml_esc(src or title)
+            lis.append(f"<li><strong>{xml_esc(title)}</strong> &mdash; {link}</li>")
+        desc = "<p>" + xml_esc(d) + " — " + str(len(ds)) + " stories.</p><ul>" + "".join(lis) + "</ul>"
+        full_title = f"Cyber Digest — {d}" + (f" · {top}" if top else "")
+        guid = f"{SITE_BASE}/daily/{d}.html"
+        items.append(
+            "<item>\n"
+            f"  <title>{xml_esc(full_title)}</title>\n"
+            f"  <link>{guid}</link>\n"
+            f"  <guid isPermaLink=\"true\">{guid}</guid>\n"
+            f"  <pubDate>{_rfc822(d)}</pubDate>\n"
+            f"  <description>{xml_esc(desc)}</description>\n"
+            "</item>")
+    feed = (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">\n'
+        "<channel>\n"
+        "  <title>Cyber Digest</title>\n"
+        f"  <link>{SITE_BASE}/</link>\n"
+        "  <description>A curated, sector-by-sector roundup of global cybersecurity developments with source-reliability indexing and Australian &amp; New Zealand context.</description>\n"
+        "  <language>en-au</language>\n"
+        f"  <atom:link href=\"{SITE_BASE}/feed.xml\" rel=\"self\" type=\"application/rss+xml\"/>\n"
+        f"  <lastBuildDate>{today}</lastBuildDate>\n"
+        + "\n".join(items) +
+        "\n</channel>\n</rss>\n")
+    open(os.path.join(DOCS, "feed.xml"), "w", encoding="utf-8").write(feed)
+    return "feed.xml"
+
+def build_sitemap(days, months, pages, reports):
+    """XML sitemap + robots.txt -> docs/sitemap.xml, docs/robots.txt."""
+    urls = ["", "index.html", "stories.html", "globe.html", "methodology.html",
+            "daily/", "monthly/index.html", "reports/index.html", "wiki/index.html"]
+    for d, _ in days:
+        urls.append(f"daily/{d}.html")
+    for m in months:
+        urls.append(f"monthly/{m}.html")
+    for r in reports:
+        urls.append(f"reports/{r['_slug']}.html")
+    for ptype, map_ in pages.items():
+        for slug in map_:
+            urls.append(f"wiki/{ptype}/{slug}.html")
+    body = "".join(f"  <url><loc>{SITE_BASE}/{xml_esc(u)}</loc></url>\n" for u in sorted(set(urls)))
+    sitemap = ('<?xml version="1.0" encoding="UTF-8"?>\n'
+               '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+               + body + "</urlset>\n")
+    open(os.path.join(DOCS, "sitemap.xml"), "w", encoding="utf-8").write(sitemap)
+    robots = f"User-agent: *\nAllow: /\n\nSitemap: {SITE_BASE}/sitemap.xml\n"
+    open(os.path.join(DOCS, "robots.txt"), "w", encoding="utf-8").write(robots)
+
 def build_index(stories):
     daily=os.path.join(VAULT,"Cyber Digest","Daily")
     days=[]
@@ -586,6 +744,7 @@ def build_index(stories):
 </div>
 
 {threat_panel_html()}
+{threat_trend_html(threat_trend())}
 
 <div class="section"><h2><span class="bar"></span>Latest</h2><div class="grid cards">
 {latest_daily_card}
@@ -1324,14 +1483,17 @@ def main():
     stories=load_db()
     pages,linkmap=scan_wiki()
     FLAT_LINKMAP=linkmap
+    reports=_reports_load()
     days,months=build_index(stories)
     build_stories(stories)
     build_daily(days)
     build_monthly(months, stories)
     build_methodology()
-    build_reports(_reports_load())
+    build_reports(reports)
     build_wiki(pages)
     build_globe()
+    build_feed(stories, days)
+    build_sitemap(days, months, pages, reports)
     print(f"✅ Site built -> {DOCS}")
     print(f"   {len(stories)} stories, {len(days)} daily, {len(months)} monthly, {sum(len(v) for v in pages.values())} wiki pages")
 
