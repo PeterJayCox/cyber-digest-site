@@ -275,6 +275,13 @@ a:hover{text-decoration:underline}
 .seeall{font-size:13px;font-weight:500;color:var(--accent);white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;gap:5px;padding:6px 14px;border:1px solid var(--border);border-radius:999px;background:var(--surface2);transition:all .15s;flex-shrink:0}
 .seeall:hover{border-color:var(--accent);box-shadow:0 0 12px var(--accent-glow)}
 
+/* ---- Generated brand assets ---- */
+/* sector icon thumbnails in cards/badges */
+.sicon{width:20px;height:20px;object-fit:cover;border-radius:4px;vertical-align:-5px;margin-right:3px;flex-shrink:0;background:var(--surface2)}
+.tag .sicon{width:14px;height:14px;vertical-align:-3px;border-radius:3px}
+/* monthly edition cover art at top of monthly cards */
+.mcover{display:block;width:100%;height:110px;object-fit:cover;border-radius:8px;margin:-4px 0 10px;border:1px solid var(--border-light)}
+
 /* Daily archive cards */
 .daily-card{display:flex;align-items:center;gap:12px;flex-direction:row;padding:14px 16px;border-left:3px solid transparent}
 .daily-card.latest{border-left-color:var(--accent)}

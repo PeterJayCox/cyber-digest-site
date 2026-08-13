@@ -41,6 +41,21 @@ SECTOR_EMOJI = {
  "Transportation & Logistics":"🚚","Government, Policy & Infrastructure Security":"🏛️",
  "Cybercrime & Website Security":"🦠",
 }
+# raster sector icon filename (in assets/img/icons/) per sector name; falls back to a globe
+SECTOR_ICON = {
+ "Financial Services":"financial","Legal Services":"legal","Defence":"defence","Healthcare":"healthcare",
+ "Education":"education","Government":"government","Government & Policy":"government",
+ "Government, Policy & Infrastructure Security":"government","Energy & Utilities":"energy",
+ "Construction & Property":"general","Retail & Entertainment & Sport":"general","Global (Macro)":"general",
+ "Transport":"general","Technology & AI Governance":"general","IT / Technology":"it","IT":"it",
+ "Legal & Regulatory":"legal","General / Cross-Sector":"general",
+ "Manufacturing & Critical Infrastructure":"manufacturing","Media & Entertainment":"media",
+ "Geopolitical & State-Sponsored":"general","Cybercrime & Ransomware":"general",
+ "Transportation & Logistics":"general","Cybercrime & Website Security":"general",
+}
+def _sector_icon_img(name, root=""):
+    f = SECTOR_ICON.get(name, "general")
+    return f'<img class="sicon" src="{root}assets/img/icons/sector-{f}.png" alt="" loading="lazy">'
 # colour tag per sector for badges
 SECTOR_TAG = {
  "Financial Services":"cyan","Legal Services":"purple","Defence":"blue","Healthcare":"red",
@@ -227,7 +242,7 @@ def nav_html(active="", root=""):
         if active=="daily/" and href=="daily/": cls="active"
         ls.append(f'<a href="{BASE}/{href}" class="{cls}"><span class="t">{ico} {label}</span></a>')
     return f'''<nav class="topnav"><div class="inner">
-        <a class="brand" href="{BASE}/index.html"><img src="{root}assets/svg/logo-mark.svg" alt="" style="height:22px;width:22px;vertical-align:middle"> Cyber&nbsp;Digest<small>public site</small></a>
+        <a class="brand" href="{BASE}/index.html"><img src="{root}assets/img/logo-mark-icon.png" alt="" style="height:22px;width:22px;vertical-align:middle;border-radius:4px"> Cyber&nbsp;Digest<small>public site</small></a>
         <div class="navlinks">{"".join(ls)}</div>
         <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light">\U0001f319</div></div></nav>'''
 
@@ -236,7 +251,7 @@ def head(title, active="", root=""):
     return f'''<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{esc(title)}</title>
-<link rel="icon" type="image/svg+xml" href="{root}assets/svg/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="{root}assets/img/favicon-32.png">
 <link rel="icon" type="image/x-icon" href="{root}assets/img/favicon.ico">
 <link rel="apple-touch-icon" sizes="180x180" href="{root}assets/img/apple-touch-icon.png">
 <link rel="alternate" type="application/rss+xml" title="Cyber Digest" href="https://peterjaycox.com/feed.xml">
@@ -245,8 +260,8 @@ def head(title, active="", root=""):
 <meta property="og:description" content="Curated sector-by-sector roundup of global cybersecurity developments with source-reliability indexing, AU/NZ context, and searchable knowledge base.">
 <meta property="og:url" content="https://peterjaycox.com/">
 <meta property="og:image" content="https://peterjaycox.com/assets/img/og-image.png">
-<meta property="og:image:width" content="1024">
-<meta property="og:image:height" content="1024">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -702,7 +717,7 @@ def build_index(stories):
     dailylist="".join(_daily_card(d,month) for d,month in days[:12])
 
     seccards="".join(
-        f'<a class="card" href="stories.html?sector={esc(k)}"><h3>{SECTOR_EMOJI.get(k,"")} {esc(k)}</h3><span class="tag {SECTOR_TAG.get(k,"blue")}">{v} stories</span><span class="go">Browse →</span></a>'
+        f'<a class="card" href="stories.html?sector={esc(k)}"><h3>{_sector_icon_img(k)} {esc(k)}</h3><span class="tag {SECTOR_TAG.get(k,"blue")}">{v} stories</span><span class="go">Browse →</span></a>'
         for k,v in top_sectors)
     threatcards="".join(
         f'<a class="card" href="stories.html?threat={esc(thr)}"><h3>{esc(thr)}</h3><span class="tag {THREAT_TAG.get(thr,"blue")}">{v}</span><span class="go">Explore →</span></a>'
@@ -741,9 +756,8 @@ def build_index(stories):
         if d["top3_sectors"]:
             badges = []
             for name, count in d["top3_sectors"]:
-                emoji = SECTOR_EMOJI.get(name, "")
                 cls = SECTOR_TAG.get(name, "blue")
-                badges.append(f'<span class="tag {cls}" style="font-size:11px">{emoji} {count}</span>')
+                badges.append(f'<span class="tag {cls}" style="font-size:11px">{_sector_icon_img(name)} {count}</span>')
             sec_badges = '<div style="display:flex;gap:4px;flex-wrap:wrap;margin:4px 0 0">' + "".join(badges) + "</div>"
 
         # Top threats badges
@@ -773,6 +787,7 @@ def build_index(stories):
             fc_line += "</div>"
 
         card = f'''<a class="card card-monthly" href="monthly/{m}.html">
+          {f'<img class="mcover" src="assets/img/monthly-{m}.png" alt="" loading="lazy">' if os.path.exists(os.path.join(ROOT,"assets","img",f"monthly-{m}.png")) else ""}
           <div style="display:flex;align-items:flex-start;gap:14px">
             <div style="font-size:2.2rem;line-height:1;flex-shrink:0;margin-top:2px">📅</div>
             <div style="flex:1;min-width:0">
@@ -819,7 +834,7 @@ def build_index(stories):
         print("⚠️ templates/home-globe.html missing; homepage globe skipped")
 
     html= head("Cyber Digest — Home","index.html")+f'''
-<div class="hero"><div class="kicker">// independent security intelligence</div>
+<div class="hero" style="background:url('assets/img/hero-bg.png') center/cover no-repeat"><div class="kicker">// independent security intelligence</div>
 <h1>Cyber <span class="accent">Digest</span></h1>
 <p class="sub">A curated, sector-by-sector roundup of global cybersecurity developments with source-reliability indexing, Australian &amp; New Zealand context, and a searchable knowledge base of every story we've covered.</p></div>
 
@@ -1158,9 +1173,8 @@ def build_monthly(months, stories):
         if d["top3_sectors"]:
             badges = []
             for name, count in d["top3_sectors"]:
-                emoji = SECTOR_EMOJI.get(name, "")
                 cls = SECTOR_TAG.get(name, "blue")
-                badges.append(f'<span class="tag {cls}" style="font-size:11px">{emoji} {count}</span>')
+                badges.append(f'<span class="tag {cls}" style="font-size:11px">{_sector_icon_img(name)} {count}</span>')
             sec_badges = '<div style="display:flex;gap:4px;flex-wrap:wrap;margin:4px 0 0">' + "".join(badges) + "</div>"
 
         # Top threats badges
@@ -1189,7 +1203,12 @@ def build_monthly(months, stories):
                 fc_line += f' · ❌ {d["fact_contradicted"]} contradicted'
             fc_line += "</div>"
 
+        # monthly-index page lives at /monthly/index.html -> prefix asset paths with ../
+        sec_badges = sec_badges.replace('src="assets/', 'src="../assets/')
+        cover = f'<img class="mcover" src="../assets/img/monthly-{m}.png" alt="Monthly {m} cover" loading="lazy">' if os.path.exists(os.path.join(ROOT, "assets", "img", f"monthly-{m}.png")) else ""
+
         card = f'''<a class="card card-monthly" href="{m}.html">
+          {cover}
           <div style="display:flex;align-items:flex-start;gap:14px">
             <div style="font-size:2.2rem;line-height:1;flex-shrink:0;margin-top:2px">📅</div>
             <div style="flex:1;min-width:0">
