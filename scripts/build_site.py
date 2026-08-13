@@ -1034,14 +1034,18 @@ def build_daily(days):
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head><body>{nav_html("", root="../")}<div class="container"><div class="crumb"><a href="../index.html">Home</a> · <a href="index.html">Daily</a></div>
 <div class="wiki-body">{h}</div></div></body></html>''')
-    # Build enhanced daily index with month groups
+    # Build enhanced daily index with month groups — current month expanded,
+    # previous months nested in collapsible <details> groups so the page stays short.
     dag=daily_agg()
     month_order=["August","July","June","May","April","March","February","January"]
+    current_month = days[0][1] if days else None
     cards=""
     for m in month_order:
         mdays=[(d,mo) for d,mo in days if mo==m]
         if not mdays: continue
-        cards+=f'<div class="section"><h2><span class="bar"></span>{m} 2026</h2><div class="grid cards">'
+        n_days=len(mdays)
+        n_stories=sum((dag.get(d) or {}).get("count") or 0 for d,_ in mdays)
+        inner=[]
         for d,mo in mdays:
             a=dag.get(d,{})
             story_count=a.get("count") or 0
@@ -1062,13 +1066,21 @@ def build_daily(days):
                     f'<span class="tag {SECTOR_TAG.get(k,"blue")}" style="font-size:10.5px">{k} {v}</span>' for k,v in a["sectors"])+"</div>"
             latest=" latest" if d==days[0][0] else ""
             badge=f'<span class="tag cyan">latest</span>' if d==days[0][0] else f'<span class="tag blue">{_dow(d)}</span>'
-            cards+=f'''<a class="card daily-card{latest}" href="{d}.html">
+            inner.append(f'''<a class="card daily-card{latest}" href="{d}.html">
                 <div class="daily-date"><span class="daily-num">{d[8:10]}</span><span class="daily-dow">{_dow(d)}</span></div>
                 <div class="daily-info"><h3>{d}</h3>{count_label}{theme}{statline}{sector_badges}</div>
                 {badge}
                 <span class="go">→</span>
-            </a>'''
-        cards+="</div></div>"
+            </a>''')
+        body="".join(inner)
+        if m==current_month:
+            cards+=f'<div class="section"><h2><span class="bar"></span>{m} 2026</h2><div class="grid cards">{body}</div></div>'
+        else:
+            dayword="day" if n_days==1 else "days"
+            storyword="story" if n_stories==1 else "stories"
+            cards+=(f'<details class="month-group"><summary><span class="bar"></span>{m} 2026'
+                    f'<span class="month-summary">{n_days} {dayword} · {n_stories} {storyword}</span></summary>'
+                    f'<div class="grid cards">{body}</div></details>')
     html=head("Daily Editions","daily/", root="../")+f'''<div class="hero hero-band"><div class="kicker">// archive</div><h1>Daily <span class="accent">Digests</span></h1>
     <p class="sub">Every daily sector-by-sector roundup, newest first.</p></div>
     {cards}'''+foot()
@@ -1088,6 +1100,16 @@ def build_daily(days):
 .daily-card .go{font-size:16px;color:var(--text-dim);flex-shrink:0;margin-left:auto;padding-left:8px}
 .daily-card:hover .go{color:var(--accent);transform:translateX(3px);transition:transform .15s}
 .daily-card:hover{transform:translateY(-2px);transition:all .15s}
+/* Daily archive — collapsible month groups */
+.month-group{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:16px;overflow:hidden}
+.month-group summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;padding:14px 18px;font-size:17px;font-weight:700;color:var(--text);user-select:none}
+.month-group summary::-webkit-details-marker{display:none}
+.month-group summary::before{content:'▸';color:var(--accent);font-size:13px;flex-shrink:0;transition:transform .15s}
+.month-group[open] summary::before{transform:rotate(90deg)}
+.month-group summary:hover{background:var(--surface-hover)}
+.month-group summary .bar{width:3px;height:18px;background:var(--accent);border-radius:2px;flex-shrink:0}
+.month-group .month-summary{margin-left:auto;font-size:12.5px;font-weight:500;color:var(--text-dim);white-space:nowrap}
+.month-group .grid.cards{padding:0 16px 16px}
 '''
     with open(css_path,"a") as f: f.write(css_extra)
     open(os.path.join(DOCS,"daily","index.html"),"w",encoding="utf-8").write(html)

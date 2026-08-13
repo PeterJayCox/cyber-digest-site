@@ -1,72 +1,51 @@
 # Cyber Digest — Site Visual Assets
 
-All brand, navigation, iconography, and social preview assets for the Cyber Digest platform.
+Raster assets generated with **Nano Banana 2** (`fal-ai/nano-banana-2`) on the user's FAL account.
+All artwork is monoline cyan `#00b4d8` on a solid deep-navy `#0a0e1a` background, so PNGs blend
+seamlessly with the site's dark theme (the default). Opens with the full design system from the
+hand-off brief (`~/Desktop/Hermes/cyber-site-asset-brief.md`).
 
-## Asset Directory Structure
+## Directory
 
 ```
 assets/
-├── img/                       # Raster formats (PNG, ICO)
-│   ├── favicon.ico            # Multi-resolution ICO (16x16, 32x32, 48x48)
-│   ├── apple-touch-icon.png   # 180x180 PNG for iOS/Safari bookmark
-│   ├── logo-mark.png          # 1024x1024 transparent PNG logo mark
-│   ├── logo-full.png          # 1280x240 PNG full horizontal logo lockup
-│   ├── hero-bg.png            # 1600x600 telemetry backdrop raster
-│   ├── og-image.png           # 1200x630 Open Graph card for social sharing
-│   ├── monthly-2026-07.png    # 1200x400 header cover for July 2026 edition
-│   └── monthly-2026-08.png    # 1200x400 header cover for August 2026 edition
-└── svg/                       # Vector formats (SVG)
-    ├── logo-mark.svg          # Pure emblem (shield + radar arcs)
-    ├── logo-full.svg          # Full emblem + CYBER DIGEST wordmark
-    ├── favicon.svg            # Scalable vector favicon
-    ├── hero-bg.svg            # Hero telemetry backdrop
-    ├── divider.svg            # Section divider ornament
-    ├── og-image.svg           # Scalable Open Graph card source
-    ├── icons-sprite.svg       # Master SVG sprite (<symbol> IDs for all icons)
-    ├── monthly-2026-07.svg    # July 2026 cover SVG
-    └── monthly-2026-08.svg    # August 2026 cover SVG
+├── img/
+│   ├── logo-mark.png            # 1408×768 logo emblem + CYBER DIGEST wordmark
+│   ├── favicon-source.png       # 1024×1024 pure emblem (favicon source)
+│   ├── favicon.ico              # 16/32/48 multi-size favicon
+│   ├── favicon-16.png           # 16×16
+│   ├── favicon-32.png           # 32×32
+│   ├── favicon-1024.png         # 1024×1024 master
+│   ├── apple-touch-icon.png     # 180×180 (iOS/Safari bookmark)
+│   ├── og-image.png             # 1200×630 Open Graph / social share card
+│   ├── hero-bg.png              # 1600×600 hero radar/telemetry backdrop
+│   ├── divider.png              # 480×120 section-divider ornament
+│   ├── monthly-2026-07.png      # 1408×768 July 2026 monthly cover (state-sponsored ops / globe+shield)
+│   ├── monthly-2026-08.png      # 1584×672 August 2026 monthly cover (frontier-AI neural nodes)
+│   └── icons/                   # 11 sector icons (800px-ish, navy bg)
+│       ├── sector-it.png … sector-education.png
+├── gallery.html                 # local contact sheet of all assets (open to review)
+└── site.css                     # (existing) site stylesheet
 ```
 
-## HTML Integration Guide
+`*-source.png` files are the raw model outputs; the trimmed `og-image.png`, `hero-bg.png`,
+`divider.png`, and favicon sizes are centre-crop/resized derivatives.
 
-### 1. Favicon & Social Meta Tags (in `<head>`)
+## Integration notes
 
-```html
-<!-- Favicons -->
-<link rel="icon" type="image/svg+xml" href="https://peterjaycox.com/assets/svg/favicon.svg">
-<link rel="icon" type="image/x-icon" href="https://peterjaycox.com/assets/img/favicon.ico">
-<link rel="apple-touch-icon" sizes="180x180" href="https://peterjaycox.com/assets/img/apple-touch-icon.png">
+- **Favicon / meta** (in `<head>` of `build_site.py` + the two standalone templates):
+  `assets/img/favicon.ico`, `assets/img/apple-touch-icon.png`,
+  `<meta property="og:image" content="https://peterjaycox.com/assets/img/og-image.png">`
+- **Hero backdrop:** point the `.hero` background-image at `assets/img/hero-bg.png`
+  (or the SVG/`hero-bg-source.png`) at low CSS opacity.
+- **Sector icons:** replace `SECTOR_EMOJI` emojis with `<img src="assets/img/icons/sector-*.png">`.
+  Note these are **raster** (not `currentColor` SVG sprites), so they don't re-tint per theme —
+  they're designed for the dark theme's navy background. For light-theme tinting you'd need SVG.
+- **Monthly covers:** served from `assets/img/monthly-<edition>.png`.
 
-<!-- Open Graph / Social Sharing -->
-<meta property="og:type" content="website">
-<meta property="og:title" content="Cyber Digest — Security Intelligence & Archive">
-<meta property="og:description" content="A curated, sector-by-sector roundup of global cybersecurity developments with source-reliability indexing and searchable knowledge base.">
-<meta property="og:url" content="https://peterjaycox.com/">
-<meta property="og:image" content="https://peterjaycox.com/assets/img/og-image.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
-```
+## Limitation vs original brief
 
-### 2. Using SVG Icon Symbols
-
-Include the icon sprite once at the top of `<body>` or inline via `<use>`:
-
-```html
-<!-- Sector Icon Example -->
-<svg class="icon" width="20" height="20"><use href="https://peterjaycox.com/assets/svg/icons-sprite.svg#sector-it"></use></svg>
-
-<!-- Nav Icon Example -->
-<a href="index.html" class="nav-link">
-  <svg class="icon" width="16" height="16"><use href="https://peterjaycox.com/assets/svg/icons-sprite.svg#nav-home"></use></svg> Home
-</a>
-```
-
-### 3. Hero Background & Branding Lockup
-
-```html
-<div class="hero" style="background-image: url('https://peterjaycox.com/assets/svg/hero-bg.svg'); background-size: cover; background-position: center;">
-  <img src="https://peterjaycox.com/assets/svg/logo-full.svg" alt="Cyber Digest Logo" class="hero-logo" style="max-width: 280px; height: auto;">
-  ...
-</div>
-```
+The brief preferred **vector SVG** sprites (esp. the icon set, so CSS could tint via `currentColor`).
+Nano Banana 2 is a **raster** image model, so output is PNG on a fixed navy background. It meets the
+brief's "escape hatch" (PNG + transparent/single-colour), but the icon set can't be re-themed by CSS.
+If light-theme icons are required, hand-author SVG sprites or re-tint at build time.
