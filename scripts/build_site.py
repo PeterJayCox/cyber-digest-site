@@ -21,9 +21,14 @@ def xml_esc(s):
     return html.escape(str(s), quote=True).replace("\n", "&#10;").replace("\r", "&#13;")
 
 def _rfc822(datestr):
-    """ISO date -> RFC-822 pubDate ('Wed, 13 Aug 2026 00:00:00 GMT')."""
-    t = time.mktime(datetime.strptime(datestr, "%Y-%m-%d").timetuple())
-    return email.utils.formatdate(t, usegmt=True)
+    """ISO date -> RFC-822 pubDate ('13 Aug 2026 00:00:00 GMT').
+
+    Uses calendar.timegm (UTC) so the GMT calendar date always equals the
+    digest date — time.mktime would convert local midnight to GMT and could
+    shift the date by a day on +timezone machines.
+    """
+    d = datetime.strptime(datestr, "%Y-%m-%d")
+    return email.utils.formatdate(calendar.timegm(d.utctimetuple()), usegmt=True)
 
 SECTOR_EMOJI = {
  "Financial Services":"💰","Legal Services":"⚖️","Defence":"🛰️","Healthcare":"🏥",
