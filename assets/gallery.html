@@ -1,0 +1,32 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+body{background:#0a0e1a;color:#e2e8f0;font-family:sans-serif;padding:20px}
+h2{color:#00b4d8;margin-top:40px}
+.g{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.g div{border:1px solid #2a3a4a;padding:8px;border-radius:8px;background:#111827}
+img{max-width:100%;height:auto;display:block}
+.cap{font-size:12px;color:#8a9cb6;margin-top:6px}
+</style></head><body>
+<h1>Cyber Digest — generated assets</h1>
+<h2>Brand</h2><div class="g">
+<div><img src="img/logo-mark.png"><div class="cap">logo-mark (1408x768)</div></div>
+<div><img src="img/favicon-1024.png"><div class="cap">favicon-source</div></div>
+<div><img src="img/favicon-32.png"><div class="cap">favicon-32</div></div>
+<div><img src="img/favicon-16.png"><div class="cap">favicon-16</div></div>
+<div><img src="img/apple-touch-icon.png"><div class="cap">apple-touch-icon 180</div></div>
+</div>
+<h2>Social / hero</h2><div class="g">
+<div><img src="img/og-image.png"><div class="cap">og-image 1200x630</div></div>
+<div><img src="img/hero-bg.png"><div class="cap">hero-bg 1600x600</div></div>
+<div><img src="img/divider.png"><div class="cap">divider 480x120</div></div>
+</div>
+<h2>Monthly covers</h2><div class="g">
+<div><img src="img/monthly-2026-07.png"><div class="cap">monthly-2026-07</div></div>
+<div><img src="img/monthly-2026-08.png"><div class="cap">monthly-2026-08</div></div>
+</div>
+<h2>Sector icons</h2><div class="g" id="icons"></div>
+<script>
+const ic=['it','government','healthcare','legal','general','defence','financial','manufacturing','media','energy','education'];
+const el=document.getElementById('icons');
+ic.forEach(n=>{const d=document.createElement('div');d.innerHTML=`<img src="img/icons/sector-${n}.png"><div class="cap">sector-${n}</div>`;el.appendChild(d);});
+</script>
+</body></html>
