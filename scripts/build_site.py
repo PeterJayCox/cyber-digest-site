@@ -460,8 +460,8 @@ def threat_trend_html(series):
     step = max(1, n // 7)
     xticks = "".join(
         f'<text x="{X(i):.1f}" y="{H-12}" fill="currentColor" opacity="0.5" font-size="11" '
-        f'text-anchor="middle">{int(s["date"][8:10])}/{int(s["date"][5:7])}</text>'
-        for i, s in enumerate(series[::step]))
+        f'text-anchor="middle">{int(series[i]["date"][8:10])}/{int(series[i]["date"][5:7])}</text>'
+        for i in range(0, n, step))
     blab = "".join(
         f'<text x="{pad+iw+6}" y="{Y(b)+3:.1f}" fill="{col}" font-size="10" opacity="0.75">{label}</text>'
         for label, col, b in bands[:-1])
