@@ -553,6 +553,52 @@ def build_sitemap(days, months, pages, reports):
     robots = f"User-agent: *\nAllow: /\n\nSitemap: {SITE_BASE}/sitemap.xml\n"
     open(os.path.join(DOCS, "robots.txt"), "w", encoding="utf-8").write(robots)
 
+def daily_agg():
+    """Per-digest-date aggregates from the DB, shared by the homepage Daily
+    Editions section and the Daily archive index: story count, top-scoring
+    headline, top sectors/threats/sources, Tier-1 alert count, ANZ count."""
+    con=sqlite3.connect(DB); con.row_factory=sqlite3.Row
+    rows=con.execute(
+        "SELECT digest_date,headline,sector,threat_type,source_name,reliability_tier,anz_relevance,score "
+        "FROM stories ORDER BY digest_date DESC, score DESC").fetchall()
+    con.close()
+    agg={}
+    for r in rows:
+        dd=r["digest_date"]
+        if not dd: continue
+        a=agg.setdefault(dd,{"count":0,"top":None,"score":-1,"sectors":{},"threats":{},"sources":{},"tier1":0,"anz":0})
+        a["count"]+=1
+        sc=r["score"] or 0
+        if sc>a["score"]:
+            a["score"]=sc; a["top"]=(r["headline"] or "").strip()
+        if r["sector"]: a["sectors"][r["sector"]]=a["sectors"].get(r["sector"],0)+1
+        if r["threat_type"]: a["threats"][r["threat_type"]]=a["threats"].get(r["threat_type"],0)+1
+        if r["source_name"]: a["sources"][r["source_name"]]=a["sources"].get(r["source_name"],0)+1
+        if r["reliability_tier"]==1: a["tier1"]+=1
+        if (r["anz_relevance"] or 0)>=3: a["anz"]+=1
+    for a in agg.values():
+        a["sectors"]=sorted(a["sectors"].items(),key=lambda x:-x[1])[:3]
+        a["threats"]=sorted(a["threats"].items(),key=lambda x:-x[1])[:3]
+        a["sources"]=sorted(a["sources"].items(),key=lambda x:-x[1])[:3]
+    return agg
+
+# Per-date day-of-week lookup (cache)
+_DOW_NAMES=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
+_DOW_CACHE={}
+def _dow(datestr):
+    if datestr not in _DOW_CACHE:
+        try:
+            import datetime as _dt
+            _DOW_CACHE[datestr]=_DOW_NAMES[_dt.datetime.strptime(datestr,"%Y-%m-%d").weekday()]
+        except Exception:
+            _DOW_CACHE[datestr]=""
+    return _DOW_CACHE[datestr]
+
+def _trunc(s,n=82):
+    s=(s or "").strip()
+    if len(s)<=n: return s
+    return s[:n].rsplit(" ",1)[0]+"…"
+
 def build_index(stories):
     daily=os.path.join(VAULT,"Cyber Digest","Daily")
     days=[]
@@ -582,21 +628,8 @@ def build_index(stories):
     sources=set(s.get("source_name") for s in stories if s.get("source_name"))
     anzi=[s for s in stories if (s.get("anz_relevance") or 0)>=3]
 
-    # Per-day aggregation: story count + top-scoring headline, keyed by digest_date
-    daily_info={}
-    for s in stories:
-        dd=s.get("digest_date")
-        if not dd: continue
-        info=daily_info.setdefault(dd,{"count":0,"top":None,"score":-1})
-        info["count"]+=1
-        sc=s.get("score") or 0
-        if sc>info["score"]:
-            info["score"]=sc
-            info["top"]=(s.get("headline") or "").strip()
-    def _trunc(s,n=82):
-        s=(s or "").strip()
-        if len(s)<=n: return s
-        return s[:n].rsplit(" ",1)[0]+"…"
+    # Per-day aggregation (shared with the Daily archive page) keyed by digest_date
+    dag=daily_agg()
 
     # latest digest card
     if months:
@@ -606,25 +639,56 @@ def build_index(stories):
     latest_daily_card=""
     if days:
         d,month=days[0]
-        latest_daily_card=f'''<a class="card" href="daily/{d}.html"><h3>Latest Daily · {d}</h3>
-        <span class="tag blue">today</span><p>Full sector-by-sector roundup with source reliability indexing and executive summary.</p>
+        la=dag.get(d,{})
+        ln=la.get("count") or 0
+        latest_daily_card=f'''<a class="card card-daily-feature" href="daily/{d}.html">
+        <div style="display:flex;align-items:flex-start;gap:14px">
+          <div style="font-size:2.2rem;line-height:1;flex-shrink:0;margin-top:2px">📅</div>
+          <div style="flex:1;min-width:0"><h3>Latest Daily</h3><div class="meta">{d} · {ln} {"story" if ln==1 else "stories"}</div></div>
+          <span class="tag cyan">today</span>
+        </div>
+        <p class="daily-theme">{_trunc(la.get("top") or "Full sector-by-sector roundup with source reliability indexing and executive summary.")}</p>
         <span class="go">Read →</span></a>'''
+
+    def _tag_badges(items, tagmap):
+        if not items: return ""
+        return '<div style="display:flex;gap:4px;flex-wrap:wrap;margin:6px 0 0">'+"".join(
+            f'<span class="tag {tagmap.get(k,"blue")}" style="font-size:11px">{k} {v}</span>' for k,v in items)+"</div>"
+
+    def _daily_card(d,month):
+        a=dag.get(d)
+        if not a: a={"count":0,"top":None,"sectors":[],"threats":[],"sources":[],"tier1":0,"anz":0}
+        n=a["count"]
+        tag=f'<span class="tag green">{n} {"story" if n==1 else "stories"}</span>' if n else ""
+        theme=f'<p class="daily-theme">{_trunc(a["top"])}</p>' if a.get("top") else ""
+        stats=[]
+        if a["sectors"]: stats.append(f'🏷️ {a["sectors"][0][0]}')
+        if a["threats"]: stats.append(f'⚠️ {a["threats"][0][0]}')
+        if a["sources"]: stats.append(f'📡 {a["sources"][0][0]}')
+        if a["tier1"]: stats.append(f'🟥 {a["tier1"]} tier-1')
+        if a["anz"]: stats.append(f'🇦🇺 {a["anz"]} ANZ')
+        stats_line=f'<div style="font-size:12px;color:var(--text-dim);margin:5px 0 0;line-height:1.4">{" · ".join(stats)}</div>' if stats else ""
+        return f'''<a class="card" href="daily/{d}.html">
+          <div style="display:flex;align-items:flex-start;gap:12px">
+            <div class="dailynum">{_dow(d)}<span>{d[8:10]}</span></div>
+            <div style="flex:1;min-width:0"><h3>{d}</h3><div class="meta">{month} 2026</div></div>
+            {tag}
+          </div>
+          {theme}
+          {stats_line}
+          {_tag_badges(a["sectors"], SECTOR_TAG)}
+          <span class="go" style="margin-top:8px">Read →</span>
+        </a>'''
+
+    dailylist="".join(_daily_card(d,month) for d,month in days[:12])
 
     seccards="".join(
         f'<a class="card" href="stories.html?sector={esc(k)}"><h3>{SECTOR_EMOJI.get(k,"")} {esc(k)}</h3><span class="tag {SECTOR_TAG.get(k,"blue")}">{v} stories</span><span class="go">Browse →</span></a>'
         for k,v in top_sectors)
     threatcards="".join(
-        f'<a class="card" href="stories.html?threat={esc(k)}"><h3>{esc(k)}</h3><span class="tag {THREAT_TAG.get(k,"blue")}">{v}</span><span class="go">Explore →</span></a>'
-        for k,v in top_threats)
+        f'<a class="card" href="stories.html?threat={esc(thr)}"><h3>{esc(thr)}</h3><span class="tag {THREAT_TAG.get(thr,"blue")}">{v}</span><span class="go">Explore →</span></a>'
+        for thr,v in top_threats)
 
-    def _daily_card(d,month):
-        info=daily_info.get(d,{"count":0,"top":None})
-        n=info["count"] or 0
-        tag=f'<span class="tag green">{n} {"story" if n==1 else "stories"}</span>' if n else ""
-        theme=f'<p class="daily-theme">{_trunc(info["top"])}</p>' if info.get("top") else ""
-        return f'<a class="card" href="daily/{d}.html"><h3>{d}</h3><span class="meta">{month} 2026</span>{tag}{theme}<span class="go">Read →</span></a>'
-
-    dailylist="".join(_daily_card(d,month) for d,month in days[:12])
     # Build rich monthly cards with full metadata from markdown
     month_cards = []
     for m in months:
@@ -934,10 +998,6 @@ render();
 def build_daily(days):
     os.makedirs(os.path.join(DOCS,"daily"),exist_ok=True)
     daily_src=os.path.join(VAULT,"Cyber Digest","Daily")
-    # Get story counts per date from DB
-    con=sqlite3.connect(DB)
-    counts={r[0]:r[1] for r in con.execute("SELECT digest_date,COUNT(*) FROM stories GROUP BY digest_date")}
-    con.close()
     for d,month in days:
         mdpath=os.path.join(daily_src,month,f"Cyber-Digest-{d}.md")
         out=os.path.join(DOCS,"daily",f"{d}.html")
@@ -956,24 +1016,36 @@ def build_daily(days):
 </head><body>{nav_html("", root="../")}<div class="container"><div class="crumb"><a href="../index.html">Home</a> · <a href="index.html">Daily</a></div>
 <div class="wiki-body">{h}</div></div></body></html>''')
     # Build enhanced daily index with month groups
+    dag=daily_agg()
     month_order=["August","July","June","May","April","March","February","January"]
-    day_names=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
     cards=""
     for m in month_order:
         mdays=[(d,mo) for d,mo in days if mo==m]
         if not mdays: continue
         cards+=f'<div class="section"><h2><span class="bar"></span>{m} 2026</h2><div class="grid cards">'
         for d,mo in mdays:
-            from datetime import datetime
-            dt=datetime.strptime(d,"%Y-%m-%d")
-            dow=day_names[dt.weekday()]
-            story_count=counts.get(d,0)
-            count_label=f"<span class=\"meta\">{story_count} stories</span>" if story_count else "<span class=\"meta\" style=\"color:var(--text-dim);opacity:.5\">pending DB ingest</span>"
+            a=dag.get(d,{})
+            story_count=a.get("count") or 0
+            if story_count:
+                count_label=f'<span class="meta">{story_count} stories</span>'
+            else:
+                count_label='<span class="meta" style="color:var(--text-dim);opacity:.5">pending DB ingest</span>'
+            theme=f'<p class="daily-theme">{_trunc(a.get("top"))}</p>' if a.get("top") else ""
+            statbits=[]
+            if a.get("threats"): statbits.append(f'⚠️ {a["threats"][0][0]}')
+            if a.get("sources"): statbits.append(f'📡 {a["sources"][0][0]}')
+            if a.get("tier1"): statbits.append(f'🟥 {a["tier1"]} tier-1')
+            if a.get("anz"): statbits.append(f'🇦🇺 {a["anz"]} ANZ')
+            statline=f'<div class="daily-stats">{" · ".join(statbits)}</div>' if statbits else ""
+            sector_badges=""
+            if a.get("sectors"):
+                sector_badges='<div style="display:flex;gap:4px;flex-wrap:wrap;margin:5px 0 0">'+"".join(
+                    f'<span class="tag {SECTOR_TAG.get(k,"blue")}" style="font-size:10.5px">{k} {v}</span>' for k,v in a["sectors"])+"</div>"
             latest=" latest" if d==days[0][0] else ""
-            badge=f'<span class="tag cyan">latest</span>' if d==days[0][0] else f'<span class="tag blue">{dow}</span>'
+            badge=f'<span class="tag cyan">latest</span>' if d==days[0][0] else f'<span class="tag blue">{_dow(d)}</span>'
             cards+=f'''<a class="card daily-card{latest}" href="{d}.html">
-                <div class="daily-date"><span class="daily-num">{dt.day}</span><span class="daily-dow">{dow}</span></div>
-                <div class="daily-info"><h3>{d}</h3>{count_label}</div>
+                <div class="daily-date"><span class="daily-num">{d[8:10]}</span><span class="daily-dow">{_dow(d)}</span></div>
+                <div class="daily-info"><h3>{d}</h3>{count_label}{theme}{statline}{sector_badges}</div>
                 {badge}
                 <span class="go">→</span>
             </a>'''

@@ -206,6 +206,19 @@ a:hover{text-decoration:underline}
 .daily-card .daily-info .meta{font-size:12px;color:var(--text-dim)}
 .daily-card .go{font-size:16px;color:var(--text-dim);flex-shrink:0;margin-left:auto;padding-left:8px;transition:all .15s}
 .daily-card:hover .go{color:var(--accent);transform:translateX(3px)}
+/* Daily archive card — headline/theme line */
+.daily-card .daily-theme{font-size:12.5px;color:var(--text-muted);line-height:1.4;margin:4px 0 0;font-weight:400}
+.daily-card .daily-stats{font-size:11.5px;color:var(--text-dim);margin:4px 0 0;line-height:1.4}
+.daily-card .daily-info .daily-theme{margin-top:6px}
+
+/* Homepage Daily Editions cards — day number block */
+.card .dailynum{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:44px;height:52px;border-radius:10px;background:var(--surface2);border:1px solid var(--border);flex-shrink:0}
+.card .dailynum span{font-size:22px;font-weight:800;line-height:1;letter-spacing:-.5px;color:var(--text);margin-top:2px}
+.card .dailynum{font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px}
+.card .daily-theme{font-size:12.5px;color:var(--text-muted);line-height:1.45;margin:8px 0 0;font-weight:400}
+
+/* Latest Daily feature card */
+.card.card-daily-feature{border-left:3px solid var(--accent)}
 
 /* ===== WIKI ===== */
 .wiki-card h3 a{color:var(--text)}
