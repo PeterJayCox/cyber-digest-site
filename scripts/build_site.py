@@ -533,19 +533,38 @@ def build_feed(stories, days):
     return "feed.xml"
 
 def build_sitemap(days, months, pages, reports):
-    """XML sitemap + robots.txt -> docs/sitemap.xml, docs/robots.txt."""
-    urls = ["", "index.html", "stories.html", "globe.html", "methodology.html",
-            "daily/", "monthly/index.html", "reports/index.html", "wiki/index.html"]
-    for d, _ in days:
-        urls.append(f"daily/{d}.html")
-    for m in months:
-        urls.append(f"monthly/{m}.html")
+    """XML sitemap + robots.txt -> docs/sitemap.xml, docs/robots.txt.
+    Each <url> carries a lastmod: daily digests use their publish date,
+    everything else uses the built file's mtime so crawlers pick up
+    freshness when the site regenerates."""
+    from datetime import datetime, timezone
+
+    def _mtime(path):
+        """ISO-8601 lastmod date for a built file, or today if absent."""
+        p = os.path.join(DOCS, path)
+        if os.path.exists(p):
+            return datetime.fromtimestamp(os.path.getmtime(p), timezone.utc).strftime("%Y-%m-%d")
+        return datetime.now(timezone.utc).strftime("%Y-%m-%d")
+
+    entry = []
+    for u in ["", "index.html", "stories.html", "globe.html", "methodology.html",
+              "daily/", "monthly/index.html", "reports/index.html", "wiki/index.html"]:
+        entry.append((u, _mtime("index.html" if u in ("", "index.html") else u)))
+    for d, _ in days:  # daily digests: lastmod = publish date
+        entry.append((f"daily/{d}.html", d))
+    for m in months:   # monthly digests: lastmod = file mtime
+        entry.append((f"monthly/{m}.html", _mtime(f"monthly/{m}.html")))
     for r in reports:
-        urls.append(f"reports/{r['_slug']}.html")
+        entry.append((f"reports/{r['_slug']}.html", _mtime(f"reports/{r['_slug']}.html")))
     for ptype, map_ in pages.items():
         for slug in map_:
-            urls.append(f"wiki/{ptype}/{slug}.html")
-    body = "".join(f"  <url><loc>{SITE_BASE}/{xml_esc(u)}</loc></url>\n" for u in sorted(set(urls)))
+            entry.append((f"wiki/{ptype}/{slug}.html", _mtime(f"wiki/{ptype}/{slug}.html")))
+
+    entry = sorted(set(entry))
+    body = "".join(
+        f"  <url><loc>{SITE_BASE}/{xml_esc(u)}</loc><lastmod>{lm}</lastmod></url>\n"
+        for u, lm in entry
+    )
     sitemap = ('<?xml version="1.0" encoding="UTF-8"?>\n'
                '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
                + body + "</urlset>\n")
@@ -812,9 +831,6 @@ def build_index(stories):
 <div class="stat"><span class="num">{len(anzi)}</span> AU/NZ</div>
 </div>
 
-{threat_panel_html()}
-{threat_trend_html(threat_trend())}
-
 <div class="section"><h2><span class="bar"></span>Latest</h2><div class="grid cards">
 {latest_daily_card}
 <a class="card" href="stories.html"><h3>Story Database</h3><span class="tag blue">searchable</span><p>Filter {n_stories} stories by sector, threat type, geography, AU/NZ relevance and date.</p><span class="go">Browse →</span></a>
@@ -822,6 +838,9 @@ def build_index(stories):
 </div></div>
 
 {home_globe}
+
+{threat_panel_html()}
+{threat_trend_html(threat_trend())}
 
 <div class="section"><h2><span class="bar"></span>Monthly Editions</h2><div class="grid cards grid-monthly">{monthlist}</div></div>
 {rptsec}
