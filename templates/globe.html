@@ -19,13 +19,12 @@
   html,body{margin:0;padding:0;height:100%;background:var(--bg);
     color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
     overflow:hidden;-webkit-font-smoothing:antialiased}
-  #globe{position:fixed;inset:0;top:-40px;width:100%;height:calc(100% + 40px);display:block;background:
+  #globe{position:fixed;inset:0;width:100%;height:100%;display:block;background:
       radial-gradient(1200px 700px at 70% 20%,rgba(0,180,216,.10),transparent 60%),
       radial-gradient(900px 600px at 15% 85%,rgba(0,150,199,.08),transparent 55%),var(--bg)}
-  /* the globe renderer centres the sphere inside #globe; pulling the container's
-     top edge up slightly raises the visual centre so it balances against the
-     header/nav chrome at the top of the frame (reduced from -160px — the globe
-     was sitting too high in the frame) */
+  /* the globe renderer centres the sphere inside #globe; the container fills the
+     frame exactly so the globe sits centred in the viewport (prior -40px/-160px
+     top offsets raised it too high in the frame) */
   .bar{position:fixed;top:0;left:0;right:0;height:3px;z-index:20;
     background:linear-gradient(90deg,var(--cyan2),var(--cyan) 40%,var(--sky))}
   header{position:fixed;top:14px;left:16px;right:16px;z-index:10;
