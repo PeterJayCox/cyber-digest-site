@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Digest — 2026-08-15</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0e1a;--surface:#111827;--surface2:#1a2332;--surface-hover:#1e293b;--text:#e2e8f0;--text-secondary:#b0c0d0;--text-muted:#8a9cb6;--text-dim:#64748b;--border:rgba(255,255,255,0.06);--border-light:rgba(255,255,255,0.1);--accent:#00b4d8;--accent-glow:rgba(0,180,216,.08);--accent-bg:rgba(0,180,216,.1);--vuln:#f43f5e;--geo:#8b5cf6;--crime:#f59e0b;--iot:#10b981;--govt:#3b82f6;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--purple:#8b5cf6;--nav-blur:rgba(10,14,26,.88);--kicker-color:#22d3ee;--kicker-bg:rgba(0,180,216,.08);--kicker-border:rgba(0,180,216,.2)}
+[data-theme="light"]{--bg:#ffffff;--surface:#fafafa;--surface2:#f3f4f5;--surface-hover:#ebebeb;--text:#171717;--text-secondary:#4d4d4d;--text-muted:#666666;--text-dim:#808080;--border:rgba(0,0,0,0.06);--border-light:rgba(0,0,0,0.1);--accent:#0072f5;--accent-glow:rgba(0,114,245,.06);--accent-bg:#ebf5ff;--vuln:#f43f5e;--geo:#8b5cf6;--crime:#f59e0b;--iot:#10b981;--govt:#3b82f6;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--purple:#8b5cf6;--nav-blur:rgba(255,255,255,.88);--kicker-color:#0068d6;--kicker-bg:#ebf5ff;--kicker-border:rgba(0,114,245,.2)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:Inter,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;min-height:100vh;transition:background .25s,color .25s}
+.skip-link{position:absolute;left:-9999px;top:0;z-index:2000;background:var(--accent);color:#fff;padding:8px 14px;border-radius:0 0 8px 0;font-size:13px;font-weight:600}
+.skip-link:focus{left:0}
+#progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--purple));z-index:10000;width:0%;transition:width .15s}
+/* Top nav */
+.topnav{position:sticky;top:0;z-index:9999;background:var(--nav-blur);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);-webkit-transform:translateZ(0);transform:translateZ(0);will-change:transform;transition:background .25s,border .25s}
+.topnav .inner{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;align-items:center;height:56px;gap:8px}
+.brand{font-size:16px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:8px;letter-spacing:-.3px}
+.brand .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);flex-shrink:0;transition:background .25s}
+.brand small{font-size:10px;color:var(--text-dim);font-weight:400;letter-spacing:1px;text-transform:uppercase}
+.navlinks{display:flex;gap:2px;margin-left:auto;align-items:center}
+.navlinks a{color:var(--text-muted);font-size:13px;font-weight:500;padding:6px 12px;border-radius:6px;transition:all .12s}
+.navlinks a:hover{color:var(--text);background:var(--surface2);text-decoration:none}
+.navlinks a.active{color:var(--text);background:var(--surface-hover);font-weight:600}
+.theme-toggle{display:flex;align-items:center;justify-content:center;margin-left:8px;width:34px;height:34px;border-radius:8px;background:var(--surface2);cursor:pointer;border:1px solid var(--border);transition:all .25s;user-select:none;flex-shrink:0;font-size:16px}
+.theme-toggle:hover{background:var(--surface-hover);border-color:var(--border-light)}
+/* Layout */
+.wrap{max-width:1100px;margin:auto;padding:0 28px 60px;display:flex;gap:32px;position:relative;z-index:1}
+#toc{position:sticky;top:80px;width:210px;flex-shrink:0;height:fit-content;max-height:calc(100vh-100px);overflow-y:auto;padding:18px 14px;background:var(--surface);border:1px solid var(--border);border-radius:10px;font-size:12px;transition:background .25s,border .25s}
+#toc h3{color:var(--accent);font-size:10px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px}
+#toc a{display:block;color:var(--text-muted);text-decoration:none;padding:3px 8px;border-radius:6px;margin-bottom:2px;transition:all .2s;border-left:2px solid transparent;font-size:12px}
+#toc a:hover{color:var(--text);background:var(--accent-bg)}
+#toc a.active{color:var(--accent);border-left-color:var(--accent);background:var(--accent-bg)}
+.main{flex:1;min-width:0}
+/* Header / Hero */
+.header{padding:32px 0 20px;text-align:center;border-bottom:1px solid var(--border);margin-bottom:28px}
+.header .kicker{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;letter-spacing:1px;color:var(--kicker-color);margin-bottom:14px;padding:5px 16px;border-radius:6px;display:inline-block;background:var(--kicker-bg);border:1px solid var(--kicker-border);transition:all .25s}
+.header h1{font-size:clamp(1.5rem,4vw,2rem);font-weight:800;letter-spacing:-.03em;color:var(--text);margin-bottom:4px}
+.header .subtitle{color:var(--text-secondary);font-size:14px}
+/* Sections */
+.section{margin-bottom:28px;scroll-margin-top:80px}
+.section h2{font-size:1.15rem;font-weight:600;color:var(--text);margin-bottom:14px;border-bottom:1px solid var(--border);padding-bottom:10px;display:flex;align-items:center;gap:10px}
+.section h2 .icon{font-size:1.3rem;line-height:1}
+.section h2 .count{margin-left:auto;background:var(--surface2);color:var(--text-muted);padding:2px 10px;border-radius:100px;font-size:11px;font-weight:600;white-space:nowrap}
+/* Exec summary */
+.exec-summary{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px 30px;margin-bottom:28px;position:relative;overflow:hidden;transition:background .25s,border .25s}
+.exec-summary::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--vuln),var(--purple))}
+.exec-summary h2{font-size:11px;text-transform:uppercase;letter-spacing:.15em;color:var(--accent);font-weight:700;margin-bottom:14px;border:none;padding:0}
+.exec-summary p{color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:14px}
+.exec-summary p:last-child{margin-bottom:0}
+.exec-summary p strong{color:var(--text);font-weight:600}
+/* AU context */
+.au-context-box{background:linear-gradient(135deg,rgba(0,180,216,.06),rgba(59,130,246,.06));border:1px solid rgba(0,180,216,.15);border-radius:10px;padding:18px 22px;margin:14px 0;position:relative}
+.au-context-box::before{content:'AU';position:absolute;top:-8px;right:14px;background:var(--accent);color:#fff;font-size:10px;font-weight:800;padding:1px 7px;border-radius:4px;letter-spacing:.05em}
+.au-context-box p{color:var(--text-muted);font-size:13px;line-height:1.65}
+/* Stats */
+.stats-row{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap;justify-content:center}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:8px 18px;text-align:center;font-size:13px;color:var(--text-muted);transition:background .25s,border .25s}
+.stat-card .stat-num{font-weight:700;color:var(--text);font-size:16px;font-feature-settings:'tnum'}
+.stat-card .stat-label{font-size:11px;color:var(--text-dim)}
+/* Bar charts */
+.bar-chart{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:18px;transition:background .25s,border .25s}
+.bar-chart h3{font-size:13px;font-weight:600;color:var(--text);margin-bottom:12px}
+.bar-row{display:flex;align-items:center;margin-bottom:6px;gap:8px}
+.bar-row .bar-label{font-size:12px;color:var(--text-muted);width:130px;flex-shrink:0;text-align:right}
+.bar-row .bar-track{flex:1;height:16px;background:var(--surface2);border-radius:99px;overflow:hidden}
+.bar-row .bar-fill{height:100%;border-radius:99px;transition:width .6s ease;min-width:4px}
+.bar-row .bar-val{font-size:11px;font-weight:600;color:var(--text);width:36px;flex-shrink:0;font-family:'JetBrains Mono',monospace}
+.bar-cyan .bar-fill{background:linear-gradient(90deg,var(--accent),#0096c7)}
+.bar-purple .bar-fill{background:linear-gradient(90deg,var(--purple),#a78bfa)}
+.bar-amber .bar-fill{background:linear-gradient(90deg,var(--amber),#fbbf24)}
+.bar-red .bar-fill{background:linear-gradient(90deg,var(--vuln),#fb7185)}
+.bar-green .bar-fill{background:linear-gradient(90deg,var(--green),#4ade80)}
+.bar-blue .bar-fill{background:linear-gradient(90deg,var(--govt),#60a5fa)}
+/* Pie */
+.pie-container{display:flex;align-items:center;gap:28px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px 28px;margin:18px 0;transition:background .25s,border .25s}
+.pie{width:140px;height:140px;border-radius:50%;flex-shrink:0}
+.pie-legend{display:flex;flex-direction:column;gap:6px;flex:1}
+.pie-legend .legend-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-muted)}
+.pie-legend .legend-item .dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.pie-legend .legend-item .val{margin-left:auto;font-weight:600;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:12px}
+/* Table */
+.data-table{width:100%;border-collapse:collapse;font-size:13px;background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:18px 0;transition:background .25s,border .25s}
+.data-table th{background:var(--surface2);color:var(--text-muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.08em;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border)}
+.data-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-muted)}
+.data-table tr:last-child td{border-bottom:none}
+.data-table .tier-badge{display:inline-flex;align-items:center;gap:6px;padding:2px 8px;border-radius:100px;font-size:11px;font-weight:600}
+.data-table .tier-1{background:rgba(34,197,94,.1);color:var(--green)}
+.data-table .tier-2{background:rgba(245,158,11,.1);color:var(--amber)}
+.data-table .tier-3{background:rgba(148,163,184,.1);color:var(--text-muted)}
+.data-table .tier-4{background:rgba(239,68,68,.1);color:var(--red)}
+/* Story cards */
+.story-grid{display:flex;flex-direction:column;gap:14px}
+.story-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 22px;transition:all .2s ease;position:relative;overflow:hidden}
+.story-card:hover{border-color:var(--border-light);transform:translateY(-1px)}
+.story-card .card-accent{position:absolute;top:0;left:0;bottom:0;width:3px;border-radius:0 3px 3px 0}
+.story-card.num-1 .card-accent{background:var(--vuln)}.story-card.num-2 .card-accent{background:var(--purple)}.story-card.num-3 .card-accent{background:var(--crime)}.story-card.num-4 .card-accent{background:var(--green)}.story-card.num-5 .card-accent{background:var(--govt)}
+.story-number{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);font-weight:500;margin-bottom:4px}
+.story-card h3{font-size:1rem;font-weight:600;color:var(--text);margin-bottom:6px;line-height:1.4}
+.story-card p.summary{color:var(--text-muted);font-size:13px;line-height:1.65;margin-bottom:10px}
+.story-card .meta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:12px}
+.story-card .meta .source{color:var(--accent);text-decoration:none;font-weight:500}
+.story-card .meta .source:hover{text-decoration:underline}
+.story-card .meta .reliability{display:inline-flex;align-items:center;gap:4px;color:var(--text-dim)}
+.story-card .meta .reliability .tier-1{color:var(--green)}
+.story-card .meta .reliability .tier-2{color:var(--amber)}
+.story-card .meta .reliability .tier-3{color:var(--text-muted)}
+.story-card .meta .reliability .tier-4{color:var(--red)}
+.story-card .meta .date{color:var(--text-dim);margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px}
+/* Tag badge */
+.tag{display:inline-block;font-size:11px;font-weight:500;padding:3px 10px;border-radius:999px;letter-spacing:.3px}
+.tag.blue{background:var(--accent-bg);color:var(--accent)}
+.tag.cyan{background:var(--accent-bg);color:var(--accent)}
+.tag.purple{background:rgba(139,92,246,.1);color:#a78bfa}
+.tag.green{background:rgba(34,197,94,.1);color:#4ade80}
+.tag.amber{background:rgba(245,158,11,.1);color:#fbbf24}
+.tag.red{background:rgba(239,68,68,.1);color:#f87171}
+/* Also notable */
+.bundle-box{background:var(--surface);border:1px dashed var(--border);border-radius:8px;padding:14px 18px;margin-top:6px}
+.bundle-box .bundle-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);font-weight:600;margin-bottom:6px}
+.bundle-box ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+.bundle-box ul li{font-size:13px;color:var(--text-muted);padding-left:12px;position:relative;line-height:1.5}
+.bundle-box ul li::before{content:'\25B8';position:absolute;left:0;color:var(--text-dim)}
+/* Controls */
+.controls{display:flex;gap:10px;margin-bottom:20px}
+.btn{font-size:12px;font-weight:600;padding:6px 16px;border-radius:99px;border:1px solid var(--border);background:var(--surface);color:var(--text-muted);cursor:pointer;transition:all .2s;font-family:inherit}
+.btn:hover{background:var(--surface2);color:var(--text)}
+.btn.active{background:var(--accent-bg);border-color:var(--accent);color:var(--accent)}
+#back-top{position:fixed;bottom:28px;right:28px;width:42px;height:42px;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--accent);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;z-index:9000;font-family:inherit}
+#back-top.visible{opacity:1}
+#back-top:hover{background:var(--surface2)}
+/* Footer */
+.footer{text-align:center;padding:28px 0 10px;border-top:1px solid var(--border);margin-top:32px;transition:border .25s}
+.footer .source-line{font-size:12px;color:var(--text-dim);font-family:'JetBrains Mono',monospace;margin-bottom:6px}
+.footer .note{font-size:11px;color:var(--text-dim);font-style:italic}
+.footer .links{display:flex;justify-content:center;gap:20px;margin-bottom:12px}
+.footer .links a{color:var(--text-dim);font-size:12px;font-weight:500;transition:color .15s}
+.footer .links a:hover{color:var(--text-secondary)}
+/* Executive view */
+body.exec-view .hide-exec,
+body.exec-view .story-card .meta,
+body.exec-view .story-card p.summary,
+body.exec-view .bundle-box,
+body.exec-view .bar-chart,
+body.exec-view .pie-container,
+body.exec-view .data-table,
+body.exec-view #incident-map{display:none!important}
+body.exec-view .story-card{padding:10px 18px;margin-bottom:4px;cursor:pointer}
+body.exec-view .story-card h3{font-size:14px;margin-bottom:0}
+body.exec-view .story-number{display:none}
+body.exec-view .story-grid{gap:6px}
+body.exec-view .story-card::after{content:'\25B6 Click to expand';display:block;font-size:10px;color:var(--text-dim);margin-top:4px;opacity:.5;transition:opacity .2s}
+body.exec-view .story-card:hover::after{opacity:1}
+body.exec-view .story-card.expanded::after{content:'\25BC Click to collapse'}
+body.exec-view .story-card.expanded .meta,
+body.exec-view .story-card.expanded p.summary{display:block!important}
+body.exec-view .story-card.expanded{padding:14px 18px}
+body.exec-view .story-card.expanded .story-number{display:block}
+body.exec-view .story-card.expanded h3{margin-bottom:6px;font-size:1rem}
+body.exec-view .story-card.expanded p.summary{margin-bottom:10px}
+/* Analytics grid */
+.analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.incident-map{overflow:hidden}
+.incident-map .map-fallback{padding-top:4px}
+.incident-map .map-fallback .bar-label{width:150px}
+.incident-map .map-fallback{border:1px solid var(--border);border-radius:12px;padding:12px 14px;background:var(--surface2)}
+.incident-map .bar-row{cursor:pointer;transition:opacity .15s}
+.incident-map .bar-row:hover{opacity:.85}
+.incident-map .bar-crit .bar-fill{background:linear-gradient(90deg,#ff4d5a,#fb7185)}
+.incident-map .bar-sev  .bar-fill{background:linear-gradient(90deg,#ffa62b,#fbbf24)}
+.incident-map .bar-elev .bar-fill{background:linear-gradient(90deg,#0096c7,#35c6e8)}
+.incident-map .bar-guard .bar-fill{background:linear-gradient(90deg,#5aa9e6,#7cc4f0)}
+.incident-map .bar-unknown .bar-fill{background:var(--surface2)}
+.incident-map .im-legend{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 8px}
+.incident-map .im-lg{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;color:var(--text-muted);padding:2px 9px;border:1px solid var(--border);border-radius:99px;background:var(--surface2)}
+.incident-map .im-lg i{width:9px;height:9px;border-radius:2px;display:inline-block}
+.incident-map .im-note{font-size:10.5px;color:var(--text-dim);margin-left:auto}
+.incident-map .im-attr{font-size:10.5px;color:var(--text-dim);margin-top:8px;line-height:1.5}
+.incident-map .pan-chip{display:inline-block;font-size:11px;padding:2px 10px;margin:0 6px 4px 0;border-radius:99px;border:1px dashed var(--border);color:var(--text-muted);background:repeating-linear-gradient(45deg,var(--surface2),var(--surface2)4px,rgba(127,127,127,.08)4px,rgba(127,127,127,.08)6px)}
+.incident-map .im-story-panel{margin-top:12px;border:1px solid var(--border);border-radius:12px;padding:14px 16px;background:var(--surface2);display:none}
+.incident-map .im-story-panel.open{display:block}
+.incident-map .im-story-panel .im-shot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.incident-map .im-story-panel h4{margin:0;font-size:14px;color:var(--text)}
+.incident-map .im-globe-btn{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;color:#0d1b3e;background:var(--accent);border-radius:99px;padding:6px 14px;text-decoration:none;white-space:nowrap}
+.incident-map .im-globe-btn:hover{filter:brightness(1.08)}
+.incident-map .im-story-panel ul{margin:0;padding:0;list-style:none}
+.incident-map .im-story-panel li{padding:7px 0;border-bottom:1px solid var(--border);font-size:12.5px}
+.incident-map .im-story-panel li:last-child{border-bottom:none}
+.incident-map .im-story-panel a{color:var(--accent);text-decoration:none;font-weight:600}
+.incident-map .im-story-panel a:hover{text-decoration:underline}
+.incident-map .im-tag{font-size:9.5px;padding:1px 7px;border-radius:99px;margin-left:8px;font-weight:700;border:1px solid}
+@media(max-width:860px){.wrap{flex-direction:column}#toc{position:static;width:100%;max-height:unset;margin-bottom:20px}.pie-container{flex-direction:column;align-items:center;gap:16px}.stats-row{gap:8px}.header h1{font-size:1.5rem}.analytics-grid{grid-template-columns:1fr}}
+@media(max-width:620px){.navlinks a span.t{display:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important;scroll-behavior:auto!important}}
+@media print{body{background:#fff!important;color:#111!important;font-size:11pt}body::before:before,.orb{display:none}#toc{display:none}.wrap{display:block;max-width:100%;padding:0}.main{width:100%}.exec-summary p,.story-card p.summary,.bar-chart,.au-context-box p,.bundle-box ul li{color:#333!important}.exec-summary,.story-card,.bar-chart,.pie-container{break-inside:avoid}@page{margin:2cm 2.5cm;@bottom-right{content:counter(page)" / "counter(pages);font-size:9pt;color:#999}}}
+</style>
+</head>
+<body>
+<nav class="topnav"><div class="inner">
+  <a class="brand" href="https://peterjaycox.github.io/cyber-digest-site/index.html"><span class="dot"></span>Cyber&nbsp;Digest<small>daily</small></a>
+  <div class="navlinks">
+    <a href="https://peterjaycox.github.io/cyber-digest-site/index.html"><span class="t">Home</span></a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/stories.html"><span class="t">Story DB</span></a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/daily/" class="active"><span class="t">Daily</span></a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/monthly/index.html"><span class="t">Monthly</span></a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/wiki/index.html"><span class="t">Wiki</span></a>
+  </div>
+  <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light">🌙</div>
+</div></nav>
+
+<a href="#main" class="skip-link">Skip to content</a>
+<div id="progress"></div>
+<div class="wrap">
+<nav id="toc" aria-label="Table of contents">
+<h3>Daily Digest</h3>
+<a href="#exec" data-section="exec">Executive summary</a>
+<a href="#incident-map" data-section="incident-map">🗺️ Incident Map</a>
+<a href="#sector-global-macro" data-section="sector-global-macro">🌐 Global (Macro)</a>
+<a href="#sector-government" data-section="sector-government">🏛️ Government</a>
+<a href="#sector-defence" data-section="sector-defence">🛰️ Defence</a>
+<a href="#sector-healthcare" data-section="sector-healthcare">🏥 Healthcare</a>
+<a href="#sector-financial-services" data-section="sector-financial-services">💰 Financial Services</a>
+<a href="#analytics" data-section="analytics">📊 Analytics</a>
+</nav>
+<main id="main" class="main">
+
+<header class="header">
+<div class="kicker">// daily digest · 2026-08-15</div>
+<h1>Cyber Digest</h1>
+<p class="subtitle">A daily roundup of key cybersecurity developments across sectors</p>
+</header>
+
+<div class="controls">
+<button class="btn active" id="btn-full" onclick="setView('full')">Full report</button>
+<button class="btn" id="btn-exec" onclick="setView('exec')">Executive view</button>
+</div>
+
+<section id="exec" class="exec-summary">
+<h2>📋 Executive Summary</h2>
+<p><strong>Saturday&#x27;s digest is led by an actively exploited macOS screen-sharing zero-day, a government-confirmed breach of France&#x27;s tax authority, and a China-linked APT adding a signed Windows rootkit to its backdoor arsenal.</strong> <strong>First</strong>, CVE-2026-65400 (CVSS 7.1) — a flaw in macOS screen sharing&#x27;s state management that lets an unauthenticated remote attacker log in without a password and run code — is under active exploitation. The Netherlands&#x27; NCSC says it received notification of the bug being abused on multiple systems with port 5900 exposed to the internet, where attackers obtained root and planted a Monero crypto miner. Apple patched the flaw last week for macOS Tahoe, Sequoia and Sonoma; details became public at Black Hat. <strong>Second</strong>, France&#x27;s tax authority (DGFiP) has confirmed a breach after a hacker using the alias ZeroBytes claimed to have obtained data on more than 600,000 people. The French Economy Ministry said an attacker used a stolen or misused identity to gain access to DGFiP systems in late June, viewing and extracting data on individuals and businesses before access was cut off; the claimed figure and data authenticity are not independently verified. <strong>Third</strong>, the HoneyMyte (Mustang Panda) APT has been observed deploying an updated CoolClient backdoor with a signed Windows kernel-mode rootkit, with confirmed victims including government entities in Myanmar, Mongolia, Pakistan and Russia, continuing a sustained China-linked espionage thread in this week&#x27;s digests.</p>
+<div class="au-context-box"><p><strong>The actively exploited macOS screen-sharing flaw is the priority obligation for Australian organisations this week.</strong> CVE-2026-65400 sits on the default attack path Macs present when screen sharing is exposed — exactly the internet-facing remote-access surface ACSC&#x27;s Essential Eight and patch-prominence guidance target. The Dutch NCSC observation that attackers reached root and dropped a crypto miner on exposed systems shows real-world weaponisation within days of public disclosure, and Australian estates running macOS Tahoe, Sequoia and Sonoma with Screen Sharing enabled should treat swift patching as urgent, ideally before the 48-hour KEV-style window the ACSC and ASD advocate. The France DGFiP breach — a state revenue authority losing data on individuals and businesses through a credential/identity compromise — is a direct analogue to the risk profile Australian agencies and the ATO face under the Privacy Act Notifiable Data Breaches scheme and the SOCI Act, and reinforces the identity-centric breach pattern Australian defenders already see. ACSC&#x27;s homepage continues to lead with frontier-AI board guidance, secure-agentic-AI adoption and CI Fortify OT isolation rather than new advisories — no new ACSC publications this cycle. Mustang Panda&#x27;s targeting of South/Southeast Asian and Russian government networks is a Five Eyes-significant development for Australian intelligence consumers tracking China-linked espionage across the Indo-Pacific.</p></div>
+<p>Two structural threads from the week tighten further on Saturday. <strong>The zero-day and security-feature bypass conveyor remains the dominant operator risk.</strong> This digest&#x27;s actively exploited macOS screen-sharing flaw joins a week defined by patch-to-exploitation conveyance — the SharePoint authentication bypass, LibWeb metabase SQLi, afd.sys and VMware vCenter entries, and CISA&#x27;s KEV and two-week BOD 26-04 directives — with several of this week&#x27;s bugs moving from HackerOne/PoC to active weaponisation within days. The Dutch NCSC&#x27;s root-and-crypto-miner observation on internet-exposed remote-access ports is the clearest evidence yet that attackers are sweeping for immediately reachable, under-patched surfaces rather than novel TTPs. <strong>China-linked espionage continues to build momentum.</strong> Mustang Panda&#x27;s signed kernel rootkit and PATCHCORD&#x27;s targeting of Afghan telecoms and Indian critical infrastructure extend the week&#x27;s APT arc — JewelBug&#x27;s dual state-espionage-and-crypto theft and the near-autonomous AI attack on a Taiwanese government target — pointing to intensifying Indo-Pacific-focused collection as allied states reorient their own offensive posture (the US private-sector-hacking memo, Germany&#x27;s spy-law overhaul). A separate governance thread also materialises: Apple&#x27;s fresh mercenary-spyware threat notifications across 110 countries and Flock&#x27;s ALPR access tightening both reflect growing pressure on surveillance and commercial-espionage data practices. Expect continued patching urgency on exposed remote-access services, sustained China-linked APT activity, and a broadening accountability debate over surveillance-data controls in the week ahead.</p>
+</section>
+
+<div class="stats-row"><div class="stat-card stat-geo"><div class="stat-num">2</div><div class="stat-label">Global (Macro)</div></div>
+<div class="stat-card stat-govt"><div class="stat-num">3</div><div class="stat-label">Government</div></div>
+<div class="stat-card stat-crime"><div class="stat-num">1</div><div class="stat-label">Defence</div></div>
+<div class="stat-card stat-iot"><div class="stat-num">4</div><div class="stat-label">Healthcare</div></div>
+<div class="stat-card stat-vuln"><div class="stat-num">1</div><div class="stat-label">Financial Services</div></div></div>
+
+<section id="incident-map" class="section"><h2><span class="icon">🗺️</span> Incident Map</h2><div class="bar-chart incident-map"><div id="incident-map-status" style="font-size:11px;color:var(--text-dim);font-weight:400;margin-bottom:8px">(static view)</div><div class="im-legend"><span class="im-lg"><i style="background:#ff4d5a"></i>Critical</span><span class="im-lg"><i style="background:#ffa62b"></i>Severe</span><span class="im-lg"><i style="background:#0096c7"></i>Elevated</span><span class="im-lg"><i style="background:#5aa9e6"></i>Guarded</span><span class="im-note">darker = more incidents</span></div><div id="incident-map-chart" style="height:400px;width:100%;display:block"></div><div id="incident-map-fallback"><div class="map-fallback"><div class="bar-row bar-sev im-row" data-name="United States" title="severity: Severe — top story: CTM360 Uncovers Over 3,000 Recruitment Phishing URLs Using Browser-in-the-Browser (BitB) Credential Traps"><span class="bar-label">United States</span><div class="bar-track"><div class="bar-fill" style="width:27.2727%"></div></div><span class="bar-val">3</span></div><div class="bar-row bar-sev im-row" data-name="Netherlands" title="severity: Severe — top story: Vulnerability Giving Attackers Full Control of Macs Is Under Active Exploitation"><span class="bar-label">Netherlands</span><div class="bar-track"><div class="bar-fill" style="width:9.09091%"></div></div><span class="bar-val">1</span></div><div class="bar-row bar-sev im-row" data-name="France" title="severity: Severe — top story: France Investigates Tax Authority Breach After Hacker Claims 600,000 Victims"><span class="bar-label">France</span><div class="bar-track"><div class="bar-fill" style="width:9.09091%"></div></div><span class="bar-val">1</span></div><div class="bar-row bar-guard im-row" data-name="Russia" title="severity: Guarded — top story: Mustang Panda Adds Signed Windows Rootkit to CoolClient Backdoor for Stealth"><span class="bar-label">Russia</span><div class="bar-track"><div class="bar-fill" style="width:9.09091%"></div></div><span class="bar-val">1</span></div><div class="bar-row bar-sev im-row" data-name="New Zealand" title="severity: Severe — top story: WindRelay Android Malware Turns Victims&#x27; Phones Into NFC Relays for Payment Fraud"><span class="bar-label">New Zealand</span><div class="bar-track"><div class="bar-fill" style="width:9.09091%"></div></div><span class="bar-val">1</span></div><p class="im-pan-note" style="margin:8px 0 0;color:var(--text-dim);font-size:11.5px">Pan-regional / not map-pinned: <span class="pan-chip">🌐 Global: 4</span></p><p style="color:var(--text-dim);font-size:11px;margin-top:8px;line-height:1.5">5 countries · 11 stories · click a country for its stories. Interactive map loads on the hosted site.</p><p class="im-attr" style="font-size:10.5px;color:var(--text-dim);margin-top:5px;line-height:1.5">🎯 Geo-attribution: <b>4</b>/11 stories located directly from text (36%). Low-confidence (region-bucket only, check): <b>United States</b>.</p></div></div><div id="incident-map-stories" class="im-story-panel"></div><div class="im-attr"><p class="im-attr" style="font-size:10.5px;color:var(--text-dim);margin-top:5px;line-height:1.5">🎯 Geo-attribution: <b>4</b>/11 stories located directly from text (36%). Low-confidence (region-bucket only, check): <b>United States</b>.</p></div>
+<script>
+(function(){
+  var payload = {"date": "2026-08-15", "mode": "daily", "title": "Incident Map", "countries": [{"name": "United States", "value": 3, "sev": "Severe", "color": "#ffa62b", "alpha": 0.96, "secs": [["Global (Macro)", 1], ["Government \u0026 Policy", 1], ["Healthcare", 1]], "topThreat": "Breach / Data Leak", "top": {"headline": "CTM360 Uncovers Over 3,000 Recruitment Phishing URLs Using Browser-in-the-Browser (BitB) Credential Traps", "url": "https://thehackernews.com/2026/08/ctm360-uncovers-over-3000-recruitment.html", "sev": "Severe"}, "stories": [{"headline": "CTM360 Uncovers Over 3,000 Recruitment Phishing URLs Using Browser-in-the-Browser (BitB) Credential Traps", "sector": "Global (Macro)", "threat": "Breach / Data Leak", "url": "https://thehackernews.com/2026/08/ctm360-uncovers-over-3000-recruitment.html", "date": "2026-08-15", "sev": "Severe"}, {"headline": "Flock Tightens Privacy Controls Amid Scandals Over Officer Abuse", "sector": "Government \u0026 Policy", "threat": "Regulatory / Policy", "url": "https://therecord.media/flock-safety-audit-assistance-police-departments", "date": "2026-08-15", "sev": "Elevated"}, {"headline": "Aesto Health Data Security Incident Affects Multiple Healthcare Provider Clients", "sector": "Healthcare", "threat": "Breach / Data Leak", "url": "https://www.hipaajournal.com/aesto-health-data-breach/", "date": "2026-08-15", "sev": "Severe"}], "attrDirect": 0, "attrRegion": 3}, {"name": "Netherlands", "value": 1, "sev": "Severe", "color": "#ffa62b", "alpha": 0.57, "secs": [["Global (Macro)", 1]], "topThreat": "Zero-day / Vuln", "top": {"headline": "Vulnerability Giving Attackers Full Control of Macs Is Under Active Exploitation", "url": "https://arstechnica.com/security/2026/08/vulnerability-giving-attackers-full-control-of-macs-is-under-active-exploitation/", "sev": "Severe"}, "stories": [{"headline": "Vulnerability Giving Attackers Full Control of Macs Is Under Active Exploitation", "sector": "Global (Macro)", "threat": "Zero-day / Vuln", "url": "https://arstechnica.com/security/2026/08/vulnerability-giving-attackers-full-control-of-macs-is-under-active-exploitation/", "date": "2026-08-15", "sev": "Severe"}], "attrDirect": 1, "attrRegion": 0}, {"name": "France", "value": 1, "sev": "Severe", "color": "#ffa62b", "alpha": 0.57, "secs": [["Government \u0026 Policy", 1]], "topThreat": "Breach / Data Leak", "top": {"headline": "France Investigates Tax Authority Breach After Hacker Claims 600,000 Victims", "url": "https://therecord.media/french-tax-authority-dgfip-confirms-data-breach", "sev": "Severe"}, "stories": [{"headline": "France Investigates Tax Authority Breach After Hacker Claims 600,000 Victims", "sector": "Government \u0026 Policy", "threat": "Breach / Data Leak", "url": "https://therecord.media/french-tax-authority-dgfip-confirms-data-breach", "date": "2026-08-15", "sev": "Severe"}], "attrDirect": 1, "attrRegion": 0}, {"name": "Russia", "value": 1, "sev": "Guarded", "color": "#5aa9e6", "alpha": 0.57, "secs": [["Defence", 1]], "topThreat": "Malware", "top": {"headline": "Mustang Panda Adds Signed Windows Rootkit to CoolClient Backdoor for Stealth", "url": "https://thehackernews.com/2026/08/mustang-panda-adds-signed-windows.html", "sev": "Guarded"}, "stories": [{"headline": "Mustang Panda Adds Signed Windows Rootkit to CoolClient Backdoor for Stealth", "sector": "Defence", "threat": "Malware", "url": "https://thehackernews.com/2026/08/mustang-panda-adds-signed-windows.html", "date": "2026-08-15", "sev": "Guarded"}], "attrDirect": 1, "attrRegion": 0}, {"name": "New Zealand", "value": 1, "sev": "Severe", "color": "#ffa62b", "alpha": 0.57, "secs": [["Financial Services", 1]], "topThreat": "Malware", "top": {"headline": "WindRelay Android Malware Turns Victims' Phones Into NFC Relays for Payment Fraud", "url": "https://thehackernews.com/2026/08/windrelay-android-malware-turns-victims.html", "sev": "Severe"}, "stories": [{"headline": "WindRelay Android Malware Turns Victims' Phones Into NFC Relays for Payment Fraud", "sector": "Financial Services", "threat": "Malware", "url": "https://thehackernews.com/2026/08/windrelay-android-malware-turns-victims.html", "date": "2026-08-15", "sev": "Severe"}], "attrDirect": 1, "attrRegion": 0}], "pan": {"Global": 4}, "attrs": {"direct": 4, "region": 7, "total": 11, "weak": {"United States": 3}}, "sevColor": {"Critical": "#ff4d5a", "Severe": "#ffa62b", "Elevated": "#0096c7", "Guarded": "#5aa9e6"}};
+  var panel  = document.getElementById('incident-map-stories');
+  if(!panel) return;
+
+  // -------- Click-through: show a country's stories in the inline panel -------
+  var GLOBE_BASE = '../globe.html';  // deployed daily/ & monthly/ both sit one
+                                     // level below the root where globe.html lives
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function sevClass(s){return esc(s||'Guarded');}
+  function showCountry(name){
+    var c=null;
+    payload.countries.forEach(function(x){ if(x.name===name) c=x; });
+    if(!c||!c.stories.length) return;
+    var globeParams='?country='+encodeURIComponent(c.name);
+    if(payload.mode==='daily'){ globeParams+='&date='+encodeURIComponent(payload.date);
+    }else{ globeParams+='&month='+encodeURIComponent(payload.date); }
+    var rows=c.stories.map(function(s,ix){
+      var link=s.url
+        ? '<a href="'+esc(s.url)+'" target="_blank" rel="noopener">'+esc(s.headline)+'</a>'
+        : esc(s.headline);
+      var tag=s.sev
+        ? '<span class="im-tag" style="color:'+esc(payload.sevColor[s.sev])+'">'+esc(s.sev)+'</span>'
+        : '';
+      return '<li>'+link+tag+'<div style="font-size:10px;color:var(--text-dim);margin-top:1px">'+
+             esc(s.sector||'')+(s.date?' · '+esc(s.date):'')+'</div></li>';
+    }).join('');
+    panel.innerHTML =
+      '<div class="im-shot">'+
+        '<h4>'+esc(c.name)+' — '+c.value+' incident'+(c.value>1?'s':'')+'</h4>'+
+        '<a class="im-globe-btn" href="'+GLOBE_BASE+globeParams+'">🌍 Open in 3D globe</a>'+
+      '</div>'+
+      (c.sev?'<div style="font-size:11px;color:var(--text-muted);margin-bottom:6px">'+
+        'Worst severity: <b style="color:'+esc(payload.sevColor[c.sev])+'">'+esc(c.sev)+
+        '</b>'+(c.topThreat?' · top actor: '+esc(c.topThreat):'')+'</div>':'')+
+      '<ul>'+rows+'</ul>';
+    panel.classList.add('open');
+    panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+
+  // Static-fallback bars are clickable too.
+  var fallback=document.getElementById('incident-map-fallback');
+  if(fallback){ fallback.addEventListener('click',function(e){
+    var row=e.target.closest('.im-row');
+    if(row) showCountry(row.getAttribute('data-name'));
+  }); }
+
+  // -------- ECharts interactive map ----------
+  function renderMap(){
+    if(!window.echarts) return;
+    var host=document.getElementById('incident-map-chart');
+    if(!host) return;
+    fetch("https://cdn.jsdelivr.net/npm/echarts@4.9.0/map/json/world.json")
+      .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+      .then(function(world){
+        window.echarts.registerMap('world', world);
+        var chart=window.echarts.init(host);
+        // Theme-aware base fill for unpopulated countries.
+        var base=document.createElement('div');
+        base.style.cssText='position:absolute;visibility:hidden;width:0;height:0';
+        document.body.appendChild(base);
+        var baseCol=getComputedStyle(document.body).getPropertyValue('--surface2').trim()||'#1a2332';
+        base.remove();
+        // Merge per-country overrides (severity colour + alpha intensity).
+        var data=payload.countries.map(function(c){
+          var rgb = c.color.replace('#','');
+          var r=parseInt(rgb.substring(0,2),16), g=parseInt(rgb.substring(2,4),16);
+          var b=parseInt(rgb.substring(4,6),16);
+          return {
+            name:c.name, value:c.value,
+            itemStyle:{areaColor:'rgba('+r+','+g+','+b+','+c.alpha+')'}
+          };
+        });
+        var max=payload.countries.reduce(function(a,c){return Math.max(a,c.value)},0)||1;
+        chart.setOption({
+          tooltip:{
+            trigger:'item',
+            backgroundColor:'var(--surface2,#111827)',
+            borderColor:'var(--border,rgba(255,255,255,.1))',
+            textStyle:{color:'var(--text,#e2e8f0)',fontSize:12},
+            extraCssText:'max-width:70vw;',
+            appendToBody:true,
+            position:function(pt,params,dom,rect,size){
+              var cw=size.contentSize[0]||0, ch=size.contentSize[1]||0;
+              var x=pt[0]+12, y=pt[1]+12;
+              if(x+cw>window.innerWidth){ x=Math.max(4,window.innerWidth-cw-8); }
+              if(y+ch>window.innerHeight){ y=Math.max(4,window.innerHeight-ch-8); }
+              if(x<4){ x=4; } if(y<4){ y=4; }
+              return [x,y];
+            },
+            formatter:function(p){
+              var c=null; payload.countries.forEach(function(x){ if(x.name===p.name) c=x; });
+              if(!c) return p.name;
+              var h='<b>'+esc(p.name)+'</b> — '+c.value+' incident'+(c.value>1?'s':'');
+              if(c.sev) h+='<br/><span style="color:'+esc(payload.sevColor[c.sev])+
+                       ';font-weight:700">● '+esc(c.sev)+'</span> worst';
+              if(c.secs.length) h+='<br/><div style="color:var(--text-muted);margin-top:4px">'+
+                 c.secs.map(function(s){return esc(s[0])+' <b>('+s[1]+')</b>'}).join(' · ')+'</div>';
+              if(c.topThreat && c.topThreat!==c.sev)
+                h+='<br/><div style="color:var(--text-muted)">Top actor: <b>'+esc(c.topThreat)+'</b></div>';
+              if(c.top && c.top.url)
+                h+='<br/><a href="'+esc(c.top.url)+'" target="_blank" rel="noopener" '+
+                   'style="color:var(--accent);font-weight:600">'+esc(c.top.headline)+' ↗</a>';
+              h+='<div style="color:var(--text-dim);font-size:10px;margin-top:6px">Click for all stories</div>';
+              return h;
+            }
+          },
+          series:[{
+            name:'Incidents', type:'map', map:'world', roam:true,
+            scaleLimit:{min:1,max:12},
+            label:{show:false},
+            emphasis:{label:{show:true,color:'var(--text,#e2e8f0)'},
+              itemStyle:{areaColor:'var(--accent,#00b4d8)',borderColor:'#fff'}},
+            itemStyle:{borderColor:'rgba(0,0,0,.25)',borderWidth:.5,areaColor:baseCol},
+            data:data
+          }]
+        });
+        chart.on('click',function(params){
+          if(params && params.componentType==='series') showCountry(params.name);
+        });
+        window.addEventListener('resize',function(){ chart.resize(); });
+        if(fallback) fallback.style.display='none';
+        var done=document.getElementById('incident-map-status');
+        if(done) done.textContent='✓ interactive map ready — click a country';
+      }).catch(function(){});
+  }
+  var done=document.getElementById('incident-map-status');
+  if(window.echarts){ renderMap(); }
+  else{
+    var s=document.createElement('script');
+    s.src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js";
+    s.onload=renderMap;
+    document.head.appendChild(s);
+  }
+})();
+</script>
+</div></section>
+<section id="sector-global-macro" class="section"><h2><span class="icon">🌐</span> Global (Macro) <span class="count">2 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Vulnerability Giving Attackers Full Control of Macs Is Under Active Exploitation</h3><p class="summary">CVE-2026-65400 (CVSS 7.1), a flaw in the macOS screen-sharing capability&#x27;s state management, lets an unauthenticated remote attacker log in without a password, view the screen and control the keyboard and mouse. The Netherlands&#x27; NCSC warned the bug is under active exploitation on multiple systems with port 5900 exposed to the internet, where attackers obtained root access and installed a Monero crypto miner. Apple patched the flaw last week for macOS Tahoe, Sequoia and Sonoma; details became public at Black Hat. **Confidence: Confirmed** (official NCSC notification; documented in-the-wild exploitation). **Breach claim: N/A** (vulnerability).</p><div class="meta"><a class="source" href="https://arstechnica.com/security/2026/08/vulnerability-giving-attackers-full-control-of-macs-is-under-active-exploitation/" target="_blank" rel="noopener">Ars Technica</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-15</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>CTM360 Uncovers Over 3,000 Recruitment Phishing URLs Using Browser-in-the-Browser (BitB) Credential Traps</h3><p class="summary">Cybersecurity researchers identified a large-scale, global recruitment-themed phishing campaign using fake interview-scheduling pages and Browser-in-the-Browser windows to steal Google and Facebook credentials, and, in more advanced cases, relay multi-factor authentication prompts in real time. CTM360&#x27;s RecruitTrap report logged more than 3,000 phishing URLs over two months, impersonating real recruiters for more than 50 organisations across 14 sectors, with marketing professionals the most-targeted group — a deliberate focus given compromised marketing accounts can reach advertising platforms, social profiles and customer data. **Confidence: Confirmed** (vendor campaign analysis). **Breach claim: N/A** (phishing campaign).</p><div class="meta"><a class="source" href="https://thehackernews.com/2026/08/ctm360-uncovers-over-3000-recruitment.html" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-14</span></div></div>
+<div class="bundle-box"><div class="bundle-label">Also notable</div><ul><li><strong>Chrome DevTools Technique Enables Authenticated Session Hijacking in Live Windows Browsers</strong> — Researchers detail a post-exploitation technique using the Chrome DevTools Protocol inside a running Chrome/Edge process on Windows to access cookies, saved data and authenticated sessions; requires prior code execution, placing it in a narrower post-compromise scenario. (The Hacker News, 2026-08-14)</li><li><strong>Unpatched GeoServer Zero-Day Targeted in Active Exploitation Attempts, Can Lead to RCE</strong> — An unpatched GeoServer remote-code-execution flaw is being actively targeted, underscoring the exposed open-source analytics/geospatial surface. (The Hacker News, 2026-08-13)</li><li><strong>New NatJack Attacks Hijack TCP Sessions and Spoof DNS by Manipulating NAT Tables</strong> — Researchers document NatJack, a class of attack that abuses NAT table manipulation to hijack TCP sessions and spoof DNS. (The Hacker News, 2026-08-13)</li><li><strong>TeamPCP/LiteLLM supply-chain exposure (recurring, exec context):</strong> — The continuing LiteLLM/Trivy credential-supply-chain exposure, covered earlier in the week, keeps evolving as researchers parse affected pipelines.</li></ul></div>
+</div>
+</section>
+<section id="sector-government" class="section"><h2><span class="icon">🏛️</span> Government <span class="count">3 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>France Investigates Tax Authority Breach After Hacker Claims 600,000 Victims</h3><p class="summary">France&#x27;s tax authority (DGFiP) has confirmed hackers breached its information systems and extracted data on individuals and businesses. The Economy Ministry said an attacker gained unauthorised access in late June after stealing or misusing someone&#x27;s identity, and could view and extract data before access was cut off. A hacker using the alias ZeroBytes claimed to have obtained data on more than 600,000 people — names, tax identification numbers, email addresses, family circumstances and tax-status details — though the figure and data authenticity are not independently verified. DGFiP said it will individually contact affected people, notify France&#x27;s data protection authority and file a criminal complaint. It is the latest in a string of 2026 French government agency breaches (ANTS in April, the Education Ministry, and the National Bank Accounts File). **Confidence: Confirmed breach** (French ministry publicly confirmed the intrusion and data extraction; the 600K victim figure is an unverified hacker claim).</p><div class="meta"><a class="source" href="https://therecord.media/french-tax-authority-dgfip-confirms-data-breach" target="_blank" rel="noopener">The Record</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-14</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>Apple Warns Users in 110 Countries They May Be Targets of Mercenary Spyware</h3><p class="summary">Apple sent a fresh batch of threat notifications to customers it suspects may have been targeted by mercenary spyware attacks in 110 countries, and says it has now notified customers in over 150 countries since the programme began in late 2021. The notifications typically go to people individually targeted because of who they are or what they do — journalists, activists, politicians and diplomats. Apple does not attribute the attacks or resulting notifications to specific attackers or regions, citing the extreme cost, sophistication and worldwide nature of mercenary spyware. **Confidence: Confirmed** (official Apple threat-notification programme).</p><div class="meta"><a class="source" href="https://thehackernews.com/2026/08/apple-warns-users-in-110-countries-they.html" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-14</span></div></div>
+<div class="story-card num-3"><div class="card-accent"></div><div class="story-number">3</div><h3>Flock Tightens Privacy Controls Amid Scandals Over Officer Abuse</h3><p class="summary">Flock Safety, a major supplier of Automatic License Plate Recognition (ALPR) technology used by thousands of US police agencies, is tightening its privacy controls and audit/assistance processes for police departments amid a series of scandals over officers misusing plate-reader data. The move reflects growing scrutiny of commercial surveillance infrastructure and the access controls law enforcement applies to location-tracking data. **Confidence: Reported** (vendor policy change reported by established outlet; no regulator disclosure cited).</p><div class="meta"><a class="source" href="https://therecord.media/flock-safety-audit-assistance-police-departments" target="_blank" rel="noopener">The Record</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-14</span></div></div>
+<div class="bundle-box"><div class="bundle-label">Also notable</div><ul><li><strong>Scottish Govt Suffers Potentially Widening Data Breach at Prosecutor&#x27;s Office</strong> — A data breach at Scotland&#x27;s Prosecutor&#x27;s Office is potentially widening, adding to a string of Scottish public-sector incidents. (Dark Reading, 2026-08-14)</li></ul></div>
+</div>
+</section>
+<section id="sector-defence" class="section"><h2><span class="icon">🛰️</span> Defence <span class="count">1 story</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Mustang Panda Adds Signed Windows Rootkit to CoolClient Backdoor for Stealth</h3><p class="summary">The threat actor HoneyMyte, also known as Mustang Panda, has been observed deploying an updated CoolClient backdoor with a signed Windows kernel-mode rootkit that can hide and protect malicious processes, files, registry objects and command-and-control information. Kaspersky identified victims in Myanmar, Mongolia, Pakistan and Russia, including confirmed government entities, with CoolClient consistently deployed as a secondary backdoor following a PlugX infection. The kernel component is installed when CoolClient has full Service Control Manager access and the SeTcbPrivilege; otherwise the implant proceeds without the driver. Kaspersky published file hashes, paths and C2 domains as indicators of compromise. **Confidence: Confirmed** (vendor technical analysis with published IoCs).</p><div class="meta"><a class="source" href="https://thehackernews.com/2026/08/mustang-panda-adds-signed-windows.html" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-14</span></div></div>
+<div class="bundle-box"><div class="bundle-label">Also notable</div><ul><li><strong>New PATCHCORD Backdoor Targets Afghan Telecom and Indian Critical Infrastructure</strong> — Researchers detail PATCHCORD, a cyber-espionage backdoor aimed at Afghan telecom infrastructure and Indian critical-infrastructure targets, extending the week&#x27;s China-linked APT arc. (The Hacker News, 2026-08-13)</li></ul></div>
+</div>
+</section>
+<section id="sector-healthcare" class="section"><h2><span class="icon">🏥</span> Healthcare <span class="count">4 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Boston Healthcare for the Homeless Program Breach Affects at Least 185K State Residents</h3><p class="summary">A data breach at the Boston Health Care for the Homeless Program affects at least 185,000 Massachusetts residents, according to notification filings reported by HIPAA Journal. The incident is among the larger nonprofit-healthcare breaches this period and highlights how detection-sensitive provider environments can expose large populations. **Confidence: Probable breach** (reported via notification/regulatory filings; victim-scale figures from the reporting source). **Breach claim: Probable breach**.</p><div class="meta"><a class="source" href="https://www.hipaajournal.com/boston-healthcare-homepless-program-mon-general-open-door-illinois-data-breaches/" target="_blank" rel="noopener">HIPAA Journal</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-14</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>Texas Hearing Institute Ransomware Attack Affects 30,000 Patients</h3><p class="summary">The Texas Hearing Institute disclosed a ransomware attack affecting approximately 30,000 patients, reported via HHS notification filings. The incident is part of a wave of smaller and mid-size provider ransomware cases, consistent with HIPAA Journal&#x27;s concurrent reporting on SportsMed Family Partnerships (Florida) and Open Door health breaches. **Confidence: Probable breach** (ransomware disclosed via notification filings). **Breach claim: Probable breach**.</p><div class="meta"><a class="source" href="https://www.hipaajournal.com/texas-hearing-institute-sportsmed-family-partnerships-florida-data-breaches/" target="_blank" rel="noopener">HIPAA Journal</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-14</span></div></div>
+<div class="story-card num-3"><div class="card-accent"></div><div class="story-number">3</div><h3>Aesto Health Data Security Incident Affects Multiple Healthcare Provider Clients</h3><p class="summary">Aesto Health, a business associate serving multiple healthcare provider clients, disclosed a data security incident. Business-associate incidents of this kind can expose data for several downstream providers at once, widening the effective blast radius beyond a single organisation and complicating notice obligations across the sector. **Confidence: Reported** (vendor disclosure via HIPAA Journal). **Breach claim: Probable breach**.</p><div class="meta"><a class="source" href="https://www.hipaajournal.com/aesto-health-data-breach/" target="_blank" rel="noopener">HIPAA Journal</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-14</span></div></div>
+<div class="story-card num-4"><div class="card-accent"></div><div class="story-number">4</div><h3>ZOLL Medical Pays $3.5 Million to Settle Data Breach Lawsuit</h3><p class="summary">ZOLL Medical has agreed to pay US$3.5 million to settle a class-action lawsuit over a prior data breach, reported by HIPAA Journal. The settlement illustrates the litigation and financial tail of healthcare data breaches, where medical-device and provider organisations face prolonged civil exposure alongside regulatory attention from HHS OCR. **Confidence: Confirmed** (documented settlement). **Breach claim: N/A** (settlement).</p><div class="meta"><a class="source" href="https://www.hipaajournal.com/zoll-medical-data-breach-settlement/" target="_blank" rel="noopener">HIPAA Journal</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-14</span></div></div>
+</div>
+</section>
+<section id="sector-financial-services" class="section"><h2><span class="icon">💰</span> Financial Services <span class="count">1 story</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>WindRelay Android Malware Turns Victims&#x27; Phones Into NFC Relays for Payment Fraud</h3><p class="summary">Researchers detail WindRelay, a new Android malware that hijacks victims&#x27; devices and abuses them as Near-Field Communication (NFC) relays for contactless payment fraud. By relaying payment-card NFC signals, the malware lets attackers perform transactions using compromised phone hardware in proximity, an emerging pattern in mobile-financial fraud that targets the contactless-payments surface widely used across Australian and New Zealand banking. **Confidence: Confirmed** (technical analysis of the malware). **Breach claim: N/A** (malware).</p><div class="meta"><a class="source" href="https://thehackernews.com/2026/08/windrelay-android-malware-turns-victims.html" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-13</span></div></div>
+</div>
+</section>
+
+<!-- Analytics Section -->
+<section id="analytics" class="section">
+<h2><span class="icon">📊</span> Analytics</h2>
+<div class="analytics-grid"><div class="bar-chart"><h3>Sector distribution</h3><div class="bar-row bar-cyan"><span class="bar-label">Global (Macro)</span><div class="bar-track"><div class="bar-fill" style="width:18%"></div></div><span class="bar-val">2</span></div>
+<div class="bar-row bar-blue"><span class="bar-label">Government</span><div class="bar-track"><div class="bar-fill" style="width:27%"></div></div><span class="bar-val">3</span></div>
+<div class="bar-row bar-blue"><span class="bar-label">Defence</span><div class="bar-track"><div class="bar-fill" style="width:9%"></div></div><span class="bar-val">1</span></div>
+<div class="bar-row bar-red"><span class="bar-label">Healthcare</span><div class="bar-track"><div class="bar-fill" style="width:36%"></div></div><span class="bar-val">4</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">Financial Services</span><div class="bar-track"><div class="bar-fill" style="width:9%"></div></div><span class="bar-val">1</span></div></div><div class="bar-chart"><h3>Source breakdown</h3><div class="bar-row bar-cyan"><span class="bar-label">The Hacker News</span><div class="bar-track"><div class="bar-fill" style="width:36%"></div></div><span class="bar-val">4</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">HIPAA Journal</span><div class="bar-track"><div class="bar-fill" style="width:36%"></div></div><span class="bar-val">4</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">The Record</span><div class="bar-track"><div class="bar-fill" style="width:18%"></div></div><span class="bar-val">2</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">Ars Technica</span><div class="bar-track"><div class="bar-fill" style="width:9%"></div></div><span class="bar-val">1</span></div></div></div>
+<div class="pie-container"><div class="pie" style="background:conic-gradient(var(--accent) 0deg 65deg,var(--purple) 65deg 163deg,var(--govt) 163deg 196deg,var(--vuln) 196deg 327deg,var(--crime) 327deg 360deg);"></div><div class="pie-legend"><div class="legend-item"><span class="dot" style="background:var(--accent)"></span> Global (Macro) <span class="val">2</span></div><div class="legend-item"><span class="dot" style="background:var(--purple)"></span> Government <span class="val">3</span></div><div class="legend-item"><span class="dot" style="background:var(--govt)"></span> Defence <span class="val">1</span></div><div class="legend-item"><span class="dot" style="background:var(--vuln)"></span> Healthcare <span class="val">4</span></div><div class="legend-item"><span class="dot" style="background:var(--crime)"></span> Financial Services <span class="val">1</span></div></div></div>
+<h3 style="font-size:14px;color:var(--text);margin-bottom:10px">Source Reliability Index</h3>
+<table class="data-table">
+<thead><tr><th>Tier</th><th>Label</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><span class="tier-badge tier-1">● Tier 1</span></td><td>Very High</td><td>Official / first-party</td></tr>
+<tr><td><span class="tier-badge tier-2">● Tier 2</span></td><td>High</td><td>Established cyber journalism</td></tr>
+<tr><td><span class="tier-badge tier-3">● Tier 3</span></td><td>Moderate</td><td>General tech/news media</td></tr>
+<tr><td><span class="tier-badge tier-4">● Tier 4</span></td><td>Low</td><td>Social / unverified</td></tr>
+</tbody>
+</table>
+</section>
+
+<footer class="footer">
+<div class="links">
+  <a href="https://peterjaycox.github.io/cyber-digest-site/index.html">Home</a>
+  <a href="https://peterjaycox.github.io/cyber-digest-site/stories.html">Story DB</a>
+  <a href="https://peterjaycox.github.io/cyber-digest-site/daily/">Daily</a>
+  <a href="https://peterjaycox.github.io/cyber-digest-site/monthly/index.html">Monthly</a>
+  <a href="https://peterjaycox.github.io/cyber-digest-site/wiki/index.html">Wiki</a>
+</div>
+<div class="source-line">Digest generated 2026-08-15. Full entries: The Hacker News (4), HIPAA Journal (4), The Record (2), Ars Technica (1). Briefs span Dark Reading (Scottish Govt breach). No single source exceeded 40% threshold (highest: The Hacker News and HIPAA Journal at 36.4%).</div>
+<div class="note">Digest prepared 15 August 2026. 48-hour freshness window (72-hour max for weekend bridging).</div>
+</footer>
+</main>
+</div>
+
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+
+<script>
+var _t=document.documentElement;
+var _b=document.querySelector(".theme-toggle");
+function toggleTheme(){var n=_t.getAttribute("data-theme")==="dark"?"light":"dark";_t.setAttribute("data-theme",n);if(_b)_b.textContent=n==="dark"?"🌙":"☀️";try{if(n==="dark")localStorage.removeItem("cd-theme");else localStorage.setItem("cd-theme",n)}catch(e){}}
+(function(){try{var s=localStorage.getItem("cd-theme");if(s){_t.setAttribute("data-theme",s);if(_b)_b.textContent="☀️"}}catch(e){}})();
+
+window.addEventListener('scroll',function(){
+var h=document.documentElement;
+var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+document.getElementById('progress').style.width=Math.min(p,100)+'%';
+var bt=document.getElementById('back-top');
+bt.classList.toggle('visible',(h.scrollTop||document.body.scrollTop)>300);
+var sections=document.querySelectorAll('section[id],.exec-summary');
+var links=document.querySelectorAll('#toc a');
+var cur='';
+sections.forEach(function(s){
+var t=s.getBoundingClientRect().top;
+if(t<250) cur=s.id;
+});
+links.forEach(function(l){
+l.classList.toggle('active',l.dataset.section===cur);
+});
+});
+function setView(m){
+document.body.classList.toggle('exec-view',m==='exec');
+document.getElementById('btn-full').classList.toggle('active',m==='full');
+document.getElementById('btn-exec').classList.toggle('active',m==='exec');
+document.querySelectorAll('.story-card').forEach(function(c){
+var interactive=m==='exec';
+c.setAttribute('role',interactive?'button':null);
+c.setAttribute('tabindex',interactive?'0':null);
+c.setAttribute('aria-expanded',interactive?(c.classList.contains('expanded')?'true':'false'):null);
+});
+}
+document.addEventListener('keydown',function(e){
+if(e.key==='Escape') setView('full');
+});
+function toggleCard(c){ if(!document.body.classList.contains('exec-view'))return; c.classList.toggle('expanded'); c.setAttribute('aria-expanded',c.classList.contains('expanded')?'true':'false'); }
+document.querySelectorAll('.story-card').forEach(function(c){
+c.addEventListener('click',function(e){
+if(e.target.closest('a')) return;
+toggleCard(this);
+});
+c.addEventListener('keydown',function(e){
+if(e.target.closest('a')) return;
+if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggleCard(this); }
+});
+});
+document.querySelectorAll('#toc a').forEach(function(l){
+l.setAttribute('role','navigation');
+});
+var _tocObs=new MutationObserver(function(){
+document.querySelectorAll('#toc a.active').forEach(function(a){a.setAttribute('aria-current','location');});
+document.querySelectorAll('#toc a:not(.active)').forEach(function(a){a.removeAttribute('aria-current');});
+});
+_tocObs.observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['class']});
+</script>
+</body>
+</html>
