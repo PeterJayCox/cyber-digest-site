@@ -127,16 +127,29 @@ def parse_monthly_md(m):
     info["is_partial"] = "Partial-month" in body
     info["story_count"] = len(re.findall(r"^\*\*\d+\.\s+", body, re.M))
 
-    # Date range
-    dm = re.search(r"(\d+)\s*(?:–|to)\s*(\d+)\s+(August|July|June|May|April|March|January|February|September|October|November|December)", body, re.I)
-    if dm:
-        info["date_range"] = f"{dm.group(1)}–{dm.group(2)} {dm.group(3)[:3]}"
+    # Date range — prefer the explicit "Digest days covered: N (day, list, Month)" entry
+    # so the card shows the true first-to-last coverage (e.g. "1–16 Aug") rather than an
+    # arbitrary "N–M Month" token that may appear earlier in the body (e.g. "8–16 August").
+    btn_dd = re.search(r"\*\*Digest days(?: covered)?:\*\*\s*\d+\s*\(([^)]+)\)", body)
+    if btn_dd:
+        inner = btn_dd.group(1)
+        days_in = [int(x) for x in re.findall(r"\d+", inner)]
+        mn = re.search(r"(August|July|June|May|April|March|January|February|September|October|November|December)", inner, re.I)
+        mname = mn.group(1)[:3] if mn else m[5:]
+        if len(days_in) >= 2:
+            info["date_range"] = f"{min(days_in)}–{max(days_in)} {mname}"
+        elif days_in:
+            info["date_range"] = f"{days_in[0]} {mname}"
     else:
-        date_nums = re.findall(r"\b(\d{1,2})\s+(?:August|July|June|May|April|March|January|February|September|October|November|December)\b", body, re.I)
-        if date_nums:
-            mn = re.search(r"(August|July|June|May|April|March|January|February|September|October|November|December)", body, re.I)
-            mn = mn.group(1)[:3] if mn else m[5:]
-            info["date_range"] = f"{date_nums[0]}–{date_nums[-1]} {mn}"
+        dm = re.search(r"(\d+)\s*(?:–|to)\s*(\d+)\s+(August|July|June|May|April|March|January|February|September|October|November|December)", body, re.I)
+        if dm:
+            info["date_range"] = f"{dm.group(1)}–{dm.group(2)} {dm.group(3)[:3]}"
+        else:
+            date_nums = re.findall(r"\b(\d{1,2})\s+(?:August|July|June|May|April|March|January|February|September|October|November|December)\b", body, re.I)
+            if date_nums:
+                mn = re.search(r"(August|July|June|May|April|March|January|February|September|October|November|December)", body, re.I)
+                mn = mn.group(1)[:3] if mn else m[5:]
+                info["date_range"] = f"{date_nums[0]}–{date_nums[-1]} {mn}"
 
     # Exec summary blurb
     es_match = re.search(r"Executive Summary\s*\n\n([^#]+?)(?:\.(?:\s|$))", body, re.I | re.DOTALL)
