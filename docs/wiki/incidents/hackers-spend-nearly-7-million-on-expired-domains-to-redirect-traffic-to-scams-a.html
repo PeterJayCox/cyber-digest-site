@@ -1,12 +1,12 @@
 <!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ENCFORGE — AI-Focused Go Ransomware</title>
+<title>Hackers Spend Nearly $7 Million on Expired Domains to Redirect Traffic to Scams and Malware</title>
 <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png">
 <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
 <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png">
 <link rel="alternate" type="application/rss+xml" title="Cyber Digest" href="https://peterjaycox.com/feed.xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="ENCFORGE — AI-Focused Go Ransomware">
+<meta property="og:title" content="Hackers Spend Nearly $7 Million on Expired Domains to Redirect Traffic to Scams and Malware">
 <meta property="og:description" content="Curated sector-by-sector roundup of global cybersecurity developments with source-reliability indexing, AU/NZ context, and searchable knowledge base.">
 <meta property="og:url" content="https://peterjaycox.com/">
 <meta property="og:image" content="https://peterjaycox.com/assets/img/og-image.png">
@@ -21,29 +21,28 @@
         <div class="navlinks"><a href="https://peterjaycox.com/index.html" class=""><span class="t">🏠 Home</span></a><a href="https://peterjaycox.com/stories.html" class=""><span class="t">📚 Story DB</span></a><a href="https://peterjaycox.com/globe.html" class=""><span class="t">🌍 Globe</span></a><a href="https://peterjaycox.com/daily/" class=""><span class="t">🗓️ Daily</span></a><a href="https://peterjaycox.com/monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="https://peterjaycox.com/reports/index.html" class=""><span class="t">📑 Reports</span></a><a href="https://peterjaycox.com/wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a></div>
         <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light">🌙</div></div></nav><main class="container">
             <div class="container">
-            <div class="crumb"><a href="../../index.html">Home</a> · <a href="../../wiki/index.html">Wiki</a> · Entities &amp; Threat Actors</div>
-            <div class="wiki-body"><div class="frontmatter">created: 2026-07-21 · updated: 2026-07-21 · type: entity · tags: [ransomware, loader] · confidence: medium · affected_sectors: [technology] · au_impact: false</div><h1>ENCFORGE — AI-Focused Go Ransomware</h1>
-<p>ENCFORGE is a <strong>compiled Go ransomware</strong> specifically designed to encrypt <strong>AI infrastructure files</strong>. Discovered by Sysdig researchers in July 2026, it is deployed by the <a href="jadepuffer.html">Jadepuffer</a> AI-agent-driven operator.</p>
-<h2>Capabilities</h2>
+            <div class="crumb"><a href="../../index.html">Home</a> · <a href="../../wiki/index.html">Wiki</a> · Incidents &amp; Campaigns</div>
+            <div class="wiki-body"><div class="frontmatter">created: 2026-08-16 · updated: 2026-08-16 · type: incident · tags:  · confidence: high · affected_sectors: [retail, telecommunications, technology, media] · au_impact: true</div><h1>Hackers Spend ~$7M on Expired Domains to Redirect Traffic to Scams and Malware</h1>
+<h2>Summary</h2>
+<p>DNS intelligence firm Infoblox detailed an operation it calls <strong>Sable Squirrel</strong>, based in Vietnam, that has spent nearly US$7 million acquiring expired ("dropcatch") domains so their inherited reputation, traffic and backlinks could be repurposed for illegal sports streaming, online gambling promotion and, in parallel, as malware command-and-control for 31,000+ samples.</p>
+<h2>Key Details</h2>
 <ul>
-<li>Encrypts <strong>model weights</strong> (AI/ML model files)</li>
-<li>Encrypts <strong>vector Indexes</strong> (vector database files)</li>
-<li>Encrypts <strong>training datasets</strong> (structured/unstructured training data)</li>
-<li>Targets other <strong>AI infrastructure files</strong> (configuration, pipeline artifacts)</li>
-<li>Compiled in Go suggesting cross-platform capability</li>
-</ul>
-<h2>Distribution</h2>
-<ul>
-<li>Deployed via <a href="jadepuffer.html">Jadepuffer</a> attacks on Langflow servers</li>
-<li>Entry vector: CVE-2025-3248 (CVSS 9.8), a critical Langflow vulnerability</li>
-<li>Second attack on same Langflow server linked to same operator</li>
+<li><strong>Date:</strong> 2026-08-14</li>
+<li><strong>Source:</strong> <a href="https://www.infoblox.com/blog/threat-intelligence/7-million-in-expired-domains-fuel-a-streaming-empire-with-a-malware-secret/">Infoblox</a></li>
+<li><strong>Reliability:</strong> Tier 1/4 — Official / first-party (vendor technical analysis)</li>
+<li><strong>Status:</strong> <strong>Confirmed</strong> (vendor three-part technical analysis with named infrastructure)</li>
+<li><strong>Model:</strong> Inherit domain reputation/backlinks/traffic for criminal use</li>
+<li><strong>Fronts:</strong> Asian sports-piracy brands (Xoilac, Cakhia, 90phut, Socolive, MiTom); gambling brands (VSBet, ColaScore, 8xbet)</li>
+<li><strong>Malware C2:</strong> 31,000+ samples including Quasar RAT, AsyncRAT, DCRat, NanoCore, Remcos RAT, njRAT; HiddenTear-signature artifacts</li>
+<li><strong>Scale:</strong> 10,000+ domains hoarded; 94% weaponised within two weeks of acquisition</li>
+<li><strong>Distribution:</strong> Traffic-distribution system targeting Vietnam, South Korea, Japan, Taiwan, Singapore and Australia; Android apps via compromised Google Play developer accounts</li>
 </ul>
 <h2>Significance</h2>
-<p>ENCFORGE represents a <strong>targeted evolution in ransomware</strong> — moving beyond general-purpose encryption to specifically target the crown jewels of AI operations: trained model weights and training data. This is more destructive than general ransomware for organisations running AI workloads, as model weights may be irreplaceable if backups do not exist.</p>
-<h2>Related Pages</h2>
+<p>Sable Squirrel weaponises expired-domain reputation and trusted distribution channels (Google Play, social media) to funnel traffic to scams while masking malware C2 behind legal-looking streaming/gambling front-ends — an example of adversaries commoditising trust signals. Directly targets Australian users, making it relevant to ACSC and platform-enforcement teams.</p>
+<h2>Related</h2>
 <ul>
-<li><a href="jadepuffer.html">Jadepuffer</a> — The threat actor deploying ENCFORGE</li>
-<li><a href="nadmesh-botnet.html">Nadmesh Botnet</a> — Go-based botnet scanning for exposed AI services</li>
+<li><a href="dysphoria-iot-botnet-integrates-blockchain-c2-and-relays-to-evade-law-enforcemen.html">Dysphoria Iot Botnet Integrates Blockchain C2 And Relays To Evade Law Enforcemen</a> — Evasion-oriented infrastructure abuse</li>
+<li><a href="investigation-of-german-banking-hack-leads-to-arrests-in-germany-brazil.html">Investigation Of German Banking Hack Leads To Arrests In Germany Brazil</a> — Parallel criminal money/payment infrastructure</li>
 </ul></div>
             </div></main>
 <div class="footer">

@@ -1,12 +1,12 @@
 <!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ENCFORGE — AI-Focused Go Ransomware</title>
+<title>Investigation of German Banking Hack Leads to Arrests in Germany, Brazil</title>
 <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png">
 <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
 <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png">
 <link rel="alternate" type="application/rss+xml" title="Cyber Digest" href="https://peterjaycox.com/feed.xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="ENCFORGE — AI-Focused Go Ransomware">
+<meta property="og:title" content="Investigation of German Banking Hack Leads to Arrests in Germany, Brazil">
 <meta property="og:description" content="Curated sector-by-sector roundup of global cybersecurity developments with source-reliability indexing, AU/NZ context, and searchable knowledge base.">
 <meta property="og:url" content="https://peterjaycox.com/">
 <meta property="og:image" content="https://peterjaycox.com/assets/img/og-image.png">
@@ -21,29 +21,26 @@
         <div class="navlinks"><a href="https://peterjaycox.com/index.html" class=""><span class="t">🏠 Home</span></a><a href="https://peterjaycox.com/stories.html" class=""><span class="t">📚 Story DB</span></a><a href="https://peterjaycox.com/globe.html" class=""><span class="t">🌍 Globe</span></a><a href="https://peterjaycox.com/daily/" class=""><span class="t">🗓️ Daily</span></a><a href="https://peterjaycox.com/monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="https://peterjaycox.com/reports/index.html" class=""><span class="t">📑 Reports</span></a><a href="https://peterjaycox.com/wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a></div>
         <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light">🌙</div></div></nav><main class="container">
             <div class="container">
-            <div class="crumb"><a href="../../index.html">Home</a> · <a href="../../wiki/index.html">Wiki</a> · Entities &amp; Threat Actors</div>
-            <div class="wiki-body"><div class="frontmatter">created: 2026-07-21 · updated: 2026-07-21 · type: entity · tags: [ransomware, loader] · confidence: medium · affected_sectors: [technology] · au_impact: false</div><h1>ENCFORGE — AI-Focused Go Ransomware</h1>
-<p>ENCFORGE is a <strong>compiled Go ransomware</strong> specifically designed to encrypt <strong>AI infrastructure files</strong>. Discovered by Sysdig researchers in July 2026, it is deployed by the <a href="jadepuffer.html">Jadepuffer</a> AI-agent-driven operator.</p>
-<h2>Capabilities</h2>
+            <div class="crumb"><a href="../../index.html">Home</a> · <a href="../../wiki/index.html">Wiki</a> · Incidents &amp; Campaigns</div>
+            <div class="wiki-body"><div class="frontmatter">created: 2026-08-16 · updated: 2026-08-16 · type: incident · tags:  · confidence: high · affected_sectors: [finance] · au_impact: true</div><h1>Investigation of German Banking Hack Leads to Arrests in Germany, Brazil</h1>
+<h2>Summary</h2>
+<p>German (BKA) and Brazilian federal police announced multiple arrests this week over a November 2023 hack that drained an estimated €30 million (US$34.7 million) from German online-banking accounts — exploiting a payment-provider vulnerability and cloned payment cards, then laundering proceeds through Brazil and four European countries.</p>
+<h2>Key Details</h2>
 <ul>
-<li>Encrypts <strong>model weights</strong> (AI/ML model files)</li>
-<li>Encrypts <strong>vector Indexes</strong> (vector database files)</li>
-<li>Encrypts <strong>training datasets</strong> (structured/unstructured training data)</li>
-<li>Targets other <strong>AI infrastructure files</strong> (configuration, pipeline artifacts)</li>
-<li>Compiled in Go suggesting cross-platform capability</li>
-</ul>
-<h2>Distribution</h2>
-<ul>
-<li>Deployed via <a href="jadepuffer.html">Jadepuffer</a> attacks on Langflow servers</li>
-<li>Entry vector: CVE-2025-3248 (CVSS 9.8), a critical Langflow vulnerability</li>
-<li>Second attack on same Langflow server linked to same operator</li>
+<li><strong>Date:</strong> 2026-08-15</li>
+<li><strong>Source:</strong> <a href="https://therecord.media/investigation-into-banking-hack-leads-to-arrests-germany-brazil">The Record</a></li>
+<li><strong>Reliability:</strong> Tier 2/4 — Established cyber journalism</li>
+<li><strong>Type:</strong> Cross-border bank-account drain + card cloning + money laundering</li>
+<li><strong>Status:</strong> <strong>Confirmed</strong> (official police announcements — law-enforcement closure, not a new breach)</li>
+<li><strong>Volume:</strong> ~€30M (US$34.7M) drained over four days in November 2023</li>
+<li><strong>Arrests:</strong> Three charged in Europe (Spain, Bulgaria); Brazil's Operação Klonen arrested four, executed 21 search-and-seizure warrants, seized &gt;US$20M in assets</li>
+<li><strong>TTP:</strong> Exploited a payment-provider vulnerability + cloned payment cards; laundered via Brazil and four European countries</li>
 </ul>
 <h2>Significance</h2>
-<p>ENCFORGE represents a <strong>targeted evolution in ransomware</strong> — moving beyond general-purpose encryption to specifically target the crown jewels of AI operations: trained model weights and training data. This is more destructive than general ransomware for organisations running AI workloads, as model weights may be irreplaceable if backups do not exist.</p>
-<h2>Related Pages</h2>
+<p>The attack exploited a payment-provider vulnerability and cloned cards to drain accounts — a TTP overlapping contactless/NFC payment fraud that Australian banks manage under APRA CPS 234 safeguarding obligations. The cross-border arrests represent a notable law-enforcement win against large financial-fraud infrastructure.</p>
+<h2>Related</h2>
 <ul>
-<li><a href="jadepuffer.html">Jadepuffer</a> — The threat actor deploying ENCFORGE</li>
-<li><a href="nadmesh-botnet.html">Nadmesh Botnet</a> — Go-based botnet scanning for exposed AI services</li>
+<li><a href="hackers-spend-nearly-7-million-on-expired-domains-to-redirect-traffic-to-scams-a.html">Hackers Spend Nearly 7 Million On Expired Domains To Redirect Traffic To Scams A</a> — Parallel criminal infrastructure using payment/fraud adjuncts</li>
 </ul></div>
             </div></main>
 <div class="footer">
