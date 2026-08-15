@@ -6,7 +6,14 @@
   <description>A curated, sector-by-sector roundup of global cybersecurity developments with source-reliability indexing and Australian &amp; New Zealand context.</description>
   <language>en-au</language>
   <atom:link href="https://peterjaycox.com/feed.xml" rel="self" type="application/rss+xml"/>
-  <lastBuildDate>Fri, 14 Aug 2026 19:17:17 GMT</lastBuildDate>
+  <lastBuildDate>Sat, 15 Aug 2026 19:56:06 GMT</lastBuildDate>
+<item>
+  <title>Cyber Digest — 2026-08-16 · Hackers Spend Nearly $7 Million on Expired Domains to Redirect Traffic to Scams and Malware</title>
+  <link>https://peterjaycox.com/daily/2026-08-16.html</link>
+  <guid isPermaLink="true">https://peterjaycox.com/daily/2026-08-16.html</guid>
+  <pubDate>Sun, 16 Aug 2026 00:00:00 GMT</pubDate>
+  <description>&lt;p&gt;2026-08-16 — 3 stories.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Hackers Spend Nearly $7 Million on Expired Domains to Redirect Traffic to Scams and Malware&lt;/strong&gt; &amp;mdash; &lt;a href=&quot;https://www.infoblox.com/blog/threat-intelligence/7-million-in-expired-domains-fuel-a-streaming-empire-with-a-malware-secret/&quot;&gt;Infoblox&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Critical SAP Commerce Cloud Vulnerability Targeted in Active Exploitation Attempts Days After Patch&lt;/strong&gt; &amp;mdash; &lt;a href=&quot;https://thehackernews.com/2026/08/sap-commerce-cloud-cve-2026-58231.html&quot;&gt;The Hacker News&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Investigation of German Banking Hack Leads to Arrests in Germany, Brazil&lt;/strong&gt; &amp;mdash; &lt;a href=&quot;https://therecord.media/investigation-into-banking-hack-leads-to-arrests-germany-brazil&quot;&gt;The Record&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</description>
+</item>
 <item>
   <title>Cyber Digest — 2026-08-15 · Vulnerability Giving Attackers Full Control of Macs Is Under Active Exploitation</title>
   <link>https://peterjaycox.com/daily/2026-08-15.html</link>
