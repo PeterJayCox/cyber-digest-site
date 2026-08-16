@@ -867,10 +867,11 @@ def build_index(stories):
 
 {home_globe}
 
+<div class="section"><h2><span class="bar"></span>Monthly Editions</h2><div class="grid cards grid-monthly">{monthlist}</div></div>
+
 {threat_panel_html()}
 {threat_trend_html(threat_trend())}
 
-<div class="section"><h2><span class="bar"></span>Monthly Editions</h2><div class="grid cards grid-monthly">{monthlist}</div></div>
 {rptsec}
 
 <div class="section"><div class="sec-head"><h2><span class="bar"></span>Top Sectors</h2><a class="seeall" href="stories.html">See all →</a></div><div class="grid cards">{seccards}</div></div>
