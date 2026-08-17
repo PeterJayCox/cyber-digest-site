@@ -1315,14 +1315,17 @@ def build_wiki(pages):
             <span class="bar"></span>{icon} {esc(type_names.get(ptype,ptype))}
             <span class="ws-count">{count}</span>
         </h2>
-        <div class="ws-body">\n'''
+        <div class="ws-body">
+        <div class="grid cards wiki-grid">
+'''
         for slug,info in section_items:
             fm=info["fm"]; title=strip_wl(fm.get("title") or slug.replace("-"," ").title())
             summary=strip_wl(summap.get(slug) or fm.get("summary") or "")
             href=f"{ptype}/{slug}.html"
-            cards+=f'<a class="card wiki-card" href="{href}" data-search="{esc(title.lower())} {esc(summary.lower()[:100])}"><h3>{esc(title)}</h3><p>{esc(summary[:140])}</p><span class="go">Open →</span></a>\n'
+            summ_p = f'<p>{esc(summary[:160])}</p>' if summary else '<p class="ws-pending">No summary yet</p>'
+            cards+=f'<a class="card wiki-card" href="{href}" data-search="{esc(title.lower())} {esc(summary.lower()[:100])}"><h3>{esc(title)}</h3>{summ_p}<span class="go">Open →</span></a>\n'
             all_items.append((title,summary,href,ptype))
-        cards+="</div></div>\n"
+        cards+="</div></div></div>\n"
     js='''<script>
 function toggleSection(heading){
     const body=heading.nextElementSibling;
@@ -1365,10 +1368,16 @@ document.addEventListener('DOMContentLoaded',()=>{
     '''+js+foot()
     open(os.path.join(wiki_index,"index.html"),"w",encoding="utf-8").write(html)
 
-    # Add CSS for collapsible sections to site.css
+    # Add CSS for collapsible sections to site.css (deduped — appended once)
     css_path=os.path.join(DOCS,"assets","site.css")
     css_extra='''
 /* Wiki index collapsible sections */
+.wiki-card h3{font-size:15.5px;line-height:1.35}
+.wiki-card p{font-size:13px;color:var(--text-muted);flex:1;line-height:1.5}
+.wiki-card .go{margin-top:auto}
+.wiki-card .ws-pending{font-style:italic;color:var(--text-dim);font-size:12.5px}
+.wiki-grid{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.wiki-card{min-height:150px}
 .ws-head{cursor:pointer;display:flex;align-items:center;gap:8px;user-select:none;padding:14px 0 10px;margin:0;font-size:20px;border-top:1px solid var(--border);color:var(--text)}
 .ws-head:hover{color:var(--accent)}
 .ws-head:hover .ws-toggle{background:var(--accent-glow);color:var(--accent);border-color:var(--accent)}
@@ -1377,8 +1386,10 @@ document.addEventListener('DOMContentLoaded',()=>{
 .ws-body{overflow:hidden;transition:max-height .25s}
 .wiki-section.collapsed .ws-body{display:none}
 .wiki-section.collapsed .ws-toggle{color:var(--accent);background:var(--accent-glow);border-color:var(--accent)}
-'''
-    with open(css_path,"a") as f: f.write(css_extra)
+''' + "\n"
+    css_text=open(css_path,encoding="utf-8").read()
+    if "wiki-grid" not in css_text:
+        with open(css_path,"a") as f: f.write(css_extra)
 
 FLAT_LINKMAP={}
 def themes_html(r):

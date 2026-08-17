@@ -306,6 +306,12 @@ a:hover{text-decoration:underline}
 .month-group .grid.cards{padding:0 16px 16px}
 
 /* Wiki index collapsible sections */
+.wiki-card h3{font-size:15.5px;line-height:1.35}
+.wiki-card p{font-size:13px;color:var(--text-muted);flex:1;line-height:1.5}
+.wiki-card .go{margin-top:auto}
+.wiki-card .ws-pending{font-style:italic;color:var(--text-dim);font-size:12.5px}
+.wiki-grid{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.wiki-card{min-height:150px}
 .ws-head{cursor:pointer;display:flex;align-items:center;gap:8px;user-select:none;padding:14px 0 10px;margin:0;font-size:20px;border-top:1px solid var(--border);color:var(--text)}
 .ws-head:hover{color:var(--accent)}
 .ws-head:hover .ws-toggle{background:var(--accent-glow);color:var(--accent);border-color:var(--accent)}
@@ -314,3 +320,4 @@ a:hover{text-decoration:underline}
 .ws-body{overflow:hidden;transition:max-height .25s}
 .wiki-section.collapsed .ws-body{display:none}
 .wiki-section.collapsed .ws-toggle{color:var(--accent);background:var(--accent-glow);border-color:var(--accent)}
+
