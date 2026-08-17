@@ -1,0 +1,120 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lockheed Martin Cyber Kill Chain</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png">
+<link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png">
+<link rel="alternate" type="application/rss+xml" title="Cyber Digest" href="https://peterjaycox.com/feed.xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Lockheed Martin Cyber Kill Chain">
+<meta property="og:description" content="Curated sector-by-sector roundup of global cybersecurity developments with source-reliability indexing, AU/NZ context, and searchable knowledge base.">
+<meta property="og:url" content="https://peterjaycox.com/">
+<meta property="og:image" content="https://peterjaycox.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/site.css?v=20260818"></head><body>
+<nav class="topnav"><div class="inner">
+        <a class="brand" href="https://peterjaycox.com/index.html"><img src="../../assets/img/logo-mark-icon.png" alt="" style="height:22px;width:22px;vertical-align:middle;border-radius:4px"> Cyber&nbsp;Digest<small>public site</small></a>
+        <div class="navlinks"><a href="https://peterjaycox.com/index.html" class=""><span class="t">🏠 Home</span></a><a href="https://peterjaycox.com/stories.html" class=""><span class="t">📚 Story DB</span></a><a href="https://peterjaycox.com/globe.html" class=""><span class="t">🌍 Globe</span></a><a href="https://peterjaycox.com/daily/" class=""><span class="t">🗓️ Daily</span></a><a href="https://peterjaycox.com/monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="https://peterjaycox.com/reports/index.html" class=""><span class="t">📑 Reports</span></a><a href="https://peterjaycox.com/wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a></div>
+        <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light">🌙</div></div></nav><main class="container">
+            <div class="container">
+            <div class="crumb"><a href="../../index.html">Home</a> · <a href="../../wiki/index.html">Wiki</a> · Concepts &amp; Frameworks</div>
+            <div class="wiki-body"><div class="frontmatter">created: 2026-08-18 · updated: 2026-08-18 · type: concept · tags: [framework, technique, intel-cycle] · confidence: high · affected_sectors: [sector-technology, sector-government, sector-finance, sector-defence] · au_impact: true</div><h1>Lockheed Martin Cyber Kill Chain</h1>
+<p>The <strong>Cyber Kill Chain</strong> is Lockheed Martin's model of the intrusion lifecycle, describing the sequence of steps an adversary must complete to compromise a network. It is the direct intellectual predecessor of <a href="mitre-attack.html">Mitre Attack</a> and remains a foundational model in threat intelligence and security operations.</p>
+<h2>Overview</h2>
+<ul>
+<li><strong>Origin:</strong> Lockheed Martin, first formalised in the 2011 paper <em>Intelligence-Driven Computer Network Defense Informed by Analysis of Adversary Campaigns and Intrusion Kill Chains</em> (Hutchins, Cloppert &amp; Amin)</li>
+<li><strong>Concept:</strong> Adapted from the military "kill chain" (find, fix, track, target, engage, assess)</li>
+<li><strong>Purpose:</strong> Providing a structured, stage-by-stage view of an intrusion so defenders can detect and interrupt it at multiple points</li>
+</ul>
+<h2>The Seven Stages</h2>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. <strong>Reconnaissance</strong></td>
+<td>Researching, identifying, and selecting targets (e.g. harvesting email addresses)</td>
+</tr>
+<tr>
+<td>2. <strong>Weaponisation</strong></td>
+<td>Coupling a deliverable with a payload (e.g. a weaponised PDF or macro)</td>
+</tr>
+<tr>
+<td>3. <strong>Delivery</strong></td>
+<td>Transmitting the weapon to the target (email attachment, malicious link, USB)</td>
+</tr>
+<tr>
+<td>4. <strong>Exploitation</strong></td>
+<td>Triggering the weapon to execute code on the victim system</td>
+</tr>
+<tr>
+<td>5. <strong>Installation</strong></td>
+<td>Installing malware / establishing remote access on the target</td>
+</tr>
+<tr>
+<td>6. <strong>Command &amp; Control (C2)</strong></td>
+<td>Establishing and controlling a channel back to the operator</td>
+</tr>
+<tr>
+<td>7. <strong>Actions on Objectives</strong></td>
+<td>Achieving the goal — theft, destruction, encryption, lateral movement</td>
+</tr>
+</tbody>
+</table>
+<h2>Relationship to MITRE ATT&amp;CK</h2>
+<ul>
+<li>The Kill Chain is <strong>higher-level</strong>: seven coarse stages spanning the full lifecycle, with strong front-end (delivery/exploitation) emphasis</li>
+<li>ATT&amp;CK is <strong>deeper and evidence-based</strong>: fourteen tactics with hundreds of techniques largely filling the post-compromise space the Kill Chain treats only as "Actions on Objectives"</li>
+<li>Common practice is to <strong>use them together</strong>: the Kill Chain for executive-level framing of the attack lifecycle, ATT&amp;CK for technique-level detection and response detail</li>
+<li>The <strong>Unified Kill Chain</strong> (Pols, 2017) explicitly merges both into an 18-phase model covering pre- and post-compromise activity</li>
+</ul>
+<h2>Use in Defence</h2>
+<ul>
+<li><strong>Defence-in-depth</strong>: place detection and controls across every stage rather than assuming one control stops the intrusion</li>
+<li><strong>"Left of boom"</strong>: the front stages (recon → delivery) are where many intrusions can be interrupted before access is gained</li>
+<li><strong>Indicator-based detection</strong>: each stage produces indicators (IPs, file hashes, domains, malware signatures) that feeds threat-intel and SIEM content</li>
+<li><strong>Purple team / exercise framing</strong>: a shared vocabulary between red and blue teams on where an attack sits in the lifecycle</li>
+</ul>
+<h2>Limitations</h2>
+<ul>
+<li>Designed around the malware-centric, exploitation-based intrusions typical of its 2011 origin — less natural for <strong>cloud</strong>, <strong>supply-chain</strong>, and <strong>insider/valid-credential</strong> intrusions that skip early stages</li>
+<li>Coarse granularity offers limited detection detail compared with <a href="mitre-attack.html">Mitre Attack</a></li>
+<li>It models a single linear intrusion; real adversaries run multiple, overlapping chains</li>
+</ul>
+<h2>Australian Angle</h2>
+<p>The Kill Chain framing is standard in Australian security-operations and cyber-threat-intelligence tradecraft, including the intelligence products the CyberCX Assessments team delivers and the incident-response baselines referenced against the ACSC <strong>Essential Eight</strong> priority mitigation strategies. It pairs naturally with ATT&amp;CK mapping for Australian government and critical-infrastructure clients.</p>
+<h2>Related Pages</h2>
+<ul>
+<li><a href="mitre-attack.html">Mitre Attack</a> — the technique-level successor/detail layer to the Kill Chain</li>
+<li><a href="d3fend.html">D3Fend</a> — defensive countermeasures used to interrupt the chain at each stage</li>
+<li><a href="security-control-frameworks.html">Security Control Frameworks</a> — control catalogues (Essential Eight, CIS, ISO) applied stage-by-stage</li>
+<li><a href="../entities/scattered-spider.html">Scattered Spider</a> — a cybercrime group whose intrusions can be framed across the kill chain stages</li>
+</ul></div>
+            </div></main>
+<div class="footer">
+  <div class="links">
+    <a href="https://peterjaycox.github.io/cyber-digest-site/index.html">Home</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/stories.html">Story DB</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/daily/">Daily</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/monthly/index.html">Monthly</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/reports/index.html">Reports</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/wiki/index.html">Wiki</a>
+    <a href="https://peterjaycox.com/feed.xml">RSS</a>
+  </div>
+  Cyber Digest public site · built 2026-08-18 07:22
+</div>
+<script>
+var _t=document.documentElement;
+var _b=document.querySelector(".theme-toggle");
+function toggleTheme(){var n=_t.getAttribute("data-theme")==="dark"?"light":"dark";_t.setAttribute("data-theme",n);if(_b)_b.textContent=n==="dark"?"🌙":"☀️";try{if(n==="dark")localStorage.removeItem("cd-theme");else localStorage.setItem("cd-theme",n)}catch(e){}}
+(function(){try{var s=localStorage.getItem("cd-theme");if(s){_t.setAttribute("data-theme",s);if(_b)_b.textContent="☀️"}}catch(e){}})()
+</script>
+</body></html>

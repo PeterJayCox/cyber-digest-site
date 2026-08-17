@@ -1,0 +1,193 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MITRE ATT&amp;CK Framework</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png">
+<link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png">
+<link rel="alternate" type="application/rss+xml" title="Cyber Digest" href="https://peterjaycox.com/feed.xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="MITRE ATT&amp;CK Framework">
+<meta property="og:description" content="Curated sector-by-sector roundup of global cybersecurity developments with source-reliability indexing, AU/NZ context, and searchable knowledge base.">
+<meta property="og:url" content="https://peterjaycox.com/">
+<meta property="og:image" content="https://peterjaycox.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/site.css?v=20260818"></head><body>
+<nav class="topnav"><div class="inner">
+        <a class="brand" href="https://peterjaycox.com/index.html"><img src="../../assets/img/logo-mark-icon.png" alt="" style="height:22px;width:22px;vertical-align:middle;border-radius:4px"> Cyber&nbsp;Digest<small>public site</small></a>
+        <div class="navlinks"><a href="https://peterjaycox.com/index.html" class=""><span class="t">🏠 Home</span></a><a href="https://peterjaycox.com/stories.html" class=""><span class="t">📚 Story DB</span></a><a href="https://peterjaycox.com/globe.html" class=""><span class="t">🌍 Globe</span></a><a href="https://peterjaycox.com/daily/" class=""><span class="t">🗓️ Daily</span></a><a href="https://peterjaycox.com/monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="https://peterjaycox.com/reports/index.html" class=""><span class="t">📑 Reports</span></a><a href="https://peterjaycox.com/wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a></div>
+        <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light">🌙</div></div></nav><main class="container">
+            <div class="container">
+            <div class="crumb"><a href="../../index.html">Home</a> · <a href="../../wiki/index.html">Wiki</a> · Concepts &amp; Frameworks</div>
+            <div class="wiki-body"><div class="frontmatter">created: 2026-08-18 · updated: 2026-08-18 · type: concept · tags: [framework, technique, defense, intel-cycle] · confidence: high · affected_sectors: [sector-technology, sector-government, sector-finance, sector-healthcare, sector-energy, sector-defence] · au_impact: true</div><h1>MITRE ATT&amp;CK Framework</h1>
+<p>The <strong>MITRE ATT&amp;CK Framework</strong> (Adversarial Tactics, Techniques, and Common Knowledge) is a globally maintained, open knowledge base of adversary tactics and techniques (TTPs), built from real-world observations of attacks. It is the de facto industry standard for describing, comparing, and defending against cyber adversary behaviour.</p>
+<h2>Overview</h2>
+<ul>
+<li><strong>Maintainer:</strong> MITRE Corporation (non-profit US Federally Funded R&amp;D Center)</li>
+<li><strong>First released:</strong> Public release May 2015 (development began 2013)</li>
+<li><strong>Status:</strong> Continuously updated (multiple version releases per year)</li>
+<li><strong>Licence:</strong> Open / freely available under a Creative Commons-style open licence</li>
+<li><strong>Basis:</strong> Real-world observations documented in threat reports, not theoretical attacks</li>
+<li><strong>URL:</strong> https://attack.mitre.org</li>
+</ul>
+<p>ATT&amp;CK provides a shared vocabulary for the entire cybersecurity discipline — from threat intelligence and incident response through to detection engineering, red teaming, and security control design.</p>
+<h2>Core Concept: TTPs</h2>
+<p>ATT&amp;CK is organised around <strong>Tactics</strong>, <strong>Techniques</strong>, and <strong>Procedures</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Tactic</strong></td>
+<td>The <em>why</em> — the adversary's operational objective (the "columns")</td>
+<td>Credential Access, Lateral Movement, Exfiltration</td>
+</tr>
+<tr>
+<td><strong>Technique</strong></td>
+<td>The <em>how</em> — the method used to achieve a tactic (the "rows", ID <code>T####</code>)</td>
+<td>T1566 Phishing, T1059 Command &amp; Scripting Interpreter</td>
+</tr>
+<tr>
+<td><strong>Sub-technique</strong></td>
+<td>A more granular variant of a technique (ID <code>T####.###</code>)</td>
+<td>T1566.001 Phishing: Spearphishing Attachment</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>The specific implementation — the actual steps/implants observed</td>
+<td>A specific loader dropping a specific RAT</td>
+</tr>
+</tbody>
+</table>
+<p>The matrix visualisation plots <strong>tactics as columns</strong> and <strong>techniques as rows</strong>, producing the familiar ATT&amp;CK matrix.</p>
+<h2>The Fourteen Enterprise Tactics</h2>
+<p>The ATT&amp;CK for Enterprise matrix is organised into 14 tactics, representing the stages of an attack lifecycle:</p>
+<ol>
+<li><strong>Reconnaissance</strong> — gathering information to plan the operation</li>
+<li><strong>Resource Development</strong> — establishing infrastructure, accounts, and capabilities</li>
+<li><strong>Initial Access</strong> — entering the environment (phishing, exploitation, valid accounts)</li>
+<li><strong>Execution</strong> — running malicious code</li>
+<li><strong>Persistence</strong> — maintaining a foothold across reboots/credential changes</li>
+<li><strong>Privilege Escalation</strong> — gaining higher-level permissions</li>
+<li><strong>Defence Evasion</strong> — avoiding detection</li>
+<li><strong>Credential Access</strong> — stealing credentials</li>
+<li><strong>Discovery</strong> — reconnaissance of the internal environment</li>
+<li><strong>Lateral Movement</strong> — moving across the network</li>
+<li><strong>Collection</strong> — gathering data of interest</li>
+<li><strong>Command and Control</strong> — communicating with compromised systems</li>
+<li><strong>Exfiltration</strong> — stealing data out of the environment</li>
+<li><strong>Impact</strong> — manipulating, interrupting, or destroying systems/data</li>
+</ol>
+<p>These map loosely to the earlier <strong>Lockheed Martin Cyber Kill Chain</strong> but are more granular and empirically based.</p>
+<h2>ATT&amp;CK Domains / Matrices</h2>
+<table>
+<thead>
+<tr>
+<th>Domain</th>
+<th>Covers</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Enterprise</strong></td>
+<td>Windows, macOS, Linux, Cloud (IaaS/SaaS/PaaS), Network, Containers</td>
+<td>Main matrix; 14 tactics</td>
+</tr>
+<tr>
+<td><strong>Mobile</strong></td>
+<td>Android, iOS</td>
+<td>Lacks some Enterprise tactics; adds Device Access specifics</td>
+</tr>
+<tr>
+<td><strong>ICS</strong></td>
+<td>Industrial Control Systems / OT</td>
+<td>Built for the operations technology environment; relevant to critical infrastructure</td>
+</tr>
+</tbody>
+</table>
+<h2>Knowledge Base Objects</h2>
+<p>Beyond techniques, the knowledge base is structured around:</p>
+<ul>
+<li><strong>Tactics / Techniques / Sub-techniques</strong> — the attack behaviour (the core)</li>
+<li><strong>Groups</strong> (<code>G####</code>) — threat actors / APTs (e.g. G0022 APT29) and their documented tool-use</li>
+<li><strong>Software</strong> (<code>S####</code>) — malware and tools (e.g. S0586 FinFisher), and which groups use them</li>
+<li><strong>Campaigns</strong> (<code>C####</code>) — specific, time-bound intrusion operations (added to differentiate from persistent groups)</li>
+<li><strong>Mitigations</strong> (<code>M####</code>) — defensive controls that can prevent or limit a technique (e.g. M1040 Behaviour Prevention on Endpoint)</li>
+<li><strong>Data Sources</strong> (<code>DS####</code>) — the telemetry/log types needed to detect a technique (e.g. DS0029 Network Traffic, DS0002 Process Creation)</li>
+<li><strong>Relationships</strong> — the mappings between groups, software, techniques, and mitigations</li>
+</ul>
+<h2>Usage in the Cyber Intelligence Lifecycle</h2>
+<p>ATT&amp;CK is used across nearly every functional area of cybersecurity:</p>
+<ul>
+<li><strong>Threat intelligence</strong> — characterising an adversary's TTPs and normalising reporting from different vendors into one vocabulary</li>
+<li><strong>Detection engineering</strong> — designing detections and SIEM rules against specific techniques and data sources</li>
+<li><strong>Adversary emulation</strong> — structuring red-team operations and breaches from known group playbooks (MITRE maintains public emulation plans, e.g. <strong>APT3</strong> as a reference)</li>
+<li><strong>Purple teaming</strong> — aligning red and blue teams on a shared technique-level target</li>
+<li><strong>Gap analysis / maturity</strong> — identifying which techniques an organisation has no visibility or control over</li>
+<li><strong>SOC / MSSP service design</strong> — scoping detection coverage and communicating service value in a standard metric</li>
+<li><strong>Control validation</strong> — testing whether defensive controls actually prevent mapped techniques</li>
+</ul>
+<h2>Related MITRE Projects</h2>
+<ul>
+<li><strong>D3FEND</strong> — a knowledge base of countermeasures (the defensive counterpart to ATT&amp;CK)</li>
+<li><strong>ENGAGE</strong> — a framework for proactive adversary engagement and deception</li>
+<li><strong>CAR (Cyber Analytics Repository)</strong> — analytics/detections expressed against ATT&amp;CK techniques</li>
+<li><strong>ATT&amp;CK Navigator</strong> — the interactive tool for visualising and annotating matrix coverage (heatmaps, layer comparison)</li>
+<li><strong>ATT&amp;CK Workbench</strong> — tooling to build and maintain custom ATT&amp;CK instances</li>
+<li><strong>STIX/TAXII representation</strong> — ATT&amp;CK is machine-readable so tooling and threat-intel platforms can consume it programmatically</li>
+</ul>
+<h2>Limitations</h2>
+<ul>
+<li><strong>Not a full kill chain</strong> — ATT&amp;CK focuses on <em>technique-level</em> behaviour, not a complete methodology; it does not cover all post-exploitation or target-specific nuances</li>
+<li><strong>Observation bias</strong> — the corpus reflects what has been publicly documented, not a complete picture of adversary behaviour</li>
+<li><strong>A vocabulary, not a risk model</strong> — it describes <em>how</em> attacks happen, not organisational risk or likelihood</li>
+<li><strong>Not a compliance framework</strong> — it complements, but does not replace, control frameworks such as NIST CSF, ISO 27001, or the ACSC Essential Eight</li>
+</ul>
+<h2>Australian Angle</h2>
+<p>MITRE ATT&amp;CK is deeply embedded in the Australian cyber operating environment:</p>
+<ul>
+<li><strong>ACSC publications</strong> routinely express adversary activity and incident descriptions in ATT&amp;CK terms, and the <strong>Essential Eight</strong> and <strong>Information Security Manual (ISM)</strong> mitigations can be mapped to specific ATT&amp;CK techniques for control-validation purposes</li>
+<li>Commercial threat-intel and MSSP detection services sold to Australian government and critical-infrastructure clients (including the assessments and detection-engineering work the CyberCX Assessments team delivers) use ATT&amp;CK as the shared language for scoping coverage and reporting</li>
+<li>Under the <strong>Soci Act</strong> framework, ATT&amp;CK-based gap analysis is a practical way to evidence cyber-resilience obligations for critical infrastructure operators <code>&lt;span class="fn"&gt;(Cyber Digest Sources — AU cyber landscape)&lt;/span&gt;</code></li>
+<li>For OT-heavy sectors, the <strong>ATT&amp;CK for ICS</strong> matrix is the relevant domain for mapping threats to Australian industrial control and SCADA environments</li>
+</ul>
+<h2>Related Pages</h2>
+<ul>
+<li><a href="../entities/scattered-spider.html">Scattered Spider</a> — a cybercrime group whose TTPs are routinely mapped and tracked via ATT&amp;CK</li>
+<li><a href="../entities/blackcat-alphv.html">Blackcat Alphv</a> — ransomware operation documented and compared using standardised ATT&amp;CK technique IDs</li>
+<li><a href="../entities/ryuk.html">Ryuk</a> — prolific ransomware variant; operator behaviour classified via ATT&amp;CK techniques</li>
+<li><a href="uk-cyber-shield.html">Uk Cyber Shield</a> — national defensive capability where technique-level detection matters</li>
+<li><a href="nis2-directive.html">Nis2 Directive</a> — regulatory framework that interacts with ATT&amp;CK-based security control validation</li>
+<li><a href="cyber-kill-chain.html">Cyber Kill Chain</a> — higher-level intrusion lifecycle model; ATT&amp;CK's predecessor and framing layer</li>
+<li><a href="d3fend.html">D3Fend</a> — MITRE's defensive-countermeasure counterpart to ATT&amp;CK</li>
+<li><a href="security-control-frameworks.html">Security Control Frameworks</a> — the control/tactical catalogues mapped against ATT&amp;CK for coverage &amp; compliance analysis</li>
+</ul></div>
+            </div></main>
+<div class="footer">
+  <div class="links">
+    <a href="https://peterjaycox.github.io/cyber-digest-site/index.html">Home</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/stories.html">Story DB</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/daily/">Daily</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/monthly/index.html">Monthly</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/reports/index.html">Reports</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/wiki/index.html">Wiki</a>
+    <a href="https://peterjaycox.com/feed.xml">RSS</a>
+  </div>
+  Cyber Digest public site · built 2026-08-18 07:22
+</div>
+<script>
+var _t=document.documentElement;
+var _b=document.querySelector(".theme-toggle");
+function toggleTheme(){var n=_t.getAttribute("data-theme")==="dark"?"light":"dark";_t.setAttribute("data-theme",n);if(_b)_b.textContent=n==="dark"?"🌙":"☀️";try{if(n==="dark")localStorage.removeItem("cd-theme");else localStorage.setItem("cd-theme",n)}catch(e){}}
+(function(){try{var s=localStorage.getItem("cd-theme");if(s){_t.setAttribute("data-theme",s);if(_b)_b.textContent="☀️"}}catch(e){}})()
+</script>
+</body></html>

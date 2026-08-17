@@ -1,0 +1,125 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security Control &amp; Tactical Frameworks</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png">
+<link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png">
+<link rel="alternate" type="application/rss+xml" title="Cyber Digest" href="https://peterjaycox.com/feed.xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Security Control &amp; Tactical Frameworks">
+<meta property="og:description" content="Curated sector-by-sector roundup of global cybersecurity developments with source-reliability indexing, AU/NZ context, and searchable knowledge base.">
+<meta property="og:url" content="https://peterjaycox.com/">
+<meta property="og:image" content="https://peterjaycox.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/site.css?v=20260818"></head><body>
+<nav class="topnav"><div class="inner">
+        <a class="brand" href="https://peterjaycox.com/index.html"><img src="../../assets/img/logo-mark-icon.png" alt="" style="height:22px;width:22px;vertical-align:middle;border-radius:4px"> Cyber&nbsp;Digest<small>public site</small></a>
+        <div class="navlinks"><a href="https://peterjaycox.com/index.html" class=""><span class="t">🏠 Home</span></a><a href="https://peterjaycox.com/stories.html" class=""><span class="t">📚 Story DB</span></a><a href="https://peterjaycox.com/globe.html" class=""><span class="t">🌍 Globe</span></a><a href="https://peterjaycox.com/daily/" class=""><span class="t">🗓️ Daily</span></a><a href="https://peterjaycox.com/monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="https://peterjaycox.com/reports/index.html" class=""><span class="t">📑 Reports</span></a><a href="https://peterjaycox.com/wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a></div>
+        <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light">🌙</div></div></nav><main class="container">
+            <div class="container">
+            <div class="crumb"><a href="../../index.html">Home</a> · <a href="../../wiki/index.html">Wiki</a> · Concepts &amp; Frameworks</div>
+            <div class="wiki-body"><div class="frontmatter">created: 2026-08-18 · updated: 2026-08-18 · type: concept · tags: [framework, regulation, defense] · confidence: high · affected_sectors: [sector-technology, sector-government, sector-finance, sector-healthcare, sector-energy, sector-defence] · au_impact: true</div><h1>Security Control &amp; Tactical Frameworks</h1>
+<p>The <strong>control and tactical frameworks</strong> are the family of standards and prioritised guidance used to design, assess, and evidence an organisation's security controls. They answer the question <em>"what should we do to defend ourselves?"</em> — distinct from adversary-behaviour frameworks such as <a href="mitre-attack.html">Mitre Attack</a> and the <a href="cyber-kill-chain.html">Cyber Kill Chain</a>, which describe <em>what the adversary does</em>.</p>
+<h2>Overview</h2>
+<p>These frameworks are organised controls and processes, used for compliance, risk management, and practical hardening. The most relevant to this wiki's domain:</p>
+<table>
+<thead>
+<tr>
+<th>Framework</th>
+<th>Owner</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>NIST CSF 2.0</strong></td>
+<td>NIST (US)</td>
+<td>High-level outcome framework: Govern, Identify, Protect, Detect, Respond, Recover</td>
+</tr>
+<tr>
+<td><strong>NIST SP 800-53</strong></td>
+<td>NIST (US)</td>
+<td>Detailed catalogue of security &amp; privacy controls (federal risk-management use)</td>
+</tr>
+<tr>
+<td><strong>ISO/IEC 27001</strong></td>
+<td>ISO</td>
+<td>Management-system standard; defines a certified information-security management system (ISMS)</td>
+</tr>
+<tr>
+<td><strong>ISO/IEC 27002</strong></td>
+<td>ISO</td>
+<td>The accompanying catalogue of control objectives and measures</td>
+</tr>
+<tr>
+<td><strong>CIS Controls</strong></td>
+<td>CIS</td>
+<td>Prioritised set of 18 key controls, ranked by impact (CIS Benchmarks for hardening)</td>
+</tr>
+<tr>
+<td><strong>ACSC Essential Eight</strong></td>
+<td>ACSC (AU)</td>
+<td>Eight prioritised mitigation strategies for baseline security (see Australian Angle)</td>
+</tr>
+</tbody>
+</table>
+<h2>Relationship to ATT&amp;CK &amp; the Kill Chain</h2>
+<ul>
+<li><strong>Adversary frameworks describe the threat</strong> — TTPs and attack lifecycle stages</li>
+<li><strong>Control frameworks prescribe the defence</strong> — the controls to put in place</li>
+<li>The two are joined by <strong>mapping</strong>: each control (e.g. an Essential Eight mitigation) can be mapped to the ATT&amp;CK techniques it prevents and the <a href="cyber-kill-chain.html">Cyber Kill Chain</a> stage it interrupts</li>
+<li>This mapping is the basis of <strong>gap analysis</strong>: identifying techniques with no controlling mitigation, and <strong>control validation</strong>: testing that the control actually blocks the mapped technique</li>
+</ul>
+<h2>Use in the Intelligence / Assessment Lifecycle</h2>
+<ul>
+<li><strong>Compliance evidence</strong> — demonstrating adherence to a standard or regulation (e.g. ISO 27001 certification, <a href="nis2-directive.html">Nis2 Directive</a>, Soci Act)</li>
+<li><strong>Baseline hardening</strong> — applying a prioritised, achievable control set (CIS Controls, Essential Eight) rather than a full standards labrum</li>
+<li><strong>Maturity assessment</strong> — measuring security posture against a framework's progression levels</li>
+<li><strong>Framing intelligence for decision-makers</strong> — expressing recommended actions in the control language boards and executives already expect</li>
+</ul>
+<h2>Limitations</h2>
+<ul>
+<li><strong>Not adversary-specific</strong>: controls describe general good practice, not the specific techniques of a named threat actor — hence the need to combine them with <a href="mitre-attack.html">Mitre Attack</a></li>
+<li><strong>Compliance ≠ security</strong>: passing a control audit does not guarantee protection against a determined adversary; control <em>validation</em> is required</li>
+<li><strong>Fragmentation</strong>: multiple overlapping frameworks create ambiguity about which to adopt; organisations typically align on a primary standard and supplement it</li>
+</ul>
+<h2>Australian Angle</h2>
+<p>Australia has a strong domestic control landscape:</p>
+<ul>
+<li>The <strong>ACSC Essential Eight</strong> is the prioritised baseline — eight mitigations (application whitelisting, patching, MFA, restrict admin privileges, macro security, user-application hardening, daily backups, and email/web filtering) that map cleanly onto ATT&amp;CK techniques and Kill Chain stages</li>
+<li>The <strong>Information Security Manual (ISM)</strong> and <strong>Essential Eight Maturity Model</strong> guide government and critical-infrastructure baseline settings</li>
+<li>The <strong>Soci Act</strong> imposes positive security obligations on Australian critical-infrastructure operators, which are operationalised largely through these control frameworks</li>
+<li>This is the working vocabulary for the assurance and assessment products delivered by the CyberCX Assessments team to Australian clients</li>
+</ul>
+<h2>Related Pages</h2>
+<ul>
+<li><a href="mitre-attack.html">Mitre Attack</a> — the adversary-behaviour framework these controls are mapped against</li>
+<li><a href="cyber-kill-chain.html">Cyber Kill Chain</a> — the lifecycle model for placing controls stage-by-stage</li>
+<li><a href="d3fend.html">D3Fend</a> — the countermeasure knowledge base that sits between controls and techniques</li>
+<li><a href="nis2-directive.html">Nis2 Directive</a> — a comparable international regulatory framework</li>
+<li><a href="uk-cyber-shield.html">Uk Cyber Shield</a> — a national cyber-resilience model that relies on these control baselines</li>
+</ul></div>
+            </div></main>
+<div class="footer">
+  <div class="links">
+    <a href="https://peterjaycox.github.io/cyber-digest-site/index.html">Home</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/stories.html">Story DB</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/daily/">Daily</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/monthly/index.html">Monthly</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/reports/index.html">Reports</a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/wiki/index.html">Wiki</a>
+    <a href="https://peterjaycox.com/feed.xml">RSS</a>
+  </div>
+  Cyber Digest public site · built 2026-08-18 07:22
+</div>
+<script>
+var _t=document.documentElement;
+var _b=document.querySelector(".theme-toggle");
+function toggleTheme(){var n=_t.getAttribute("data-theme")==="dark"?"light":"dark";_t.setAttribute("data-theme",n);if(_b)_b.textContent=n==="dark"?"🌙":"☀️";try{if(n==="dark")localStorage.removeItem("cd-theme");else localStorage.setItem("cd-theme",n)}catch(e){}}
+(function(){try{var s=localStorage.getItem("cd-theme");if(s){_t.setAttribute("data-theme",s);if(_b)_b.textContent="☀️"}}catch(e){}})()
+</script>
+</body></html>
