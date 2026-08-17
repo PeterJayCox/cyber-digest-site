@@ -278,7 +278,7 @@ def head(title, active="", root=""):
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{root}{SHARE_CSS}?v={datetime.now().strftime('%Y%m%d')}"></head><body>
+<link rel="stylesheet" href="{root}{SHARE_CSS}?v={datetime.now().strftime('%Y%m%d%H%M')}"></head><body>
 {nav_html(active, root)}<main class="container">'''
 
 def foot():
