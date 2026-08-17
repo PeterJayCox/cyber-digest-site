@@ -1331,7 +1331,7 @@ function toggleSection(heading){
     const body=heading.nextElementSibling;
     const sec=heading.closest('.wiki-section');
     const tog=heading.querySelector('.ws-toggle');
-    if(body.style.display==='none'){
+    if(sec.classList.contains('collapsed')){
         body.style.display='';
         sec.classList.remove('collapsed');
         if(tog) tog.textContent='▼';
@@ -1376,7 +1376,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 .wiki-card p{font-size:13px;color:var(--text-muted);flex:1;line-height:1.5}
 .wiki-card .go{margin-top:auto}
 .wiki-card .ws-pending{font-style:italic;color:var(--text-dim);font-size:12.5px}
-.wiki-grid{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.grid.cards.wiki-grid{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
 .wiki-card{min-height:150px}
 .ws-head{cursor:pointer;display:flex;align-items:center;gap:8px;user-select:none;padding:14px 0 10px;margin:0;font-size:20px;border-top:1px solid var(--border);color:var(--text)}
 .ws-head:hover{color:var(--accent)}
@@ -1388,7 +1388,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 .wiki-section.collapsed .ws-toggle{color:var(--accent);background:var(--accent-glow);border-color:var(--accent)}
 ''' + "\n"
     css_text=open(css_path,encoding="utf-8").read()
-    if "wiki-grid" not in css_text:
+    if ".grid.cards.wiki-grid{" not in css_text:
         with open(css_path,"a") as f: f.write(css_extra)
 
 FLAT_LINKMAP={}
