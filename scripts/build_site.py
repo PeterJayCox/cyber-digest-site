@@ -371,6 +371,28 @@ def parse_md(text):
             return meta, body
     return {}, text
 
+def load_wiki_summaries():
+    """Read the curated one-line summaries from Wiki/index.md (the dashboard).
+    Returns {page_basename: summary}. The wiki pages themselves carry no
+    `summary` frontmatter key — index.md is the single source of one-liners."""
+    idx = os.path.join(VAULT, "Wiki", "index.md")
+    m = {}
+    if not os.path.exists(idx):
+        return m
+    pat = re.compile(r"^-\s+(?:🇦🇺\s*)?\[\[([^\]|]+)\]\]\s*(?:—|-)\s*(.*)$")
+    for line in open(idx, encoding="utf-8"):
+        g = pat.match(line.rstrip("\n"))
+        if not g:
+            continue
+        slug = g.group(1).strip().split("/")[-1]
+        summary = (g.group(2) or "").strip()
+        # drop the auto-added confidence/severity glyph suffix from the dashboard
+        summary = re.sub(r"\s*·\s*(?:●|◐|○|·|🔴|🟠|🟡|🟢|⚪)+$", "", summary)
+        if summary and "no summary yet" not in summary:
+            m[slug] = summary
+    return m
+
+
 def md_to_html(md, linkmap, mdpath=""):
     """Convert markdown body to HTML with Obsidian wikilink + footnote resolution."""
     # resolve [[...]] wikilinks to internal links
@@ -1249,6 +1271,7 @@ def build_monthly(months, stories):
 def build_wiki(pages):
     wiki_index=os.path.join(DOCS,"wiki")
     os.makedirs(wiki_index,exist_ok=True)
+    summap = load_wiki_summaries()
     type_order=["incidents","entities","concepts","vulnerabilities"]
     type_names={"incidents":"Incidents & Campaigns","entities":"Entities & Threat Actors","concepts":"Concepts & Frameworks","vulnerabilities":"Vulnerabilities & CVEs"}
     type_icons={"incidents":"🔥","entities":"🦠","concepts":"💡","vulnerabilities":"🛡️"}
@@ -1262,7 +1285,7 @@ def build_wiki(pages):
             # linkmap resolved relative to this page's directory by md_to_html
             linkmap_rel={k: v for k,v in FLAT_LINKMAP.items()}
             content=md_to_html(body, linkmap_rel, os.path.join(d,slug+".html"))
-            meta_lines=[f"{k}: {v}" for k,v in fm.items() if k in ("confidence","au_impact","affected_sectors","type","created","updated","tags")]
+            meta_lines=[f"{k}: {v}" for k,v in fm.items() if k in ("confidence","au_impact","affected_sectors","type","created","updated","tags","severity")]
             cl=lambda s: re.sub(r"\[\[+([^\]]+)\]\]+", r"\1", s)
             meta_lines=[cl(x) for x in meta_lines]
             meta_block=f'<div class="frontmatter">{" · ".join(esc(x) for x in meta_lines)}</div>' if meta_lines else ''
@@ -1295,7 +1318,7 @@ def build_wiki(pages):
         <div class="ws-body">\n'''
         for slug,info in section_items:
             fm=info["fm"]; title=strip_wl(fm.get("title") or slug.replace("-"," ").title())
-            summary=strip_wl(fm.get("summary") or "")
+            summary=strip_wl(summap.get(slug) or fm.get("summary") or "")
             href=f"{ptype}/{slug}.html"
             cards+=f'<a class="card wiki-card" href="{href}" data-search="{esc(title.lower())} {esc(summary.lower()[:100])}"><h3>{esc(title)}</h3><p>{esc(summary[:140])}</p><span class="go">Open →</span></a>\n'
             all_items.append((title,summary,href,ptype))
