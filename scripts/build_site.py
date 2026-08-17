@@ -1307,11 +1307,11 @@ def build_wiki(pages):
         if ptype not in pages: continue
         section_items=sorted(pages[ptype].items())
         count=len(section_items)
-        collapsed=" collapsed"  # all start collapsed
+        collapsed=""  # all sections open by default
         icon=type_icons.get(ptype,"")
         cards+=f'''<div class="wiki-section{esc(collapsed)}">
-        <h2 class="ws-head" onclick="toggleSection(this)">
-            <span class="ws-toggle">▶</span>
+        <h2 class="ws-head" id="sec-{ptype}" onclick="toggleSection(this)">
+            <span class="ws-toggle">▼</span>
             <span class="bar"></span>{icon} {esc(type_names.get(ptype,ptype))}
             <span class="ws-count">{count}</span>
         </h2>
@@ -1341,6 +1341,22 @@ function toggleSection(heading){
         if(tog) tog.textContent='▶';
     }
 }
+function setAllSections(open){
+    document.querySelectorAll('.wiki-section').forEach(s=>{
+        const body=s.querySelector('.ws-body');
+        const tog=s.querySelector('.ws-toggle');
+        if(open){
+            body.style.display='';
+            s.classList.remove('collapsed');
+            if(tog) tog.textContent='▼';
+        } else {
+            body.style.display='none';
+            s.classList.add('collapsed');
+            if(tog) tog.textContent='▶';
+        }
+    });
+    return false;
+}
 function filterWiki(){
     const q=document.getElementById('wikiSearch').value.toLowerCase();
     document.querySelectorAll('.wiki-card').forEach(c=>{
@@ -1359,10 +1375,10 @@ document.addEventListener('DOMContentLoaded',()=>{
 });
 </script>'''
     html=head("Cyber Wiki","wiki/index.html", root="../")+f'''<div class="hero hero-band"><div class="kicker">// knowledge base</div><h1>Cyber <span class="accent">Wiki</span></h1>
-    <p class="sub">Entities, threat actors, incidents, vulnerabilities and concepts — cross-linked from every digest.</p></div>
+    <p class="sub">Entities, threat actors, incidents, vulnerabilities and concepts — cross-linked from every digest. Everything is open — click a heading to collapse, or jump to a section.</p></div>
     <div class="filters">
         <input type="text" id="wikiSearch" placeholder="Search wiki…">
-        <span style="color:var(--text-dim);font-size:13px">{len(all_items)} pages — click a heading to expand</span>
+        <span style="color:var(--text-dim);font-size:13px">{len(all_items)} pages · <a href="#sec-incidents">🔥 Incidents</a> · <a href="#sec-entities">🦠 Entities</a> · <a href="#sec-concepts">💡 Concepts</a> · <a href="#sec-vulnerabilities">🛡️ Vulns</a> · <a href="#" onclick="return setAllSections(true)">Expand all</a> · <a href="#" onclick="return setAllSections(false)">Collapse all</a></span>
     </div>
     {cards}
     '''+js+foot()
@@ -1386,6 +1402,8 @@ document.addEventListener('DOMContentLoaded',()=>{
 .ws-body{overflow:hidden;transition:max-height .25s}
 .wiki-section.collapsed .ws-body{display:none}
 .wiki-section.collapsed .ws-toggle{color:var(--accent);background:var(--accent-glow);border-color:var(--accent)}
+.filters a{color:var(--accent);font-size:13px;cursor:pointer;text-decoration:none}
+.filters a:hover{text-decoration:underline}
 ''' + "\n"
     css_text=open(css_path,encoding="utf-8").read()
     if ".grid.cards.wiki-grid{" not in css_text:

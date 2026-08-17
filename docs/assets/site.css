@@ -320,4 +320,6 @@ a:hover{text-decoration:underline}
 .ws-body{overflow:hidden;transition:max-height .25s}
 .wiki-section.collapsed .ws-body{display:none}
 .wiki-section.collapsed .ws-toggle{color:var(--accent);background:var(--accent-glow);border-color:var(--accent)}
+.filters a{color:var(--accent);font-size:13px;cursor:pointer;text-decoration:none}
+.filters a:hover{text-decoration:underline}
 
