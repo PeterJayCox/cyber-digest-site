@@ -15,7 +15,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../assets/site.css?v=202608180857"></head><body>
+<link rel="stylesheet" href="../../assets/site.css?v=202608181138"></head><body>
 <nav class="topnav"><div class="inner">
         <a class="brand" href="https://peterjaycox.com/index.html"><img src="../../assets/img/logo-mark-icon.png" alt="" style="height:22px;width:22px;vertical-align:middle;border-radius:4px"> Cyber&nbsp;Digest<small>public site</small></a>
         <div class="navlinks"><a href="https://peterjaycox.com/index.html" class=""><span class="t">🏠 Home</span></a><a href="https://peterjaycox.com/stories.html" class=""><span class="t">📚 Story DB</span></a><a href="https://peterjaycox.com/globe.html" class=""><span class="t">🌍 Globe</span></a><a href="https://peterjaycox.com/daily/" class=""><span class="t">🗓️ Daily</span></a><a href="https://peterjaycox.com/monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="https://peterjaycox.com/reports/index.html" class=""><span class="t">📑 Reports</span></a><a href="https://peterjaycox.com/wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a></div>
@@ -23,7 +23,7 @@
             <div class="container">
             <div class="crumb"><a href="../../index.html">Home</a> · <a href="../../wiki/index.html">Wiki</a> · Incidents &amp; Campaigns</div>
             <div class="wiki-body"><div class="frontmatter">type: incident · created: 2026-07-25 · updated: 2026-07-25 · tags: [incident, cve, sector-technology] · confidence: high · affected_sectors: [technology] · au_impact: false</div><h1>Bing Images Flaws Let Crafted SVGs Run Commands as SYSTEM on Microsoft's Servers</h1>
-<p>Two critical CVEs (<a href="../vulnerabilities/cve-2026-32194.html">Cve 2026 32194</a> and <a href="../vulnerabilities/cve-2026-32191.html">Cve 2026 32191</a>, both CVSS 9.8) in Bing's image-processing tier allowed crafted SVGs to achieve <strong>Remote Code Execution (RCE) as SYSTEM</strong> (Windows) or <strong>root</strong> (Linux). Discovered by <strong>XBOW</strong> and fixed server-side by Microsoft.</p>
+<p>Two critical CVEs (<a href="../vulnerabilities/cve-2026-32194-bing-images-svg-windows.html">Cve 2026 32194 Bing Images Svg Windows</a> and <a href="../vulnerabilities/cve-2026-32191-bing-images-svg-linux.html">Cve 2026 32191 Bing Images Svg Linux</a>, both CVSS 9.8) in Bing's image-processing tier allowed crafted SVGs to achieve <strong>Remote Code Execution (RCE) as SYSTEM</strong> (Windows) or <strong>root</strong> (Linux). Discovered by <strong>XBOW</strong> and fixed server-side by Microsoft.</p>
 <h2>Overview</h2>
 <table>
 <thead>
@@ -39,7 +39,7 @@
 </tr>
 <tr>
 <td><strong>CVEs</strong></td>
-<td><a href="../vulnerabilities/cve-2026-32194.html">Cve 2026 32194</a> (Windows, CVSS 9.8), <a href="../vulnerabilities/cve-2026-32191.html">Cve 2026 32191</a> (Linux, CVSS 9.8)</td>
+<td><a href="../vulnerabilities/cve-2026-32194-bing-images-svg-windows.html">Cve 2026 32194 Bing Images Svg Windows</a> (Windows, CVSS 9.8), <a href="../vulnerabilities/cve-2026-32191-bing-images-svg-linux.html">Cve 2026 32191 Bing Images Svg Linux</a> (Linux, CVSS 9.8)</td>
 </tr>
 <tr>
 <td><strong>Type</strong></td>
@@ -61,8 +61,8 @@
 <p>While Microsoft fixed these server-side (no user action required), the vulnerabilities represent a critical finding in a major consumer-facing service. XBOW's discovery methodology — likely involving AI-assisted fuzzing — highlights the growing role of automated vulnerability research.</p>
 <h2>Related Pages</h2>
 <ul>
-<li><a href="../vulnerabilities/cve-2026-32194.html">Cve 2026 32194</a> — Bing SVG RCE on Windows (SYSTEM, CVSS 9.8)</li>
-<li><a href="../vulnerabilities/cve-2026-32191.html">Cve 2026 32191</a> — Bing SVG RCE on Linux (root, CVSS 9.8)</li>
+<li><a href="../vulnerabilities/cve-2026-32194-bing-images-svg-windows.html">Cve 2026 32194 Bing Images Svg Windows</a> — Bing SVG RCE on Windows (SYSTEM, CVSS 9.8)</li>
+<li><a href="../vulnerabilities/cve-2026-32191-bing-images-svg-linux.html">Cve 2026 32191 Bing Images Svg Linux</a> — Bing SVG RCE on Linux (root, CVSS 9.8)</li>
 </ul></div>
             </div></main>
 <div class="footer">
@@ -75,7 +75,7 @@
     <a href="https://peterjaycox.github.io/cyber-digest-site/wiki/index.html">Wiki</a>
     <a href="https://peterjaycox.com/feed.xml">RSS</a>
   </div>
-  Cyber Digest public site · built 2026-08-18 08:57
+  Cyber Digest public site · built 2026-08-18 11:38
 </div>
 <script>
 var _t=document.documentElement;

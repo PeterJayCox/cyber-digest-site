@@ -1268,6 +1268,29 @@ def build_monthly(months, stories):
     <div class="grid cards grid-monthly">{cards}</div>'''+foot()
     open(os.path.join(DOCS,"monthly","index.html"),"w",encoding="utf-8").write(html)
 
+def cleanup_stale_wiki(pages):
+    """Remove orphaned .html pages under docs/wiki/ that no longer have a
+    corresponding page (renames/deletions). Keeps index.html and the current slug set.
+    Only touches the wiki output directory; leaves daily/, stories/, assets/ etc. alone."""
+    wiki_index=os.path.join(DOCS,"wiki")
+    if not os.path.isdir(wiki_index): return
+    # valid slug -> expected output filename per type
+    valid_ptype=os.path.join(wiki_index,"index.html")
+    stale=0
+    for ptype,map_ in pages.items():
+        d=os.path.join(wiki_index,ptype)
+        if not os.path.isdir(d): continue
+        expected={f"{slug}.html" for slug in map_}
+        for fn in os.listdir(d):
+            if not fn.endswith(".html"): continue
+            if fn in expected: continue
+            p=os.path.join(d,fn)
+            try: os.remove(p); stale+=1
+            except OSError as e: print(f"  [cleanup] skip {p}: {e}")
+    if stale:
+        print(f"🧹 Removed {stale} stale wiki page(s)")
+    return stale
+
 def build_wiki(pages):
     wiki_index=os.path.join(DOCS,"wiki")
     os.makedirs(wiki_index,exist_ok=True)
@@ -1694,6 +1717,7 @@ def main():
     build_methodology()
     build_reports(reports)
     build_wiki(pages)
+    cleanup_stale_wiki(pages)
     build_globe()
     build_feed(stories, days)
     build_sitemap(days, months, pages, reports)
