@@ -491,17 +491,33 @@ def threat_trend_html(series):
     iw, ih = W - 2 * pad, H - 2 * pad
     xstep = 0 if n <= 1 else iw / (n - 1)
     def X(i): return pad + i * xstep
-    def Y(p): return pad + ih - ih * (max(0.0, min(100.0, p)) / 100.0)
+
+    # Autoscale the Y axis to the observed data range (with padding) so that
+    # day-to-day movement is visible, instead of being squashed against a fixed
+    # 0-100 scale. Band gridlines/labels are drawn only where they fall inside
+    # the window; the caption notes the zoom so it stays honest.
+    vals = [s["pct"] for s in series]
+    vmin, vmax = min(vals), max(vals)
+    span = (vmax - vmin) or 1.0
+    pad_amt = max(2.0, span * 0.12)
+    ylo = max(0.0, vmin - pad_amt)
+    yhi = min(100.0, vmax + pad_amt)
+    if yhi - ylo < 1e-9:
+        yhi = min(100.0, ylo + 2.0)
+    yspan = (yhi - ylo) or 1.0
+    def Y(p):
+        p = max(ylo, min(yhi, p))
+        return pad + ih - ih * ((p - ylo) / yspan)
 
     bands = [("Low", "#22c55e", 40), ("Guarded", "#f59e0b", 55),
              ("Elevated", "#f97316", 70), ("Severe", "#ef4444", 85), ("Critical", "#dc2626", 100)]
     grid = "".join(
         f'<line x1="{pad}" y1="{Y(b):.1f}" x2="{pad+iw}" y2="{Y(b):.1f}" '
         f'stroke="currentColor" stroke-opacity="0.07" stroke-dasharray="3 4"/>'
-        for _, _, b in bands if b < 100)
+        for _, _, b in bands if ylo < b < yhi)
 
     pts = " ".join(f"{X(i):.1f},{Y(s['pct']):.1f}" for i, s in enumerate(series))
-    area = (f'<polygon points="{pad},{Y(0):.1f} {pts} {pad+iw:.1f},{Y(0):.1f}" '
+    area = (f'<polygon points="{pad},{Y(ylo):.1f} {pts} {pad+iw:.1f},{Y(ylo):.1f}" '
             'fill="var(--accent-glow)"/>') if n > 1 else ""
     line = (f'<polyline points="{pts}" fill="none" stroke="var(--accent)" stroke-width="2.5" '
             'stroke-linejoin="round" stroke-linecap="round"/>') if n > 1 else ""
@@ -514,7 +530,11 @@ def threat_trend_html(series):
         for i in range(0, n, step))
     blab = "".join(
         f'<text x="{pad+iw+6}" y="{Y(b)+3:.1f}" fill="{col}" font-size="10" opacity="0.75">{label}</text>'
-        for label, col, b in bands[:-1])
+        for label, col, b in bands if ylo < b < yhi)
+    yaxis = (f'<text x="{pad-4}" y="{Y(yhi)+3:.1f}" fill="currentColor" opacity="0.5" font-size="10" '
+             f'text-anchor="end">{yhi:.0f}</text>'
+             f'<text x="{pad-4}" y="{Y(ylo)+3:.1f}" fill="currentColor" opacity="0.5" font-size="10" '
+             f'text-anchor="end">{ylo:.0f}</text>')
     last = series[-1]
     return f'''<div class="section" style="margin-top:6px">
 <h2><span class="bar"></span>Reported Threat Activity <span style="font-size:13px;font-weight:400;color:var(--text-dim)">· trend · 14-day rolling window</span></h2>
@@ -524,9 +544,10 @@ def threat_trend_html(series):
   {grid}
   {area}{line}{dot}
   {xticks}
+  {yaxis}
   {blab}
 </svg>
-<div style="font-size:12px;color:var(--text-dim);margin-top:6px;text-align:center">Daily 14-day rolling threat index · as of {last["date"]} · latest <strong>{last["band"]}</strong> · {last["pct"]:.0f}/100</div>
+<div style="font-size:12px;color:var(--text-dim);margin-top:6px;text-align:center">Daily 14-day rolling threat index · as of {last["date"]} · latest <strong>{last["band"]}</strong> · {last["pct"]:.0f}/100 · axis {ylo:.0f}–{yhi:.0f} of 100 (zoomed)</div>
 </div></div>'''
 
 # ---------------- RSS feed + sitemap ----------------
