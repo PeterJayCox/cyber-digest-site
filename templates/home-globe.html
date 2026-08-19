@@ -58,6 +58,8 @@
         if(!data || !data.points || !data.points.length) throw new Error('empty');
         var el=host;
         var globe=new Globe(el)
+          .width(el.clientWidth)
+          .height(el.clientHeight)
           .globeImageUrl('//cdn.jsdelivr.net/npm/three-globe/example/img/earth-night.jpg')
           .backgroundColor('rgba(0,0,0,0)')
           .atmosphereColor('#00b4d8').atmosphereAltitude(0.15)
@@ -71,6 +73,9 @@
         globe.pointOfView({lat:22,lng:14,alt:1.5});
         globe.controls().autoRotate=true;
         globe.controls().autoRotateSpeed=0.45;
+        window.addEventListener('resize', function(){
+          globe.width(el.clientWidth).height(el.clientHeight);
+        });
         var card=document.getElementById('home-globe-card');
         var press=null;
         card.addEventListener('pointerdown',function(e){ press=[e.clientX,e.clientY]; });

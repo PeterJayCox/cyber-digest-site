@@ -1714,13 +1714,21 @@ def build_globe():
 
 
 def build_flashcards():
-    """Copy the standalone (password-gated) Flashforge app to docs/flashcards.html."""
+    """Copy the standalone (password-gated) Flashforge app to docs/flashcards.html,
+    injecting the shared site navigation bar into the __SITE_NAV__ placeholder."""
     src = os.path.join(ROOT, "templates", "flashcards.html")
-    if os.path.exists(src):
-        shutil.copy(src, os.path.join(DOCS, "flashcards.html"))
-        print("✅ Flashcards page -> docs/flashcards.html (password-gated standalone)")
-    else:
+    if not os.path.exists(src):
         print("⚠️ templates/flashcards.html missing; flashcards page not written")
+        return
+    html = open(src, encoding="utf-8").read()
+    nav = nav_html("flashcards.html", "")            # Flashcards marked active, absolute URLs
+    nav = re.sub(r'<div class="theme-toggle"[^>]*>.*?</div>', '', nav, flags=re.S)  # fixed-dark app: drop site theme toggle
+    if "__SITE_NAV__" in html:
+        html = html.replace("__SITE_NAV__", nav)
+    else:
+        html = html.replace('<div class="wrap">', nav + '\n<div class="wrap">', 1)
+    open(os.path.join(DOCS, "flashcards.html"), "w", encoding="utf-8").write(html)
+    print("✅ Flashcards page -> docs/flashcards.html (password-gated standalone + site nav)")
 
 def main():
     global FLAT_LINKMAP

@@ -150,9 +150,20 @@
   .lock-sub{color:var(--muted);font-size:14px;margin:8px 0 18px}
   #lockPass{text-align:center;margin-bottom:12px}
   .lock-err{display:none;color:var(--bad);font-size:13px;margin:10px 0 0}
+
+  /* Site navigation bar (injected by build) — styled with the app's dark theme */
+  .topnav{position:sticky;top:0;z-index:50;background:color-mix(in srgb, var(--bg2) 92%, transparent);border-bottom:1px solid var(--line);-webkit-backdrop-filter:saturate(160%) blur(10px);backdrop-filter:saturate(160%) blur(10px);transform:translateZ(0);will-change:transform}
+  .topnav .inner{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .topnav .brand{color:var(--accent);font-weight:800;font-size:15px;display:flex;align-items:center;gap:7px;text-decoration:none;white-space:nowrap}
+  .topnav .brand small{color:var(--dim);font-weight:600;font-size:11px;margin-left:3px}
+  .topnav .navlinks{display:flex;gap:2px;flex-wrap:wrap;margin-left:auto}
+  .topnav .navlinks a{color:var(--muted);padding:6px 10px;border-radius:9px;font-size:13.5px;font-weight:600;text-decoration:none;white-space:nowrap;transition:.15s}
+  .topnav .navlinks a:hover{color:var(--text);background:var(--panel)}
+  .topnav .navlinks a.active{color:var(--accent);background:var(--panel);box-shadow:inset 0 0 0 1px var(--line2)}
 </style>
 </head>
 <body>
+  __SITE_NAV__
   <!-- Lock screen (surface-level password gate; not real security) -->
   <div id="lock" class="lock">
     <div class="lock-box">
