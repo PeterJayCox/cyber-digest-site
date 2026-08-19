@@ -256,7 +256,7 @@ def nav_html(active="", root=""):
         if active=="daily/" and href=="daily/": cls="active"
         ls.append(f'<a href="{BASE}/{href}" class="{cls}"><span class="t">{ico} {label}</span></a>')
     return f'''<nav class="topnav"><div class="inner">
-        <a class="brand" href="{BASE}/index.html"><img src="{root}assets/img/logo-mark-icon.png" alt="" style="height:22px;width:22px;vertical-align:middle;border-radius:4px"> Cyber&nbsp;Digest<small>public site</small></a>
+        <a class="brand" href="{BASE}/index.html"><span class="brand-logo" aria-hidden="true"></span> Cyber&nbsp;Digest<small>public site</small></a>
         <div class="navlinks">{"".join(ls)}</div>
         <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light">\U0001f319</div></div></nav>'''
 
@@ -891,7 +891,7 @@ def build_index(stories):
         print("⚠️ templates/home-globe.html missing; homepage globe skipped")
 
     html= head("Cyber Digest — Home","index.html")+f'''
-<div class="hero" style="background:url('assets/img/hero-bg.png') center/cover no-repeat"><div class="kicker">// independent security intelligence</div>
+<div class="hero"><div class="kicker">// independent security intelligence</div>
 <h1>Cyber <span class="accent">Digest</span></h1>
 <p class="sub">A curated, sector-by-sector roundup of global cybersecurity developments with source-reliability indexing, Australian &amp; New Zealand context, and a searchable knowledge base of every story we've covered.</p></div>
 

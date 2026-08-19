@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <linearGradient id="cyan-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22d3ee" />
+      <stop offset="100%" stop-color="#00b4d8" />
+    </linearGradient>
+  </defs>
+  <!-- Tile (light) — full square, CSS rounds the corners at render -->
+  <rect width="100" height="100" fill="#ffffff"/>
+  <rect x="0.5" y="0.5" width="99" height="99" fill="none" stroke="#e2ecf7" stroke-width="1"/>
+  <!-- Shield mark -->
+  <g>
+    <path d="M 50 12 L 82 26 C 82 58 68 78 50 90 C 32 78 18 58 18 26 Z"
+          fill="none" stroke="url(#cyan-grad)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 50 28 A 22 22 0 0 1 72 50" fill="none" stroke="#00b4d8" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+    <path d="M 50 36 A 14 14 0 0 1 64 50" fill="none" stroke="#0ea5e9" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M 50 44 A 6 6 0 0 1 56 50" fill="none" stroke="#bae6fd" stroke-width="2" stroke-linecap="round"/>
+    <line x1="50" y1="20" x2="50" y2="82" stroke="#00b4d8" stroke-width="2" stroke-dasharray="3 3" opacity="0.5"/>
+    <line x1="24" y1="50" x2="76" y2="50" stroke="#00b4d8" stroke-width="2" stroke-dasharray="3 3" opacity="0.5"/>
+    <circle cx="50" cy="50" r="3.5" fill="#0ea5e9"/>
+    <circle cx="72" cy="50" r="2.5" fill="#00b4d8"/>
+    <circle cx="50" cy="28" r="2.5" fill="#00b4d8"/>
+  </g>
+</svg>
