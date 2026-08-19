@@ -70,7 +70,7 @@
           .pointAltitude(function(p){ return p.kind==='region'?0.012:0.03; })
           .pointRadius(function(p){ return p.kind==='region'?0.16:0.3; })
           .pointResolution(4);
-        globe.pointOfView({lat:22,lng:14,alt:1.5});
+        globe.pointOfView({lat:22,lng:14,alt:1.15});
         globe.controls().autoRotate=true;
         globe.controls().autoRotateSpeed=0.45;
         window.addEventListener('resize', function(){
