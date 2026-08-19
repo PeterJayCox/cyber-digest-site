@@ -49,10 +49,6 @@ def generate_logos():
 
     with open(os.path.join(SVG_DIR, "logo-mark.svg"), "w") as f:
         f.write(mark_svg)
-        
-    cairosvg.svg2png(bytestring=mark_svg.encode('utf-8'),
-                    write_to=os.path.join(IMG_DIR, "logo-mark.png"),
-                    output_width=1024, output_height=1024)
 
     # Horizontal Lockup Logo (Mark + Wordmark)
     full_logo_svg = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 60" width="320" height="60">
@@ -81,10 +77,6 @@ def generate_logos():
 
     with open(os.path.join(SVG_DIR, "logo-full.svg"), "w") as f:
         f.write(full_logo_svg)
-
-    cairosvg.svg2png(bytestring=full_logo_svg.encode('utf-8'),
-                    write_to=os.path.join(IMG_DIR, "logo-full.png"),
-                    output_width=1280, output_height=240)
 
 
 # --- 2. FAVICON SET ---
@@ -239,10 +231,6 @@ def generate_hero_and_dividers():
 
     with open(os.path.join(SVG_DIR, "hero-bg.svg"), "w") as f:
         f.write(hero_bg_svg)
-
-    cairosvg.svg2png(bytestring=hero_bg_svg.encode('utf-8'),
-                    write_to=os.path.join(IMG_DIR, "hero-bg.png"),
-                    output_width=1600, output_height=600)
 
     # Section Divider Ornament
     divider_svg = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 16" width="200" height="16">
