@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Digest — 2026-08-19</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0e1a;--surface:#111827;--surface2:#1a2332;--surface-hover:#1e293b;--text:#e2e8f0;--text-secondary:#b0c0d0;--text-muted:#8a9cb6;--text-dim:#64748b;--border:rgba(255,255,255,0.06);--border-light:rgba(255,255,255,0.1);--accent:#00b4d8;--accent-glow:rgba(0,180,216,.08);--accent-bg:rgba(0,180,216,.1);--vuln:#f43f5e;--geo:#8b5cf6;--crime:#f59e0b;--iot:#10b981;--govt:#3b82f6;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--purple:#8b5cf6;--nav-blur:rgba(10,14,26,.88);--kicker-color:#22d3ee;--kicker-bg:rgba(0,180,216,.08);--kicker-border:rgba(0,180,216,.2)}
+[data-theme="light"]{--bg:#ffffff;--surface:#fafafa;--surface2:#f3f4f5;--surface-hover:#ebebeb;--text:#171717;--text-secondary:#4d4d4d;--text-muted:#666666;--text-dim:#808080;--border:rgba(0,0,0,0.06);--border-light:rgba(0,0,0,0.1);--accent:#0072f5;--accent-glow:rgba(0,114,245,.06);--accent-bg:#ebf5ff;--vuln:#f43f5e;--geo:#8b5cf6;--crime:#f59e0b;--iot:#10b981;--govt:#3b82f6;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--purple:#8b5cf6;--nav-blur:rgba(255,255,255,.88);--kicker-color:#0068d6;--kicker-bg:#ebf5ff;--kicker-border:rgba(0,114,245,.2)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:Inter,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;min-height:100vh;transition:background .25s,color .25s}
+.skip-link{position:absolute;left:-9999px;top:0;z-index:2000;background:var(--accent);color:#fff;padding:8px 14px;border-radius:0 0 8px 0;font-size:13px;font-weight:600}
+.skip-link:focus{left:0}
+#progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--purple));z-index:10000;width:0%;transition:width .15s}
+/* Top nav */
+.topnav{position:sticky;top:0;z-index:9999;background:var(--nav-blur);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);-webkit-transform:translateZ(0);transform:translateZ(0);will-change:transform;transition:background .25s,border .25s}
+.topnav .inner{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;align-items:center;height:56px;gap:8px}
+.brand{font-size:16px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:8px;letter-spacing:-.3px}
+.brand .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);flex-shrink:0;transition:background .25s}
+.brand small{font-size:10px;color:var(--text-dim);font-weight:400;letter-spacing:1px;text-transform:uppercase}
+.navlinks{display:flex;gap:2px;margin-left:auto;align-items:center}
+.navlinks a{color:var(--text-muted);font-size:13px;font-weight:500;padding:6px 12px;border-radius:6px;transition:all .12s}
+.navlinks a:hover{color:var(--text);background:var(--surface2);text-decoration:none}
+.navlinks a.active{color:var(--text);background:var(--surface-hover);font-weight:600}
+.theme-toggle{display:flex;align-items:center;justify-content:center;margin-left:8px;width:34px;height:34px;border-radius:8px;background:var(--surface2);cursor:pointer;border:1px solid var(--border);transition:all .25s;user-select:none;flex-shrink:0;font-size:16px}
+.theme-toggle:hover{background:var(--surface-hover);border-color:var(--border-light)}
+/* Layout */
+.wrap{max-width:1100px;margin:auto;padding:0 28px 60px;display:flex;gap:32px;position:relative;z-index:1}
+#toc{position:sticky;top:80px;width:210px;flex-shrink:0;height:fit-content;max-height:calc(100vh-100px);overflow-y:auto;padding:18px 14px;background:var(--surface);border:1px solid var(--border);border-radius:10px;font-size:12px;transition:background .25s,border .25s}
+#toc h3{color:var(--accent);font-size:10px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px}
+#toc a{display:block;color:var(--text-muted);text-decoration:none;padding:3px 8px;border-radius:6px;margin-bottom:2px;transition:all .2s;border-left:2px solid transparent;font-size:12px}
+#toc a:hover{color:var(--text);background:var(--accent-bg)}
+#toc a.active{color:var(--accent);border-left-color:var(--accent);background:var(--accent-bg)}
+.main{flex:1;min-width:0}
+/* Header / Hero */
+.header{padding:32px 0 20px;text-align:center;border-bottom:1px solid var(--border);margin-bottom:28px}
+.header .kicker{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;letter-spacing:1px;color:var(--kicker-color);margin-bottom:14px;padding:5px 16px;border-radius:6px;display:inline-block;background:var(--kicker-bg);border:1px solid var(--kicker-border);transition:all .25s}
+.header h1{font-size:clamp(1.5rem,4vw,2rem);font-weight:800;letter-spacing:-.03em;color:var(--text);margin-bottom:4px}
+.header .subtitle{color:var(--text-secondary);font-size:14px}
+/* Sections */
+.section{margin-bottom:28px;scroll-margin-top:80px}
+.section h2{font-size:1.15rem;font-weight:600;color:var(--text);margin-bottom:14px;border-bottom:1px solid var(--border);padding-bottom:10px;display:flex;align-items:center;gap:10px}
+.section h2 .icon{font-size:1.3rem;line-height:1}
+.section h2 .count{margin-left:auto;background:var(--surface2);color:var(--text-muted);padding:2px 10px;border-radius:100px;font-size:11px;font-weight:600;white-space:nowrap}
+/* Exec summary */
+.exec-summary{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px 30px;margin-bottom:28px;position:relative;overflow:hidden;transition:background .25s,border .25s}
+.exec-summary::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--vuln),var(--purple))}
+.exec-summary h2{font-size:11px;text-transform:uppercase;letter-spacing:.15em;color:var(--accent);font-weight:700;margin-bottom:14px;border:none;padding:0}
+.exec-summary p{color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:14px}
+.exec-summary p:last-child{margin-bottom:0}
+.exec-summary p strong{color:var(--text);font-weight:600}
+/* AU context */
+.au-context-box{background:linear-gradient(135deg,rgba(0,180,216,.06),rgba(59,130,246,.06));border:1px solid rgba(0,180,216,.15);border-radius:10px;padding:18px 22px;margin:14px 0;position:relative}
+.au-context-box::before{content:'AU';position:absolute;top:-8px;right:14px;background:var(--accent);color:#fff;font-size:10px;font-weight:800;padding:1px 7px;border-radius:4px;letter-spacing:.05em}
+.au-context-box p{color:var(--text-muted);font-size:13px;line-height:1.65}
+/* Stats */
+.stats-row{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap;justify-content:center}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:8px 18px;text-align:center;font-size:13px;color:var(--text-muted);transition:background .25s,border .25s}
+.stat-card .stat-num{font-weight:700;color:var(--text);font-size:16px;font-feature-settings:'tnum'}
+.stat-card .stat-label{font-size:11px;color:var(--text-dim)}
+/* Monthly reader-first blocks (At a Glance + Month at a Glance) */
+.glance-box{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:12px;padding:20px 24px;margin-bottom:28px}
+.glance-box ul{margin:0;padding-left:20px;display:grid;gap:8px}
+.glance-box li{font-size:14px;line-height:1.55;color:var(--text-muted)}
+.glance-box li strong{color:var(--text);font-weight:600}
+.month-glance{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:28px}
+.month-glance .stats-row{margin-bottom:0}
+.mg-headline{color:var(--text-muted);font-size:14px;line-height:1.6;margin:14px 0 0}
+.mg-headline strong{color:var(--text);font-weight:600}
+/* Bar charts */
+.bar-chart{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:18px;transition:background .25s,border .25s}
+.bar-chart h3{font-size:13px;font-weight:600;color:var(--text);margin-bottom:12px}
+.bar-row{display:flex;align-items:center;margin-bottom:6px;gap:8px}
+.bar-row .bar-label{font-size:12px;color:var(--text-muted);width:130px;flex-shrink:0;text-align:right}
+.bar-row .bar-track{flex:1;height:16px;background:var(--surface2);border-radius:99px;overflow:hidden}
+.bar-row .bar-fill{height:100%;border-radius:99px;transition:width .6s ease;min-width:4px}
+.bar-row .bar-val{font-size:11px;font-weight:600;color:var(--text);width:36px;flex-shrink:0;font-family:'JetBrains Mono',monospace}
+.bar-cyan .bar-fill{background:linear-gradient(90deg,var(--accent),#0096c7)}
+.bar-purple .bar-fill{background:linear-gradient(90deg,var(--purple),#a78bfa)}
+.bar-amber .bar-fill{background:linear-gradient(90deg,var(--amber),#fbbf24)}
+.bar-red .bar-fill{background:linear-gradient(90deg,var(--vuln),#fb7185)}
+.bar-green .bar-fill{background:linear-gradient(90deg,var(--green),#4ade80)}
+.bar-blue .bar-fill{background:linear-gradient(90deg,var(--govt),#60a5fa)}
+/* Pie */
+.pie-container{display:flex;align-items:center;gap:28px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px 28px;margin:18px 0;transition:background .25s,border .25s}
+.pie{width:140px;height:140px;border-radius:50%;flex-shrink:0}
+.pie-legend{display:flex;flex-direction:column;gap:6px;flex:1}
+.pie-legend .legend-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-muted)}
+.pie-legend .legend-item .dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.pie-legend .legend-item .val{margin-left:auto;font-weight:600;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:12px}
+/* Table */
+.data-table{width:100%;border-collapse:collapse;font-size:13px;background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:18px 0;transition:background .25s,border .25s}
+.data-table th{background:var(--surface2);color:var(--text-muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.08em;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border)}
+.data-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-muted)}
+.data-table tr:last-child td{border-bottom:none}
+.data-table .tier-badge{display:inline-flex;align-items:center;gap:6px;padding:2px 8px;border-radius:100px;font-size:11px;font-weight:600}
+.data-table .tier-1{background:rgba(34,197,94,.1);color:var(--green)}
+.data-table .tier-2{background:rgba(245,158,11,.1);color:var(--amber)}
+.data-table .tier-3{background:rgba(148,163,184,.1);color:var(--text-muted)}
+.data-table .tier-4{background:rgba(239,68,68,.1);color:var(--red)}
+/* Story cards */
+.story-grid{display:flex;flex-direction:column;gap:14px}
+.story-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 22px;transition:all .2s ease;position:relative;overflow:hidden}
+.story-card:hover{border-color:var(--border-light);transform:translateY(-1px)}
+.story-card .card-accent{position:absolute;top:0;left:0;bottom:0;width:3px;border-radius:0 3px 3px 0}
+.story-card.num-1 .card-accent{background:var(--vuln)}.story-card.num-2 .card-accent{background:var(--purple)}.story-card.num-3 .card-accent{background:var(--crime)}.story-card.num-4 .card-accent{background:var(--green)}.story-card.num-5 .card-accent{background:var(--govt)}
+.story-number{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);font-weight:500;margin-bottom:4px}
+.story-card h3{font-size:1rem;font-weight:600;color:var(--text);margin-bottom:6px;line-height:1.4}
+.story-card p.summary{color:var(--text-muted);font-size:13px;line-height:1.65;margin-bottom:10px}
+.story-card .meta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:12px}
+.story-card .meta .source{color:var(--accent);text-decoration:none;font-weight:500}
+.story-card .meta .source:hover{text-decoration:underline}
+.story-card .meta .reliability{display:inline-flex;align-items:center;gap:4px;color:var(--text-dim)}
+.story-card .meta .reliability .tier-1{color:var(--green)}
+.story-card .meta .reliability .tier-2{color:var(--amber)}
+.story-card .meta .reliability .tier-3{color:var(--text-muted)}
+.story-card .meta .reliability .tier-4{color:var(--red)}
+.story-card .meta .date{color:var(--text-dim);margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px}
+/* Tag badge */
+.tag{display:inline-block;font-size:11px;font-weight:500;padding:3px 10px;border-radius:999px;letter-spacing:.3px}
+.tag.blue{background:var(--accent-bg);color:var(--accent)}
+.tag.cyan{background:var(--accent-bg);color:var(--accent)}
+.tag.purple{background:rgba(139,92,246,.1);color:#a78bfa}
+.tag.green{background:rgba(34,197,94,.1);color:#4ade80}
+.tag.amber{background:rgba(245,158,11,.1);color:#fbbf24}
+.tag.red{background:rgba(239,68,68,.1);color:#f87171}
+/* Also notable */
+.bundle-box{background:var(--surface);border:1px dashed var(--border);border-radius:8px;padding:14px 18px;margin-top:6px}
+.bundle-box .bundle-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);font-weight:600;margin-bottom:6px}
+.bundle-box ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+.bundle-box ul li{font-size:13px;color:var(--text-muted);padding-left:12px;position:relative;line-height:1.5}
+.bundle-box ul li::before{content:'\25B8';position:absolute;left:0;color:var(--text-dim)}
+/* Controls */
+.controls{display:flex;gap:10px;margin-bottom:20px}
+.btn{font-size:12px;font-weight:600;padding:6px 16px;border-radius:99px;border:1px solid var(--border);background:var(--surface);color:var(--text-muted);cursor:pointer;transition:all .2s;font-family:inherit}
+.btn:hover{background:var(--surface2);color:var(--text)}
+.btn.active{background:var(--accent-bg);border-color:var(--accent);color:var(--accent)}
+#back-top{position:fixed;bottom:28px;right:28px;width:42px;height:42px;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--accent);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;z-index:9000;font-family:inherit}
+#back-top.visible{opacity:1}
+#back-top:hover{background:var(--surface2)}
+/* Footer */
+.footer{text-align:center;padding:28px 0 10px;border-top:1px solid var(--border);margin-top:32px;transition:border .25s}
+.footer .source-line{font-size:12px;color:var(--text-dim);font-family:'JetBrains Mono',monospace;margin-bottom:6px}
+.footer .note{font-size:11px;color:var(--text-dim);font-style:italic}
+.footer .links{display:flex;justify-content:center;gap:20px;margin-bottom:12px}
+.footer .links a{color:var(--text-dim);font-size:12px;font-weight:500;transition:color .15s}
+.footer .links a:hover{color:var(--text-secondary)}
+/* Executive view */
+body.exec-view .hide-exec,
+body.exec-view .story-card .meta,
+body.exec-view .story-card p.summary,
+body.exec-view .bundle-box,
+body.exec-view .bar-chart,
+body.exec-view .pie-container,
+body.exec-view .data-table,
+body.exec-view #incident-map{display:none!important}
+body.exec-view .story-card{padding:10px 18px;margin-bottom:4px;cursor:pointer}
+body.exec-view .story-card h3{font-size:14px;margin-bottom:0}
+body.exec-view .story-number{display:none}
+body.exec-view .story-grid{gap:6px}
+body.exec-view .story-card::after{content:'\25B6 Click to expand';display:block;font-size:10px;color:var(--text-dim);margin-top:4px;opacity:.5;transition:opacity .2s}
+body.exec-view .story-card:hover::after{opacity:1}
+body.exec-view .story-card.expanded::after{content:'\25BC Click to collapse'}
+body.exec-view .story-card.expanded .meta,
+body.exec-view .story-card.expanded p.summary{display:block!important}
+body.exec-view .story-card.expanded{padding:14px 18px}
+body.exec-view .story-card.expanded .story-number{display:block}
+body.exec-view .story-card.expanded h3{margin-bottom:6px;font-size:1rem}
+body.exec-view .story-card.expanded p.summary{margin-bottom:10px}
+/* Analytics grid */
+.analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.incident-map{overflow:hidden}
+.incident-map .map-fallback{padding-top:4px}
+.incident-map .map-fallback .bar-label{width:150px}
+.incident-map .map-fallback{border:1px solid var(--border);border-radius:12px;padding:12px 14px;background:var(--surface2)}
+.incident-map .bar-row{cursor:pointer;transition:opacity .15s}
+.incident-map .bar-row:hover{opacity:.85}
+.incident-map .bar-crit .bar-fill{background:linear-gradient(90deg,#ff4d5a,#fb7185)}
+.incident-map .bar-sev  .bar-fill{background:linear-gradient(90deg,#ffa62b,#fbbf24)}
+.incident-map .bar-elev .bar-fill{background:linear-gradient(90deg,#0096c7,#35c6e8)}
+.incident-map .bar-guard .bar-fill{background:linear-gradient(90deg,#5aa9e6,#7cc4f0)}
+.incident-map .bar-unknown .bar-fill{background:var(--surface2)}
+.incident-map .im-legend{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 8px}
+.incident-map .im-lg{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;color:var(--text-muted);padding:2px 9px;border:1px solid var(--border);border-radius:99px;background:var(--surface2)}
+.incident-map .im-lg i{width:9px;height:9px;border-radius:2px;display:inline-block}
+.incident-map .im-note{font-size:10.5px;color:var(--text-dim);margin-left:auto}
+.incident-map .im-attr{font-size:10.5px;color:var(--text-dim);margin-top:8px;line-height:1.5}
+.incident-map .pan-chip{display:inline-block;font-size:11px;padding:2px 10px;margin:0 6px 4px 0;border-radius:99px;border:1px dashed var(--border);color:var(--text-muted);background:repeating-linear-gradient(45deg,var(--surface2),var(--surface2)4px,rgba(127,127,127,.08)4px,rgba(127,127,127,.08)6px)}
+.incident-map .im-story-panel{margin-top:12px;border:1px solid var(--border);border-radius:12px;padding:14px 16px;background:var(--surface2);display:none}
+.incident-map .im-story-panel.open{display:block}
+.incident-map .im-story-panel .im-shot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.incident-map .im-story-panel h4{margin:0;font-size:14px;color:var(--text)}
+.incident-map .im-globe-btn{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;color:#0d1b3e;background:var(--accent);border-radius:99px;padding:6px 14px;text-decoration:none;white-space:nowrap}
+.incident-map .im-globe-btn:hover{filter:brightness(1.08)}
+.incident-map .im-story-panel ul{margin:0;padding:0;list-style:none}
+.incident-map .im-story-panel li{padding:7px 0;border-bottom:1px solid var(--border);font-size:12.5px}
+.incident-map .im-story-panel li:last-child{border-bottom:none}
+.incident-map .im-story-panel a{color:var(--accent);text-decoration:none;font-weight:600}
+.incident-map .im-story-panel a:hover{text-decoration:underline}
+.incident-map .im-tag{font-size:9.5px;padding:1px 7px;border-radius:99px;margin-left:8px;font-weight:700;border:1px solid}
+@media(max-width:860px){.wrap{flex-direction:column}#toc{position:static;width:100%;max-height:unset;margin-bottom:20px}.pie-container{flex-direction:column;align-items:center;gap:16px}.stats-row{gap:8px}.header h1{font-size:1.5rem}.analytics-grid{grid-template-columns:1fr}}
+@media(max-width:620px){.navlinks a span.t{display:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important;scroll-behavior:auto!important}}
+@media print{body{background:#fff!important;color:#111!important;font-size:11pt}body::before:before,.orb{display:none}#toc{display:none}.wrap{display:block;max-width:100%;padding:0}.main{width:100%}.exec-summary p,.story-card p.summary,.bar-chart,.au-context-box p,.bundle-box ul li{color:#333!important}.exec-summary,.story-card,.bar-chart,.pie-container{break-inside:avoid}@page{margin:2cm 2.5cm;@bottom-right{content:counter(page)" / "counter(pages);font-size:9pt;color:#999}}}
+</style>
+</head>
+<body>
+<nav class="topnav"><div class="inner">
+  <a class="brand" href="https://peterjaycox.github.io/cyber-digest-site/index.html"><span class="dot"></span>Cyber&nbsp;Digest<small>daily</small></a>
+  <div class="navlinks">
+    <a href="https://peterjaycox.github.io/cyber-digest-site/index.html"><span class="t">Home</span></a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/stories.html"><span class="t">Story DB</span></a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/daily/" class="active"><span class="t">Daily</span></a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/monthly/index.html"><span class="t">Monthly</span></a>
+    <a href="https://peterjaycox.github.io/cyber-digest-site/wiki/index.html"><span class="t">Wiki</span></a>
+  </div>
+  <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light">🌙</div>
+</div></nav>
+
+<a href="#main" class="skip-link">Skip to content</a>
+<div id="progress"></div>
+<div class="wrap">
+<nav id="toc" aria-label="Table of contents">
+<h3>Daily Digest</h3>
+<a href="#exec" data-section="exec">Executive summary</a>
+<a href="#incident-map" data-section="incident-map">🗺️ Incident Map</a>
+<a href="#sector-government" data-section="sector-government">🏛️ Government</a>
+<a href="#sector-global-macro" data-section="sector-global-macro">🌐 Global (Macro)</a>
+<a href="#sector-healthcare" data-section="sector-healthcare">🏥 Healthcare</a>
+<a href="#sector-financial-services" data-section="sector-financial-services">💰 Financial Services</a>
+<a href="#sector-transport" data-section="sector-transport">🚚 Transport</a>
+<a href="#analytics" data-section="analytics">📊 Analytics</a>
+</nav>
+<main id="main" class="main">
+
+<header class="header">
+<div class="kicker">// daily digest · 2026-08-19</div>
+<h1>Cyber Digest</h1>
+<p class="subtitle">A daily roundup of key cybersecurity developments across sectors</p>
+</header>
+
+<div class="controls">
+<button class="btn active" id="btn-full" onclick="setView('full')">Full report</button>
+<button class="btn" id="btn-exec" onclick="setView('exec')">Executive view</button>
+</div>
+
+<section id="exec" class="exec-summary">
+<h2>📋 Executive Summary</h2>
+<p><strong>A functional Wednesday led by an active-exploitation alert on Australian soil, the latest Microsoft Copilot Personal flaws, and a fresh spike in AI-agent and cloud-credential attacks.</strong> <strong>First</strong>, the Australian Cyber Security Centre (ACSC) issued a <strong>High-rated alert on 19 August for active exploitation in Australia of N-able and N-central remote monitoring and management (RMM) platform vulnerabilities</strong>, tracked as CVE-2026-18556 and CVE-2026-18577, urging organisations to assess exposure and apply mitigations. This is a direct and rare AU-first active-threat warning and reinforces the RMM supply-chain theme running through the year. <strong>Second</strong>, Varonis Threat Labs disclosed three vulnerabilities in Microsoft Copilot Personal — collectively &quot;CoSnitch&quot; (CVE-2026-24301) — that let a single click on a crafted link silently exfiltrate data from connected apps; the flaws turn on an undocumented `autorun=1` URL parameter Copilot itself surfaced during testing, and Microsoft shipped patches on 18 August. <strong>Third</strong>, CISA added four vulnerabilities to its Known Exploited Vulnerabilities catalogue on 18 August covering Microsoft Internet Key Exchange (IKE), Broadcom VMware vCenter, Microsoft SharePoint and Apple macOS, with the catalogue&#x27;s MLflow SSRF entry updated on 19 August — the third straight adult cyber-news day anchored by CISA patch prioritisation.</p>
+<div class="au-context-box"><p><strong>The ACSC&#x27;s active-exploitation alert for N-able/N-central is the standout Australian development and should be treated as priority remediation for any local organisation running remote-monitoring software.</strong> RMM tools have been a defining attack vector in Australian-targeted intrusions throughout 2026, and this is the clearest active-exploitation warning to Australian organisations in the cycle. It sits alongside the ASD ISM and Essential Eight patching obligations — under APRA CPS 234, regulated financial firms holding N-able/N-central in scope face a direct compliance imperative to assess exposure promptly. The deepfake-scam warning from ASIC, which surfaced in this cycle, continues the AU regulatory focus on AI-enabled fraud and identity theft against Australian consumers and investors, reinforcing the OAIC Notifiable Data Breaches scheme and ACSC guidance on AI-assisted social engineering. The CoSnitch findings on consumer AI assistants are directly relevant to Australian individuals and the growing Base-layer of agentic AI tools in local enterprises, while the week&#x27;s US RMM/KEV activity is a Five Eyes signal Australian defenders should monitor as BOD 26-04-style prioritisation continues.</p></div>
+</section>
+
+<div class="stats-row"><div class="stat-card stat-geo"><div class="stat-num">3</div><div class="stat-label">Government</div></div>
+<div class="stat-card stat-govt"><div class="stat-num">4</div><div class="stat-label">Global (Macro)</div></div>
+<div class="stat-card stat-crime"><div class="stat-num">1</div><div class="stat-label">Healthcare</div></div>
+<div class="stat-card stat-iot"><div class="stat-num">2</div><div class="stat-label">Financial Services</div></div>
+<div class="stat-card stat-vuln"><div class="stat-num">1</div><div class="stat-label">Transport</div></div></div>
+
+<section id="incident-map" class="section"><h2><span class="icon">🗺️</span> Incident Map</h2><div class="bar-chart incident-map"><div id="incident-map-status" style="font-size:11px;color:var(--text-dim);font-weight:400;margin-bottom:8px">(static view)</div><div class="im-legend"><span class="im-lg"><i style="background:#ff4d5a"></i>Critical</span><span class="im-lg"><i style="background:#ffa62b"></i>Severe</span><span class="im-lg"><i style="background:#0096c7"></i>Elevated</span><span class="im-lg"><i style="background:#5aa9e6"></i>Guarded</span><span class="im-note">darker = more incidents</span></div><div id="incident-map-chart" style="height:400px;width:100%;display:block"></div><div id="incident-map-fallback"><div class="map-fallback"><div class="bar-row bar-sev im-row" data-name="Australia" title="severity: Severe — top story: ACSC Issues High-Rated Alert on Active Exploitation of N-able Slopes — Australia Priority"><span class="bar-label">Australia</span><div class="bar-track"><div class="bar-fill" style="width:27.2727%"></div></div><span class="bar-val">3</span></div><div class="bar-row bar-crit im-row" data-name="United States" title="severity: Critical — top story: CISA Adds Four Known Exploited Vulnerabilities to Catalog"><span class="bar-label">United States</span><div class="bar-track"><div class="bar-fill" style="width:27.2727%"></div></div><span class="bar-val">3</span></div><div class="bar-row bar-sev im-row" data-name="Germany" title="severity: Severe — top story: Berlin Cuts Two State Ministries Off Government Network After Security Breach"><span class="bar-label">Germany</span><div class="bar-track"><div class="bar-fill" style="width:9.09091%"></div></div><span class="bar-val">1</span></div><div class="bar-row bar-elev im-row" data-name="United Kingdom" title="severity: Elevated — top story: Six Arrested as UK Police Target Cargo Theft Costing £70m+ a Year"><span class="bar-label">United Kingdom</span><div class="bar-track"><div class="bar-fill" style="width:9.09091%"></div></div><span class="bar-val">1</span></div><p class="im-pan-note" style="margin:8px 0 0;color:var(--text-dim);font-size:11.5px">Pan-regional / not map-pinned: <span class="pan-chip">🌐 Global: 3</span></p><p style="color:var(--text-dim);font-size:11px;margin-top:8px;line-height:1.5">4 countries · 11 stories · click a country for its stories. Interactive map loads on the hosted site.</p><p class="im-attr" style="font-size:10.5px;color:var(--text-dim);margin-top:5px;line-height:1.5">🎯 Geo-attribution: <b>8</b>/11 stories located directly from text (73%).</p></div></div><div id="incident-map-stories" class="im-story-panel"></div><div class="im-attr"><p class="im-attr" style="font-size:10.5px;color:var(--text-dim);margin-top:5px;line-height:1.5">🎯 Geo-attribution: <b>8</b>/11 stories located directly from text (73%).</p></div>
+<script>
+(function(){
+  var payload = {"date": "2026-08-19", "mode": "daily", "title": "Incident Map", "countries": [{"name": "Australia", "value": 3, "sev": "Severe", "color": "#ffa62b", "alpha": 0.96, "secs": [["Financial Services", 2], ["Government \u0026 Policy", 1]], "topThreat": "Breach / Data Leak", "top": {"headline": "ACSC Issues High-Rated Alert on Active Exploitation of N-able Slopes \u2014 Australia Priority", "url": "https://www.cyber.gov.au/about-us/view-all-content/alerts-and-advisories", "sev": "Severe"}, "stories": [{"headline": "ACSC Issues High-Rated Alert on Active Exploitation of N-able Slopes \u2014 Australia Priority", "sector": "Government \u0026 Policy", "threat": "Zero-day / Vuln", "url": "https://www.cyber.gov.au/about-us/view-all-content/alerts-and-advisories", "date": "2026-08-19", "sev": "Severe"}, {"headline": "ASIC Warns of Deepfake Scam Surge Against Australian Consumers", "sector": "Financial Services", "threat": "Breach / Data Leak", "url": "https://www.finextra.com/newsarticle/48254/asic-warns-of-surge-in-deepfake-scams?utm_medium=rssfinextra\u0026utm_source=finextrafeed", "date": "2026-08-19", "sev": "Guarded"}, {"headline": "ANZ Warns of Troubling 'Scam-Coaching' Trend", "sector": "Financial Services", "threat": "Breach / Data Leak", "url": "https://www.finextra.com/newsarticle/48261/would-i-lie-to-you-anz-warns-of-troubling-scam-coaching-trend?utm_medium=rssfinextra\u0026utm_source=finextrafeed", "date": "2026-08-19", "sev": "Severe"}], "attrDirect": 3, "attrRegion": 0}, {"name": "United States", "value": 3, "sev": "Critical", "color": "#ff4d5a", "alpha": 0.96, "secs": [["Government \u0026 Policy", 1], ["Global (Macro)", 1], ["Healthcare", 1]], "topThreat": "Zero-day / Vuln", "top": {"headline": "CISA Adds Four Known Exploited Vulnerabilities to Catalog", "url": "https://www.cisa.gov/news-events/alerts/2026/08/18/cisa-adds-four-known-exploited-vulnerabilities-catalog", "sev": "Elevated"}, "stories": [{"headline": "CISA Adds Four Known Exploited Vulnerabilities to Catalog", "sector": "Government \u0026 Policy", "threat": "Zero-day / Vuln", "url": "https://www.cisa.gov/news-events/alerts/2026/08/18/cisa-adds-four-known-exploited-vulnerabilities-catalog", "date": "2026-08-19", "sev": "Elevated"}, {"headline": "Medusa Ransomware Tallying Hundreds of New Victims; CISA Updates Tactics", "sector": "Global (Macro)", "threat": "Ransomware", "url": "https://cyberscoop.com/medusa-ransomware-tactics-cisa-advisory/", "date": "2026-08-19", "sev": "Critical"}, {"headline": "American Addiction Centers \u0026 Octopus Pathology Disclose Hacking Incidents", "sector": "Healthcare", "threat": "Breach / Data Leak", "url": "https://www.hipaajournal.com/american-addiction-centers-oculus-pathology-disclose-hacking-incidents/", "date": "2026-08-19", "sev": "Severe"}], "attrDirect": 3, "attrRegion": 0}, {"name": "Germany", "value": 1, "sev": "Severe", "color": "#ffa62b", "alpha": 0.57, "secs": [["Government \u0026 Policy", 1]], "topThreat": "Breach / Data Leak", "top": {"headline": "Berlin Cuts Two State Ministries Off Government Network After Security Breach", "url": "https://therecord.media/berlin-cuts-two-state-ministries-off-government-breach", "sev": "Severe"}, "stories": [{"headline": "Berlin Cuts Two State Ministries Off Government Network After Security Breach", "sector": "Government \u0026 Policy", "threat": "Breach / Data Leak", "url": "https://therecord.media/berlin-cuts-two-state-ministries-off-government-breach", "date": "2026-08-19", "sev": "Severe"}], "attrDirect": 1, "attrRegion": 0}, {"name": "United Kingdom", "value": 1, "sev": "Elevated", "color": "#0096c7", "alpha": 0.57, "secs": [["Transport", 1]], "topThreat": "Breach / Data Leak", "top": {"headline": "Six Arrested as UK Police Target Cargo Theft Costing \u00a370m+ a Year", "url": "https://www.freightwaves.com/news/6-arrested-as-uk-police-target-cargo-theft-costing-88m-a-year", "sev": "Elevated"}, "stories": [{"headline": "Six Arrested as UK Police Target Cargo Theft Costing \u00a370m+ a Year", "sector": "Transport", "threat": "Breach / Data Leak", "url": "https://www.freightwaves.com/news/6-arrested-as-uk-police-target-cargo-theft-costing-88m-a-year", "date": "2026-08-19", "sev": "Elevated"}], "attrDirect": 1, "attrRegion": 0}], "pan": {"Global": 3}, "attrs": {"direct": 8, "region": 3, "total": 11, "weak": {}}, "sevColor": {"Critical": "#ff4d5a", "Severe": "#ffa62b", "Elevated": "#0096c7", "Guarded": "#5aa9e6"}};
+  var panel  = document.getElementById('incident-map-stories');
+  if(!panel) return;
+
+  // -------- Click-through: show a country's stories in the inline panel -------
+  var GLOBE_BASE = '../globe.html';  // deployed daily/ & monthly/ both sit one
+                                     // level below the root where globe.html lives
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function sevClass(s){return esc(s||'Guarded');}
+  function showCountry(name){
+    var c=null;
+    payload.countries.forEach(function(x){ if(x.name===name) c=x; });
+    if(!c||!c.stories.length) return;
+    var globeParams='?country='+encodeURIComponent(c.name);
+    if(payload.mode==='daily'){ globeParams+='&date='+encodeURIComponent(payload.date);
+    }else{ globeParams+='&month='+encodeURIComponent(payload.date); }
+    var rows=c.stories.map(function(s,ix){
+      var link=s.url
+        ? '<a href="'+esc(s.url)+'" target="_blank" rel="noopener">'+esc(s.headline)+'</a>'
+        : esc(s.headline);
+      var tag=s.sev
+        ? '<span class="im-tag" style="color:'+esc(payload.sevColor[s.sev])+'">'+esc(s.sev)+'</span>'
+        : '';
+      return '<li>'+link+tag+'<div style="font-size:10px;color:var(--text-dim);margin-top:1px">'+
+             esc(s.sector||'')+(s.date?' · '+esc(s.date):'')+'</div></li>';
+    }).join('');
+    panel.innerHTML =
+      '<div class="im-shot">'+
+        '<h4>'+esc(c.name)+' — '+c.value+' incident'+(c.value>1?'s':'')+'</h4>'+
+        '<a class="im-globe-btn" href="'+GLOBE_BASE+globeParams+'">🌍 Open in 3D globe</a>'+
+      '</div>'+
+      (c.sev?'<div style="font-size:11px;color:var(--text-muted);margin-bottom:6px">'+
+        'Worst severity: <b style="color:'+esc(payload.sevColor[c.sev])+'">'+esc(c.sev)+
+        '</b>'+(c.topThreat?' · top actor: '+esc(c.topThreat):'')+'</div>':'')+
+      '<ul>'+rows+'</ul>';
+    panel.classList.add('open');
+    panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+
+  // Static-fallback bars are clickable too.
+  var fallback=document.getElementById('incident-map-fallback');
+  if(fallback){ fallback.addEventListener('click',function(e){
+    var row=e.target.closest('.im-row');
+    if(row) showCountry(row.getAttribute('data-name'));
+  }); }
+
+  // -------- ECharts interactive map ----------
+  function renderMap(){
+    if(!window.echarts) return;
+    var host=document.getElementById('incident-map-chart');
+    if(!host) return;
+    fetch("https://cdn.jsdelivr.net/npm/echarts@4.9.0/map/json/world.json")
+      .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+      .then(function(world){
+        window.echarts.registerMap('world', world);
+        var chart=window.echarts.init(host);
+        // Theme-aware base fill for unpopulated countries.
+        var base=document.createElement('div');
+        base.style.cssText='position:absolute;visibility:hidden;width:0;height:0';
+        document.body.appendChild(base);
+        var baseCol=getComputedStyle(document.body).getPropertyValue('--surface2').trim()||'#1a2332';
+        base.remove();
+        // Merge per-country overrides (severity colour + alpha intensity).
+        var data=payload.countries.map(function(c){
+          var rgb = c.color.replace('#','');
+          var r=parseInt(rgb.substring(0,2),16), g=parseInt(rgb.substring(2,4),16);
+          var b=parseInt(rgb.substring(4,6),16);
+          return {
+            name:c.name, value:c.value,
+            itemStyle:{areaColor:'rgba('+r+','+g+','+b+','+c.alpha+')'}
+          };
+        });
+        var max=payload.countries.reduce(function(a,c){return Math.max(a,c.value)},0)||1;
+        chart.setOption({
+          tooltip:{
+            trigger:'item',
+            backgroundColor:'var(--surface2,#111827)',
+            borderColor:'var(--border,rgba(255,255,255,.1))',
+            textStyle:{color:'var(--text,#e2e8f0)',fontSize:12},
+            extraCssText:'max-width:70vw;',
+            appendToBody:true,
+            position:function(pt,params,dom,rect,size){
+              var cw=size.contentSize[0]||0, ch=size.contentSize[1]||0;
+              var x=pt[0]+12, y=pt[1]+12;
+              if(x+cw>window.innerWidth){ x=Math.max(4,window.innerWidth-cw-8); }
+              if(y+ch>window.innerHeight){ y=Math.max(4,window.innerHeight-ch-8); }
+              if(x<4){ x=4; } if(y<4){ y=4; }
+              return [x,y];
+            },
+            formatter:function(p){
+              var c=null; payload.countries.forEach(function(x){ if(x.name===p.name) c=x; });
+              if(!c) return p.name;
+              var h='<b>'+esc(p.name)+'</b> — '+c.value+' incident'+(c.value>1?'s':'');
+              if(c.sev) h+='<br/><span style="color:'+esc(payload.sevColor[c.sev])+
+                       ';font-weight:700">● '+esc(c.sev)+'</span> worst';
+              if(c.secs.length) h+='<br/><div style="color:var(--text-muted);margin-top:4px">'+
+                 c.secs.map(function(s){return esc(s[0])+' <b>('+s[1]+')</b>'}).join(' · ')+'</div>';
+              if(c.topThreat && c.topThreat!==c.sev)
+                h+='<br/><div style="color:var(--text-muted)">Top actor: <b>'+esc(c.topThreat)+'</b></div>';
+              if(c.top && c.top.url)
+                h+='<br/><a href="'+esc(c.top.url)+'" target="_blank" rel="noopener" '+
+                   'style="color:var(--accent);font-weight:600">'+esc(c.top.headline)+' ↗</a>';
+              h+='<div style="color:var(--text-dim);font-size:10px;margin-top:6px">Click for all stories</div>';
+              return h;
+            }
+          },
+          series:[{
+            name:'Incidents', type:'map', map:'world', roam:true,
+            scaleLimit:{min:1,max:12},
+            label:{show:false},
+            emphasis:{label:{show:true,color:'var(--text,#e2e8f0)'},
+              itemStyle:{areaColor:'var(--accent,#00b4d8)',borderColor:'#fff'}},
+            itemStyle:{borderColor:'rgba(0,0,0,.25)',borderWidth:.5,areaColor:baseCol},
+            data:data
+          }]
+        });
+        chart.on('click',function(params){
+          if(params && params.componentType==='series') showCountry(params.name);
+        });
+        window.addEventListener('resize',function(){ chart.resize(); });
+        if(fallback) fallback.style.display='none';
+        var done=document.getElementById('incident-map-status');
+        if(done) done.textContent='✓ interactive map ready — click a country';
+      }).catch(function(){});
+  }
+  var done=document.getElementById('incident-map-status');
+  if(window.echarts){ renderMap(); }
+  else{
+    var s=document.createElement('script');
+    s.src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js";
+    s.onload=renderMap;
+    document.head.appendChild(s);
+  }
+})();
+</script>
+</div></section>
+<section id="sector-government" class="section"><h2><span class="icon">🏛️</span> Government <span class="count">3 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>ACSC Issues High-Rated Alert on Active Exploitation of N-able Slopes — Australia Priority</h3><p class="summary">The Australian Cyber Security Centre (ACSC) issued a High-rated alert on 19 August warning of active exploitation in Australia of N-able and N-central remote monitoring and management (RMM) vulnerabilities tracked as CVE-2026-18556 and CVE-2026-18577. The ACSC rated the alert High and directed Australian organisations — across business, critical infrastructure and government — to assess exposure and apply mitigations. This is a direct, Australia-specific active-threat warning in an RMM product class long-targeted by Australian campaigns. **Confidence: Confirmed** (official ACSC alert; High rating). **Breach claim: N/A** (vulnerability/advisory).</p><div class="meta"><a class="source" href="https://www.cyber.gov.au/about-us/view-all-content/alerts-and-advisories" target="_blank" rel="noopener">ACSC</a><span class="reliability"><span class="tier-2">●</span> Tier 1/4 — Official / First-party</span><span class="date">2026-08-19</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>Berlin Cuts Two State Ministries Off Government Network After Security Breach</h3><p class="summary">Berlin cut two state ministries off the German government network following a security breach, in an operation actors reportedly linked to the supply-chain issue affecting the government network. The move is the latest in a wave of German and European government-network incidents this year, and illustrates the operational trade-off between availability and containment when a breach is detected in shared government infrastructure. **Confidence: Reported breach** (outlet-reported incident; government confirmed network separation). **Breachability: Probable breach.**</p><div class="meta"><a class="source" href="https://therecord.media/berlin-cuts-two-state-ministries-off-government-breach" target="_blank" rel="noopener">The Record</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-18</span></div></div>
+<div class="story-card num-3"><div class="card-accent"></div><div class="story-number">3</div><h3>CISA Adds Four Known Exploited Vulnerabilities to Catalog</h3><p class="summary">CISA added four vulnerabilities to its Known Exploited Vulnerabilities (KEV) catalogue on 18 August: Microsoft Internet Key Exchange (IKE) service extensions (CVE-2026-33824), Broadcom VMware vCenter path traversal (CVE-2026-59310), Microsoft SharePoint weak authentication (CVE-2026-55040) and Apple macOS improper authentication (CVE-2026-65400). The additions carry a two-week federal remediation obligation under BOD 26-04 and signal confirmed exploitation in the wild across Windows, VMware, SharePoint and macOS. A further MLflow SSRF entry was added on 19 August (CVE-2026-64849). **Confidence: Confirmed** (official CISA KEV entries). **Breachability: N/A** (vulnerability advisory).</p><div class="meta"><a class="source" href="https://www.cisa.gov/news-events/alerts/2026/08/18/cisa-adds-four-known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener">CISA</a><span class="reliability"><span class="tier-2">●</span> Tier 1/4 — Official / First-party (vulnerability feed)</span><span class="date">2026-08-18</span></div></div>
+</div>
+</section>
+<section id="sector-global-macro" class="section"><h2><span class="icon">🌐</span> Global (Macro) <span class="count">4 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Microsoft Copilot Personal Flaws Let One Click Exfiltrate Data From Connected Apps — CoSnitch</h3><p class="summary">Varonis Threat Labs disclosed three vulnerabilities in Microsoft Copilot Personal that could allow a single click on a crafted link to silently exfiltrate data from connected apps and other information available to the victim&#x27;s Copilot session. The flaws, collectively named **CoSnitch** (CVE-2026-24301), turn in part on an undocumented `autorun=1` URL parameter that Copilot itself surfaced during testing; the researchers reported the issue to Microsoft in December 2025 and patches shipped 18 August. The group found no evidence of in-the-wild exploitation. **Confidence: Confirmed** (vendor-researched disclosure, patch published). **Breachability: N/A** (vulnerability).</p><div class="meta"><a class="source" href="https://thehackernews.com/2026/08/microsoft-copilot-personal-flaws-could.html" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-18</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>Critical GitLab GraphQL Flaw Lets Unauthenticated Attackers Delete Public Projects</h3><p class="summary">GitLab patched a critical vulnerability in its GraphQL API that could allow an unauthenticated attacker to delete public projects, disclosed with a zero-click angle. The flaw, reported on 17 August, adds to a busy week of critical web-application findings and reinforces GitLab&#x27;s position as a high-value, internet-facing target. **Confidence: Confirmed** (vendor advisory; reported by multiple outlets). **Breachability: N/A** (vulnerability).</p><div class="meta"><a class="source" href="https://thehackernews.com/2026/08/critical-gitlab-graphql-flaw-could-let.html" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-17</span></div></div>
+<div class="story-card num-3"><div class="card-accent"></div><div class="story-number">3</div><h3>One Attacker Has Scraped Both Salesforce and ServiceNow Portals Since 2025</h3><p class="summary">Researchers documented a single threat actor continuously scraping both Salesforce and ServiceNow web portals since 2025, harvesting data exposed in those customer-facing SaaS platforms. The finding underscores the pivot to **SaaS-scraping as a low-friction mass-compromise technique**, where public/waters surfaces on widely used enterprise platforms are mined at scale rather than exploited by a single breach. **Confidence: Probable** (researcher-identified campaign; no single exclusive newscaster). **Breachability: Unverified claim** (attributed scraping activity).</p><div class="meta"><a class="source" href="https://thehackernews.com/2026/08/one-attacker-has-scraped-both.html" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-18</span></div></div>
+<div class="story-card num-4"><div class="card-accent"></div><div class="story-number">4</div><h3>Medusa Ransomware Tallying Hundreds of New Victims; CISA Updates Tactics</h3><p class="summary">CISA identified more than 200 victims of the Medusa ransomware operation over the last year and updated its advisory on the group&#x27;s tactics, techniques and procedures. The updated advisory reflects a continuing and high-volume Ransomware-as-a-Service targeting pattern and gives defenders fresh detection guidance, in line with CISA&#x27;s ongoing KEV and advisory cadence. **Confidence: Confirmed** (CISA/agency advisory reported by the outlet). **Breachability: Confirmed breach** (multiple victim entities per advisory).</p><div class="meta"><a class="source" href="https://cyberscoop.com/medusa-ransomware-tactics-cisa-advisory/" target="_blank" rel="noopener">CyberScoop</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-18</span></div></div>
+</div>
+</section>
+<section id="sector-healthcare" class="section"><h2><span class="icon">🏥</span> Healthcare <span class="count">1 story</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>American Addiction Centers &amp; Octopus Pathology Disclose Hacking Incidents</h3><p class="summary">American Addiction Centers and Oculus (Octopus) Pathology disclosed hacking incidents involving unauthorised access to protected health information. Both entities filed the required notifications consistent with federal and state breach-notification rules; details on record volumes and impacted individuals were limited in the early disclosures. **Confidence: Confirmed breach** (companies disclosed incidents to regulators). **Breachability: Confirmed breach.**</p><div class="meta"><a class="source" href="https://www.hipaajournal.com/american-addiction-centers-oculus-pathology-disclose-hacking-incidents/" target="_blank" rel="noopener">HIPAA Journal</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-18</span></div></div>
+</div>
+</section>
+<section id="sector-financial-services" class="section"><h2><span class="icon">💰</span> Financial Services <span class="count">2 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>ASIC Warns of Deepfake Scam Surge Against Australian Consumers</h3><p class="summary">The Australian Securities and Investments Commission (ASIC) warned of a surge in deepfake-related scams targeting Australian consumers and investors, including authorised-transaction and high-stream fake celebrity/authority models. The warning reinforces the OAIC and ACSC standing guidance on AI-enabled fraud and identity theft, and flags the growing consumer exposure to AI-generated verisual content. **Confidence: Confirmed** (Australian regulator public warning). **Breachability: N/A** (regulatory/investor warning).</p><div class="meta"><a class="source" href="https://www.finextra.com/newsarticle/48254/asic-warns-of-surge-in-deepfake-scams?utm_medium=rssfinextra&amp;utm_source=finextrafeed" target="_blank" rel="noopener">Finextra</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-17</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>ANZ Warns of Troubling &#x27;Scam-Coaching&#x27; Trend</h3><p class="summary">Australian bank ANZ warned of a &quot;scam-coaching&quot; trend, in which fraudsters coach victims to lie to their bank to subvert scam-prevention controls — a variant of social-engineering designed to defeat the very protections banks and regulators have deployed. The warning is directly relevant to the OAIC Notifiable Data Breach scheme&#x27;s anti-fraud regime and to the industry&#x27;s escalating fight against authorised-push-payment scams. **Confidence: Confirmed** (Australian bank warning). **Breachability: N/A** (social-engineering trend).</p><div class="meta"><a class="source" href="https://www.finextra.com/newsarticle/48261/would-i-lie-to-you-anz-warns-of-troubling-scam-coaching-trend?utm_medium=rssfinextra&amp;utm_source=finextrafeed" target="_blank" rel="noopener">Finextra</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-17</span></div></div>
+</div>
+</section>
+<section id="sector-transport" class="section"><h2><span class="icon">🚚</span> Transport <span class="count">1 story</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Six Arrested as UK Police Target Cargo Theft Costing £70m+ a Year</h3><p class="summary">UK police arrested six people in an operation targeting cargo and freight theft — a logistics-side physical-cyber overlap that moves goods loss into the supply-chain risk picture. The arrests underscore the convergence of organised freight crime with digital coordination of supply chains used by Australian and global shippers. **Confidence: Confirmed** (police action-reported). **Breachability: N/A** (physical/organised crime).</p><div class="meta"><a class="source" href="https://www.freightwaves.com/news/6-arrested-as-uk-police-target-cargo-theft-costing-88m-a-year" target="_blank" rel="noopener">FreightWaves</a><span class="reliability"><span class="tier-2">●</span> Tier 3/4 — Moderate / General news</span><span class="date">2026-08-18</span></div></div>
+</div>
+</section>
+
+<!-- Analytics Section -->
+<section id="analytics" class="section">
+<h2><span class="icon">📊</span> Analytics</h2>
+<div class="analytics-grid"><div class="bar-chart"><h3>Sector distribution</h3><div class="bar-row bar-blue"><span class="bar-label">Government</span><div class="bar-track"><div class="bar-fill" style="width:27%"></div></div><span class="bar-val">3</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">Global (Macro)</span><div class="bar-track"><div class="bar-fill" style="width:36%"></div></div><span class="bar-val">4</span></div>
+<div class="bar-row bar-red"><span class="bar-label">Healthcare</span><div class="bar-track"><div class="bar-fill" style="width:9%"></div></div><span class="bar-val">1</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">Financial Services</span><div class="bar-track"><div class="bar-fill" style="width:18%"></div></div><span class="bar-val">2</span></div>
+<div class="bar-row bar-green"><span class="bar-label">Transport</span><div class="bar-track"><div class="bar-fill" style="width:9%"></div></div><span class="bar-val">1</span></div></div><div class="bar-chart"><h3>Source breakdown</h3><div class="bar-row bar-cyan"><span class="bar-label">The Hacker News</span><div class="bar-track"><div class="bar-fill" style="width:27%"></div></div><span class="bar-val">3</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">Finextra</span><div class="bar-track"><div class="bar-fill" style="width:18%"></div></div><span class="bar-val">2</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">ACSC</span><div class="bar-track"><div class="bar-fill" style="width:9%"></div></div><span class="bar-val">1</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">The Record</span><div class="bar-track"><div class="bar-fill" style="width:9%"></div></div><span class="bar-val">1</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">CISA</span><div class="bar-track"><div class="bar-fill" style="width:9%"></div></div><span class="bar-val">1</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">CyberScoop</span><div class="bar-track"><div class="bar-fill" style="width:9%"></div></div><span class="bar-val">1</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">HIPAA Journal</span><div class="bar-track"><div class="bar-fill" style="width:9%"></div></div><span class="bar-val">1</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">FreightWaves</span><div class="bar-track"><div class="bar-fill" style="width:9%"></div></div><span class="bar-val">1</span></div></div></div>
+<div class="pie-container"><div class="pie" style="background:conic-gradient(var(--accent) 0deg 98deg,var(--purple) 98deg 229deg,var(--govt) 229deg 262deg,var(--vuln) 262deg 327deg,var(--crime) 327deg 360deg);"></div><div class="pie-legend"><div class="legend-item"><span class="dot" style="background:var(--accent)"></span> Government <span class="val">3</span></div><div class="legend-item"><span class="dot" style="background:var(--purple)"></span> Global (Macro) <span class="val">4</span></div><div class="legend-item"><span class="dot" style="background:var(--govt)"></span> Healthcare <span class="val">1</span></div><div class="legend-item"><span class="dot" style="background:var(--vuln)"></span> Financial Services <span class="val">2</span></div><div class="legend-item"><span class="dot" style="background:var(--crime)"></span> Transport <span class="val">1</span></div></div></div>
+<h3 style="font-size:14px;color:var(--text);margin-bottom:10px">Source Reliability Index</h3>
+<table class="data-table">
+<thead><tr><th>Tier</th><th>Label</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><span class="tier-badge tier-1">● Tier 1</span></td><td>Very High</td><td>Official / first-party</td></tr>
+<tr><td><span class="tier-badge tier-2">● Tier 2</span></td><td>High</td><td>Established cyber journalism</td></tr>
+<tr><td><span class="tier-badge tier-3">● Tier 3</span></td><td>Moderate</td><td>General tech/news media</td></tr>
+<tr><td><span class="tier-badge tier-4">● Tier 4</span></td><td>Low</td><td>Social / unverified</td></tr>
+</tbody>
+</table>
+</section>
+
+<footer class="footer">
+<div class="links">
+  <a href="https://peterjaycox.github.io/cyber-digest-site/index.html">Home</a>
+  <a href="https://peterjaycox.github.io/cyber-digest-site/stories.html">Story DB</a>
+  <a href="https://peterjaycox.github.io/cyber-digest-site/daily/">Daily</a>
+  <a href="https://peterjaycox.github.io/cyber-digest-site/monthly/index.html">Monthly</a>
+  <a href="https://peterjaycox.github.io/cyber-digest-site/wiki/index.html">Wiki</a>
+</div>
+<div class="source-line">Digest generated 2026-08-19. Sources: The Hacker News (3), Finextra (2), ACSC (1), The Record (1), CISA (1), CyberScoop (1), HIPAA Journal (1), FreightWaves (1). No single source exceeded the 40% threshold (The Hacker News at 27.3%).</div>
+<div class="note">Digest prepared 19 August 2026. 48-hour freshness window (72-hour max for weekend bridging).</div>
+</footer>
+</main>
+</div>
+
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+
+<script>
+var _t=document.documentElement;
+var _b=document.querySelector(".theme-toggle");
+function toggleTheme(){var n=_t.getAttribute("data-theme")==="dark"?"light":"dark";_t.setAttribute("data-theme",n);if(_b)_b.textContent=n==="dark"?"🌙":"☀️";try{if(n==="dark")localStorage.removeItem("cd-theme");else localStorage.setItem("cd-theme",n)}catch(e){}}
+(function(){try{var s=localStorage.getItem("cd-theme");if(s){_t.setAttribute("data-theme",s);if(_b)_b.textContent="☀️"}}catch(e){}})();
+
+window.addEventListener('scroll',function(){
+var h=document.documentElement;
+var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+document.getElementById('progress').style.width=Math.min(p,100)+'%';
+var bt=document.getElementById('back-top');
+bt.classList.toggle('visible',(h.scrollTop||document.body.scrollTop)>300);
+var sections=document.querySelectorAll('section[id],.exec-summary');
+var links=document.querySelectorAll('#toc a');
+var cur='';
+sections.forEach(function(s){
+var t=s.getBoundingClientRect().top;
+if(t<250) cur=s.id;
+});
+links.forEach(function(l){
+l.classList.toggle('active',l.dataset.section===cur);
+});
+});
+function setView(m){
+document.body.classList.toggle('exec-view',m==='exec');
+document.getElementById('btn-full').classList.toggle('active',m==='full');
+document.getElementById('btn-exec').classList.toggle('active',m==='exec');
+document.querySelectorAll('.story-card').forEach(function(c){
+var interactive=m==='exec';
+c.setAttribute('role',interactive?'button':null);
+c.setAttribute('tabindex',interactive?'0':null);
+c.setAttribute('aria-expanded',interactive?(c.classList.contains('expanded')?'true':'false'):null);
+});
+}
+document.addEventListener('keydown',function(e){
+if(e.key==='Escape') setView('full');
+});
+function toggleCard(c){ if(!document.body.classList.contains('exec-view'))return; c.classList.toggle('expanded'); c.setAttribute('aria-expanded',c.classList.contains('expanded')?'true':'false'); }
+document.querySelectorAll('.story-card').forEach(function(c){
+c.addEventListener('click',function(e){
+if(e.target.closest('a')) return;
+toggleCard(this);
+});
+c.addEventListener('keydown',function(e){
+if(e.target.closest('a')) return;
+if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggleCard(this); }
+});
+});
+document.querySelectorAll('#toc a').forEach(function(l){
+l.setAttribute('role','navigation');
+});
+var _tocObs=new MutationObserver(function(){
+document.querySelectorAll('#toc a.active').forEach(function(a){a.setAttribute('aria-current','location');});
+document.querySelectorAll('#toc a:not(.active)').forEach(function(a){a.removeAttribute('aria-current');});
+});
+_tocObs.observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['class']});
+</script>
+</body>
+</html>
