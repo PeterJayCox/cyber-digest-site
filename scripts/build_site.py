@@ -248,7 +248,8 @@ def nav_html(active="", root=""):
     BASE = "https://peterjaycox.com"
     items = [("index.html","Home","🏠"),("stories.html","Story DB","📚"),
              ("globe.html","Globe","🌍"),("daily/","Daily","🗓️"),("monthly/index.html","Monthly","📅"),
-             ("reports/index.html","Reports","📑"),("wiki/index.html","Wiki","🧠")]
+             ("reports/index.html","Reports","📑"),("wiki/index.html","Wiki","🧠"),
+             ("flashcards.html","Flashcards","🗂️")]
     ls=[]
     for href,label,ico in items:
         cls="active" if href==active else ""
@@ -1712,6 +1713,15 @@ def build_globe():
     return True
 
 
+def build_flashcards():
+    """Copy the standalone (password-gated) Flashforge app to docs/flashcards.html."""
+    src = os.path.join(ROOT, "templates", "flashcards.html")
+    if os.path.exists(src):
+        shutil.copy(src, os.path.join(DOCS, "flashcards.html"))
+        print("✅ Flashcards page -> docs/flashcards.html (password-gated standalone)")
+    else:
+        print("⚠️ templates/flashcards.html missing; flashcards page not written")
+
 def main():
     global FLAT_LINKMAP
     ap=argparse.ArgumentParser()
@@ -1740,6 +1750,7 @@ def main():
     build_wiki(pages)
     cleanup_stale_wiki(pages)
     build_globe()
+    build_flashcards()
     build_feed(stories, days)
     build_sitemap(days, months, pages, reports)
     print(f"✅ Site built -> {DOCS}")
