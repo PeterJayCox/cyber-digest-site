@@ -152,7 +152,9 @@
   <url><loc>https://peterjaycox.com/wiki/incidents/cisa-adds-ray-project-ray-code-injection-flaw-to-known-exploited-vulnerabilities.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/cisa-adds-three-known-exploited-vulnerabilities-to-catalog.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/cisa-adds-two-known-exploited-vulnerabilities-to-kev-catalogue.html</loc><lastmod>2026-08-20</lastmod></url>
+  <url><loc>https://peterjaycox.com/wiki/incidents/cisa-adds-two-trueconf-server-cves-to-known-exploited-vulnerabilities.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/cisa-advisory-improve-router-hygiene-to-protect-against-russian-state-sponsored-.html</loc><lastmod>2026-08-20</lastmod></url>
+  <url><loc>https://peterjaycox.com/wiki/incidents/cisa-advisory-johnson-controls-simplex-incident-manager-credential-leak.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/cisa-fbi-joint-advisory-russian-state-sponsored-zimbra-phishing-campaign-aa26-20.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/cisa-github-leak.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/cisa-issues-ics-advisory-on-cpdlc-over-atn-b1-vulnerabilities-five-cves-.html</loc><lastmod>2026-08-20</lastmod></url>
@@ -172,9 +174,11 @@
   <url><loc>https://peterjaycox.com/wiki/incidents/craneware-cyberattack.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/critical-sap-commerce-cloud-vulnerability-targeted-in-active-exploitation-attemp.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/critical-sap-commerce-cloud-vulnerability-targeted-in-active-exploitation-attempts-days-after-patch.html</loc><lastmod>2026-08-20</lastmod></url>
+  <url><loc>https://peterjaycox.com/wiki/incidents/cryptographic-context-injection-vs-grok-data-exfiltration-via-encrypted-instructions.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/ctm360-uncovers-over-3-000-recruitment-phishing-urls-using-browser-in-the-browse.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/cyber-extortionists-steal-data-from-uk-department-for-education.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/cyberattack-on-north-carolina-ports-contained-as-coast-guard-state-officials-inv.html</loc><lastmod>2026-08-20</lastmod></url>
+  <url><loc>https://peterjaycox.com/wiki/incidents/cybersecurity-threat-delays-start-of-semester-at-ut-san-antonio.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/data-breaches-announced-by-four-hospitals-and-surgery-centres.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/data-breaches-announced-by-loma-linda-university-health-ucla-health.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/deadlock-ransomware-uses-polygon-smart-contracts-to-make-extortion-infra-harder-.html</loc><lastmod>2026-08-20</lastmod></url>
@@ -256,6 +260,7 @@
   <url><loc>https://peterjaycox.com/wiki/incidents/n-able-says-attackers-take-over-n-central-servers-after-initial-fix-proves-incom.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/n8n-patches-severity-8-7-expression-sandbox-escape-discovered-by-security-joes.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/n8n-sandbox-escape-lets-workflow-editors-run-os-commands-cvss-8-7-.html</loc><lastmod>2026-08-20</lastmod></url>
+  <url><loc>https://peterjaycox.com/wiki/incidents/nasa-ait-gui-flaws-could-let-unauthenticated-attackers-issue-spacecraft-commands.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/nearly-750-000-had-financial-info-ssns-leaked-in-south-carolina-loan-company-bre.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/nearly-800-malicious-npm-packages-deliver-cross-platform-rat-and-infostealer.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/netnut-takedown.html</loc><lastmod>2026-08-20</lastmod></url>
@@ -267,6 +272,7 @@
   <url><loc>https://peterjaycox.com/wiki/incidents/new-zealand-sanctions-russian-hackers-propaganda-groups-over-ukraine-war.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/nichirei-cyberattack.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/nodebb-patches-eight-ai-found-flaws-exposing-admin-access-and-private-chats.html</loc><lastmod>2026-08-20</lastmod></url>
+  <url><loc>https://peterjaycox.com/wiki/incidents/non-profit-urges-designation-of-ai-as-critical-infrastructure.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/north-korea-s-lazarus-group-sharing-tools-with-ransomware-hackers-south-korean-a.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/nvidia-and-36-tech-giants-launch-open-secure-ai-alliance-to-govern-agentic-workf.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/nvidia-forms-37-member-open-secure-ai-alliance-open-sources-nooa-framework.html</loc><lastmod>2026-08-20</lastmod></url>
@@ -295,6 +301,7 @@
   <url><loc>https://peterjaycox.com/wiki/incidents/senate-democrats-introduce-bill-distributing-300-million-annually-for-water-syst.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/silverfox-targets-japanese-manufacturer-with-3-driver-byovd-chain-and-valleyrat.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/singapore-launches-ai-training-data-guidelines-expands-pets-resources.html</loc><lastmod>2026-08-20</lastmod></url>
+  <url><loc>https://peterjaycox.com/wiki/incidents/slovakia-s-speed-cameras-found-with-russian-backdoor.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/south-carolina-s-anmed-closes-nearly-80-facilities-following-disruptive-cyberatt.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/ssd-secure-disclosure-releases-public-exploit-for-unpatched-vbulletin-rce-flaw-c.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/state-department-imposes-visa-restrictions-on-foreign-cyber-scammers.html</loc><lastmod>2026-08-20</lastmod></url>
@@ -305,6 +312,7 @@
   <url><loc>https://peterjaycox.com/wiki/incidents/tennessee-pathology-group-170k-breach.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/texas-hearing-institute-ransomware-attack-affects-30-000-patients.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/three-recent-chrome-releases-fix-1-442-flaws-more-than-prior-23-updates-combined.html</loc><lastmod>2026-08-20</lastmod></url>
+  <url><loc>https://peterjaycox.com/wiki/incidents/toxicpanda-2-0-and-golddigger-expand-android-banking-attacks-with-on-device-frau.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/triwest-healthcare-alliance-announces-breach-affecting-12-000-tricare-beneficiar.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/triwest-healthcare-breach.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/trump-signs-memo-authorising-private-sector-offensive-operations-against-foreign.html</loc><lastmod>2026-08-20</lastmod></url>
@@ -330,6 +338,7 @@
   <url><loc>https://peterjaycox.com/wiki/incidents/we-now-have-a-better-understanding-how-openai-hacked-into-hugging-face.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/windrelay-android-malware-turns-victims-phones-into-nfc-relays-for-payment-fraud.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/zoll-medical-pays-3-5-million-to-settle-data-breach-lawsuit.html</loc><lastmod>2026-08-20</lastmod></url>
+  <url><loc>https://peterjaycox.com/wiki/incidents/zombie-card-attack-can-revive-expired-visa-cards-for-contactless-payments.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/zoom-screen-share-hijack-flaws-found-by-ai-tool-in-under-20-prompts.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/index.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/vulnerabilities/aws-kiro-flaw.html</loc><lastmod>2026-08-20</lastmod></url>
