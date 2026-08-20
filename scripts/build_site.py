@@ -620,7 +620,7 @@ def build_sitemap(days, months, pages, reports):
 
     entry = []
     for u in ["", "index.html", "stories.html", "globe.html", "methodology.html",
-              "daily/", "monthly/index.html", "reports/index.html", "wiki/index.html"]:
+              "daily/", "monthly/index.html", "reports/index.html", "wiki/index.html", "wiki/cve-attack-matrix.html"]:
         entry.append((u, _mtime("index.html" if u in ("", "index.html") else u)))
     for d, _ in days:  # daily digests: lastmod = publish date
         entry.append((f"daily/{d}.html", d))
@@ -1425,6 +1425,13 @@ document.addEventListener('DOMContentLoaded',()=>{
         <input type="text" id="wikiSearch" placeholder="Search wiki…">
         <span style="color:var(--text-dim);font-size:13px">{len(all_items)} pages · <a href="#sec-incidents">🔥 Incidents</a> · <a href="#sec-entities">🦠 Entities</a> · <a href="#sec-concepts">💡 Concepts</a> · <a href="#sec-vulnerabilities">🛡️ Vulns</a> · <a href="#" onclick="return setAllSections(true)">Expand all</a> · <a href="#" onclick="return setAllSections(false)">Collapse all</a></span>
     </div>
+    <div class="wiki-toolbar">
+        <a class="card wiki-card wiki-tool" href="cve-attack-matrix.html" data-search="cve mitre attack matrix d3fend techniques framework">
+            <h3>🛰️ CVE × MITRE ATT&amp;CK / D3FEND Matrix</h3>
+            <p class="ws-pending" style="font-style:normal">Interactive explorer — select any wiki CVE to see the ATT&amp;CK techniques it utilises and the defensive countermeasures D3FEND recommends.</p>
+            <span class="go">Open tool →</span>
+        </a>
+    </div>
     {cards}
     '''+js+foot()
     open(os.path.join(wiki_index,"index.html"),"w",encoding="utf-8").write(html)
@@ -1449,6 +1456,11 @@ document.addEventListener('DOMContentLoaded',()=>{
 .wiki-section.collapsed .ws-toggle{color:var(--accent);background:var(--accent-glow);border-color:var(--accent)}
 .filters a{color:var(--accent);font-size:13px;cursor:pointer;text-decoration:none}
 .filters a:hover{text-decoration:underline}
+/* CVE matrix tool card on the wiki index */
+.wiki-toolbar{margin:18px 0 6px}
+.wiki-tool{display:flex;flex-direction:column;gap:8px;border:1px solid var(--accent);background:linear-gradient(90deg,var(--surface2),var(--surface))}
+.wiki-tool h3{color:var(--accent)}
+.wiki-tool:hover{border-color:var(--accent-glow);transform:translateY(-1px)}
 ''' + "\n"
     css_text=open(css_path,encoding="utf-8").read()
     if ".grid.cards.wiki-grid{" not in css_text:
@@ -1730,6 +1742,26 @@ def build_flashcards():
     open(os.path.join(DOCS, "flashcards.html"), "w", encoding="utf-8").write(html)
     print("✅ Flashcards page -> docs/flashcards.html (password-gated standalone + site nav)")
 
+
+def build_cve_matrix():
+    """Copy the standalone CVE x MITRE ATT&CK/D3FEND matrix into docs/wiki/,
+    injecting the shared site navigation bar into the __SITE_NAV__ placeholder."""
+    src = os.path.expanduser("~/Desktop/Hermes/att-cve-explorer/wiki-cve-attack-matrix.html")
+    if not os.path.exists(src):
+        print("⚠️ CVE matrix source missing; docs/wiki/cve-attack-matrix.html not written")
+        return
+    html = open(src, encoding="utf-8").read()
+    nav = nav_html("wiki/index.html", "")            # Wiki marked active, absolute URLs
+    nav = re.sub(r'<div class="theme-toggle"[^>]*>.*?</div>', '', nav, flags=re.S)  # fixed-dark app: drop site theme toggle
+    if "__SITE_NAV__" in html:
+        html = html.replace("__SITE_NAV__", nav)
+    else:
+        print("⚠️ __SITE_NAV__ placeholder missing in matrix source; nav not injected")
+    wiki_dir = os.path.join(DOCS, "wiki")
+    os.makedirs(wiki_dir, exist_ok=True)
+    open(os.path.join(wiki_dir, "cve-attack-matrix.html"), "w", encoding="utf-8").write(html)
+    print("✅ CVE matrix -> docs/wiki/cve-attack-matrix.html (standalone + site nav)")
+
 def main():
     global FLAT_LINKMAP
     ap=argparse.ArgumentParser()
@@ -1759,6 +1791,7 @@ def main():
     cleanup_stale_wiki(pages)
     build_globe()
     build_flashcards()
+    build_cve_matrix()
     build_feed(stories, days)
     build_sitemap(days, months, pages, reports)
     print(f"✅ Site built -> {DOCS}")

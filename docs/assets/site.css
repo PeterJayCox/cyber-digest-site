@@ -324,4 +324,9 @@ a:hover{text-decoration:underline}
 .wiki-section.collapsed .ws-toggle{color:var(--accent);background:var(--accent-glow);border-color:var(--accent)}
 .filters a{color:var(--accent);font-size:13px;cursor:pointer;text-decoration:none}
 .filters a:hover{text-decoration:underline}
+/* CVE matrix tool card on the wiki index */
+.wiki-toolbar{margin:18px 0 6px}
+.wiki-tool{display:flex;flex-direction:column;gap:8px;border:1px solid var(--accent);background:linear-gradient(90deg,var(--surface2),var(--surface))}
+.wiki-tool h3{color:var(--accent)}
+.wiki-tool:hover{border-color:var(--accent-glow);transform:translateY(-1px)}
 
