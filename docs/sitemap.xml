@@ -95,6 +95,7 @@
   <url><loc>https://peterjaycox.com/wiki/entities/scmbanker.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/entities/silver-fox.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/entities/smartloader.html</loc><lastmod>2026-08-20</lastmod></url>
+  <url><loc>https://peterjaycox.com/wiki/entities/the-gentlemen.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/entities/uat-7810.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/entities/uta0533.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/entities/wp-shellstorm.html</loc><lastmod>2026-08-20</lastmod></url>
@@ -347,8 +348,11 @@
   <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-16812-arista-velocloud-cmd-injection.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-17583-thermo-fisher-dna-tampering.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-18577-nable-ncentral-auth-bypass.html</loc><lastmod>2026-08-20</lastmod></url>
+  <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-19489.html</loc><lastmod>2026-08-20</lastmod></url>
+  <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-19490.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-20349-cisco-asa-ftd-heap-overflow.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-27577-n8n-sandbox-escape.html</loc><lastmod>2026-08-20</lastmod></url>
+  <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-27875.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-29059-windmill.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-3055-netscaler-memory-overread.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-32191-bing-images-svg-linux.html</loc><lastmod>2026-08-20</lastmod></url>
@@ -379,7 +383,10 @@
   <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-6875-servicenow-ai.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-68820-afd-sys-winsock-uaf.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-71398-adobe-campaign-incorrect-authz.html</loc><lastmod>2026-08-20</lastmod></url>
+  <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-72529.html</loc><lastmod>2026-08-20</lastmod></url>
+  <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-72530.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-72898-metabase-sql-injection.html</loc><lastmod>2026-08-20</lastmod></url>
+  <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-73570.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-8037-progress-loadmaster-rce.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-8933-snap-confine.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/vulnerabilities/fortibleed.html</loc><lastmod>2026-08-20</lastmod></url>
