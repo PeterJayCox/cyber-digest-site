@@ -338,6 +338,7 @@ def scan_wiki():
             if not fn.endswith(".md"): continue
             p=os.path.join(d,fn); slug=fn[:-3]
             fm, body = parse_md(open(p,encoding="utf-8").read())
+            if str(fm.get("published","")).strip().lower() == "false": continue
             pages.setdefault(ptype,{})[slug]={"path":p,"fm":fm,"body":body,"slug":slug,"file":fn}
             rel=f"wiki/{ptype}/{slug}.html"
             linkmap[slug]=rel
@@ -353,6 +354,7 @@ def scan_wiki():
             if not fn.endswith(".md"): continue
             p=os.path.join(sub,fn); slug=fn[:-3]
             fm,body=parse_md(open(p,encoding="utf-8").read())
+            if str(fm.get("published","")).strip().lower() == "false": continue
             pages.setdefault("incidents",{})[slug]={"path":p,"fm":fm,"body":body,"slug":slug,"file":fn}
             rel=f"wiki/incidents/{slug}.html"
             linkmap[slug]=rel; linkmap[slug.replace("-"," ")]=rel
