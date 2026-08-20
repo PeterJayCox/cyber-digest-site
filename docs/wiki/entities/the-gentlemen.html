@@ -15,45 +15,67 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../assets/site.css?v=202608210601"></head><body>
+<link rel="stylesheet" href="../../assets/site.css?v=202608210626"></head><body>
 <nav class="topnav"><div class="inner">
         <a class="brand" href="https://peterjaycox.com/index.html"><span class="brand-logo" aria-hidden="true"></span> Cyber&nbsp;Digest<small>public site</small></a>
         <div class="navlinks"><a href="https://peterjaycox.com/index.html" class=""><span class="t">🏠 Home</span></a><a href="https://peterjaycox.com/stories.html" class=""><span class="t">📚 Story DB</span></a><a href="https://peterjaycox.com/globe.html" class=""><span class="t">🌍 Globe</span></a><a href="https://peterjaycox.com/daily/" class=""><span class="t">🗓️ Daily</span></a><a href="https://peterjaycox.com/monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="https://peterjaycox.com/reports/index.html" class=""><span class="t">📑 Reports</span></a><a href="https://peterjaycox.com/wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a><a href="https://peterjaycox.com/flashcards.html" class=""><span class="t">🗂️ Flashcards</span></a></div>
         <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light">🌙</div></div></nav><main class="container">
             <div class="container">
             <div class="crumb"><a href="../../index.html">Home</a> · <a href="../../wiki/index.html">Wiki</a> · Entities &amp; Threat Actors</div>
-            <div class="wiki-body"><div class="frontmatter">type: entity · created: 2026-08-21 · updated: 2026-08-21 · tags: [ransomware-group, ransomware, campaign] · confidence: medium · affected_sectors: [healthcare, finance, technology] · au_impact: true</div><h1>The Gentlemen</h1>
-<p><strong>The Gentlemen</strong> (also styled <strong>"TheGentlemen"</strong>) is a ransomware group first observed in September 2025. Still relatively new, it has already demonstrated an unusually high operational tempo and the ability to launch advanced, tailored attacks against enterprise systems — in NCC Group's October 2025 assessment, The Gentlemen was singled out as a "newcomer" operating at a tempo "suggestive of experienced operators", distinct from the many recycled-data groups flooding the 2025 ransomware landscape. <span class="fn">(Security Reports/2025/NCCGroup-Cyber-Threat-Intelligence-Report-2025.md)</span> <span class="fn">(Security Reports/2026/Guidepoint-Ransomware-Annual_Report-2026.md)</span></p>
+            <div class="wiki-body"><div class="frontmatter">type: entity · created: 2026-08-21 · updated: 2026-08-21 · tags: [ransomware-group, ransomware, campaign, au-focus] · confidence: medium · affected_sectors: [healthcare, finance, technology, manufacturing] · au_impact: true</div><h1>The Gentlemen</h1>
+<p><strong>The Gentlemen</strong> (also styled <strong>"TheGentlemen"</strong>; tracked as <strong>Storm-2697</strong> by Microsoft Threat Intelligence) is a ransomware-as-a-service (RaaS) group first observed in September 2025. Still relatively new, it has become the <strong>second-most-active ransomware group of 2026 by claimed victim volume</strong>. Its defining feature is not novel malware but a <strong>90/10 affiliate revenue split</strong> (vs the 80/20 market standard) that bought scale by attracting experienced operators from rival programmes. <span class="fn">(Security Reports/2025/NCCGroup-Cyber-Threat-Intelligence-Report-2025.md)</span> <span class="fn">(Security Reports/2026/Guidepoint-Ransomware-Annual_Report-2026.md)</span></p>
 <h2>Emergence and TTPs</h2>
 <ul>
-<li><strong>First observed:</strong> September 2025.</li>
-<li>By the end of October 2025, the group had made <strong>21 public ransomware attack claims</strong> targeting organisations across Asia, South America, Europe and Africa. <span class="fn">(Security Reports/2025/NCCGroup-Cyber-Threat-Intelligence-Report-2025.md)</span></li>
-<li>Trend Micro highlighted The Gentlemen for its <strong>advanced, tailored attacks on enterprise systems</strong>, profiling the group after a September attack investigation. <span class="fn">(Trend Micro, "Unmasking the Gentlemen Ransomware", 2025)</span>(https://www.trendmicro.com/en_us/research/25/i/unmasking-the-gentlemen-ransomware.html)</li>
-<li>Operates a <strong>Data Leak Site (DLS)</strong> listing attack claims with countdown timers and threats to publish exfiltrated data — consistent with <strong>double-extortion</strong> ransomware activity. <span class="fn">(Security Reports/2025/NCCGroup-Cyber-Threat-Intelligence-Report-2025.md)</span></li>
-<li>Claimed sectors span <strong>healthcare, financial services, IT and consumer discretionary</strong>. <span class="fn">(Security Reports/2025/NCCGroup-Cyber-Threat-Intelligence-Report-2025.md)</span></li>
+<li><strong>First observed:</strong> Microsoft records the group as emerging around <strong>mid-2025</strong>, initially closed, opening its RaaS to affiliates around <strong>September 2025</strong>.</li>
+<li>By the end of October 2025, the group had made <strong>21 public ransomware attack claims</strong> across Asia, South America, Europe and Africa. <span class="fn">(Security Reports/2025/NCCGroup-Cyber-Threat-Intelligence-Report-2025.md)</span></li>
+<li>Trend Micro highlighted The Gentlemen for its <strong>advanced, tailored attacks on enterprise systems</strong>. <span class="fn">(Trend Micro, "Unmasking the Gentlemen Ransomware", 2025)</span>(https://www.trendmicro.com/en_us/research/25/i/unmasking-the-gentlemen-ransomware.html)</li>
+<li>Operates a <strong>Data Leak Site (DLS)</strong> with countdown timers and publication threats — consistent with <strong>double-extortion</strong> ransomware activity. <span class="fn">(Security Reports/2025/NCCGroup-Cyber-Threat-Intelligence-Report-2025.md)</span></li>
+<li>Claimed sectors include <strong>healthcare, financial services, IT, consumer discretionary, manufacturing and food</strong>. The group does not observe the informal "no hospitals" or "no critical infrastructure" conventions some operators claim.</li>
+<li><strong>Encryptor and propagation (Microsoft, 28 May 2026):</strong> written in <strong>Go</strong> (obfuscated with <strong>Garble</strong>), per-file ephemeral <strong>Curve25519 keys with XChaCha20</strong>, and a <strong>self-propagation engine</strong> attempting <strong>21 remote-execution operations per target host</strong> (PsExec, SMB share, WMI, scheduled task, service, WinRM) after a defence-evasion PowerShell blob.</li>
 </ul>
 <h2>Scale and escalation</h2>
 <ul>
 <li>By the end of October 2025, 21 public victim claims. <span class="fn">(Security Reports/2025/NCCGroup-Cyber-Threat-Intelligence-Report-2025.md)</span></li>
-<li>The group's claimed victim count had <strong>escalated to 332+ by early 2026</strong>, per the August 2026 cyber digest's weekly ransomware trend. This figure is <strong>self-claimed and not independently verified</strong>. <span class="fn">(raw/digests/Cyber-Digest-2026-08-12)</span></li>
-<li>CYFIRMA reporting lists The Gentlemen as one of the <strong>top ransomware groups active in South-East Asia</strong> (22 incidents in the collated dataset), behind only the regionally dominant Qilin. <span class="fn">(Philippines Threat Assessment/COLLATED_INTELLIGENCE.md)</span></li>
+<li><strong>483+ public victims across ~66 countries</strong> by 13 Jun 2026 (Security Affairs; researcher Gregory Devans), with <strong>580 victims across 77 countries</strong> by 7 Jul 2026 (Unit 42 tracking). These are <strong>self-claimed leak-site figures, not independently verified</strong>.</li>
+<li>A <strong>single affiliate's C2 infrastructure</strong> was linked by Check Point Research to <strong>1,570+ probable corporate victims</strong> — well above the public leak-site tally, meaning public claims understate the operation's reach.</li>
+<li>CYFIRMA reporting lists The Gentlemen as one of the <strong>top ransomware groups active in South-East Asia</strong> (22 incidents in the collated dataset), behind the regionally dominant Qilin. <span class="fn">(Philippines Threat Assessment/COLLATED_INTELLIGENCE.md)</span></li>
+</ul>
+<h2>The May 2026 backend leak — "when the gang got hacked"</h2>
+<ul>
+<li>On <strong>4 May 2026</strong> the operator acknowledged the group's internal backend database had been compromised and leaked, likely tied to the breach of its hosting provider, <strong>4VPS</strong>.</li>
+<li>Check Point Research obtained a portion: internal chat logs, affiliate rosters, ransom negotiation transcripts and tooling discussions — a rare attacker-side window.</li>
+<li>The leak revealed the group is run by <strong>roughly nine named operators</strong> around a single administrator, and underpinned the June 2026 named attribution.</li>
+</ul>
+<h2>Attribution</h2>
+<ul>
+<li>Microsoft Threat Intelligence tracks the operator group as <strong>Storm-2697</strong>, "a financially motivated threat actor that manages the RaaS platform while affiliates carry out attacks".</li>
+<li>A <strong>10 June 2026 Krebs on Security investigation</strong> (corroborated by Check Point, Intel 471, PRODAFT, Constella Intelligence) linked the leading operator persona (Hastalamuerte / SantaMuerte / Zeta88) to <strong>Alexander Andreevich Yapaev</strong>, a 36-year-old Izhevsk, Russia. This is an identification based on correlation, <strong>not a conviction</strong>.</li>
+<li>The administrator is described as a <strong>former affiliate of the Qilin</strong> programme — learning the trade under an established operation before building a rival.</li>
 </ul>
 <h2>Confidence in claims: legitimate data, not recycling</h2>
-<p>NCC Group's review of The Gentlemen's public claims found <strong>no overlap with other groups' claims between 2021 and 2025</strong> — an important differentiator from groups such as Funksec and Babuk that make high-volume claims assessed to be recycled breach data. NCC assessed the claim against <strong>2GO</strong> (a large Philippines-based logistics company) as <strong>likely genuine</strong>, noting 2GO had no prior record of being breached. The group therefore appears to be generating fresh breach data rather than relabelling older compromises. <span class="fn">(Security Reports/2025/NCCGroup-Cyber-Threat-Intelligence-Report-2025.md)</span></p>
+<p>NCC Group's review of The Gentlemen's public claims found <strong>no overlap with other groups' claims between 2021 and 2025</strong> — a differentiator from high-volume groups assessed to rely on recycled breach data. NCC assessed the claim against <strong>2GO</strong> (a large Philippines-based logistics company) as <strong>likely genuine</strong>. The group appears to generate fresh breach data rather than relabelling older compromises. <span class="fn">(Security Reports/2025/NCCGroup-Cyber-Threat-Intelligence-Report-2025.md)</span></p>
 <h2>Notable incidents</h2>
 <h3>AnMed (US healthcare) — August 2026</h3>
-<p>The Gentlemen claimed responsibility in the August 2026 disruption of <strong>AnMed</strong>, a nonprofit health system serving Upstate South Carolina and Northeast Georgia. During the fallout the <strong>group hijacked AnMed's Facebook page</strong>, posting ransom demands that claimed exfiltration (or 6 terabytes) including records relating to sexual assault, mental health, abortion and sexual harassment — claims for which <strong>no evidence had been provided</strong>. The incident stems from the malware disruption AnMed first disclosed on 26 July 2026. <span class="fn">(raw/digests/Cyber-Digest-2026-08-12)</span> See <a href="../incidents/anmed-closes-almost-80-facilities-amid-cyberattack.html">Anmed Closes Almost 80 Facilities Amid Cyberattack</a>.</p>
+<p>The Gentlemen claimed responsibility in the August 2026 disruption of <strong>AnMed</strong>, a nonprofit health system serving South Carolina and Georgia. The group <strong>hijacked AnMed's Facebook page</strong>, posting ransom demands claiming exfiltration of records including sexual assault, mental health, abortion and sexual harassment — claims for which <strong>no evidence had been provided</strong>. The incident stems from the disruption AnMed disclosed on 26 July 2026. See <a href="../incidents/anmed-closes-almost-80-facilities-amid-cyberattack.html">Anmed Closes Almost 80 Facilities Amid Cyberattack</a>.</p>
 <h3>Philippine Savings Bank (PSBank) — 2 August 2026</h3>
-<p>A ThreatMon alert (reported by Undercode News) claimed The Gentlemen added <strong>Philippine Savings Bank</strong> to its victim list. This is a <strong>low-confidence, unconfirmed lead</strong> — no independent evidence of compromise or public confirmation by the bank. It should not be reported as a confirmed breach. <span class="fn">(Philippines Threat Assessment/RESEARCH_UPDATE_2026-08-03.md)</span></p>
+<p>A ThreatMon alert (Undercode News) claimed The Gentlemen added <strong>Philippine Savings Bank</strong> to its victim list. <strong>Low-confidence, unconfirmed lead</strong> — no independent evidence. Do not report as a confirmed breach. <span class="fn">(Philippines Threat Assessment/RESEARCH_UPDATE_2026-08-03.md)</span></p>
+<h3>Chain-victimisation — April 2026 (UK → Turkey)</h3>
+<p>In April 2026 the group breached a UK software consultancy, then used data stolen from it to attack a client in Turkey, publishing both and citing the UK firm as its "access broker".</p>
 <h2>Australian angle</h2>
-<p>The Gentlemen has a demonstrated regional footprint (South-East Asia and the Philippines, incl. the 2GO logistics breach and the PSBank listing). No confirmed Australian victim was identified at the time this page was created, but the group's active targeting of the healthcare, finance and logistics sectors overlaps closely with APRA/ASIC-regulated industries in AU. Australian organisations should treat The Gentlemen like any credible double-extortion RaaS and apply core ransomware defences (patched, internet-exposed estate; backup isolates; the Acsc "Don't Pay" posture). Au Impact</p>
+<p>Australia is a <strong>demonstrated, repeated target</strong> — Check Point ranks Australia as the group's <strong>fourth-most-targeted nation</strong>. Confirmed Australian victims:</p>
+<ul>
+<li><strong>Einstein Technology Pty Ltd</strong> (IT services) — claim 12 March 2026. Sources: DeXpose, SOCRadar.</li>
+<li><strong>Mackay Sugar</strong> (North Queensland sugar producer) — claimed 10 June 2026 cyber attack that shutdown Farleigh and Racecourse mills at crushing-season start; Cyber Daily exclusive corroborated by SecurityWeek/ABC; company confirmed a dark-web claim but not the specific group (Moderate–High). See the full incident analysis in Security Reports/2026/Mackay-Sugar-Cyber-Attack-Analysis-2026.</li>
+<li><strong>Royal Foods Pty Ltd</strong> (food distribution) — claim 11 July 2026; confirmed by Cyber Daily and Echo Newspaper.</li>
+</ul>
+<p>The heavy food/agri representation (two of three) matches the group's global dominance of manufacturing/industrial targets. Australian food, agriculture and managed-service providers holding harvest, grower or client data are squarely in scope. Full analysis: Security Reports/2026/The-Gentlemen-Ransomware-Intelligence-Assessment-2026. Au Impact</p>
 <h2>Related Pages</h2>
 <ul>
 <li><a href="../incidents/anmed-closes-almost-80-facilities-amid-cyberattack.html">Anmed Closes Almost 80 Facilities Amid Cyberattack</a> — AnMed healthcare disruption attributed in-part to The Gentlemen</li>
-<li><a href="scattered-spider.html">Scattered Spider</a> — Prolific cybercrime group; comparison point for a high-tempo, multi-victim operation</li>
-<li><a href="goddamn-ransomware.html">Goddamn Ransomware</a> — Ransomware variant</li>
+<li><a href="scattered-spider.html">Scattered Spider</a> — Prolific cybercrime group; comparison point</li>
 <li><a href="../concepts/mitre-attack.html">Mitre Attack</a> — TTP framework for mapping The Gentlemen's activity</li>
-</ul></div>
+</ul>
+<p><em>Mackay Sugar AU attack analysis: Security Reports/2026/Mackay-Sugar-Cyber-Attack-Analysis-2026.</em></p></div>
             </div></main>
 <div class="footer">
   <div class="links">
@@ -65,7 +87,7 @@
     <a href="https://peterjaycox.github.io/cyber-digest-site/wiki/index.html">Wiki</a>
     <a href="https://peterjaycox.com/feed.xml">RSS</a>
   </div>
-  Cyber Digest public site · built 2026-08-21 06:01
+  Cyber Digest public site · built 2026-08-21 06:26
 </div>
 <script>
 var _t=document.documentElement;
