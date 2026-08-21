@@ -146,6 +146,11 @@
   .hint{position:fixed;right:16px;bottom:48px;z-index:9;font-size:10.5px;color:var(--dim);
     background:rgba(13,27,62,.6);border:1px solid var(--border);border-radius:10px;padding:7px 11px;
     pointer-events:none}
+  .mode-badge{position:fixed;left:50%;transform:translateX(-50%);bottom:46px;z-index:9;
+    font-size:10.5px;color:var(--sky);background:rgba(0,180,216,.18);
+    border:1px solid rgba(0,180,216,.35);border-radius:999px;padding:5px 13px;
+    pointer-events:none;white-space:nowrap;transition:background .2s}
+  @media (max-width:760px){.mode-badge{display:none}}
   #fallback{position:fixed;inset:0;overflow:auto;padding:60px 24px 40px;display:flex;justify-content:center;background:var(--bg)}
   #fallback .fb-in{max-width:720px;width:100%}
   #fallback h2{margin:0 0 4px} #fallback .sub{color:var(--muted);font-size:13px;margin-bottom:20px}
@@ -216,6 +221,7 @@
 </aside>
 
 <div class="hint">Drag to rotate · scroll to zoom · click a dot or a story</div>
+<div id="mode-badge" class="mode-badge">● country view — scroll to zoom in</div>
 
 <div id="sitefoot">
   <a href="index.html">Home</a><a href="stories.html">Story DB</a>
@@ -262,6 +268,13 @@
   var dates=[];
   var maxDate=null;
   var timer=null;
+  // zoom-based view mode: 'cluster' (one marker per country/region when far
+  // out) vs 'exploded' (every story as its own dot when zoomed in). Segues
+  // automatically as the user scrolls/zooms.
+  var viewMode="cluster";
+  var ZOOM_OUT_DIST=175;   // camera distance above which we cluster
+  var ZOOM_IN_DIST=135;    // camera distance below which we explode
+  var zoomHysteresis={mode:"cluster"};
 
   function pColor(p){
     if(p.kind==="region") return REGION_COLOR;
@@ -343,10 +356,137 @@
 
   function refresh(){
     query();
-    globeInstance.pointsData(filtered);
+    renderView();
     renderList();
     renderAnalysis();
     $("show-n").textContent=filtered.length;
+    syncModeBadge();
+  }
+
+  // --- zoom-based cluster<->explode view ---------------------------------
+  // Recomputes clusters from the CURRENT filtered set so severity/sector/
+  // country/time filters stay correct, then feeds the globe whichever set the
+  // current zoom level wants.
+  function buildClientClusters(pts){
+    var map={};
+    pts.forEach(function(p){
+      // bucket city/country stories by country; region markers by region
+      var key = p.kind==="region" ? ("r:"+p.region) : ("c:"+(p.country||""));
+      if(!(key in map)) map[key]={key:key, kind:(p.kind==="region"?"cluster_region":"cluster"),
+        label: p.kind==="region"?p.region:(p.country||""),
+        count:0, sevIdx:0, sumLat:0, sumLon:0};
+      var b=map[key];
+      b.count++;
+      b.sumLat+=p.lat; b.sumLon+=p.lon;
+      var si=SEV_ORDER.indexOf(p.severity); if(si> b.sevIdx) b.sevIdx=si;
+    });
+    var out=[];
+    Object.keys(map).forEach(function(k){
+      var b=map[k];
+      out.push({kind:b.kind, country:b.label, geo_label:b.label,
+        region: b.kind==="cluster_region"?b.label:undefined,
+        lat:b.sumLat/b.count, lon:b.sumLon/b.count,
+        count:b.count, severity:SEV_ORDER[b.sevIdx]});
+    });
+    out.sort(function(a,b){return b.count-a.count;});
+    return out;
+  }
+
+  function camDistance(){
+    // camera distance from globe centre -> proxy for zoom level
+    // (alt 1.0 == one globe radius ~100 units; default alt 2.0 -> ~200)
+    if(!globeInstance || !globeInstance.camera) return 999;
+    return globeInstance.camera().position.length();
+  }
+
+  function currentViewData(){
+    if(viewMode==="exploded") return filtered;
+    return buildClientClusters(filtered);
+  }
+
+  function renderView(){
+    if(!globeInstance) return;
+    globeInstance.pointsData(currentViewData());
+    paintViews();
+  }
+
+  // styling for the points layer — cluster markers vs individual dots
+  function paintViews(){
+    if(!globeInstance) return;
+    globeInstance
+      .pointColor(function(p){ return clusterColor(p); })
+      .pointAltitude(function(p){ return clusterAltitude(p); })
+      .pointRadius(function(p){ return clusterRadius(p); })
+      .pointLabel(clusterLabel)
+      .pointResolution(5);
+    paintPoints();
+  }
+
+  function isCluster(p){ return p && (p.kind==="cluster"||p.kind==="cluster_region"); }
+
+  function clusterColor(p){
+    if(isCluster(p)) return SEV_COLOR[p.severity]||"#ffffff";
+    return pColor(p);
+  }
+  function clusterAltitude(p){
+    if(isCluster(p)) return 0.04;
+    if(p.kind==="region") return 0.015;
+    return p.severity==="Critical"?0.06:(p.severity==="Severe"?0.045:0.028);
+  }
+  function clusterRadius(p){
+    if(isCluster(p)){
+      // larger bubble for more stories (log-ish scale, capped)
+      return 0.55 + 0.32*Math.min(4.5, Math.pow(p.count,0.5));
+    }
+    if(p.kind==="region") return 0.22;
+    return p.severity==="Critical"?0.55:(p.severity==="Severe"?0.45:0.34);
+  }
+  function clusterLabel(p){
+    if(isCluster(p)){
+      var geo = (p.kind==="cluster_region") ? ("🌐 "+p.region) : p.country;
+      return "<div style='font-size:12px;max-width:260px;line-height:1.5'>"+
+        "<b>"+esc(geo)+"</b><br><span style='opacity:.9'>"+esc(p.severity)+"</span> · "+
+        "<b>"+p.count+"</b> stor"+(p.count===1?"y":"ies")+
+        "<br><span style='opacity:.5'>scroll / click to zoom in</span></div>";
+    }
+    var sev=p.kind==="region"?("🌐 "+p.region):(p.severity+" · "+p.country);
+    return "<div style='font-size:12px;max-width:260px;line-height:1.4'>"+
+      "<b>"+esc(p.headline)+"</b><br><span style='opacity:.7'>"+esc(sev)+" · "+esc(p.date)+"</span></div>";
+  }
+
+  // zoom->mode transition with hysteresis
+  function updateZoomMode(){
+    if(!globeInstance || !globeInstance.camera) return;
+    var d=camDistance();
+    var target = (d>=ZOOM_OUT_DIST) ? "cluster" : (d<=ZOOM_IN_DIST ? "exploded" : viewMode);
+    if(target!==viewMode){
+      // don't re-cluster just for a slight nudge; need to clear hysteresis
+      if(Math.abs(d - (viewMode==="cluster"?ZOOM_IN_DIST:ZOOM_OUT_DIST)) < 1) return;
+      viewMode=target;
+      renderView();
+      syncModeBadge();
+    }
+  }
+  function syncModeBadge(){
+    var el=$("mode-badge");
+    if(!el) return;
+    el.textContent = (viewMode==="cluster")
+      ? "● country view — scroll to zoom in"
+      : "● story view — scroll to zoom out";
+    el.style.background = (viewMode==="cluster") ? "rgba(0,180,216,.18)" : "rgba(255,255,255,.05)";
+  }
+
+  // click a country/region bubble -> explode into that bucket's individual
+  // stories and fly the camera in to it
+  function zoomToCluster(cl){
+    viewMode="exploded";
+    if(cl.country && cl.kind!=="cluster_region") $("cou").value=cl.country;
+    var lat=cl.lat, lon=cl.lon;
+    // keep the globe on the surface; clamp lat so we don't fly over a pole
+    lat=Math.max(-80,Math.min(80,lat));
+    renderView();
+    syncModeBadge();
+    globeInstance.pointOfView({lat:lat, lng:lon, alt:0.45}, 1100);
   }
 
   function severityRank(s){return SEV_ORDER.indexOf(s);}
@@ -379,7 +519,9 @@
 
   function paintPoints(){
     globeInstance.pointColor(function(p){
-      return p.headline===hoverHeadline ? "#ffffff" : pColor(p);
+      // clusters have no single headline to highlight against
+      if(isCluster(p)) return clusterColor(p);
+      return p.headline===hoverHeadline ? "#ffffff" : clusterColor(p);
     });
   }
 
@@ -485,26 +627,16 @@
         .atmosphereAltitude(0.18)
         .pointsData(all)
         .pointLat('lat').pointLng('lon')
-        .pointColor(function(p){return pColor(p)})
-        .pointAltitude(function(p){
-          if(p.kind==="region") return 0.015;
-          return p.severity==="Critical"?0.06:(p.severity==="Severe"?0.045:0.028);
-        })
-        .pointRadius(function(p){
-          if(p.kind==="region") return 0.22;
-          return p.severity==="Critical"?0.55:(p.severity==="Severe"?0.45:0.34);
-        })
-        .pointResolution(5)
-        .onPointClick(openStory)
-        .pointLabel(function(p){
-          var sev=p.kind==="region"?("🌐 "+p.region):(p.severity+" · "+p.country);
-          return "<div style='font-size:12px;max-width:260px;line-height:1.4'>"+
-            "<b>"+esc(p.headline)+"</b><br><span style='opacity:.7'>"+esc(sev)+" · "+esc(p.date)+"</span></div>";
+        .onPointClick(function(p){
+          if(isCluster(p)){ zoomToCluster(p); return; }
+          openStory(p);
         });
       globe.pointOfView({lat:18,lng:12,alt:2.0});
       globe.controls().autoRotate=true;
       globe.controls().autoRotateSpeed=0.6;
       globeInstance=globe;
+      // apply the zoom-aware styling + initial (cluster) view
+      paintViews();
       // expose for the day/night module script (applied after init)
       window.__globe=globe;
       // Size the renderer to the #globe container (which is pulled 160px above
@@ -520,6 +652,8 @@
       c.addEventListener('start',function(){c.autoRotate=false});
       var t=null;
       c.addEventListener('end',function(){ clearTimeout(t); t=setTimeout(function(){c.autoRotate=true},2500); });
+      c.addEventListener('change', updateZoomMode);
+      globe.onZoom(function(){ updateZoomMode(); });
       window.addEventListener('resize',function(){ sizeGlobe(); });
       $("side-toggle").onclick=function(){ $("side").classList.toggle("closed"); };
       $("side").classList.remove("closed");
