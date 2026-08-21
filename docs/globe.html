@@ -519,7 +519,7 @@
 
   // click a country bubble -> explode into that bucket's individual stories
   // and fly the camera in to it. (Pan-region stories aren't clustered — they
-  // are a separate ring layer; clicking a ring is handled by onRingClick.)
+  // are a separate, decorative ring layer; rings are not clickable.)
   function zoomToCluster(cl){
     viewMode="exploded";
     if(cl.country) $("cou").value=cl.country;
@@ -690,8 +690,7 @@
             zoomToCluster(p); return;
           }
           openStory(p);
-        })
-        .onRingClick(function(p){ openStory(p); });
+        });
       // nicer default pose: tilt onto the populated Atlantic/Europe–Americas
       // hemisphere so the cluster view opens on the interesting landmass
       globe.pointOfView({lat:18,lng:-25,alt:2.1});
