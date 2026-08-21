@@ -272,8 +272,8 @@
   // out) vs 'exploded' (every story as its own dot when zoomed in). Segues
   // automatically as the user scrolls/zooms.
   var viewMode="cluster";
-  var ZOOM_OUT_DIST=175;   // camera distance above which we cluster
-  var ZOOM_IN_DIST=135;    // camera distance below which we explode
+  var ZOOM_OUT_DIST=190;   // camera distance above which we cluster (alt ~1.1)
+  var ZOOM_IN_DIST=140;    // camera distance below which we explode (alt ~0.8)
   var zoomHysteresis={mode:"cluster"};
 
   function pColor(p){
@@ -460,8 +460,6 @@
     var d=camDistance();
     var target = (d>=ZOOM_OUT_DIST) ? "cluster" : (d<=ZOOM_IN_DIST ? "exploded" : viewMode);
     if(target!==viewMode){
-      // don't re-cluster just for a slight nudge; need to clear hysteresis
-      if(Math.abs(d - (viewMode==="cluster"?ZOOM_IN_DIST:ZOOM_OUT_DIST)) < 1) return;
       viewMode=target;
       renderView();
       syncModeBadge();
