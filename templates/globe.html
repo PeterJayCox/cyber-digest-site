@@ -145,6 +145,8 @@
     font-size:18px;cursor:pointer}
   #panel .prev,#panel .next{position:absolute;bottom:14px;border:none;background:none;color:var(--cyan);
     font-size:20px;cursor:pointer;padding:4px 8px}
+  #panel .zoom{position:absolute;bottom:10px;right:112px;border:none;background:rgba(0,180,216,.14);
+    color:var(--text);font-size:13px;cursor:pointer;padding:5px 8px;border-radius:8px}
   #panel .prev{right:64px}#panel .next{right:14px}
   .hint{position:fixed;right:16px;bottom:48px;z-index:9;font-size:10.5px;color:var(--dim);
     background:rgba(13,27,62,.6);border:1px solid var(--border);border-radius:10px;padding:7px 11px;
@@ -230,6 +232,10 @@
 
 <div class="hint">Drag to rotate · scroll to zoom · click a dot or a story</div>
 <div id="mode-badge" class="mode-badge">● country view — scroll to zoom in</div>
+<div id="hintpop" style="display:none;position:fixed;bottom:84px;left:50%;transform:translateX(-50%);z-index:60;background:rgba(13,27,62,.92);border:1px solid rgba(0,180,216,.35);border-radius:12px;padding:10px 16px;color:var(--text);font-size:12.5px;line-height:1.5;box-shadow:0 4px 24px rgba(0,0,0,.45);max-width:min(520px,calc(100vw - 32px));text-align:center">
+  🖱️ Click a <b style="color:var(--cyan)">country bubble</b> to explode into its stories · scroll to zoom · Esc to reset
+  <span style="display:inline-block;cursor:pointer;color:var(--muted);margin-left:10px;text-decoration:underline" onclick="this.parentNode.style.display='none'">dismiss</span>
+</div>
 
 <div id="sitefoot">
   <a href="index.html">Home</a><a href="stories.html">Story DB</a>
@@ -242,6 +248,7 @@
   <h2 id="p-title"></h2>
   <div class="meta" id="p-meta"></div>
   <a class="go" id="p-go" href="#" target="_blank" rel="noopener">Read the story ↗</a>
+  <button class="zoom" id="p-zoom" title="Zoom to this country on the globe">🎯</button>
   <button class="prev" id="p-prev" title="Prev story">‹</button>
   <button class="next" id="p-next" title="Next story">›</button>
 </div>
@@ -272,6 +279,8 @@
   var all=[];
   var filtered=[];
   var hoverHeadline=null;
+  var activeStory=null;   // story dot that carries the halo for the open/hovered story
+  var spinLock=false;     // hold auto-rotate off while zoomed into an exploded view
   var panelIdx=0;
   var dates=[];
   var maxDate=null;
@@ -463,6 +472,7 @@
 
   function clusterColor(p){
     if(isCluster(p)) return SEV_COLOR[p.severity]||"#ffffff";
+    if(activeStory && p.headline===activeStory.headline) return "#ffffff";
     return pColor(p);
   }
   function clusterAltitude(p){
@@ -482,8 +492,12 @@
     }
     if(p.kind==="region") return 0.22;
     // in bar mode shrink radius so columns stay thin and read as bars
-    if(barMode) return p.severity==="Critical"?0.16:(p.severity==="Severe"?0.13:(p.severity==="Elevated"?0.11:0.08));
-    return p.severity==="Critical"?0.55:(p.severity==="Severe"?0.45:0.34);
+    var r = barMode
+      ? (p.severity==="Critical"?0.16:(p.severity==="Severe"?0.13:(p.severity==="Elevated"?0.11:0.08)))
+      : (p.severity==="Critical"?0.55:(p.severity==="Severe"?0.45:0.34));
+    // halo: the current story's dot reads bigger to stay linked to the open panel
+    if(activeStory && p.headline===activeStory.headline) return r+0.12;
+    return r;
   }
   function clusterLabel(p){
     if(isCluster(p)){
@@ -493,6 +507,13 @@
         "<br><span style='opacity:.5'>scroll / click to zoom in</span></div>";
     }
     var sev=p.kind==="region"?("🌐 "+p.region):(p.severity+" · "+p.country);
+    // LOD in the exploded view: condensed label unless this is the focused dot
+    var focused=(p.headline===hoverHeadline) || (activeStory && p.headline===activeStory.headline);
+    if(viewMode==="exploded" && !focused){
+      var short=p.headline.length>48 ? p.headline.slice(0,48).replace(/\s+\S*$/,"")+"…" : p.headline;
+      return "<div style='font-size:11px;max-width:220px;line-height:1.4;opacity:.85'>"+
+        "<b>"+esc(short)+"</b><br><span style='opacity:.7'>"+esc(sev)+"</span></div>";
+    }
     return "<div style='font-size:12px;max-width:260px;line-height:1.4'>"+
       "<b>"+esc(p.headline)+"</b><br><span style='opacity:.7'>"+esc(sev)+" · "+esc(p.date)+"</span></div>";
   }
@@ -504,6 +525,7 @@
     var target = (d>=ZOOM_OUT_DIST) ? "cluster" : (d<=ZOOM_IN_DIST ? "exploded" : viewMode);
     if(target!==viewMode){
       viewMode=target;
+      if(target==="cluster") spinLock=false;   // back at the overview -> allow spin
       renderView();
       syncModeBadge();
     }
@@ -522,6 +544,7 @@
   // are a separate, decorative ring layer; rings are not clickable.)
   function zoomToCluster(cl){
     viewMode="exploded";
+    activeStory=null;              // browsing a country's dots, no single halo
     if(cl.country) $("cou").value=cl.country;
     var lat=cl.lat, lon=cl.lon;
     // keep the globe on the surface; clamp lat so we don't fly over a pole
@@ -531,6 +554,46 @@
     // THAT bucket's stories (not every story worldwide) and the sidebar follows.
     refresh();
     globeInstance.pointOfView({lat:lat, lng:lon, alt:0.45}, 1100);
+  }
+
+  // freeze auto-rotate while the user is zoomed into an exploded view, so the
+  // story dots they've just flown to don't rotate away underneath them.
+  function rotateHold(){
+    spinLock=true;
+    if(globeInstance && globeInstance.controls()) globeInstance.controls().autoRotate=false;
+  }
+  function rotateRelease(){
+    spinLock=false;
+    resumeSpinSoon();
+  }
+
+  // "Zoom to country" from the open story panel (🎯 button + clicking the geo pill)
+  function zoomToCountry(){
+    var p=activeStory;
+    if(!p || p.kind==="region") return;
+    var c=p.country;
+    $("cou").value=c;
+    viewMode="exploded";
+    refresh();
+    var lat=0,lon=0,n=0;
+    filtered.forEach(function(q){ if(q.kind!=="region" && q.country===c){ lat+=q.lat; lon+=q.lon; n++; } });
+    if(n){ lat/=n; lon/=n; }
+    lat=Math.max(-80,Math.min(80,lat));
+    rotateHold();
+    globeInstance.pointOfView({lat:lat, lng:lon, alt:1.15}, 1100);
+  }
+
+  // Escape / back: undo a cluster click — clear the country filter, close the
+  // panel and fly back out to the whole-globe country view.
+  function resetOverview(){
+    $("panel").style.display="none";
+    activeStory=null;
+    hoverHeadline=null;
+    if($("cou")) $("cou").value="";
+    viewMode="cluster";
+    rotateRelease();
+    refresh();
+    globeInstance.pointOfView({lat:18, lng:-25, alt:2.1}, 1400);
   }
 
   function severityRank(s){return SEV_ORDER.indexOf(s);}
@@ -565,7 +628,9 @@
     globeInstance.pointColor(function(p){
       // clusters have no single headline to highlight against
       if(isCluster(p)) return clusterColor(p);
-      return p.headline===hoverHeadline ? "#ffffff" : clusterColor(p);
+      if(p.headline===hoverHeadline) return "#ffffff";
+      if(activeStory && p.headline===activeStory.headline) return "#ffffff";
+      return clusterColor(p);
     });
   }
 
@@ -611,18 +676,22 @@
     // always show story dots once a story is open — otherwise a click from the
     // cluster view can land in the zoom dead-band and the dot never appears
     viewMode="exploded"; renderView(); syncModeBadge();
+    activeStory=p; paintPoints();
     $("p-title").textContent=p.headline;
     var sevPill=p.kind==="region"
       ? '<span class="pill region">🌐 '+esc(p.region)+'</span>'
       : '<span class="pill '+esc(p.severity)+'">'+esc(p.severity)+'</span>';
     var meta=sevPill+
       (p.sector?'<span class="pill sector">'+esc(p.sector)+'</span>':'')+
-      '<br><b>'+esc(p.geo_label||p.country||p.region)+'</b> · '+esc(p.date);
+      '<br><b class="zgeo" title="Zoom to country">'+esc(p.geo_label||p.country||p.region)+'</b> · '+esc(p.date);
     $("p-meta").innerHTML=meta;
+    var zg=document.querySelector("#p-meta .zgeo");
+    if(zg){ zg.style.cursor="pointer"; zg.style.borderBottom="1px dashed var(--cyan)"; zg.onclick=zoomToCountry; }
     var go=$("p-go");
     if(p.url){go.href=p.url; go.style.display="inline-block";}
     else{go.style.display="none";}
     $("panel").style.display="block";
+    rotateHold();
     globeInstance.pointOfView({lat:p.lat, lng:p.lon, altitude:0.9}, 900);
   }
   function stepPanel(delta){
@@ -701,6 +770,12 @@
       paintViews();
       // expose for the day/night module script (applied after init)
       window.__globe=globe;
+      // one-time hint for the newly-clickable explode interaction
+      if(!sessionStorage.getItem("cbGlobeHint")){
+        sessionStorage.setItem("cbGlobeHint","1");
+        var hp=$("hintpop");
+        if(hp){ hp.style.display="block"; setTimeout(function(){ hp.style.display="none"; },12000); }
+      }
       // Size the renderer to the #globe container (which is pulled 160px above
       // the viewport so the globe sits centred in the visible frame), not the
       // window — otherwise the canvas is viewport-sized and the globe renders
@@ -713,7 +788,7 @@
       var c=globe.controls();
       c.addEventListener('start',function(){c.autoRotate=false});
       var t=null;
-      c.addEventListener('end',function(){ clearTimeout(t); t=setTimeout(function(){c.autoRotate=true},2500); });
+      c.addEventListener('end',function(){ clearTimeout(t); if(!spinLock){ t=setTimeout(function(){c.autoRotate=true},2500); } });
       c.addEventListener('change', updateZoomMode);
       globe.onZoom(function(){ updateZoomMode(); });
       window.addEventListener('resize',function(){ sizeGlobe(); });
@@ -737,11 +812,12 @@
         document.querySelectorAll("#sev-chips .chip").forEach(function(c){c.classList.add("on");});
         refresh();
       };
-      $("panel-x").onclick=function(){ $("panel").style.display="none"; };
+      $("panel-x").onclick=function(){ $("panel").style.display="none"; activeStory=null; paintPoints(); };
       $("p-prev").onclick=function(){ stepPanel(-1); };
       $("p-next").onclick=function(){ stepPanel(1); };
+      $("p-zoom").onclick=zoomToCountry;
       document.addEventListener('keydown',function(e){
-        if(e.key==="Escape") $("panel").style.display="none";
+        if(e.key==="Escape" || e.key==="Backspace"){ if($("panel").style.display==="block"||$("cou").value){ resetOverview(); } }
         if(e.key==="ArrowLeft" && $("panel").style.display==="block") stepPanel(-1);
         if(e.key==="ArrowRight" && $("panel").style.display==="block") stepPanel(1);
       });
