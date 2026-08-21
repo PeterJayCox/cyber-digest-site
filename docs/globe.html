@@ -670,7 +670,6 @@
         .pointLat('lat').pointLng('lon')
         .ringsData([])
         .ringLat('lat').ringLng('lon')
-        .onRingClick(function(p){ openStory(p); })
         .onPointClick(function(p){
           if(isCluster(p)){ zoomToCluster(p); return; }
           openStory(p);
