@@ -281,8 +281,9 @@
   // automatically as the user scrolls/zooms.
   var viewMode="cluster";
   var barMode=false;   // display toggle: false=spread dots, true=severity bars
-  var ZOOM_OUT_DIST=190;   // camera distance above which we cluster (alt ~1.1)
-  var ZOOM_IN_DIST=140;    // camera distance below which we explode (alt ~0.8)
+  var ZOOM_OUT_DIST=215;   // camera distance above which we cluster (globe radius 100; default pose ~350)
+  var ZOOM_IN_DIST=180;    // camera distance below which we explode into story dots (was 140 — story
+                           // view now arrives sooner, at roughly a globe's-width on screen)
   var zoomHysteresis={mode:"cluster"};
 
   function pColor(p){
@@ -525,8 +526,10 @@
     var lat=cl.lat, lon=cl.lon;
     // keep the globe on the surface; clamp lat so we don't fly over a pole
     lat=Math.max(-80,Math.min(80,lat));
-    renderView();
-    syncModeBadge();
+    // refresh() re-queries with the country filter applied, then re-renders the
+    // globe, the story list and the analysis — so clicking a bubble explodes
+    // THAT bucket's stories (not every story worldwide) and the sidebar follows.
+    refresh();
     globeInstance.pointOfView({lat:lat, lng:lon, alt:0.45}, 1100);
   }
 
@@ -605,6 +608,9 @@
   function openStory(p){
     panelIdx=filtered.indexOf(p);
     if(panelIdx<0) panelIdx=0;
+    // always show story dots once a story is open — otherwise a click from the
+    // cluster view can land in the zoom dead-band and the dot never appears
+    viewMode="exploded"; renderView(); syncModeBadge();
     $("p-title").textContent=p.headline;
     var sevPill=p.kind==="region"
       ? '<span class="pill region">🌐 '+esc(p.region)+'</span>'
@@ -671,9 +677,21 @@
         .ringsData([])
         .ringLat('lat').ringLng('lon')
         .onPointClick(function(p){
-          if(isCluster(p)){ zoomToCluster(p); return; }
+          if(isCluster(p)){
+            // single-story country bubble: open that story straight away
+            // (no point exploding a cluster of one)
+            if(p.count===1){
+              for(var i=0;i<filtered.length;i++){
+                if(filtered[i].kind!=="region" && filtered[i].country===p.country){
+                  openStory(filtered[i]); return;
+                }
+              }
+            }
+            zoomToCluster(p); return;
+          }
           openStory(p);
-        });
+        })
+        .onRingClick(function(p){ openStory(p); });
       // nicer default pose: tilt onto the populated Atlantic/Europe–Americas
       // hemisphere so the cluster view opens on the interesting landmass
       globe.pointOfView({lat:18,lng:-25,alt:2.1});
