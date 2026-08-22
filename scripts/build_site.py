@@ -1493,7 +1493,9 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 FLAT_LINKMAP={}
 def themes_html(r):
-    """Render the cross-sector themes list at the end of a report page."""
+    """Render the cross-sector themes list. Placed at the TOP of the report
+    page (BLUF — bottom line up front, user request 2026-08-22) so the themes
+    lead the page before the sector sections."""
     themes = r.get("cross_sector_themes", [])
     if not themes:
         return ""
@@ -1514,7 +1516,7 @@ def themes_html(r):
             '<div style="display:flex;gap:4px;flex-wrap:wrap">' + badges + '</div>'
             '</div></div></div>'
         )
-    intro = r.get("theme_intro", "Ten themes cut across the sector-specific incidents above, each listing the sectors it touches.")
+    intro = r.get("theme_intro", "The bottom line up front: these themes cut across every sector-specific incident below, each listing the sectors it touches.")
     return ('<div class="section" id="cross-sector-themes">'
             '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">'
             '<span style="font-size:1.6rem">\U0001F3AF</span>'
@@ -1608,8 +1610,8 @@ def build_reports(reports):
             '<div class="crumb"><a href="../index.html">Home</a> \u00b7 <a href="index.html">Reports</a> \u00b7 ' + esc(r["report_title"]) + '</div>'
             '<div class="section" style="margin-top:6px"><div style="display:flex;gap:6px;flex-wrap:wrap">' + toc + '</div></div>'
             '</div>'
-            + sec_html_s
             + themes_html(r)
+            + sec_html_s
             + foot()
         )
         open(os.path.join(DOCS, "reports", slug + ".html"), "w", encoding="utf-8").write(page)
