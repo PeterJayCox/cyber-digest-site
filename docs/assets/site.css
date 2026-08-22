@@ -138,6 +138,10 @@ a:hover{text-decoration:underline}
 .btn.ghost{color:var(--text-secondary);background:var(--surface2);border:1px solid var(--border)}
 .btn.ghost:hover{color:var(--text);border-color:var(--accent);box-shadow:0 0 14px var(--accent-glow)}
 
+/* ===== 404 PAGE ===== */
+.hero-404{min-height:340px;display:flex;flex-direction:column;justify-content:center;background:url('img/404-radar.webp') no-repeat center/cover,url('svg/hero-bg.svg') no-repeat center top/cover}
+[data-theme="light"] .hero-404{background:url('svg/hero-bg-light.svg') no-repeat center top/cover}
+
 /* ===== SECTION ===== */
 .section{margin:38px 0}
 .section h2{font-size:18px;font-weight:600;color:var(--text);letter-spacing:-.3px;margin-bottom:18px;display:flex;align-items:center;gap:10px;padding-bottom:10px;border-bottom:1px solid var(--border)}

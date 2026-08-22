@@ -4,7 +4,7 @@ Cyber workspace (daily/monthly digests, story SQLite DB, wiki pages).
 
 Output: <repo>/docs/  (GitHub Pages publishes from the /docs folder of main)
 """
-import argparse, base64, calendar, email.utils, html, json, os, re, shutil, sqlite3, sys, time
+import argparse, base64, calendar, email.utils, html, json, math, os, re, shutil, sqlite3, sys, time
 from datetime import datetime, date, timedelta
 
 VAULT = "/Users/petercox/Library/Mobile Documents/iCloud~md~obsidian/Documents/Peter's Vault/Cyber"
@@ -437,6 +437,24 @@ def threat_panel_html():
         return ""
     band = idx["band"]; pct = idx["pct"]; mom = idx.get("momentum_pct")
     conf_cls = {"Low":"green","Guarded":"amber","Elevated":"red","Severe":"red","Critical":"red"}[band]
+
+    # --- Live SVG gauge dial: needle angle driven by the real index value ---
+    # Semicircle 180deg -> left=0, right=100. Arc centre (cx,cy), radius r.
+    gcx, gcy, gr = 90.0, 82.0, 64.0
+    ang = math.pi * (1.0 - max(0.0, min(100.0, float(pct))) / 100.0)   # radians
+    nx, ny = gcx + gr * math.cos(ang), gcy - gr * math.sin(ang)
+    def _arc(a0, a1):
+        x0, y0 = gcx + gr * math.cos(math.pi * (1 - a0 / 100)), gcy - gr * math.sin(math.pi * (1 - a0 / 100))
+        x1, y1 = gcx + gr * math.cos(math.pi * (1 - a1 / 100)), gcy - gr * math.sin(math.pi * (1 - a1 / 100))
+        return f'M {x0:.1f} {y0:.1f} A {gr} {gr} 0 0 1 {x1:.1f} {y1:.1f}'
+    segs = [(0,40,"#22c55e"),(40,55,"#f59e0b"),(55,70,"#f97316"),(70,85,"#ef4444"),(85,100,"#dc2626")]
+    gauge_svg = f'''<svg width="180" height="96" viewBox="0 0 180 96" role="img" aria-label="Threat index {pct:.0f} of 100, band {band}" style="flex-shrink:0">
+  {''.join(f'<path d="{_arc(a,b)}" stroke="{c}" stroke-width="7" fill="none" stroke-linecap="round" stroke-opacity=".55"/>' for a,b,c in segs)}
+  <path d="{_arc(max(0,pct-2.5),min(100,pct+2.5)) if pct>2 else ''}" stroke="var(--accent)" stroke-width="7" fill="none" stroke-linecap="round" style="filter:drop-shadow(0 0 3px var(--accent-glow))"/>
+  <line x1="{gcx}" y1="{gcy}" x2="{nx:.1f}" y2="{ny:.1f}" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" style="filter:drop-shadow(0 0 3px var(--accent-glow))"/>
+  <circle cx="{gcx}" cy="{gcy}" r="4" fill="var(--accent)"/>
+  <text x="{gcx}" y="{gcy-12}" text-anchor="middle" fill="var(--text)" font-size="20" font-weight="800">{pct:.0f}</text>
+</svg>'''
     mom_html = ""
     if mom is not None:
         arrow = "▲" if mom > 0 else "▼"
@@ -450,14 +468,9 @@ def threat_panel_html():
 <div class="section" style="margin-top:6px">
 <h2><span class="bar"></span>Reported Threat Activity <span style="font-size:13px;font-weight:400;color:var(--text-dim)">· 14-day window · as of {idx["as_of"]}</span></h2>
 <div class="threat-panel" style="display:flex;flex-wrap:wrap;gap:22px;align-items:center;background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:20px 24px">
-  <div style="display:flex;align-items:center;gap:16px">
+  {gauge_svg}
+  <div style="display:flex;align-items:center;gap:16px;flex:1;min-width:200px">
     <span class="tag {conf_cls}" style="font-size:15px;padding:6px 14px;border-radius:16px"><strong>{band}</strong> · {pct}/100</span>
-    <div style="min-width:170px">
-      <div style="height:10px;border-radius:6px;background:var(--tag-amber-bg);overflow:hidden">
-        <div style="height:100%;width:{pct}%;background:{ "var(--tag-red-text)" if pct>=55 else "var(--tag-amber-text)" }"></div>
-      </div>
-      <div style="font-size:11px;color:var(--text-dim);margin-top:4px">weighted severity × exploitation × confidence, decayed over 14 days</div>
-    </div>
   </div>
   <div style="font-size:13px;color:var(--text-dim);line-height:1.5;flex:1;min-width:220px">
     {mom_html}
@@ -1774,6 +1787,22 @@ def build_cve_matrix():
     open(os.path.join(wiki_dir, "cve-attack-matrix.html"), "w", encoding="utf-8").write(html)
     print("✅ CVE matrix -> docs/wiki/cve-attack-matrix.html (standalone + site nav)")
 
+def build_404():
+    """Custom 404 page — SIGNAL LOST radar art + site nav."""
+    p = os.path.join(DOCS, "404.html")
+    html = head("404 — Signal Lost", "index.html") + f'''
+<div class="hero hero-404">
+  <div class="kicker">// error 404</div>
+  <h1 style="font-size:clamp(34px,6vw,58px)">Signal <span class="accent">Lost</span></h1>
+  <p class="sub">The page you requested doesn't exist, moved, or was never intercepted.</p>
+  <div class="cta-row">
+    <a class="btn" href="index.html">Return to base &rarr;</a>
+    <a class="btn ghost" href="stories.html">Search the story database</a>
+  </div>
+</div>''' + foot()
+    open(p, "w", encoding="utf-8").write(html)
+    print("✅ 404 page -> docs/404.html")
+
 def main():
     global FLAT_LINKMAP
     ap=argparse.ArgumentParser()
@@ -1804,6 +1833,7 @@ def main():
     build_globe()
     build_flashcards()
     build_cve_matrix()
+    build_404()
     build_feed(stories, days)
     build_sitemap(days, months, pages, reports)
     print(f"✅ Site built -> {DOCS}")
