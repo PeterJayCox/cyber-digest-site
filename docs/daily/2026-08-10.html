@@ -34,21 +34,35 @@ body{font-family:Inter,-apple-system,sans-serif;background:var(--bg);color:var(-
 #toc a{display:block;color:var(--text-muted);text-decoration:none;padding:3px 8px;border-radius:6px;margin-bottom:2px;transition:all .2s;border-left:2px solid transparent;font-size:12px}
 #toc a:hover{color:var(--text);background:var(--accent-bg)}
 #toc a.active{color:var(--accent);border-left-color:var(--accent);background:var(--accent-bg)}
+#toc a .sicon{display:inline-flex;width:15px;height:15px;flex-shrink:0;color:currentColor}
+#toc a .sicon svg{width:100%;height:100%}
 .main{flex:1;min-width:0}
 /* Header / Hero */
-.header{padding:32px 0 20px;text-align:center;border-bottom:1px solid var(--border);margin-bottom:28px}
-.header .kicker{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;letter-spacing:1px;color:var(--kicker-color);margin-bottom:14px;padding:5px 16px;border-radius:6px;display:inline-block;background:var(--kicker-bg);border:1px solid var(--kicker-border);transition:all .25s}
-.header h1{font-size:clamp(1.5rem,4vw,2rem);font-weight:800;letter-spacing:-.03em;color:var(--text);margin-bottom:4px}
-.header .subtitle{color:var(--text-secondary);font-size:14px}
+.hero{position:relative;overflow:hidden;padding:44px 36px 30px;text-align:center;border:1px solid var(--border);border-radius:16px;background:linear-gradient(160deg,var(--surface) 0%,var(--surface2) 55%,var(--surface) 100%);margin-bottom:28px}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border-light) 1px,transparent 1px),linear-gradient(90deg,var(--border-light) 1px,transparent 1px);background-size:44px 44px;opacity:.35;-webkit-mask-image:radial-gradient(ellipse at center top,#000 20%,transparent 72%);mask-image:radial-gradient(ellipse at center top,#000 20%,transparent 72%);pointer-events:none}
+.hero>*:not(.hero-grid){position:relative;z-index:1}
+.hero .kicker{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;letter-spacing:1px;color:var(--kicker-color);margin-bottom:14px;padding:5px 16px;border-radius:6px;display:inline-block;background:var(--kicker-bg);border:1px solid var(--kicker-border)}
+.hero-date{font-family:'JetBrains Mono',monospace;font-size:clamp(1.7rem,4.5vw,2.5rem);font-weight:800;letter-spacing:-.02em;line-height:1.15;background:linear-gradient(120deg,var(--text) 55%,var(--accent));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
+.hero-date .sep{margin:0 12px;opacity:.45;font-weight:400}
+.hero h1{font-size:.95rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px}
+.hero .subtitle{color:var(--text-secondary);font-size:13.5px;margin-bottom:18px}
+.hero-chips{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;padding:5px 13px;border-radius:999px;border:1px solid var(--border);background:var(--surface2);color:var(--text-secondary);font-family:'JetBrains Mono',monospace}
+.chip-accent{border-color:rgba(0,180,216,.35);color:var(--accent);background:var(--accent-bg)}
+[data-theme="light"] .chip-accent{border-color:rgba(0,114,245,.35)}
+.chip-guard i{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(34,197,94,.6);display:inline-block}
+.chip-au{border-color:rgba(59,130,246,.3)}
 /* Sections */
 .section{margin-bottom:28px;scroll-margin-top:80px}
 .section h2{font-size:1.15rem;font-weight:600;color:var(--text);margin-bottom:14px;border-bottom:1px solid var(--border);padding-bottom:10px;display:flex;align-items:center;gap:10px}
-.section h2 .icon{font-size:1.3rem;line-height:1}
+.section h2 .icon{display:inline-flex;width:19px;height:19px;line-height:1;color:var(--accent)}
+.section h2 .icon svg{width:100%;height:100%}
 .section h2 .count{margin-left:auto;background:var(--surface2);color:var(--text-muted);padding:2px 10px;border-radius:100px;font-size:11px;font-weight:600;white-space:nowrap}
 /* Exec summary */
 .exec-summary{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px 30px;margin-bottom:28px;position:relative;overflow:hidden;transition:background .25s,border .25s}
 .exec-summary::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--vuln),var(--purple))}
-.exec-summary h2{font-size:11px;text-transform:uppercase;letter-spacing:.15em;color:var(--accent);font-weight:700;margin-bottom:14px;border:none;padding:0}
+.exec-summary h2{font-size:11px;text-transform:uppercase;letter-spacing:.15em;color:var(--accent);font-weight:700;margin-bottom:14px;border:none;padding:0;display:flex;align-items:center;gap:8px}
+.exec-summary h2 .icon svg{width:16px;height:16px}
 .exec-summary p{color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:14px}
 .exec-summary p:last-child{margin-bottom:0}
 .exec-summary p strong{color:var(--text);font-weight:600}
@@ -58,9 +72,13 @@ body{font-family:Inter,-apple-system,sans-serif;background:var(--bg);color:var(-
 .au-context-box p{color:var(--text-muted);font-size:13px;line-height:1.65}
 /* Stats */
 .stats-row{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap;justify-content:center}
-.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:8px 18px;text-align:center;font-size:13px;color:var(--text-muted);transition:background .25s,border .25s}
-.stat-card .stat-num{font-weight:700;color:var(--text);font-size:16px;font-feature-settings:'tnum'}
-.stat-card .stat-label{font-size:11px;color:var(--text-dim)}
+.stat-card{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 20px;text-align:center;font-size:13px;color:var(--text-muted);min-width:130px;overflow:hidden;transition:border-color .2s,transform .2s,background .25s}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--sc,var(--accent))}
+.stat-card:hover{transform:translateY(-2px);border-color:var(--sc,var(--accent))}
+.stat-card .stat-num{font-weight:800;color:var(--text);font-size:20px;font-feature-settings:'tnum';line-height:1.2}
+.stat-card .stat-label{font-size:10.5px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+.stat-geo{--sc:#00b4d8}.stat-govt{--sc:#3b82f6}.stat-crime{--sc:#f59e0b}.stat-iot{--sc:#10b981}.stat-vuln{--sc:#f43f5e}
+[data-theme="light"] .stat-geo{--sc:#0072f5}
 /* Monthly reader-first blocks (At a Glance + Month at a Glance) */
 .glance-box{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:12px;padding:20px 24px;margin-bottom:28px}
 .glance-box ul{margin:0;padding-left:20px;display:grid;gap:8px}
@@ -103,7 +121,9 @@ body{font-family:Inter,-apple-system,sans-serif;background:var(--bg);color:var(-
 .bar-blue .bar-fill{background:linear-gradient(90deg,var(--govt),#60a5fa)}
 /* Pie */
 .pie-container{display:flex;align-items:center;gap:28px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px 28px;margin:18px 0;transition:background .25s,border .25s}
-.pie{width:140px;height:140px;border-radius:50%;flex-shrink:0}
+.pie{width:150px;height:150px;border-radius:50%;flex-shrink:0;position:relative;display:flex;align-items:center;justify-content:center}
+.pie-total{position:absolute;width:94px;height:94px;border-radius:50%;background:var(--surface);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:var(--text);font-feature-settings:'tnum';line-height:1.1}
+.pie-total small{font-size:9px;font-weight:600;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em}
 .pie-legend{display:flex;flex-direction:column;gap:6px;flex:1}
 .pie-legend .legend-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-muted)}
 .pie-legend .legend-item .dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
@@ -119,17 +139,20 @@ body{font-family:Inter,-apple-system,sans-serif;background:var(--bg);color:var(-
 .data-table .tier-3{background:rgba(148,163,184,.1);color:var(--text-muted)}
 .data-table .tier-4{background:rgba(239,68,68,.1);color:var(--red)}
 /* Story cards */
-.story-grid{display:flex;flex-direction:column;gap:14px}
-.story-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 22px;transition:all .2s ease;position:relative;overflow:hidden}
-.story-card:hover{border-color:var(--border-light);transform:translateY(-1px)}
-.story-card .card-accent{position:absolute;top:0;left:0;bottom:0;width:3px;border-radius:0 3px 3px 0}
-.story-card.num-1 .card-accent{background:var(--vuln)}.story-card.num-2 .card-accent{background:var(--purple)}.story-card.num-3 .card-accent{background:var(--crime)}.story-card.num-4 .card-accent{background:var(--green)}.story-card.num-5 .card-accent{background:var(--govt)}
-.story-number{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);font-weight:500;margin-bottom:4px}
-.story-card h3{font-size:1rem;font-weight:600;color:var(--text);margin-bottom:6px;line-height:1.4}
-.story-card p.summary{color:var(--text-muted);font-size:13px;line-height:1.65;margin-bottom:10px}
+.story-grid{display:flex;flex-direction:column;gap:16px}
+.story-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 26px 18px 58px;transition:border-color .2s,box-shadow .2s,transform .2s;position:relative;overflow:hidden}
+.story-card:hover{border-color:var(--border-light);transform:translateY(-2px);box-shadow:0 8px 24px -12px rgba(0,0,0,.5),0 0 0 1px var(--accent-glow)}
+[data-theme="light"] .story-card:hover{box-shadow:0 8px 24px -14px rgba(0,40,80,.25)}
+.story-card .card-accent{position:absolute;top:0;left:0;bottom:0;width:4px;border-radius:0}
+.story-card.num-1 .card-accent{background:linear-gradient(180deg,var(--vuln),rgba(244,63,94,.25))}.story-card.num-2 .card-accent{background:linear-gradient(180deg,var(--purple),rgba(139,92,246,.25))}.story-card.num-3 .card-accent{background:linear-gradient(180deg,var(--crime),rgba(245,158,11,.25))}.story-card.num-4 .card-accent{background:linear-gradient(180deg,var(--green),rgba(34,197,94,.25))}.story-card.num-5 .card-accent{background:linear-gradient(180deg,var(--govt),rgba(59,130,246,.25))}
+.story-number{position:absolute;left:0;top:0;bottom:0;width:42px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:17px;font-weight:700;color:var(--text-dim);border-right:1px solid var(--border);background:var(--surface2)}
+.story-card.num-1 .story-number{color:#fb7185}.story-card.num-2 .story-number{color:#a78bfa}.story-card.num-3 .story-number{color:#fbbf24}
+.story-card h3{font-size:1.02rem;font-weight:600;color:var(--text);margin-bottom:7px;line-height:1.4}
+.story-card p.summary{color:var(--text-muted);font-size:13px;line-height:1.68;margin-bottom:12px}
 .story-card .meta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:12px}
-.story-card .meta .source{color:var(--accent);text-decoration:none;font-weight:500}
-.story-card .meta .source:hover{text-decoration:underline}
+.story-card .meta .source{color:var(--accent);text-decoration:none;font-weight:500;padding:2px 10px;border:1px solid var(--border);border-radius:999px;transition:all .15s}
+span.source{padding:2px 10px;border:1px solid var(--border);border-radius:999px;display:inline-block}
+.story-card .meta .source:hover{border-color:var(--accent);background:var(--accent-bg)}
 .story-card .meta .reliability{display:inline-flex;align-items:center;gap:4px;color:var(--text-dim)}
 .story-card .meta .reliability .tier-1{color:var(--green)}
 .story-card .meta .reliability .tier-2{color:var(--amber)}
@@ -187,6 +210,12 @@ body.exec-view .story-card.expanded{padding:14px 18px}
 body.exec-view .story-card.expanded .story-number{display:block}
 body.exec-view .story-card.expanded h3{margin-bottom:6px;font-size:1rem}
 body.exec-view .story-card.expanded p.summary{margin-bottom:10px}
+body.exec-view .story-card .card-accent{width:4px}
+body.exec-view .story-card{padding-left:50px}
+body.exec-view .story-card.expanded{padding-left:50px}
+/* SVG icon helper */
+.sicon{display:inline-flex;width:19px;height:19px;color:var(--accent)}
+.sicon svg{width:100%;height:100%}
 /* Analytics grid */
 .analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .incident-map{overflow:hidden}
@@ -218,8 +247,8 @@ body.exec-view .story-card.expanded p.summary{margin-bottom:10px}
 .incident-map .im-story-panel a{color:var(--accent);text-decoration:none;font-weight:600}
 .incident-map .im-story-panel a:hover{text-decoration:underline}
 .incident-map .im-tag{font-size:9.5px;padding:1px 7px;border-radius:99px;margin-left:8px;font-weight:700;border:1px solid}
-@media(max-width:860px){.wrap{flex-direction:column}#toc{position:static;width:100%;max-height:unset;margin-bottom:20px}.pie-container{flex-direction:column;align-items:center;gap:16px}.stats-row{gap:8px}.header h1{font-size:1.5rem}.analytics-grid{grid-template-columns:1fr}}
-@media(max-width:620px){.navlinks a span.t{display:none}}
+@media(max-width:860px){.wrap{flex-direction:column}#toc{position:static;width:100%;max-height:unset;margin-bottom:20px}.pie-container{flex-direction:column;align-items:center;gap:16px}.stats-row{gap:8px}.analytics-grid{grid-template-columns:1fr}}
+@media(max-width:620px){.navlinks a span.t{display:none}.hero{padding:32px 18px 24px}.story-card{padding-left:50px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important;scroll-behavior:auto!important}}
 @media print{body{background:#fff!important;color:#111!important;font-size:11pt}body::before:before,.orb{display:none}#toc{display:none}.wrap{display:block;max-width:100%;padding:0}.main{width:100%}.exec-summary p,.story-card p.summary,.bar-chart,.au-context-box p,.bundle-box ul li{color:#333!important}.exec-summary,.story-card,.bar-chart,.pie-container{break-inside:avoid}@page{margin:2cm 2.5cm;@bottom-right{content:counter(page)" / "counter(pages);font-size:9pt;color:#999}}}
 </style>
@@ -242,22 +271,25 @@ body.exec-view .story-card.expanded p.summary{margin-bottom:10px}
 <div class="wrap">
 <nav id="toc" aria-label="Table of contents">
 <h3>Daily Digest</h3>
-<a href="#exec" data-section="exec">Executive summary</a>
-<a href="#incident-map" data-section="incident-map">🗺️ Incident Map</a>
-<a href="#sector-global-macro" data-section="sector-global-macro">🌐 Global (Macro)</a>
-<a href="#sector-retail-entertainment-sport" data-section="sector-retail-entertainment-sport">🛍️ Retail &amp; Entertainment &amp; Sport</a>
-<a href="#sector-legal-services" data-section="sector-legal-services">⚖️ Legal Services</a>
-<a href="#sector-energy-utilities" data-section="sector-energy-utilities">⚡ Energy &amp; Utilities</a>
-<a href="#sector-defence" data-section="sector-defence">🛰️ Defence</a>
-<a href="#sector-government" data-section="sector-government">🏛️ Government</a>
-<a href="#analytics" data-section="analytics">📊 Analytics</a>
+<a href="#exec" data-section="exec"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M9 13h6M9 17h4"/></svg></span><span>Executive summary</span></a>
+<a href="#incident-map" data-section="incident-map"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.1-6-10a6 6 0 0 1 12 0c0 4.9-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg></span><span>Incident Map</span></a>
+<a href="#sector-global-macro" data-section="sector-global-macro"><span>Global (Macro)</span></a>
+<a href="#sector-retail-entertainment-sport" data-section="sector-retail-entertainment-sport"><span>Retail &amp; Entertainment &amp; Sport</span></a>
+<a href="#sector-legal-services" data-section="sector-legal-services"><span>Legal Services</span></a>
+<a href="#sector-energy-utilities" data-section="sector-energy-utilities"><span>Energy &amp; Utilities</span></a>
+<a href="#sector-defence" data-section="sector-defence"><span>Defence</span></a>
+<a href="#sector-government" data-section="sector-government"><span>Government</span></a>
+<a href="#analytics" data-section="analytics"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-8M21 20H3"/></svg></span><span>Analytics</span></a>
 </nav>
 <main id="main" class="main">
 
-<header class="header">
+<header class="hero">
+<div class="hero-grid"></div>
 <div class="kicker">// daily digest · 2026-08-10</div>
+<div class="hero-date"><div class="hero-date">Monday<span class="sep">&middot;</span>10 August 2026</div></div>
 <h1>Cyber Digest</h1>
 <p class="subtitle">A daily roundup of key cybersecurity developments across sectors</p>
+<div class="hero-chips"><div class="hero-chips"><span class="chip chip-accent">3 stories</span><span class="chip">6 sectors</span><span class="chip">3 sources</span><span class="chip chip-guard"><i></i>AU/NZ watchlist active</span></div></div>
 </header>
 
 <div class="controls">
@@ -266,7 +298,7 @@ body.exec-view .story-card.expanded p.summary{margin-bottom:10px}
 </div>
 
 <section id="exec" class="exec-summary">
-<h2>📋 Executive Summary</h2>
+<h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M9 13h6M9 17h4"/></svg></span> Executive Summary</h2>
 <p><strong>A Monday digest centred on active vulnerability exploitation, a large consumer-brand breach and a regulatory inflection point — with the week&#x27;s defining patterns (RMM/mgmt-appliance exploitation, automated financial credential theft) holding firm.</strong> <strong>First</strong>, N-able released Hotfix 2 for N-central as attackers who exploited CVE-2026-18577 (CVSS 8.2) continue reaching managed systems and establishing persistence — escalating the week&#x27;s theme of internet-exposed management-appliance exploitation. <strong>Second</strong>, a new study finds more than half of AI-generated security patches are broken, a cautionary finding for the AI-assisted remediation strategies many Australian and NZ programmes are trialling. <strong>Third</strong>, Levi Strauss disclosed a breach in which hackers accessed employee computers and corporate data — a consumer-brand breach confirmed by first-party disclosure. <strong>Fourth</strong>, a coalition of US water utilities partnered with a DEF CON offshoot to launch the community-run Water Watch Center, extending the critical-infrastructure OT-defence theme.</p>
 <div class="au-context-box"><p>The <strong>N-able N-central exploitation</strong> is directly relevant to Australian managed service providers, which rely heavily on RMM tooling to manage client endpoints — a compromised RMM server grants attackers the same elevated access legitimate technicians use, so one compromised instance can expose many client environments. Australian MSPs running the platform should apply Hotfix 2 under the Essential Eight patching schedule and prioritise alerting on N-central server access. The <strong>AI-generated patch reliability finding</strong> matters for Australian enterprises and ASD/ACSC-referenced AI adoption: machine-suggested fixes still require human verification before production or OT deployment. <strong>CVE-2026-8037 in Progress Kemp LoadMaster</strong> (CISA KEV, 792 reported exploit attempts) is a Five Eyes-aligned warning for AU network teams running critical appliances exposed at the perimeter. <strong>ACSC</strong> has released no new advisories since the weekend; it continues to feature joint board-level guidance on frontier AI cyber threats and secure adoption of agentic AI in defence.</p></div>
 <p>Today&#x27;s digest tightens established weekly themes. <strong>Active exploitation in privileged management software extends the week&#x27;s defining pattern</strong> — the N-able second hotfix follows the Kemp LoadMaster KEV listing (CVE-2026-8037, CVSS 9.6, added after 792 exploit attempts) and sustained RMM/tooling targeting (including the Metabase CVSS 10.0 zero-day exploited against cloud and self-hosted instances); unattended patch velocity on internet-exposed management appliances remains the highest-yield control. <strong>The Levi Strauss breach and the persistent Microsoft 365 AitM payroll-phishing campaign (Arctic Wolf Labs) reinforce financially motivated targeting</strong> of corporate credentials and financial-role accounts, now a mainstream automated adversary play. <strong>The Water Watch Center connects directly to CISA&#x27;s warnings about PLC-targeting in the Water and Wastewater Sectors</strong> — community-driven OT defence is hardening in organised form. <strong>Across the week the convergence of RMM exploitation, AitM credential harvesting, AI-tooling reliability concerns, and critical-infrastructure OT defence confirms CISOs should prioritise patch velocity, phishing-resistant MFA, AI-remediation human review, and OT/ICS visibility heading into mid-August.</strong></p>
@@ -278,7 +310,7 @@ body.exec-view .story-card.expanded p.summary{margin-bottom:10px}
 <div class="stat-card stat-iot"><div class="stat-num">0</div><div class="stat-label">Energy &amp; Utilities</div></div>
 <div class="stat-card stat-vuln"><div class="stat-num">0</div><div class="stat-label">Defence</div></div></div>
 
-<section id="incident-map" class="section"><h2><span class="icon">🗺️</span> Incident Map</h2><div class="bar-chart incident-map"><div id="incident-map-status" style="font-size:11px;color:var(--text-dim);font-weight:400;margin-bottom:8px">(static view)</div><div class="im-legend"><span class="im-lg"><i style="background:#ff4d5a"></i>Critical</span><span class="im-lg"><i style="background:#ffa62b"></i>Severe</span><span class="im-lg"><i style="background:#0096c7"></i>Elevated</span><span class="im-lg"><i style="background:#5aa9e6"></i>Guarded</span><span class="im-note">darker = more incidents</span></div><div id="incident-map-chart" style="height:400px;width:100%;display:block"></div><div id="incident-map-fallback"><div class="map-fallback"><p class="im-pan-note" style="margin:8px 0 0;color:var(--text-dim);font-size:11.5px">Pan-regional / not map-pinned: <span class="pan-chip">🌐 Global: 3</span></p><p style="color:var(--text-dim);font-size:11px;margin-top:8px;line-height:1.5">0 countries · 3 stories · click a country for its stories. Interactive map loads on the hosted site.</p><p class="im-attr" style="font-size:10.5px;color:var(--text-dim);margin-top:5px;line-height:1.5">🎯 Geo-attribution: <b>0</b>/3 stories located directly from text (0%).</p></div></div><div id="incident-map-stories" class="im-story-panel"></div><div class="im-attr"><p class="im-attr" style="font-size:10.5px;color:var(--text-dim);margin-top:5px;line-height:1.5">🎯 Geo-attribution: <b>0</b>/3 stories located directly from text (0%).</p></div>
+<section id="incident-map" class="section"><h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.1-6-10a6 6 0 0 1 12 0c0 4.9-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg></span> Incident Map</h2><div class="bar-chart incident-map"><div id="incident-map-status" style="font-size:11px;color:var(--text-dim);font-weight:400;margin-bottom:8px">(static view)</div><div class="im-legend"><span class="im-lg"><i style="background:#ff4d5a"></i>Critical</span><span class="im-lg"><i style="background:#ffa62b"></i>Severe</span><span class="im-lg"><i style="background:#0096c7"></i>Elevated</span><span class="im-lg"><i style="background:#5aa9e6"></i>Guarded</span><span class="im-note">darker = more incidents</span></div><div id="incident-map-chart" style="height:400px;width:100%;display:block"></div><div id="incident-map-fallback"><div class="map-fallback"><p class="im-pan-note" style="margin:8px 0 0;color:var(--text-dim);font-size:11.5px">Pan-regional / not map-pinned: <span class="pan-chip">🌐 Global: 3</span></p><p style="color:var(--text-dim);font-size:11px;margin-top:8px;line-height:1.5">0 countries · 3 stories · click a country for its stories. Interactive map loads on the hosted site.</p><p class="im-attr" style="font-size:10.5px;color:var(--text-dim);margin-top:5px;line-height:1.5">🎯 Geo-attribution: <b>0</b>/3 stories located directly from text (0%).</p></div></div><div id="incident-map-stories" class="im-story-panel"></div><div class="im-attr"><p class="im-attr" style="font-size:10.5px;color:var(--text-dim);margin-top:5px;line-height:1.5">🎯 Geo-attribution: <b>0</b>/3 stories located directly from text (0%).</p></div>
 <script>
 (function(){
   var payload = {"date": "2026-08-10", "mode": "daily", "title": "Incident Map", "countries": [], "pan": {"Global": 3}, "attrs": {"direct": 0, "region": 3, "total": 3, "weak": {}}, "sevColor": {"Critical": "#ff4d5a", "Severe": "#ffa62b", "Elevated": "#0096c7", "Guarded": "#5aa9e6"}};
@@ -418,30 +450,30 @@ body.exec-view .story-card.expanded p.summary{margin-bottom:10px}
 })();
 </script>
 </div></section>
-<section id="sector-global-macro" class="section"><h2><span class="icon">🌐</span> Global (Macro) <span class="count">2 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>N-able Issues N-central Hotfix 2 as Attackers Reach Managed Systems and Persist</h3><p class="summary">N-able released a required second hotfix for N-central, superseding Hotfix 1 with additional hardening, as threat actors continue exploiting CVE-2026-18577 (CVSS 8.2) in the RMM product. The company detected unusual activity in a customer&#x27;s environment on July 31, leading to discovery of an exploited zero-day impacting N-central server versions prior to 2026.3.1.7. N-able states Hotfix 2 is required even if the earlier hotfix was applied, reflecting continued monitoring of adversaries as they evolve techniques and establish persistence. **Verification: Verified** (vendor advisory + active-exploitation reporting).</p><div class="meta"><a class="source" href="https://thehackernews.com/2026/08/n-central-attackers-reach-managed.html" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-08</span></div></div>
+<section id="sector-global-macro" class="section"><h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.7 2.6 4 5.6 4 9s-1.3 6.4-4 9c-2.7-2.6-4-5.6-4-9s1.3-6.4 4-9z"/></svg></span> Global (Macro) <span class="count">2 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>N-able Issues N-central Hotfix 2 as Attackers Reach Managed Systems and Persist</h3><p class="summary">N-able released a required second hotfix for N-central, superseding Hotfix 1 with additional hardening, as threat actors continue exploiting CVE-2026-18577 (CVSS 8.2) in the RMM product. The company detected unusual activity in a customer&#x27;s environment on July 31, leading to discovery of an exploited zero-day impacting N-central server versions prior to 2026.3.1.7. N-able states Hotfix 2 is required even if the earlier hotfix was applied, reflecting continued monitoring of adversaries as they evolve techniques and establish persistence. **Verification: Verified** (vendor advisory + active-exploitation reporting).</p><div class="meta"><a class="source" href="https://thehackernews.com/2026/08/n-central-attackers-reach-managed.html" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-08</span></div></div>
 <div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>More Than Half of AI-Generated Security Patches Are Broken, Study Finds</h3><p class="summary">New research reports that more than half of AI-generated security patches are broken — failing to remediate the vulnerability, introducing regressions, or breaking functionality. A cautionary signal for teams adopting AI-assisted vulnerability remediation, underscoring that machine-suggested fixes still require human verification before production or OT deployment.</p><div class="meta"><a class="source" href="https://cyberscoop.com/ai-code-patching-security-risks/" target="_blank" rel="noopener">CyberScoop</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-07</span></div></div>
 <div class="bundle-box"><div class="bundle-label">Also notable</div><ul><li><strong>Metabase Zero-Day (CVSS 10.0) Exploited in Wild, Admin Access Without Authentication</strong> — Maximum-severity flaw in Metabase business-intelligence software exploited as a zero-day; unauth remote SQL injection granting admin access, DB-credential theft and data export. Cloud updated; self-hosted must patch. (The Hacker News, 2026-08-08)</li><li><strong>Progress Kemp LoadMaster Flaw Added to CISA KEV After 792 Reported Exploit Attempts</strong> — Critical command-injection (CVE-2026-8037, CVSS 9.6) in the load-balancer appliance added to KEV after active-exploitation reports; allows unauth remote code execution. (The Hacker News, 2026-08-08)</li><li><strong>Widespread Microsoft 365 AitM Phishing Harvests Payroll and Finance Emails</strong> — Arctic Wolf Labs detailed an active AitM campaign using residential proxies and ~8-hour automated session maintenance, targeting financial-role staff across US/Canada/Europe; overlaps Payroll Pirate cluster (Storm-2755). (The Hacker News, 2026-08-07)</li><li><strong>Nearly 800 Malicious npm Packages Deliver Cross-Platform RAT and Infostealer</strong> — npm cluster (~800 packages) delivers cross-platform malware via a README trick loading a WEL1DROPPER downloader from Cloudflare Workers. (The Hacker News, 2026-08-07)</li><li><strong>New CSS Attacks Can Break Webmail Defenses to Steal Passwords and Tokens</strong> — PortSwigger Black Hat USA research: email content escaping its boundary interferes with Outlook/Gmail/Proton/etc.; PoC, not yet malicious exploitation. (The Hacker News, 2026-08-08)</li></ul></div>
 </div>
 </section>
-<section id="sector-retail-entertainment-sport" class="section"><h2><span class="icon">🛍️</span> Retail &amp; Entertainment &amp; Sport <span class="count">1 story</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Levi Strauss Says Hackers Breached Employee Computers, Accessed Corporate Data</h3><p class="summary">Levi Strauss disclosed that hackers breached employee computers and accessed corporate data. **Breach Triage: Confirmed** — the company disclosed the incident first-party (disclosure-check passed); it is a direct system compromise, not a circulating-dataset claim, so no combolist/recycled indicators apply.</p><div class="meta"><a class="source" href="https://therecord.media/levis-data-breach-social-engineering" target="_blank" rel="noopener">The Record</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-07</span></div></div>
+<section id="sector-retail-entertainment-sport" class="section"><h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.7 2.6 4 5.6 4 9s-1.3 6.4-4 9c-2.7-2.6-4-5.6-4-9s1.3-6.4 4-9z"/></svg></span> Retail &amp; Entertainment &amp; Sport <span class="count">1 story</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Levi Strauss Says Hackers Breached Employee Computers, Accessed Corporate Data</h3><p class="summary">Levi Strauss disclosed that hackers breached employee computers and accessed corporate data. **Breach Triage: Confirmed** — the company disclosed the incident first-party (disclosure-check passed); it is a direct system compromise, not a circulating-dataset claim, so no combolist/recycled indicators apply.</p><div class="meta"><a class="source" href="https://therecord.media/levis-data-breach-social-engineering" target="_blank" rel="noopener">The Record</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-07</span></div></div>
 </div>
 </section>
-<section id="sector-legal-services" class="section"><h2><span class="icon">⚖️</span> Legal Services <span class="count">0 stories</span></h2><div class="story-grid"><div class="bundle-box"><div class="bundle-label">Also notable</div><ul><li><strong>New Mexico Judge Orders Meta to Pay $567 Million in Kids Online Safety Case</strong> — A New Mexico judge ordered Meta to pay $567 million over its handling of minors&#x27; safety, a landmark state-level consumer-protection judgment with regulatory-precedent implications for platform duty-of-care and privacy enforcement. (The Record, 2026-08-07)</li></ul></div>
+<section id="sector-legal-services" class="section"><h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.7 2.6 4 5.6 4 9s-1.3 6.4-4 9c-2.7-2.6-4-5.6-4-9s1.3-6.4 4-9z"/></svg></span> Legal Services <span class="count">0 stories</span></h2><div class="story-grid"><div class="bundle-box"><div class="bundle-label">Also notable</div><ul><li><strong>New Mexico Judge Orders Meta to Pay $567 Million in Kids Online Safety Case</strong> — A New Mexico judge ordered Meta to pay $567 million over its handling of minors&#x27; safety, a landmark state-level consumer-protection judgment with regulatory-precedent implications for platform duty-of-care and privacy enforcement. (The Record, 2026-08-07)</li></ul></div>
 </div>
 </section>
-<section id="sector-energy-utilities" class="section"><h2><span class="icon">⚡</span> Energy &amp; Utilities <span class="count">0 stories</span></h2><div class="story-grid"><div class="bundle-box"><div class="bundle-label">Also notable</div><ul><li><strong>Water Utilities Partner With DEF CON Offshoot for Community-Run &#x27;Water Watch Center&#x27;</strong> — A coalition of US water utilities partnered with a DEF CON offshoot to launch a community-driven monitoring initiative for the Water and Wastewater Systems Sector, responding to CISA warnings about PLC-targeting — extending the OT-defence theme. (The Record, 2026-08-07)</li></ul></div>
+<section id="sector-energy-utilities" class="section"><h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.7 2.6 4 5.6 4 9s-1.3 6.4-4 9c-2.7-2.6-4-5.6-4-9s1.3-6.4 4-9z"/></svg></span> Energy &amp; Utilities <span class="count">0 stories</span></h2><div class="story-grid"><div class="bundle-box"><div class="bundle-label">Also notable</div><ul><li><strong>Water Utilities Partner With DEF CON Offshoot for Community-Run &#x27;Water Watch Center&#x27;</strong> — A coalition of US water utilities partnered with a DEF CON offshoot to launch a community-driven monitoring initiative for the Water and Wastewater Systems Sector, responding to CISA warnings about PLC-targeting — extending the OT-defence theme. (The Record, 2026-08-07)</li></ul></div>
 </div>
 </section>
-<section id="sector-defence" class="section"><h2><span class="icon">🛰️</span> Defence <span class="count">0 stories</span></h2><div class="story-grid"><div class="bundle-box"><div class="bundle-label">Also notable</div><ul><li><strong>Military Device Manufacturer Discloses Cyber Incident to SEC</strong> — An unnamed military device manufacturer disclosed a cyber incident to the US SEC, a defence supply-chain disclosure with downstream implications for the defence industrial base. (The Record, 2026-08-07)</li></ul></div>
+<section id="sector-defence" class="section"><h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 7.9-8 9-4.6-1.1-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span> Defence <span class="count">0 stories</span></h2><div class="story-grid"><div class="bundle-box"><div class="bundle-label">Also notable</div><ul><li><strong>Military Device Manufacturer Discloses Cyber Incident to SEC</strong> — An unnamed military device manufacturer disclosed a cyber incident to the US SEC, a defence supply-chain disclosure with downstream implications for the defence industrial base. (The Record, 2026-08-07)</li></ul></div>
 </div>
 </section>
-<section id="sector-government" class="section"><h2><span class="icon">🏛️</span> Government <span class="count">0 stories</span></h2><div class="story-grid"><div class="bundle-box"><div class="bundle-label">Also notable</div><ul><li><strong>US Cyber Ambassador Nominee Cassady Confirmed in Senate</strong> — The US Senate confirmed Adam Cassady as US cyber ambassador, with implications for international cyber norms and Five Eyes cyber-cooperation relevant to Australia and New Zealand. (The Record, 2026-08-07)</li></ul></div>
+<section id="sector-government" class="section"><h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21h16M5 18h14M6 10v8M10 10v8M14 10v8M18 10v8M3 10h18L12 4z"/></svg></span> Government <span class="count">0 stories</span></h2><div class="story-grid"><div class="bundle-box"><div class="bundle-label">Also notable</div><ul><li><strong>US Cyber Ambassador Nominee Cassady Confirmed in Senate</strong> — The US Senate confirmed Adam Cassady as US cyber ambassador, with implications for international cyber norms and Five Eyes cyber-cooperation relevant to Australia and New Zealand. (The Record, 2026-08-07)</li></ul></div>
 </div>
 </section>
 
 <!-- Analytics Section -->
 <section id="analytics" class="section">
-<h2><span class="icon">📊</span> Analytics</h2>
+<h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-8M21 20H3"/></svg></span> Analytics</h2>
 <div class="analytics-grid"><div class="bar-chart"><h3>Sector distribution</h3><div class="bar-row bar-cyan"><span class="bar-label">Global (Macro)</span><div class="bar-track"><div class="bar-fill" style="width:67%"></div></div><span class="bar-val">2</span></div>
 <div class="bar-row bar-red"><span class="bar-label">Retail &amp; Entertainment &amp; Sport</span><div class="bar-track"><div class="bar-fill" style="width:33%"></div></div><span class="bar-val">1</span></div>
 <div class="bar-row bar-purple"><span class="bar-label">Legal Services</span><div class="bar-track"><div class="bar-fill" style="width:0%"></div></div><span class="bar-val">0</span></div>
@@ -450,7 +482,7 @@ body.exec-view .story-card.expanded p.summary{margin-bottom:10px}
 <div class="bar-row bar-blue"><span class="bar-label">Government</span><div class="bar-track"><div class="bar-fill" style="width:0%"></div></div><span class="bar-val">0</span></div></div><div class="bar-chart"><h3>Source breakdown</h3><div class="bar-row bar-cyan"><span class="bar-label">The Hacker News</span><div class="bar-track"><div class="bar-fill" style="width:33%"></div></div><span class="bar-val">1</span></div>
 <div class="bar-row bar-cyan"><span class="bar-label">CyberScoop</span><div class="bar-track"><div class="bar-fill" style="width:33%"></div></div><span class="bar-val">1</span></div>
 <div class="bar-row bar-cyan"><span class="bar-label">The Record</span><div class="bar-track"><div class="bar-fill" style="width:33%"></div></div><span class="bar-val">1</span></div></div></div>
-<div class="pie-container"><div class="pie" style="background:conic-gradient(var(--accent) 0deg 240deg,var(--purple) 240deg 360deg,var(--govt) 360deg 360deg,var(--vuln) 360deg 360deg,var(--crime) 360deg 360deg,var(--govt) 360deg 360deg);"></div><div class="pie-legend"><div class="legend-item"><span class="dot" style="background:var(--accent)"></span> Global (Macro) <span class="val">2</span></div><div class="legend-item"><span class="dot" style="background:var(--purple)"></span> Retail &amp; Entertainment &amp; Sport <span class="val">1</span></div><div class="legend-item"><span class="dot" style="background:var(--govt)"></span> Legal Services <span class="val">0</span></div><div class="legend-item"><span class="dot" style="background:var(--vuln)"></span> Energy &amp; Utilities <span class="val">0</span></div><div class="legend-item"><span class="dot" style="background:var(--crime)"></span> Defence <span class="val">0</span></div><div class="legend-item"><span class="dot" style="background:var(--govt)"></span> Government <span class="val">0</span></div></div></div>
+<div class="pie-container"><div class="pie" style="background:conic-gradient(var(--accent) 0deg 240deg,var(--purple) 240deg 360deg,var(--govt) 360deg 360deg,var(--vuln) 360deg 360deg,var(--crime) 360deg 360deg,var(--govt) 360deg 360deg);"><span class="pie-total">3<small>stories</small></span></div><div class="pie-legend"><div class="legend-item"><span class="dot" style="background:var(--accent)"></span> Global (Macro) <span class="val">2</span></div><div class="legend-item"><span class="dot" style="background:var(--purple)"></span> Retail &amp; Entertainment &amp; Sport <span class="val">1</span></div><div class="legend-item"><span class="dot" style="background:var(--govt)"></span> Legal Services <span class="val">0</span></div><div class="legend-item"><span class="dot" style="background:var(--vuln)"></span> Energy &amp; Utilities <span class="val">0</span></div><div class="legend-item"><span class="dot" style="background:var(--crime)"></span> Defence <span class="val">0</span></div><div class="legend-item"><span class="dot" style="background:var(--govt)"></span> Government <span class="val">0</span></div></div></div>
 <h3 style="font-size:14px;color:var(--text);margin-bottom:10px">Source Reliability Index</h3>
 <table class="data-table">
 <thead><tr><th>Tier</th><th>Label</th><th>Description</th></tr></thead>
