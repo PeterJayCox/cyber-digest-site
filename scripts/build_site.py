@@ -155,6 +155,9 @@ def parse_monthly_md(m):
     es_match = re.search(r"Executive Summary\s*\n\n([^#]+?)(?:\.(?:\s|$))", body, re.I | re.DOTALL)
     if es_match:
         raw = es_match.group(1).strip().replace("\n", " ")
+        # Strip markdown emphasis/bold markers (**, *, __) so the card summary renders clean
+        raw = re.sub(r"\*\*|\*|__", "", raw)
+        raw = re.sub(r"\s+", " ", raw).strip()
         info["blurb"] = (raw[:120].rsplit(" ", 1)[0] + "...") if len(raw) > 120 else raw
 
     # Story of the Month
