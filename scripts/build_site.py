@@ -442,7 +442,10 @@ def threat_panel_html():
         arrow = "▲" if mom > 0 else "▼"
         mcol = "var(--tag-red-text)" if abs(mom) >= 15 else "var(--text-dim)"
         mom_html = (f'<span style="font-size:13px;color:{mcol}">{arrow} {abs(mom):.0f}% '
-                    f'{"rise" if mom>0 else "fall"} vs prior 14 days</span>')
+                    f'{"rise" if mom>0 else "fall"} against prior 14 days</span>')
+    # Rolling trend chart lives in the same section, directly under the panel
+    series = threat_trend()
+    chart_html = threat_trend_html(series, wrap=False) if series else ""
     return f'''
 <div class="section" style="margin-top:6px">
 <h2><span class="bar"></span>Reported Threat Activity <span style="font-size:13px;font-weight:400;color:var(--text-dim)">· 14-day window · as of {idx["as_of"]}</span></h2>
@@ -461,6 +464,7 @@ def threat_panel_html():
     <div style="margin-top:2px">{idx['current_count']} stories rated this window. This measures <strong>reported</strong> activity — frequency and severity of publicly reported incidents — not a prediction of attack, and only as current as the last digest. <a href="methodology.html" style="color:var(--cyan);font-weight:600">Methodology &amp; caveats →</a></div>
   </div>
 </div>
+{chart_html}
 </div>'''
 
 # ---------------- Threat-index trend series (homepage chart) ----------------
@@ -488,8 +492,10 @@ def threat_trend(max_points=45):
         series.append({"date": tod.isoformat(), "pct": idx["pct"], "band": idx["band"]})
     return series
 
-def threat_trend_html(series):
-    """Inline SVG area chart of the daily 14-day rolling threat index."""
+def threat_trend_html(series, wrap=True):
+    """Inline SVG area chart of the daily 14-day rolling threat index.
+    `wrap=False` returns just the card (for embedding under the panel in one
+    section); `wrap=True` returns a standalone section with its own header."""
     if not series:
         return ""
     n = len(series)
@@ -542,9 +548,7 @@ def threat_trend_html(series):
              f'<text x="{pad-4}" y="{Y(ylo)+3:.1f}" fill="currentColor" opacity="0.5" font-size="10" '
              f'text-anchor="end">{ylo:.0f}</text>')
     last = series[-1]
-    return f'''<div class="section" style="margin-top:6px">
-<h2><span class="bar"></span>Reported Threat Activity <span style="font-size:13px;font-weight:400;color:var(--text-dim)">· trend · 14-day rolling window</span></h2>
-<div style="background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:16px 20px;overflow-x:auto">
+    chart = f'''<div style="background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:16px 20px;margin-top:14px;overflow-x:auto">
 <svg viewBox="0 0 {W} {H}" width="100%" role="img" aria-label="Reported threat activity index over time" style="display:block;max-width:820px;margin:0 auto;color:var(--text-secondary)">
   <rect x="{pad}" y="{pad}" width="{iw}" height="{ih}" fill="none" stroke="currentColor" stroke-opacity="0.06"/>
   {grid}
@@ -553,8 +557,11 @@ def threat_trend_html(series):
   {yaxis}
   {blab}
 </svg>
-<div style="font-size:12px;color:var(--text-dim);margin-top:6px;text-align:center">Daily 14-day rolling threat index · as of {last["date"]} · latest <strong>{last["band"]}</strong> · {last["pct"]:.0f}/100 · axis {ylo:.0f}–{yhi:.0f} of 100 (zoomed)</div>
-</div></div>'''
+<div style="font-size:12px;color:var(--text-dim);margin-top:6px;text-align:center">Daily 14-day rolling threat index · as of {last["date"]} · latest <strong>{last["band"]}</strong> · axis {ylo:.0f}–{yhi:.0f} of 100 (zoomed)</div>
+</div>'''
+    if not wrap:
+        return chart
+    return f'<div class="section" style="margin-top:6px"><h2><span class="bar"></span>Reported Threat Activity <span style="font-size:13px;font-weight:400;color:var(--text-dim)">· trend · 14-day rolling window</span></h2>\n{chart}\n</div>'
 
 # ---------------- RSS feed + sitemap ----------------
 def build_feed(stories, days):
@@ -898,14 +905,15 @@ def build_index(stories):
     html= head("Cyber Digest — Home","index.html")+f'''
 <div class="hero"><div class="kicker">// independent security intelligence</div>
 <h1>Cyber <span class="accent">Digest</span></h1>
-<p class="sub">A curated, sector-by-sector roundup of global cybersecurity developments with source-reliability indexing, Australian &amp; New Zealand context, and a searchable knowledge base of every story we've covered.</p></div>
+<p class="sub">A curated, sector-by-sector roundup of global cybersecurity developments with source-reliability indexing, Australian &amp; New Zealand context, and a searchable knowledge base of every story we've covered.</p>
+{f'<div class="cta-row"><a class="btn" href="daily/{days[0][0]}.html">Read today&rsquo;s digest &rarr;</a><a class="btn ghost" href="stories.html">Browse {n_stories} stories</a></div>' if days else ""}</div>
 
 <div class="stats">
-<div class="stat"><span class="num">{n_stories}</span> Stories</div>
-<div class="stat"><span class="num">{len(days)}</span> Daily</div>
-<div class="stat"><span class="num">{len(months)}</span> Monthly</div>
-<div class="stat"><span class="num">{len(sources)}</span> Sources</div>
-<div class="stat"><span class="num">{len(anzi)}</span> AU/NZ</div>
+<div class="stat"><span class="num">{n_stories}</span><span class="lbl">Stories</span></div>
+<div class="stat"><span class="num">{len(days)}</span><span class="lbl">Daily</span></div>
+<div class="stat"><span class="num">{len(months)}</span><span class="lbl">Monthly</span></div>
+<div class="stat"><span class="num">{len(sources)}</span><span class="lbl">Sources</span></div>
+<div class="stat"><span class="num">{len(anzi)}</span><span class="lbl">AU/NZ</span></div>
 </div>
 
 <div class="section"><h2><span class="bar"></span>Latest</h2><div class="grid cards">
@@ -919,7 +927,6 @@ def build_index(stories):
 <div class="section"><h2><span class="bar"></span>Monthly Editions</h2><div class="grid cards grid-monthly">{monthlist}</div></div>
 
 {threat_panel_html()}
-{threat_trend_html(threat_trend())}
 
 {rptsec}
 
