@@ -1492,6 +1492,47 @@ document.addEventListener('DOMContentLoaded',()=>{
         with open(css_path,"a") as f: f.write(css_extra)
 
 FLAT_LINKMAP={}
+def exec_summary_html(r):
+    """Render the executive summary (analysis narrative + key judgements) at the
+    very top of a report page — above Cross-Sector Themes (BLUF, user request
+    2026-08-22). Data schema in report JSON:
+      "exec_summary": {"narrative": [para, ...],
+                       "key_judgements": [{"judgement": "...", "confidence": "High|Moderate|Low"}]}
+    Absent field -> renders nothing (older reports stay valid)."""
+    es = r.get("exec_summary") or {}
+    paras = es.get("narrative", [])
+    kjs = es.get("key_judgements", [])
+    if not paras and not kjs:
+        return ""
+    conf_cls = {"High": "green", "Moderate": "amber", "Low": "red"}
+    parts = "".join(
+        '<p style="margin:0 0 10px;font-size:13.5px;color:var(--text-secondary);line-height:1.6">'
+        + esc(p) + '</p>'
+        for p in paras
+    )
+    kj_html = ""
+    if kjs:
+        rows = []
+        for i, k in enumerate(kjs, 1):
+            conf = k.get("confidence", "")
+            cls = conf_cls.get(conf, "blue")
+            rows.append(
+                '<div class="story" style="margin-bottom:0;padding:10px 0;border-bottom:1px solid var(--border-light)">'
+                '<div style="display:flex;gap:10px;align-items:flex-start">'
+                '<span class="tag purple" style="flex-shrink:0;margin-top:2px;border-radius:50%;width:26px;height:26px;justify-content:center;align-items:center;display:inline-flex;font-weight:700">' + str(i) + '</span>'
+                '<div style="flex:1;min-width:0">'
+                '<p style="margin:0 0 6px;font-size:13.5px;color:var(--text);line-height:1.5">' + esc(k.get("judgement", "")) + '</p>'
+                '<span class="tag ' + cls + '" style="font-size:11px">Confidence: ' + esc(conf) + '</span>'
+                '</div></div></div>'
+            )
+        kj_html = '<h3 style="margin:16px 0 8px;font-size:15px;font-weight:650">Key Judgements</h3>' + "".join(rows)
+    return ('<div class="section" id="executive-summary">'
+            '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">'
+            '<span style="font-size:1.6rem">\U0001F4CB</span>'
+            '<h2 style="margin:0;font-size:22px"><span class="bar"></span>Executive Summary</h2>'
+            '<span class="tag blue" style="margin-left:auto">Analysis</span></div>'
+            + parts + kj_html + '</div>')
+
 def themes_html(r):
     """Render the cross-sector themes list. Placed at the TOP of the report
     page (BLUF — bottom line up front, user request 2026-08-22) so the themes
@@ -1610,6 +1651,7 @@ def build_reports(reports):
             '<div class="crumb"><a href="../index.html">Home</a> \u00b7 <a href="index.html">Reports</a> \u00b7 ' + esc(r["report_title"]) + '</div>'
             '<div class="section" style="margin-top:6px"><div style="display:flex;gap:6px;flex-wrap:wrap">' + toc + '</div></div>'
             '</div>'
+            + exec_summary_html(r)
             + themes_html(r)
             + sec_html_s
             + foot()
