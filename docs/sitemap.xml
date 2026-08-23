@@ -103,6 +103,7 @@
   <url><loc>https://peterjaycox.com/wiki/entities/uta0533.html</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/entities/wp-shellstorm.html</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/-wrench-attacks-against-crypto-holders-appear-to-be-on-the-rise.html</loc><lastmod>2026-08-23</lastmod></url>
+  <url><loc>https://peterjaycox.com/wiki/incidents/14-trojanised-npm-packages-deliver-redc2-4-0-linux-backdoor-with-ai-assisted-c2.html</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/18-malicious-npm-packages-deliver-cross-platform-rat-to-alibaba-tool-users.html</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/23andMe-settlement.html</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/737-chrome-vpn-extensions-caught-routing-traffic-through-single-proxy-infrastruc.html</loc><lastmod>2026-08-23</lastmod></url>
@@ -254,8 +255,10 @@
   <url><loc>https://peterjaycox.com/wiki/incidents/kimsuky-builds-offline-ai-stack-to-boost-phishing-and-automate-malware-developme.html</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/kimwolf-v7-android-botnet-makes-http-2-ddos-traffic-look-like-legitimate-browsin.html</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/kratos-phishing-takedown.html</loc><lastmod>2026-08-23</lastmod></url>
+  <url><loc>https://peterjaycox.com/wiki/incidents/lawmakers-call-for-investigation-into-impact-of-cisa-staffing-cuts.html</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/lawmakers-seek-watchdog-review-of-federal-hacking-of-americans.html</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/lazarus-exploits-windows-zero-day-to-gain-system-access-and-deploy-backdoor.html</loc><lastmod>2026-08-23</lastmod></url>
+  <url><loc>https://peterjaycox.com/wiki/incidents/leaked-source-code-formally-links-geedge-networks-gateway-to-china-s-great-firew.html</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/levi-strauss-says-hackers-breached-employee-computers-accessed-corporate-data.html</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/long-running-data-theft-campaign-targeting-salesforce-and-servicenow.html</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/major-australian-energy-supplier-confirms-customer-data-compromised.html</loc><lastmod>2026-08-23</lastmod></url>
@@ -267,6 +270,7 @@
   <url><loc>https://peterjaycox.com/wiki/incidents/meps-question-anthropic-s-eu-standing-discuss-digital-sovereignty.html</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/metabase-zero-day-exploited-in-wild-allows-admin-access-without-authentication-c.html</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/microsoft-copilot-for-word-can-copy-hidden-prompts-into-new-documents.html</loc><lastmod>2026-08-23</lastmod></url>
+  <url><loc>https://peterjaycox.com/wiki/incidents/microsoft-defender-s-own-signed-btr-sys-driver-weaponised-for-kernel-level-attac.html</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/microsoft-patches-398-flaws-including-a-windows-driver-zero-day-under-active-att.html</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/military-device-manufacturer-discloses-cyber-incident-to-sec.html</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/mustang-panda-adds-signed-windows-rootkit-to-coolclient-backdoor-for-stealth.html</loc><lastmod>2026-08-23</lastmod></url>
@@ -316,6 +320,7 @@
   <url><loc>https://peterjaycox.com/wiki/incidents/safepal-crypto-hardware-wallet-maker-confirms-breach-affecting-nearly-40-000-cus.html</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/semiconductor-titan-analog-devices-reports-data-breach.html</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/senate-democrats-introduce-bill-distributing-300-million-annually-for-water-syst.html</loc><lastmod>2026-08-23</lastmod></url>
+  <url><loc>https://peterjaycox.com/wiki/incidents/senators-press-tiktok-over-internal-experiment-withholding-safety-features.html</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/silverfox-targets-japanese-manufacturer-with-3-driver-byovd-chain-and-valleyrat.html</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/singapore-launches-ai-training-data-guidelines-expands-pets-resources.html</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/slovakia-s-speed-cameras-found-with-russian-backdoor.html</loc><lastmod>2026-08-23</lastmod></url>
@@ -331,6 +336,7 @@
   <url><loc>https://peterjaycox.com/wiki/incidents/texas-hearing-institute-ransomware-attack-affects-30-000-patients.html</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/three-recent-chrome-releases-fix-1-442-flaws-more-than-prior-23-updates-combined.html</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/tiktok-agrees-to-400-million-settlement-in-us-child-privacy-lawsuit.html</loc><lastmod>2026-08-23</lastmod></url>
+  <url><loc>https://peterjaycox.com/wiki/incidents/toxicpanda-2-0-abuses-vpn-permissions-to-blind-google-play-during-installation.html</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/toxicpanda-2-0-and-golddigger-expand-android-banking-attacks-with-on-device-frau.html</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/triwest-healthcare-alliance-announces-breach-affecting-12-000-tricare-beneficiar.html</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/triwest-healthcare-breach.html</loc><lastmod>2026-08-23</lastmod></url>
