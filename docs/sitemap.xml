@@ -117,6 +117,7 @@
   <url><loc>https://peterjaycox.com/wiki/incidents/acsc-cms-exploitation.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/acsc-publishes-guidance-on-secure-adoption-of-agentic-ai-in-defence.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/acsc-publishes-new-ai-frontier-cyber-threat-guidance-for-boards-of-directors.html</loc><lastmod>2026-08-24</lastmod></url>
+  <url><loc>https://peterjaycox.com/wiki/incidents/acsc-teamcity-active-exploitation-alert-2026-08-24.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/adobe-campaign-classic-cvss-10-0-flaw-could-run-code-without-user-interaction.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/aesto-health-data-security-incident-affects-multiple-healthcare-provider-clients.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/ai-assisted-http-terminator-finds-novel-http-desync-techniques-and-apache-zero-d.html</loc><lastmod>2026-08-24</lastmod></url>
@@ -169,6 +170,7 @@
   <url><loc>https://peterjaycox.com/wiki/incidents/cisa-issues-foundational-logging-visibility-and-operational-guidance-for-federal.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/cisa-issues-ics-advisory-on-cpdlc-over-atn-b1-vulnerabilities-five-cves-.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/cisa-issues-multiple-siemens-and-johnson-controls-ics-advisories.html</loc><lastmod>2026-08-24</lastmod></url>
+  <url><loc>https://peterjaycox.com/wiki/incidents/cisa-kev-addition-oracle-http-server-cve-2026-21962-2026-08-24.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/cisa-plans-to-finalise-cyber-incident-reporting-regulations-in-september-2026.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/cisa-publishes-open-source-software-security-principles-and-practices.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/cisa-urges-water-and-wastewater-systems-sector-to-protect-ot-against-activity-ta.html</loc><lastmod>2026-08-24</lastmod></url>
@@ -251,6 +253,7 @@
   <url><loc>https://peterjaycox.com/wiki/incidents/iran-linked-ot-attacks.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/irregular-firm-behind-ai-hacking-incidents-won-t-say-if-there-were-more.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/japanese-telco-breach.html</loc><lastmod>2026-08-24</lastmod></url>
+  <url><loc>https://peterjaycox.com/wiki/incidents/keycloak-cve-2026-18963-critical-password-reset-flaw-2026-08-24.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/keyv-linked-npm-worm-poisons-hundreds-of-packages-plants-claude-code-and-vs-code.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/kimi-k3-agents-found-redis-zero-days-and-built-rce-exploit.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/kimsuky-builds-offline-ai-stack-to-boost-phishing-and-automate-malware-developme.html</loc><lastmod>2026-08-24</lastmod></url>
@@ -274,6 +277,7 @@
   <url><loc>https://peterjaycox.com/wiki/incidents/microsoft-defender-s-own-signed-btr-sys-driver-weaponised-for-kernel-level-attac.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/microsoft-patches-398-flaws-including-a-windows-driver-zero-day-under-active-att.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/military-device-manufacturer-discloses-cyber-incident-to-sec.html</loc><lastmod>2026-08-24</lastmod></url>
+  <url><loc>https://peterjaycox.com/wiki/incidents/modu-ui-changup-south-korean-startup-platform-breach-2026-08-24.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/mustang-panda-adds-signed-windows-rootkit-to-coolclient-backdoor-for-stealth.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/mythos-attack-on-3rd-round-pqc-algorithm-candidate-puts-hawk-out-of-commission.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/n-able-says-attackers-take-over-n-central-servers-after-initial-fix-proves-incom.html</loc><lastmod>2026-08-24</lastmod></url>
@@ -314,6 +318,7 @@
   <url><loc>https://peterjaycox.com/wiki/incidents/privacy-concerns-raised-over-government-demand-for-hospital-emergency-room-data.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/public-exploit-released-for-patched-vbulletin-pre-auth-code-execution-flaw-cve-2.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/ransomware-hits-colombian-justice-ministry-days-before-presidential-transition.html</loc><lastmod>2026-08-24</lastmod></url>
+  <url><loc>https://peterjaycox.com/wiki/incidents/reliaquest-failed-shinyhunters-vishing-attack-2026-08-24.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/researchers-report-84-flaws-in-4g-and-5g-cores-including-session-hijacking.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/revenue-cycle-management-group-mcbs-discloses-data-incident-affecting-1-26m-pati.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/rust-registry-supply-chain-attack-plants-build-time-malware-in-crates-with-245-m.html</loc><lastmod>2026-08-24</lastmod></url>
@@ -364,6 +369,7 @@
   <url><loc>https://peterjaycox.com/wiki/incidents/vishing-attack-gives-threat-actor-access-to-quantum-health-network.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/vulnerability-giving-attackers-full-control-of-macs-is-under-active-exploitation.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/we-now-have-a-better-understanding-how-openai-hacked-into-hugging-face.html</loc><lastmod>2026-08-24</lastmod></url>
+  <url><loc>https://peterjaycox.com/wiki/incidents/weedhack-malware-ai-built-fake-minecraft-sites-2026-08-24.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/windrelay-android-malware-turns-victims-phones-into-nfc-relays-for-payment-fraud.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/wormable-exploit-chain-jumps-from-tesla-wall-connector-to-other-ev-charger-brand.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/incidents/zoll-medical-pays-3-5-million-to-settle-data-breach-lawsuit.html</loc><lastmod>2026-08-24</lastmod></url>
@@ -387,10 +393,12 @@
   <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-17583-thermo-fisher-dna-tampering.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-18556.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-18577-nable-ncentral-auth-bypass.html</loc><lastmod>2026-08-24</lastmod></url>
+  <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-18963.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-19478.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-19489.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-19490.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-20349-cisco-asa-ftd-heap-overflow.html</loc><lastmod>2026-08-24</lastmod></url>
+  <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-21962.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-27577-n8n-sandbox-escape.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-27875.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-29059-windmill.html</loc><lastmod>2026-08-24</lastmod></url>
@@ -416,7 +424,7 @@
   <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-62815-ms-quic-rce.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-62878-windows-dns-server-overflow.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-62893-wds-tftp-rce.html</loc><lastmod>2026-08-24</lastmod></url>
-  <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-63077-teamcity.html</loc><lastmod>2026-08-24</lastmod></url>
+  <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-63077.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-64564-linux-sctp-uaf.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-64638-wordpress-xss-rce.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://peterjaycox.com/wiki/vulnerabilities/cve-2026-65400-macos-screen-sharing-rce.html</loc><lastmod>2026-08-24</lastmod></url>
