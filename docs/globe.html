@@ -290,9 +290,9 @@
   // automatically as the user scrolls/zooms.
   var viewMode="cluster";
   var barMode=false;   // display toggle: false=spread dots, true=severity bars
-  var ZOOM_OUT_DIST=215;   // camera distance above which we cluster (globe radius 100; default pose ~350)
-  var ZOOM_IN_DIST=180;    // camera distance below which we explode into story dots (was 140 — story
-                           // view now arrives sooner, at roughly a globe's-width on screen)
+  var ZOOM_OUT_DIST=212;   // camera distance above which we cluster (globe radius ~100; default pose alt 2.1 ≈ 210)
+  var ZOOM_IN_DIST=205;    // camera distance below which we explode into story dots — tight 7-unit
+                           // band right under the default pose, so it breaks as soon as you scroll in
   var zoomHysteresis={mode:"cluster"};
 
   function pColor(p){
@@ -457,9 +457,13 @@
       .pointAltitude(function(p){ return clusterAltitude(p); })
       .pointRadius(function(p){ return clusterRadius(p); })
       .pointLabel(clusterLabel)
-      .pointResolution(5)
-      // pan-region markers: static translucent rings (broad region, not a city)
-      .ringColor(function(){ return "rgba(154,167,189,0.35)"; })
+      .pointResolution(16)
+      // pan-region markers: translucent rings tinted by threat severity
+      // (broad region, not a city) — each ring's colour matches its story's severity
+      .ringColor(function(p){
+        var h=SEV_COLOR[p.severity]||REGION_COLOR;
+        return "rgba("+parseInt(h.slice(1,3),16)+","+parseInt(h.slice(3,5),16)+","+parseInt(h.slice(5,7),16)+",0.4)";
+      })
       .ringMaxRadius(function(p){ return p.region==="Global"?3.0:(p.region==="APAC"?2.5:2.0); })
       .ringAltitude(function(){ return 0.020; })
       .ringRepeatPeriod(function(){ return 0; })
