@@ -40,15 +40,15 @@
     padding:10px 14px;text-align:center;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
   .stat b{display:block;font-size:19px;font-weight:700;color:var(--sky)}
   .stat span{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--dim)}
-  .sidebtn{margin-left:auto;pointer-events:auto;background:rgba(13,27,62,.72);
+  .sidebtn{pointer-events:auto;background:rgba(13,27,62,.72);
     border:1px solid var(--border);border-radius:14px;padding:12px 16px;color:var(--text);
     font-size:13px;font-weight:600;cursor:pointer;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
   .sidebtn:hover{border-color:var(--cyan)}
   /* ---- Site nav (back to the rest of the site) ---- */
-  #sitenav{position:fixed;top:86px;right:16px;z-index:10;display:flex;gap:2px;flex-wrap:wrap;
+  #sitenav{margin-left:auto;align-self:center;display:flex;gap:2px;flex-wrap:wrap;
     justify-content:flex-end;background:rgba(13,27,62,.72);border:1px solid var(--border);
     border-radius:12px;padding:5px 7px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-    pointer-events:auto;max-width:min(640px,calc(100vw - 380px))}
+    pointer-events:auto;max-width:min(640px,calc(100vw - 480px))}
   #sitenav a{color:var(--muted);text-decoration:none;font-size:11.5px;font-weight:600;padding:4px 9px;
     border-radius:8px;white-space:nowrap;transition:all .15s;position:relative}
   #sitenav a::after{content:"";position:absolute;left:9px;right:9px;bottom:2px;height:1.5px;
@@ -123,13 +123,6 @@
   .pill.region{background:rgba(154,167,189,.12);color:var(--region);border:1px solid rgba(154,167,189,.35);text-transform:none}
   .item .sector{color:var(--dim);font-size:10px}
   .empty{padding:30px 12px;text-align:center;color:var(--dim);font-size:12px}
-  /* ---- Footer links ---- */
-  #sitefoot{position:fixed;left:50%;transform:translateX(-50%);bottom:10px;z-index:9;
-    display:flex;gap:14px;background:rgba(13,27,62,.6);border:1px solid var(--border);
-    border-radius:10px;padding:6px 14px;pointer-events:auto}
-  #sitefoot a{color:var(--dim);text-decoration:none;font-size:10.5px;transition:color .15s}
-  #sitefoot a:hover{color:var(--cyan)}
-  @media (max-width:760px){#sitefoot{display:none}}
   /* ---- Detail panel (click a story) ---- */
   #panel{position:fixed;right:16px;bottom:16px;width:min(380px,calc(100vw - 32px));z-index:11;
     background:rgba(13,27,62,.92);border:1px solid var(--border);border-radius:16px;
@@ -169,7 +162,7 @@
     #side{width:min(340px,calc(100vw - 32px));left:16px;top:86px;bottom:16px}
     header{flex-direction:column}
     .hint{display:none}
-    #sitenav{max-width:calc(100vw - 32px);right:16px;top:86px;justify-content:flex-start;
+    #sitenav{max-width:calc(100vw - 32px);justify-content:flex-start;
       overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch}
   }
 </style>
@@ -188,19 +181,18 @@
     <div class="stat"><b id="st-plotted">·</b><span>located</span></div>
     <div class="stat"><b id="st-country">·</b><span>countries</span></div>
   </div>
+  <!-- Site navigation: back to the rest of the site (docked into the header row) -->
+  <nav id="sitenav" aria-label="Main">
+    <a href="index.html">🏠 Home</a>
+    <a href="stories.html">📚 Story DB</a>
+    <a href="globe.html" class="act" aria-current="page">🌍 Globe</a>
+    <a href="daily/">🗓️ Daily</a>
+    <a href="monthly/index.html">📅 Monthly</a>
+    <a href="reports/index.html">📑 Reports</a>
+    <a href="wiki/index.html">🧠 Wiki</a>
+  </nav>
   <button class="sidebtn" id="side-toggle">☰ Stories</button>
 </header>
-
-<!-- Site navigation: back to the rest of the site -->
-<nav id="sitenav" aria-label="Main">
-  <a href="index.html">🏠 Home</a>
-  <a href="stories.html">📚 Story DB</a>
-  <a href="globe.html" class="act" aria-current="page">🌍 Globe</a>
-  <a href="daily/">🗓️ Daily</a>
-  <a href="monthly/index.html">📅 Monthly</a>
-  <a href="reports/index.html">📑 Reports</a>
-  <a href="wiki/index.html">🧠 Wiki</a>
-</nav>
 
 <!-- Sidebar: filters + analysis + story list -->
 <aside id="side">
@@ -237,11 +229,7 @@
   <span style="display:inline-block;cursor:pointer;color:var(--muted);margin-left:10px;text-decoration:underline" onclick="this.parentNode.style.display='none'">dismiss</span>
 </div>
 
-<div id="sitefoot">
-  <a href="index.html">Home</a><a href="stories.html">Story DB</a>
-  <a href="daily/">Daily</a><a href="monthly/index.html">Monthly</a>
-  <a href="reports/index.html">Reports</a><a href="wiki/index.html">Wiki</a>
-</div>
+<div id="sitefoot" style="display:none"></div>
 
 <div id="panel">
   <button class="x" id="panel-x" aria-label="Close">✕</button>
