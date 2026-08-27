@@ -44,8 +44,8 @@
   function boot(){
     if(!pending) return; pending=false;
     var s=document.createElement('script');
-    s.src='https://cdn.jsdelivr.net/npm/globe.gl/dist/globe.gl.min.js';
-    s.integrity='sha384-fS13P48RBFel+cPUp5960AhzvtEr64LerQ00neZuM+Hi/VDxxemdQnN7IcWPYvPb';
+    s.src='https://cdn.jsdelivr.net/npm/globe.gl@2.46.2/dist/globe.gl.min.js';
+    s.integrity='sha384-1uolMBZ25k3zJcNwCLEv49+L+m2dZudqAzsoSAJfQTzDCSBxJzrMuZ2dkp/5JKiT';
     s.crossOrigin='anonymous';
     s.onload=render; s.onerror=fail;
     document.head.appendChild(s);
