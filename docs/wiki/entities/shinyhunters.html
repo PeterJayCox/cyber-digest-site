@@ -1,0 +1,78 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShinyHunters</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png">
+<link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png">
+<link rel="alternate" type="application/rss+xml" title="Cyber Digest" href="https://cyber.peterjaycox.com/feed.xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ShinyHunters">
+<meta property="og:description" content="Curated sector-by-sector roundup of global cybersecurity developments with source-reliability indexing, AU/NZ context, and searchable knowledge base.">
+<meta property="og:url" content="https://cyber.peterjaycox.com/">
+<meta property="og:image" content="https://cyber.peterjaycox.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/site.css?v=202608291340"></head><body>
+<nav class="topnav"><div class="inner">
+        <a class="brand" href="https://cyber.peterjaycox.com/index.html"><span class="brand-logo" aria-hidden="true"></span> Cyber&nbsp;Digest<small>public site</small></a>
+        <div class="navlinks"><a href="https://cyber.peterjaycox.com/index.html" class=""><span class="t">🏠 Home</span></a><a href="https://cyber.peterjaycox.com/stories.html" class=""><span class="t">📚 Story DB</span></a><a href="https://cyber.peterjaycox.com/globe.html" class=""><span class="t">🌍 Globe</span></a><a href="https://cyber.peterjaycox.com/daily/" class=""><span class="t">🗓️ Daily</span></a><a href="https://cyber.peterjaycox.com/monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="https://cyber.peterjaycox.com/reports/index.html" class=""><span class="t">📑 Reports</span></a><a href="https://cyber.peterjaycox.com/wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a><a href="https://cyber.peterjaycox.com/flashcards.html" class=""><span class="t">🗂️ Flashcards</span></a></div>
+        <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light">🌙</div></div></nav><main class="container">
+            <div class="container">
+            <div class="crumb"><a href="../../index.html">Home</a> · <a href="../../wiki/index.html">Wiki</a> · Entities &amp; Threat Actors</div>
+            <div class="wiki-body"><div class="frontmatter">type: entity · created: 2026-08-28 · updated: 2026-08-28 · tags: [cybercrime-group, le-action, campaign, supply-chain] · confidence: high · affected_sectors: [technology, healthcare, retail, finance, education, media] · au_impact: true</div><h1>ShinyHunters</h1>
+<p><strong>ShinyHunters</strong> (leader persona <strong>shinycorp</strong>; affiliated with <strong>The Com</strong>) is a black-hat criminal hacker and data-extortion group active since about 2020. It is among the most prolific data-theft and extortion operations in the world, built around large-scale credential theft, SaaS/cloud intrusions and a "pay-or-leak" extortion model rather than bare ransomware encryption. Its name derives from <em>Shiny Pokémon</em> — "shiny hunting" in the Pokémon games. It overlaps heavily with <a href="scattered-spider.html">Scattered Spider</a> and cybercrime forums such as The Com.<span class="fn">(raw/digests/Cyber-Digest-2026-08-28.md)</span></p>
+<h2>TTPs</h2>
+<ul>
+<li><strong>Large-scale SaaS / cloud data theft</strong> from Microsoft 365, SharePoint, OneDrive, Salesforce, Slack, Okta and similar platforms, then exfiltration and extortion.</li>
+<li><strong>Vishing and Okta/Entra SSO phishing:</strong> impersonated Okta SSO login pages and voice-phishing calls to steal credentials from high-value enterprise users (investment banking, luxury retail, travel, payment processing). 2026 activity tracked by Mandiant/Google Threat Intelligence as <strong>UNC6661 / UNC6671</strong>.</li>
+<li><strong>Supply-chain / integrator pivots:</strong> gained access through third-party platforms and integrators — including <strong>Anodot → Snowflake</strong> — to reach downstream customers (a repeat of the 2024 Snowflake campaign).</li>
+<li><strong>Extortion mechanics:</strong> demand emails signed "ShinyHunters", follow-on six- to seven-figure ransom demands (BTC), 72-hour deadlines, sample leaks via <strong>LimeWire</strong> and Tox negotiation, and a ShinyHunters-branded data-leak site on Tor. Uses a <strong>delayed extortion model</strong> — victims who pay have sometimes had data leaked anyway.</li>
+<li><strong>Oracle Access Manager exploitation</strong> (CVE-2021-35587) via hard-coded credentials and SQL*Plus data exfiltration.</li>
+</ul>
+<h2>Notable campaigns and breaches</h2>
+<ul>
+<li><strong>2020–2021:</strong> early sale/leak of hundreds of millions of records (BigBasket ~20M, Tokopedia ~91M, and the 2021 sale of 70M+ AT&amp;T subscriber records — AT&amp;T only acknowledged the breach in 2024).</li>
+<li><strong>2024 — Snowflake customer campaign:</strong> the campaign that made the group infamous — <strong>Ticketmaster (~560M records, $500K asking price)</strong>, <strong>AT&amp;T (~110M call records; AT&amp;T paid ~$370K to delete data)</strong>, <strong>Santander (~30M)</strong>, <strong>Neiman Marcus (~31M)</strong>, <strong>Advance Auto Parts</strong>, <strong>LendingTree</strong>, <strong>Bausch Health</strong> and others; access via an <strong>EPAM Systems</strong> supply-chain breach and Snowflake credentials stored unencrypted in Jira.</li>
+<li><strong>2025:</strong> SoundCloud (~29.8M accounts, Dec 2025), Pornhub (Premium member data threat), and a <strong>Salesforce data-leak site extorting 39 victims</strong> (Oct 2025).</li>
+<li><strong>2026 Okta/Entra SSO campaign:</strong> Panera (~5M, Jan), Grubhub, Figure (~1M, Feb), Wynn Resorts (~800K, Feb), Odido (~6M, Feb), Aura (~900K, Mar), Betterment (~1.4M, Feb), Telus/Telus Digital (~1 PB claimed, $65M demand, Mar), <strong>European Commission</strong> (~350 GB, Mar — attributed by CERT-EU), Rockstar Games (~80M claimed via Anodot→Snowflake, Apr), ADT (~5.5M via Okta vishing, Apr), Carnival Cruise (~6M, Apr), McGraw Hill (~13.5M, Apr), <strong>Instructure/Canvas</strong> (~275M records/3.65TB, Apr–May — reached a ransom agreement with the group), University of Nottingham (Jun), MSG Sports (45 GB leaked, Jun), <strong>RingCentral</strong> (~1.6M, Jul).</li>
+<li><strong>2026 — Australian-relevant recent incidents:</strong> <strong>Baxter International</strong> (~7.1M alleged Salesforce records, Aug), <strong>Carhartt</strong> (~12.9M accounts via its Databricks analytics platform, Aug — HIBP-verified), and the failed <strong>ReliaQuest</strong> vishing attack (Aug).</li>
+</ul>
+<h2>Scale</h2>
+<p>ShinyHunters has been linked to breaches touching <strong>hundreds of millions of records</strong> across a wide swathe of sectors — ticketing, telecoms, banking, retail, hospitality, healthcare, education, media and government. It sells stolen datasets (sometimes with ransomware affiliates/other eCrime actors) at prices exceeding US$1M per company.</p>
+<h2>Attribution and law enforcement</h2>
+<ul>
+<li>Real-world identity remains <strong>largely unknown</strong>; researchers describe the name more as a <strong>brand</strong> than a fixed crew, possibly tied to <strong>GnosticPlayers</strong> and to <a href="scattered-spider.html">Scattered Spider</a> (0ktapus/Muddled Libra/Starfraud). A claimed "Scattered Lapsus$ Hunters" supergroup has been reported.</li>
+<li><strong>Arrests have not stopped operations:</strong> French national <strong>Sébastien Raoult</strong> was arrested (May 2022) and extradited to the US over ShinyHunters-linked activity, yet the brand continued shipping breaches. Vercel's April 2026 breach claim was <strong>denied by ShinyHunters' actual leadership</strong> — a sign the name is now used by copycats.</li>
+</ul>
+<h2>Australian angle</h2>
+<p>ShinyHunters is a direct and repeated threat to Australian and New Zealand organisations and consumers. Health-ISAC has warned of its increasing targeting of <strong>healthcare data</strong> — directly relevant under APRA CPS 234 and the OAIC Notifiable Data Breaches scheme given AU health sector concentration risk. The Baxter and Carhartt breaches expose AU/NZ retail and health consumers to downstream phishing and fraud; AU/NZ retailers should treat analytics/data platforms (Databricks, Salesforce, Snowflake) holding customer data as a widening target. See also <a href="../incidents/health-isac-warns-of-increasing-shinyhunters-healthcare-data-theft-attacks.html">Health Isac Warns Of Increasing Shinyhunters Healthcare Data Theft Attacks</a>. Au Impact</p>
+<h2>Related Pages</h2>
+<ul>
+<li><a href="scattered-spider.html">Scattered Spider</a> — overlapping, collaborating cybercrime group (0ktapus / Muddled Libra)</li>
+<li><a href="../incidents/shinyhunters-leaks-7-1-million-records-claimed-from-medical-device-maker-baxter-.html">Shinyhunters Leaks 7 1 Million Records Claimed From Medical Device Maker Baxter </a> — ShinyHunters Baxter International breach (Aug 2026)</li>
+<li><a href="../incidents/carhartt-breach-shinyhunters-releases-data-of-12-9-million-accounts.html">Carhartt Breach Shinyhunters Releases Data Of 12 9 Million Accounts</a> — ShinyHunters Carhartt breach (Aug 2026)</li>
+<li><a href="../incidents/reliaquest-failed-shinyhunters-vishing-attack-2026-08-24.html">Reliaquest Failed Shinyhunters Vishing Attack 2026 08 24</a> — the failed ReliaQuest vishing attack</li>
+</ul></div>
+            </div></main>
+<div class="footer">
+  <div class="links">
+    <a href="https://cyber.peterjaycox.com/index.html">Home</a>
+    <a href="https://cyber.peterjaycox.com/stories.html">Story DB</a>
+    <a href="https://cyber.peterjaycox.com/daily/">Daily</a>
+    <a href="https://cyber.peterjaycox.com/monthly/index.html">Monthly</a>
+    <a href="https://cyber.peterjaycox.com/reports/index.html">Reports</a>
+    <a href="https://cyber.peterjaycox.com/wiki/index.html">Wiki</a>
+    <a href="https://cyber.peterjaycox.com/feed.xml">RSS</a>
+  </div>
+  Cyber Digest public site · built 2026-08-29 13:40
+</div>
+<script>
+var _t=document.documentElement;
+var _b=document.querySelector(".theme-toggle");
+function toggleTheme(){var n=_t.getAttribute("data-theme")==="dark"?"light":"dark";_t.setAttribute("data-theme",n);if(_b)_b.textContent=n==="dark"?"🌙":"☀️";try{if(n==="dark")localStorage.removeItem("cd-theme");else localStorage.setItem("cd-theme",n)}catch(e){}}
+(function(){try{var s=localStorage.getItem("cd-theme");if(s){_t.setAttribute("data-theme",s);if(_b)_b.textContent="☀️"}}catch(e){}})()
+</script>
+</body></html>

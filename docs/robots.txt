@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://peterjaycox.com/sitemap.xml
+Sitemap: https://cyber.peterjaycox.com/sitemap.xml
+Sitemap: https://cyber.peterjaycox.com/sitemap-pages.xml
+Sitemap: https://cyber.peterjaycox.com/sitemap-daily.xml
+Sitemap: https://cyber.peterjaycox.com/sitemap-monthly.xml
+Sitemap: https://cyber.peterjaycox.com/sitemap-reports.xml
+Sitemap: https://cyber.peterjaycox.com/sitemap-wiki.xml

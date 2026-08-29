@@ -14,7 +14,7 @@ DB    = os.path.join(VAULT, "Cyber Digest", "cyber-digest.db")
 
 NASSP = os.path.expanduser("~/Desktop/Hermes/Cyber Digest/scripts")
 
-SITE_BASE = "https://peterjaycox.com"
+SITE_BASE = "https://cyber.peterjaycox.com"
 
 def xml_esc(s):
     """Escape a string for XML text/attributes (fuller than html.escape: also \n)."""
@@ -248,7 +248,7 @@ def esc(s):
     return html.escape(str(s), quote=True)
 
 def nav_html(active="", root=""):
-    BASE = "https://peterjaycox.com"
+    BASE = "https://cyber.peterjaycox.com"
     items = [("index.html","Home","🏠"),("stories.html","Story DB","📚"),
              ("globe.html","Globe","🌍"),("daily/","Daily","🗓️"),("monthly/index.html","Monthly","📅"),
              ("reports/index.html","Reports","📑"),("wiki/index.html","Wiki","🧠"),
@@ -271,12 +271,12 @@ def head(title, active="", root=""):
 <link rel="icon" type="image/png" sizes="32x32" href="{root}assets/img/favicon-32.png">
 <link rel="icon" type="image/x-icon" href="{root}assets/img/favicon.ico">
 <link rel="apple-touch-icon" sizes="180x180" href="{root}assets/img/apple-touch-icon.png">
-<link rel="alternate" type="application/rss+xml" title="Cyber Digest" href="https://peterjaycox.com/feed.xml">
+<link rel="alternate" type="application/rss+xml" title="Cyber Digest" href="https://cyber.peterjaycox.com/feed.xml">
 <meta property="og:type" content="website">
 <meta property="og:title" content="{esc(title)}">
 <meta property="og:description" content="Curated sector-by-sector roundup of global cybersecurity developments with source-reliability indexing, AU/NZ context, and searchable knowledge base.">
-<meta property="og:url" content="https://peterjaycox.com/">
-<meta property="og:image" content="https://peterjaycox.com/assets/img/og-image.png">
+<meta property="og:url" content="https://cyber.peterjaycox.com/">
+<meta property="og:image" content="https://cyber.peterjaycox.com/assets/img/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -291,13 +291,13 @@ def foot():
     return f'''</main>
 <div class="footer">
   <div class="links">
-    <a href="https://peterjaycox.github.io/cyber-digest-site/index.html">Home</a>
-    <a href="https://peterjaycox.github.io/cyber-digest-site/stories.html">Story DB</a>
-    <a href="https://peterjaycox.github.io/cyber-digest-site/daily/">Daily</a>
-    <a href="https://peterjaycox.github.io/cyber-digest-site/monthly/index.html">Monthly</a>
-    <a href="https://peterjaycox.github.io/cyber-digest-site/reports/index.html">Reports</a>
-    <a href="https://peterjaycox.github.io/cyber-digest-site/wiki/index.html">Wiki</a>
-    <a href="https://peterjaycox.com/feed.xml">RSS</a>
+    <a href="https://cyber.peterjaycox.com/index.html">Home</a>
+    <a href="https://cyber.peterjaycox.com/stories.html">Story DB</a>
+    <a href="https://cyber.peterjaycox.com/daily/">Daily</a>
+    <a href="https://cyber.peterjaycox.com/monthly/index.html">Monthly</a>
+    <a href="https://cyber.peterjaycox.com/reports/index.html">Reports</a>
+    <a href="https://cyber.peterjaycox.com/wiki/index.html">Wiki</a>
+    <a href="https://cyber.peterjaycox.com/feed.xml">RSS</a>
   </div>
   Cyber Digest public site · built {datetime.now().strftime("%Y-%m-%d %H:%M")}
 </div>
@@ -629,45 +629,114 @@ def build_feed(stories, days):
     open(os.path.join(DOCS, "feed.xml"), "w", encoding="utf-8").write(feed)
     return "feed.xml"
 
+SITEMAP_SECTIONS = ("pages", "daily", "monthly", "reports", "wiki")
+
+def _sitemap_urlset(entries):
+    """Render a <urlset> document from [(url_path, lastmod), ...]."""
+    body = "".join(
+        f"  <url><loc>{SITE_BASE}/{xml_esc(u)}</loc><lastmod>{lm}</lastmod></url>\n"
+        for u, lm in entries
+    )
+    return ('<?xml version="1.0" encoding="UTF-8"?>\n'
+            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+            + body + '</urlset>\n')
+
 def build_sitemap(days, months, pages, reports):
-    """XML sitemap + robots.txt -> docs/sitemap.xml, docs/robots.txt.
-    Each <url> carries a lastmod: daily digests use their publish date,
-    everything else uses the built file's mtime so crawlers pick up
-    freshness when the site regenerates."""
+    """Split XML sitemap + robots.txt -> docs/.
+
+    docs/sitemap.xml is a *sitemap index* pointing at per-section sitemaps
+    (sitemap-pages/daily/monthly/reports/wiki.xml). Daily digests use their
+    publish date as lastmod; every other page uses the mtime of the underlying
+    SOURCE file (vault markdown/JSON) so lastmod reflects real edits rather
+    than "today" (the build rewrites all HTML every deploy, which previously
+    made lastmod equal the crawl date and therefore a dead signal). Only the
+    canonical root / is emitted for the homepage — no duplicate index.html URL.
+    All section roots use trailing-slash form for consistency."""
     from datetime import datetime, timezone
 
     def _mtime(path):
-        """ISO-8601 lastmod date for a built file, or today if absent."""
+        """ISO-8601 lastmod date for a built file's mtime (section roots)."""
         p = os.path.join(DOCS, path)
         if os.path.exists(p):
             return datetime.fromtimestamp(os.path.getmtime(p), timezone.utc).strftime("%Y-%m-%d")
         return datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
-    entry = []
-    for u in ["", "index.html", "stories.html", "globe.html", "methodology.html",
-              "daily/", "monthly/index.html", "reports/index.html", "wiki/index.html", "wiki/cve-attack-matrix.html"]:
-        entry.append((u, _mtime("index.html" if u in ("", "index.html") else u)))
-    for d, _ in days:  # daily digests: lastmod = publish date
-        entry.append((f"daily/{d}.html", d))
-    for m in months:   # monthly digests: lastmod = file mtime
-        entry.append((f"monthly/{m}.html", _mtime(f"monthly/{m}.html")))
-    for r in reports:
-        entry.append((f"reports/{r['_slug']}.html", _mtime(f"reports/{r['_slug']}.html")))
-    for ptype, map_ in pages.items():
-        for slug in map_:
-            entry.append((f"wiki/{ptype}/{slug}.html", _mtime(f"wiki/{ptype}/{slug}.html")))
+    def _src_mtime(path):
+        """ISO-8601 lastmod date for a SOURCE file (vault md/json), so lastmod
+        tracks real content edits instead of the HTML rebuild timestamp."""
+        if path and os.path.exists(path):
+            return datetime.fromtimestamp(os.path.getmtime(path), timezone.utc).strftime("%Y-%m-%d")
+        return datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
-    entry = sorted(set(entry))
-    body = "".join(
-        f"  <url><loc>{SITE_BASE}/{xml_esc(u)}</loc><lastmod>{lm}</lastmod></url>\n"
-        for u, lm in entry
-    )
-    sitemap = ('<?xml version="1.0" encoding="UTF-8"?>\n'
-               '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-               + body + "</urlset>\n")
-    open(os.path.join(DOCS, "sitemap.xml"), "w", encoding="utf-8").write(sitemap)
-    robots = f"User-agent: *\nAllow: /\n\nSitemap: {SITE_BASE}/sitemap.xml\n"
-    open(os.path.join(DOCS, "robots.txt"), "w", encoding="utf-8").write(robots)
+    sections = {}   # label -> list[(url_path, lastmod)]
+
+    # Top-level navigation pages. Only the canonical root is emitted — no
+    # duplicate index.html URL for the homepage.
+    sections["pages"] = [
+        ("", _mtime("index.html")),
+        ("stories.html", _mtime("stories.html")),
+        ("globe.html", _mtime("globe.html")),
+        ("methodology.html", _mtime("methodology.html")),
+    ]
+
+    # Daily digests: lastmod = publish date; archive index uses build mtime.
+    sections["daily"] = [("daily/", _mtime("daily/"))] + [
+        (f"daily/{d}.html", d) for d, _ in days
+    ]
+
+    # Monthly digests: lastmod from their source markdown.
+    monthly_src = os.path.join(VAULT, "Cyber Digest", "Monthly")
+    sections["monthly"] = [("monthly/", _mtime("monthly/index.html"))] + [
+        (f"monthly/{m}.html",
+         _src_mtime(os.path.join(monthly_src, f"Cyber-Digest-Monthly-{m}.md")))
+        for m in months
+    ]
+
+    # Reports: lastmod from their source JSON.
+    reports_src = os.path.join(VAULT, "Cyber Digest", "Reports")
+    sections["reports"] = [("reports/", _mtime("reports/index.html"))] + [
+        (f"reports/{r['_slug']}.html", _src_mtime(os.path.join(reports_src, r["_file"])))
+        for r in reports
+    ]
+
+    # Wiki: lastmod from the source vault markdown for each page.
+    wiki_entries = [
+        ("wiki/", _mtime("wiki/index.html")),
+        ("wiki/cve-attack-matrix.html", _mtime("wiki/cve-attack-matrix.html")),
+    ]
+    for ptype, map_ in pages.items():
+        for slug, info in map_.items():
+            wiki_entries.append((f"wiki/{ptype}/{slug}.html", _src_mtime(info.get("path"))))
+    sections["wiki"] = wiki_entries
+
+    # Write each section sitemap (deduped + sorted by URL).
+    for label, entries in sections.items():
+        entries = sorted(set(entries))
+        sections[label] = entries
+        with open(os.path.join(DOCS, f"sitemap-{label}.xml"), "w", encoding="utf-8") as f:
+            f.write(_sitemap_urlset(entries))
+
+    # Sitemap index with per-section lastmod = newest entry in that section.
+    def _max_lm(entries):
+        default = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        return max((lm for _, lm in entries), default=default)
+
+    idx = ['<?xml version="1.0" encoding="UTF-8"?>',
+           '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    for label in SITEMAP_SECTIONS:
+        idx.append(
+            f'  <sitemap><loc>{SITE_BASE}/sitemap-{label}.xml</loc>'
+            f'<lastmod>{_max_lm(sections[label])}</lastmod></sitemap>'
+        )
+    idx.append('</sitemapindex>')
+    open(os.path.join(DOCS, "sitemap.xml"), "w", encoding="utf-8").write("\n".join(idx) + "\n")
+
+    # robots.txt: advertise the index plus each per-section sitemap.
+    robots = ["User-agent: *", "Allow: /", "",
+              f"Sitemap: {SITE_BASE}/sitemap.xml"]
+    for label in SITEMAP_SECTIONS:
+        robots.append(f"Sitemap: {SITE_BASE}/sitemap-{label}.xml")
+    open(os.path.join(DOCS, "robots.txt"), "w", encoding="utf-8").write("\n".join(robots) + "\n")
 
 def daily_agg():
     """Per-digest-date aggregates from the DB, shared by the homepage Daily

@@ -314,7 +314,7 @@ def generate_og_card():
 
     <!-- Footer URL -->
     <line x1="0" y1="340" x2="680" y2="340" stroke="#1e293b" stroke-width="1"/>
-    <text x="0" y="380" font-family="SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace" font-size="18" fill="#64748b">https://peterjaycox.com</text>
+    <text x="0" y="380" font-family="SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace" font-size="18" fill="#64748b">https://cyber.peterjaycox.com</text>
   </g>
 </svg>'''
 
