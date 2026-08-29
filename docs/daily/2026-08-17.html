@@ -365,70 +365,101 @@ body.exec-view .story-card.expanded{padding-left:50px}
       .then(function(world){
         window.echarts.registerMap('world', world);
         var chart=window.echarts.init(host);
-        // Theme-aware base fill for unpopulated countries.
-        var base=document.createElement('div');
-        base.style.cssText='position:absolute;visibility:hidden;width:0;height:0';
-        document.body.appendChild(base);
-        var baseCol=getComputedStyle(document.body).getPropertyValue('--surface2').trim()||'#1a2332';
-        base.remove();
-        // Merge per-country overrides (severity colour + alpha intensity).
-        var data=payload.countries.map(function(c){
-          var rgb = c.color.replace('#','');
-          var r=parseInt(rgb.substring(0,2),16), g=parseInt(rgb.substring(2,4),16);
-          var b=parseInt(rgb.substring(4,6),16);
+        // ---- theme helpers: live base land fill + which theme is active ----
+        function baseCol(){
+          var el=document.createElement('div');
+          el.style.cssText='position:absolute;visibility:hidden;width:0;height:0';
+          document.body.appendChild(el);
+          var col=getComputedStyle(document.body).getPropertyValue('--surface2').trim()||'#1a2332';
+          el.remove();
+          return col;
+        }
+        function lightMode(){
+          var t=document.documentElement.getAttribute('data-theme');
+          if(t==='light'||t==='dark') return t==='light';
+          var m=baseCol().match(/^#([0-9a-f]{6})$/i);
+          if(m){
+            var v=parseInt(m[1],16);
+            return (0.2126*((v>>16)&255)+0.7152*((v>>8)&255)+0.0722*(v&255))>150;
+          }
+          return false;
+        }
+        // Full option with theme-appropriate colours. In light mode the
+        // severity fills are softened to pastel tints (lower alpha) and
+        // country borders are fainter, so the map never reads dark/harsh
+        // against the white page.
+        function buildOption(){
+          var light=lightMode();
+          var aScale=light?0.55:1;
+          var border=light?'rgba(0,0,0,.10)':'rgba(0,0,0,.25)';
+          // Merge per-country overrides (severity colour + alpha intensity).
+          var data=payload.countries.map(function(c){
+            var rgb = c.color.replace('#','');
+            var r=parseInt(rgb.substring(0,2),16), g=parseInt(rgb.substring(2,4),16);
+            var b=parseInt(rgb.substring(4,6),16);
+            return {
+              name:c.name, value:c.value,
+              itemStyle:{areaColor:'rgba('+r+','+g+','+b+','+(c.alpha*aScale).toFixed(2)+')'}
+            };
+          });
           return {
-            name:c.name, value:c.value,
-            itemStyle:{areaColor:'rgba('+r+','+g+','+b+','+c.alpha+')'}
-          };
-        });
-        var max=payload.countries.reduce(function(a,c){return Math.max(a,c.value)},0)||1;
-        chart.setOption({
-          tooltip:{
-            trigger:'item',
-            backgroundColor:'var(--surface2,#111827)',
-            borderColor:'var(--border,rgba(255,255,255,.1))',
-            textStyle:{color:'var(--text,#e2e8f0)',fontSize:12},
-            extraCssText:'max-width:70vw;',
-            appendToBody:true,
-            position:function(pt,params,dom,rect,size){
-              var cw=size.contentSize[0]||0, ch=size.contentSize[1]||0;
-              var x=pt[0]+12, y=pt[1]+12;
-              if(x+cw>window.innerWidth){ x=Math.max(4,window.innerWidth-cw-8); }
-              if(y+ch>window.innerHeight){ y=Math.max(4,window.innerHeight-ch-8); }
-              if(x<4){ x=4; } if(y<4){ y=4; }
-              return [x,y];
+            tooltip:{
+              trigger:'item',
+              backgroundColor:'var(--surface2,#111827)',
+              borderColor:'var(--border,rgba(255,255,255,.1))',
+              textStyle:{color:'var(--text,#e2e8f0)',fontSize:12},
+              extraCssText:'max-width:70vw;',
+              appendToBody:true,
+              position:function(pt,params,dom,rect,size){
+                var cw=size.contentSize[0]||0, ch=size.contentSize[1]||0;
+                var x=pt[0]+12, y=pt[1]+12;
+                if(x+cw>window.innerWidth){ x=Math.max(4,window.innerWidth-cw-8); }
+                if(y+ch>window.innerHeight){ y=Math.max(4,window.innerHeight-ch-8); }
+                if(x<4){ x=4; } if(y<4){ y=4; }
+                return [x,y];
+              },
+              formatter:function(p){
+                var c=null; payload.countries.forEach(function(x){ if(x.name===p.name) c=x; });
+                if(!c) return p.name;
+                var h='<b>'+esc(p.name)+'</b> — '+c.value+' incident'+(c.value>1?'s':'');
+                if(c.sev) h+='<br/><span style="color:'+esc(payload.sevColor[c.sev])+
+                         ';font-weight:700">● '+esc(c.sev)+'</span> worst';
+                if(c.secs.length) h+='<br/><div style="color:var(--text-muted);margin-top:4px">'+
+                   c.secs.map(function(s){return esc(s[0])+' <b>('+s[1]+')</b>'}).join(' · ')+'</div>';
+                if(c.topThreat && c.topThreat!==c.sev)
+                  h+='<br/><div style="color:var(--text-muted)">Top actor: <b>'+esc(c.topThreat)+'</b></div>';
+                if(c.top && c.top.url)
+                  h+='<br/><a href="'+esc(c.top.url)+'" target="_blank" rel="noopener" '+
+                     'style="color:var(--accent);font-weight:600">'+esc(c.top.headline)+' ↗</a>';
+                h+='<div style="color:var(--text-dim);font-size:10px;margin-top:6px">Click for all stories</div>';
+                return h;
+              }
             },
-            formatter:function(p){
-              var c=null; payload.countries.forEach(function(x){ if(x.name===p.name) c=x; });
-              if(!c) return p.name;
-              var h='<b>'+esc(p.name)+'</b> — '+c.value+' incident'+(c.value>1?'s':'');
-              if(c.sev) h+='<br/><span style="color:'+esc(payload.sevColor[c.sev])+
-                       ';font-weight:700">● '+esc(c.sev)+'</span> worst';
-              if(c.secs.length) h+='<br/><div style="color:var(--text-muted);margin-top:4px">'+
-                 c.secs.map(function(s){return esc(s[0])+' <b>('+s[1]+')</b>'}).join(' · ')+'</div>';
-              if(c.topThreat && c.topThreat!==c.sev)
-                h+='<br/><div style="color:var(--text-muted)">Top actor: <b>'+esc(c.topThreat)+'</b></div>';
-              if(c.top && c.top.url)
-                h+='<br/><a href="'+esc(c.top.url)+'" target="_blank" rel="noopener" '+
-                   'style="color:var(--accent);font-weight:600">'+esc(c.top.headline)+' ↗</a>';
-              h+='<div style="color:var(--text-dim);font-size:10px;margin-top:6px">Click for all stories</div>';
-              return h;
-            }
-          },
-          series:[{
-            name:'Incidents', type:'map', map:'world', roam:true,
-            scaleLimit:{min:1,max:12},
-            label:{show:false},
-            emphasis:{label:{show:true,color:'var(--text,#e2e8f0)'},
-              itemStyle:{areaColor:'var(--accent,#00b4d8)',borderColor:'#fff'}},
-            itemStyle:{borderColor:'rgba(0,0,0,.25)',borderWidth:.5,areaColor:baseCol},
-            data:data
-          }]
-        });
+            series:[{
+              name:'Incidents', type:'map', map:'world', roam:true,
+              scaleLimit:{min:1,max:12},
+              label:{show:false},
+              emphasis:{label:{show:true,color:'var(--text,#e2e8f0)'},
+                itemStyle:{areaColor:'var(--accent,#00b4d8)',borderColor:'#fff'}},
+              itemStyle:{borderColor:border,borderWidth:.5,areaColor:baseCol()},
+              data:data
+            }]
+          };
+        }
+        chart.setOption(buildOption());
         chart.on('click',function(params){
           if(params && params.componentType==='series') showCountry(params.name);
         });
         window.addEventListener('resize',function(){ chart.resize(); });
+        // Live re-theme: the page defaults to dark and only restores a saved
+        // light preference in a script at the bottom of <body>, and the user
+        // can flip the 🌙/☀️ toggle at any time — watch data-theme so the map
+        // repaints instead of keeping the theme that was active at load.
+        if(window.MutationObserver){
+          new MutationObserver(function(){
+            chart.setOption(buildOption());
+          }).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+        }
         if(fallback) fallback.style.display='none';
         var done=document.getElementById('incident-map-status');
         if(done) done.textContent='✓ interactive map ready — click a country';
