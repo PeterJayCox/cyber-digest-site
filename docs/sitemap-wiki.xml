@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://cyber.peterjaycox.com/wiki/</loc><lastmod>2026-08-29</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/concepts/bit2watt.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/concepts/china-ai-companion-regulation.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/concepts/congressional-stalemates-digital-policy.html</loc><lastmod>2026-08-17</lastmod></url>
@@ -17,7 +17,7 @@
   <url><loc>https://cyber.peterjaycox.com/wiki/concepts/singapore-ai-training-data-guidelines.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/concepts/trump-ai-vulnerability-clearinghouse.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/concepts/uk-cyber-shield.html</loc><lastmod>2026-08-17</lastmod></url>
-  <url><loc>https://cyber.peterjaycox.com/wiki/cve-attack-matrix.html</loc><lastmod>2026-08-29</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/cve-attack-matrix.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/entities/blackcat-alphv.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/entities/cse-canada.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/entities/cylindrical-canine.html</loc><lastmod>2026-08-17</lastmod></url>
@@ -41,10 +41,10 @@
   <url><loc>https://cyber.peterjaycox.com/wiki/entities/sandworm.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/entities/scattered-spider.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/entities/scmbanker.html</loc><lastmod>2026-08-17</lastmod></url>
-  <url><loc>https://cyber.peterjaycox.com/wiki/entities/shinyhunters.html</loc><lastmod>2026-08-29</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/entities/shinyhunters.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/entities/silver-fox.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/entities/smartloader.html</loc><lastmod>2026-08-17</lastmod></url>
-  <url><loc>https://cyber.peterjaycox.com/wiki/entities/teampcp.html</loc><lastmod>2026-08-28</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/entities/teampcp.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/entities/the-gentlemen.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/entities/uat-7810.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/entities/uta0533.html</loc><lastmod>2026-08-17</lastmod></url>
@@ -301,6 +301,7 @@
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/semiconductor-titan-analog-devices-reports-data-breach.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/senate-democrats-introduce-bill-distributing-300-million-annually-for-water-syst.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/senators-press-tiktok-over-internal-experiment-withholding-safety-features.html</loc><lastmod>2026-08-23</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/shinyhunters-infiltrates-teampcp.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/shinyhunters-leaks-7-1-million-records-claimed-from-medical-device-maker-baxter-.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/silverfox-targets-japanese-manufacturer-with-3-driver-byovd-chain-and-valleyrat.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/singapore-launches-ai-training-data-guidelines-expands-pets-resources.html</loc><lastmod>2026-08-17</lastmod></url>
