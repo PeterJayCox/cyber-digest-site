@@ -1,0 +1,282 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hindsight is 20/20: Building Agent Memory that Retains, Recalls, and Reflects</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png">
+<link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png">
+<link rel="alternate" type="application/rss+xml" title="Cyber Digest" href="https://cyber.peterjaycox.com/feed.xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hindsight is 20/20: Building Agent Memory that Retains, Recalls, and Reflects">
+<meta property="og:description" content="Curated sector-by-sector roundup of global cybersecurity developments with source-reliability indexing, AU/NZ context, and searchable knowledge base.">
+<meta property="og:url" content="https://cyber.peterjaycox.com/">
+<meta property="og:image" content="https://cyber.peterjaycox.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/site.css?v=202608301942"></head><body>
+<nav class="topnav"><div class="inner">
+        <a class="brand" href="https://cyber.peterjaycox.com/index.html"><span class="brand-logo" aria-hidden="true"></span> Cyber&nbsp;Digest<small>public site</small></a>
+        <div class="navlinks"><a href="https://cyber.peterjaycox.com/index.html" class=""><span class="t">🏠 Home</span></a><a href="https://cyber.peterjaycox.com/stories.html" class=""><span class="t">📚 Story DB</span></a><a href="https://cyber.peterjaycox.com/globe.html" class=""><span class="t">🌍 Globe</span></a><a href="https://cyber.peterjaycox.com/daily/" class=""><span class="t">🗓️ Daily</span></a><a href="https://cyber.peterjaycox.com/monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="https://cyber.peterjaycox.com/reports/index.html" class=""><span class="t">📑 Reports</span></a><a href="https://cyber.peterjaycox.com/wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a><a href="https://cyber.peterjaycox.com/flashcards.html" class=""><span class="t">🗂️ Flashcards</span></a></div>
+        <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light">🌙</div></div></nav><main class="container">
+            <div class="container">
+            <div class="crumb"><a href="../../index.html">Home</a> · <a href="../../wiki/index.html">Wiki</a> · Concepts &amp; Frameworks</div>
+            <div class="wiki-body"><div class="frontmatter">type: concept · created: 2026-08-09 · updated: 2026-08-30 · confidence: high · tags: [agent-memory, llm-architectures, tempr, cara, memory-systems, paper]</div><h1>Hindsight Agent Memory Architecture</h1>
+<p><strong>Paper:</strong> Hindsight_Agent_Memory_Architecture.Pdf — arXiv:2512.12818v1 (Dec 2025)</p>
+<h2>Core Idea</h2>
+<p>HINDSIGHT treats agent memory as a <strong>structured, first-class substrate for reasoning</strong> rather than a thin RAG retrieval layer around a stateless LLM. It organises memory into four logical networks with three core operations.</p>
+<h2>Four-Network Memory Organisation</h2>
+<table>
+<thead>
+<tr>
+<th>Network</th>
+<th>Contents</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>World</strong> (W)</td>
+<td>Objective facts about the external world</td>
+<td>Statements independent of agent perspective</td>
+</tr>
+<tr>
+<td><strong>Experience</strong> (B)</td>
+<td>Agent's own experiences, actions, recommendations</td>
+<td>First-person biographical info</td>
+</tr>
+<tr>
+<td><strong>Opinion</strong> (O)</td>
+<td>Subjective judgments with confidence scores <code>c∈[0,1]</code></td>
+<td>Evolving beliefs, updated via reinforcement</td>
+</tr>
+<tr>
+<td><strong>Observation</strong> (S)</td>
+<td>Preference-neutral entity summaries</td>
+<td>Synthesised profiles from underlying facts</td>
+</tr>
+</tbody>
+</table>
+<h2>Three Core Operations</h2>
+<ol>
+<li><strong>Retain</strong> → ingests conversation transcripts, extracts narrative facts (not fragmented), resolves entities, builds graph links (temporal, semantic, entity, causal)</li>
+<li><strong>Recall</strong> → four-way parallel retrieval (semantic vector, BM25 keyword, graph spreading activation, temporal), fused via Reciprocal Rank Fusion + neural cross-encoder reranking, respects token budget <code>k</code></li>
+<li><strong>Reflect</strong> → preference-conditioned generation using retrieved memories + behavioural profile, forms/updates opinions</li>
+</ol>
+<h2>Key Components</h2>
+<h3>TEMPR (Temporal Entity Memory Priming Retrieval)</h3>
+<ul>
+<li>Implements <strong>Retain</strong> and <strong>Recall</strong></li>
+<li>Narrative fact extraction via LLM (coarse-grained: 2–5 comprehensive facts per conversation, not fragmented utterances)</li>
+<li>Entity resolution with string similarity + co-occurrence + temporal proximity</li>
+<li>Memory graph with 4 edge types: entity, temporal (decay-weighted), semantic (cosine &gt; threshold), causal (upweighted)</li>
+<li>Token-budget-aware retrieval: caller specifies how much context to retrieve</li>
+</ul>
+<h3>CARA (Coherent Adaptive Reasoning Agents)</h3>
+<ul>
+<li>Implements <strong>Reflect</strong></li>
+<li><strong>Behavioural profile</strong> Θ = (Skepticism, Literalism, Empathy, Bias-strength)</li>
+<li>Each disposition 1–5, bias-strength β ∈ [0,1]</li>
+<li>Controls how opinions are formed and expressed</li>
+<li><strong>Opinion reinforcement</strong> — when new facts arrive, related opinions are assessed (reinforce/weaken/contradict/neutral) and confidence scores updated</li>
+<li><strong>Background merging</strong> — LLM-powered merge of agent biographical info, resolving conflicts in favour of newer info</li>
+</ul>
+<h2>Results</h2>
+<table>
+<thead>
+<tr>
+<th>Benchmark</th>
+<th>Baseline (OSS-20B full-context)</th>
+<th>Hindsight (OSS-20B)</th>
+<th>Hindsight (OSS-120B)</th>
+<th>Hindsight (Gemini-3)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LongMemEval</td>
+<td>39.0%</td>
+<td><strong>83.6%</strong> (+44.6pp)</td>
+<td>89.0%</td>
+<td><strong>91.4%</strong></td>
+</tr>
+<tr>
+<td>LoCoMo</td>
+<td>75.78% (Memobase best prior)</td>
+<td>83.18%</td>
+<td>85.67%</td>
+<td><strong>89.61%</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Key finding: the memory architecture itself drives performance — the OSS-20B version (deployable on a single consumer GPU) beats full-context GPT-4o (60.2% → 83.6%).</p>
+<h2>Key Design Principles</h2>
+<ol>
+<li><strong>Epistemic clarity</strong> — facts, observations, and opinions kept structurally distinct</li>
+<li><strong>Temporal awareness</strong> — every memory carries occurrence interval <code>(τs, τe)</code> and mention time <code>τm</code></li>
+<li><strong>Entity-aware reasoning</strong> — multi-hop discovery via graph links</li>
+<li><strong>Preference consistency</strong> — stable behavioural profile across sessions, with opinions that evolve via evidence-based reinforcement</li>
+</ol>
+<h2>Implications for Agent Design</h2>
+<ul>
+<li>Memory should be <strong>structured</strong>, not just a retrieval index — separating evidence from inference enables traceable reasoning</li>
+<li><strong>Opinion confidence</strong> allows agents to hold beliefs with appropriate strength and update them gracefully</li>
+<li>A small model (20B) + good memory architecture outperforms a frontier model with no structured memory</li>
+<li>Token-budget-aware retrieval lets agents trade off latency vs. coverage per query</li>
+</ul>
+<h2>Contemporary Research Landscape</h2>
+<h3>Competing Memory Systems (referenced in Hindsight)</h3>
+<table>
+<thead>
+<tr>
+<th>System</th>
+<th>Date</th>
+<th>Key Approach</th>
+<th>Differentiator</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MemGPT</strong> (Packer)</td>
+<td>2023</td>
+<td>OS-like paging active↔archival</td>
+<td>Pioneer of tiered context, but unstructured text blocks</td>
+</tr>
+<tr>
+<td><strong>Zep</strong> (Rasmussen)</td>
+<td>Jan 2025</td>
+<td>Temporal knowledge graph (Graphiti)</td>
+<td>Bi-temporal modeling, 94.8% DMR, 90% latency reduction vs baselines</td>
+</tr>
+<tr>
+<td><strong>A-MEM</strong> (Xu) ✦</td>
+<td>Feb 2025</td>
+<td>Zettelkasten method — atomic notes + LLM-generated links</td>
+<td>Memory evolution: new notes update existing ones dynamically</td>
+</tr>
+<tr>
+<td><strong>Mem0</strong> (Chhikara)</td>
+<td>Apr 2025</td>
+<td>Dense retrieval + graph representations</td>
+<td>Production-focused: 91% lower latency, 90% token savings</td>
+</tr>
+<tr>
+<td><strong>Memory-R1</strong> (Yan)</td>
+<td>Aug 2025</td>
+<td>RL (PPO/GRPO) for memory ops (ADD/UPDATE/DELETE)</td>
+<td>Only 152 training QA pairs; learns <em>when</em> to write/update/forget</td>
+</tr>
+<tr>
+<td><strong>MemVerse</strong> (Liu)</td>
+<td>Dec 2025</td>
+<td>Multimodal memory, hierarchical KG, periodic distillation</td>
+<td>Fast parametric recall via distilled long-term→parametric knowledge</td>
+</tr>
+<tr>
+<td><strong>KARMA</strong> (Wang)</td>
+<td>2025</td>
+<td>3D scene graphs for embodied/robotic agents</td>
+<td>Spatial reasoning, not conversational</td>
+</tr>
+</tbody>
+</table>
+<p>✦ = Accepted at NeurIPS 2025</p>
+<h3>Very Recent Papers (Aug 2026)</h3>
+<ol>
+<li>
+<p><strong>HiGram — Hierarchical Graph Memory</strong> (Yue et al., 2608.05095)
+   - Addresses flat-graph limitation: coarse-to-fine memory hierarchy
+   - MicroGraph-based path-level localisation before rewriting
+   - Coordinated rewriting: jointly revises intra-unit memory + inter-unit dependencies
+   - Improves answer quality <em>and</em> token efficiency on conflict-aware benchmarks</p>
+</li>
+<li>
+<p><strong>ScrubJay-MEM</strong> (Bhandari et al., 2608.04746)
+   - Bio-inspired: western scrub jay episodic memory → per-memory type-conditioned temporal decay
+   - Each memory: What–Where–When tuple with estimated perishability ω and utility horizon η
+   - Query-adaptive scoring, revised retroactively every n LLM calls
+   - Introduces <strong>Temporal Generalization Test (TGT)</strong> with GenGap metric
+   - +10–18% F1 over Mem0 on MemoryAgentBench EventQA-64k
+   - <em>Key insight:</em> type-conditioned temporal decay is necessary for temporal reasoning over perishable facts</p>
+</li>
+<li>
+<p><strong>Memory Reward Inflation</strong> (Asadolahi et al., 2608.00017)
+   - Self-improving agents: incorrect episodes get inflated rewards → preferentially reuse own mistakes
+   - Formalises <strong>Echo Gap</strong> and <strong>Error-Independence Assumption (EIA)</strong> — proves EIA is necessary for correction
+   - LUCID de-inflation algorithm: consistent gains on BIRD text-to-SQL
+   - <em>Key insight:</em> memory scoring bias compounds under both rank-by-score and plain similarity retrieval</p>
+</li>
+</ol>
+<h3>Surveys</h3>
+<ul>
+<li><strong>From Human Memory to AI Memory</strong> (Wu et al., Apr 2025) — 3D categorisation (object, form, time) with 8 quadrants; connects episodic/semantic memory to RAG/knowledge graphs</li>
+<li><strong>Memory Mechanism Survey</strong> (Zhang et al., 2025b) — source, form, and operations taxonomy; notes parametric memory is hard to interpret</li>
+<li><strong>Memory Quadruple Framework</strong> (Zhang et al., 2025a) — storage, persistence, access, controllability</li>
+</ul>
+<h3>Benchmarks</h3>
+<table>
+<thead>
+<tr>
+<th>Benchmark</th>
+<th>Year</th>
+<th>Scale</th>
+<th>Key Test</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LongMemEval</strong></td>
+<td>2024</td>
+<td>500 Q, up to 1.5M tokens</td>
+<td>5 abilities: IE, MR, TR, KU, ABS</td>
+</tr>
+<tr>
+<td><strong>LoCoMo</strong></td>
+<td>2024</td>
+<td>50 convos, avg 19.3 sessions</td>
+<td>Long-term multi-session recall</td>
+</tr>
+<tr>
+<td><strong>MemoryBench</strong></td>
+<td>2025</td>
+<td>Continual learning from feedback</td>
+<td>Forgetting under new info</td>
+</tr>
+<tr>
+<td><strong>TGT</strong> (new)</td>
+<td>2026</td>
+<td>Held-out retention intervals</td>
+<td>Temporal Generalisation Gap (GenGap)</td>
+</tr>
+</tbody>
+</table>
+<h3>Where Hindsight Sits</h3>
+<p>Hindsight is the <strong>only</strong> architecture that:
+- Separates <strong>all four</strong> epistemic categories (World, Experience, Opinion, Observation)
+- Has configurable <strong>behavioural profiles</strong> (Skepticism/Literalism/Empathy + bias strength)
+- Supports <strong>opinion evolution</strong> with confidence scores and reinforcement
+- Uses <strong>four-way parallel retrieval</strong> (semantic + BM25 + graph spreading activation + temporal) with RRF + cross-encoder</p>
+<p>Its main gap vs contemporary work: no RL-based memory operation decisions (Memory-R1), no multimodal support (MemVerse), no forgetting/decay mechanism (ScrubJay), and no hierarchical graph organisation (HiGram). The authors acknowledge RL-based joint optimisation of retain/recall/reflect as future work.</p>
+<p>Code: https://github.com/vectorize-io/hindsight
+Benchmarks viewer: https://hindsight-benchmarks.vercel.app/</p></div>
+            </div></main>
+<div class="footer">
+  <div class="links">
+    <a href="https://cyber.peterjaycox.com/index.html">Home</a>
+    <a href="https://cyber.peterjaycox.com/stories.html">Story DB</a>
+    <a href="https://cyber.peterjaycox.com/daily/">Daily</a>
+    <a href="https://cyber.peterjaycox.com/monthly/index.html">Monthly</a>
+    <a href="https://cyber.peterjaycox.com/reports/index.html">Reports</a>
+    <a href="https://cyber.peterjaycox.com/wiki/index.html">Wiki</a>
+    <a href="https://cyber.peterjaycox.com/feed.xml">RSS</a>
+  </div>
+  Cyber Digest public site · built 2026-08-30 19:42
+</div>
+<script>
+var _t=document.documentElement;
+var _b=document.querySelector(".theme-toggle");
+function toggleTheme(){var n=_t.getAttribute("data-theme")==="dark"?"light":"dark";_t.setAttribute("data-theme",n);if(_b)_b.textContent=n==="dark"?"🌙":"☀️";try{if(n==="dark")localStorage.removeItem("cd-theme");else localStorage.setItem("cd-theme",n)}catch(e){}}
+(function(){try{var s=localStorage.getItem("cd-theme");if(s){_t.setAttribute("data-theme",s);if(_b)_b.textContent="☀️"}}catch(e){}})()
+</script>
+</body></html>
