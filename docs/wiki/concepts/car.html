@@ -1,0 +1,156 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MITRE CAR (Cyber Analytics Repository)</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png">
+<link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png">
+<link rel="alternate" type="application/rss+xml" title="Cyber Digest" href="https://cyber.peterjaycox.com/feed.xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="MITRE CAR (Cyber Analytics Repository)">
+<meta property="og:description" content="Curated sector-by-sector roundup of global cybersecurity developments with source-reliability indexing, AU/NZ context, and searchable knowledge base.">
+<meta property="og:url" content="https://cyber.peterjaycox.com/">
+<meta property="og:image" content="https://cyber.peterjaycox.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/site.css?v=202608301959"></head><body>
+<nav class="topnav"><div class="inner">
+        <a class="brand" href="https://cyber.peterjaycox.com/index.html"><span class="brand-logo" aria-hidden="true"></span> Cyber&nbsp;Digest<small>public site</small></a>
+        <div class="navlinks"><a href="https://cyber.peterjaycox.com/index.html" class=""><span class="t">🏠 Home</span></a><a href="https://cyber.peterjaycox.com/stories.html" class=""><span class="t">📚 Story DB</span></a><a href="https://cyber.peterjaycox.com/globe.html" class=""><span class="t">🌍 Globe</span></a><a href="https://cyber.peterjaycox.com/daily/" class=""><span class="t">🗓️ Daily</span></a><a href="https://cyber.peterjaycox.com/monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="https://cyber.peterjaycox.com/reports/index.html" class=""><span class="t">📑 Reports</span></a><a href="https://cyber.peterjaycox.com/wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a><a href="https://cyber.peterjaycox.com/flashcards.html" class=""><span class="t">🗂️ Flashcards</span></a></div>
+        <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light">🌙</div></div></nav><main class="container">
+            <div class="container">
+            <div class="crumb"><a href="../../index.html">Home</a> · <a href="../../wiki/index.html">Wiki</a> · Concepts &amp; Frameworks</div>
+            <div class="wiki-body"><div class="frontmatter">type: concept · created: 2026-08-30 · updated: 2026-08-30 · tags: [framework, technique, defense] · confidence: high · affected_sectors: [technology, government, finance, healthcare, energy, defence] · au_impact: true</div><h1>MITRE CAR</h1>
+<p><strong>CAR</strong> (Cyber Analytics Repository) is MITRE's knowledge base of <strong>detection analytics</strong> built against the <a href="mitre-attack.html">Mitre Attack</a> adversary model. Where ATT&amp;CK catalogues what an adversary does, CAR catalogues concrete, validated ways to <em>detect</em> it — each analytic expressed as a hypothesis with the data, sensor, and logic needed to test it.</p>
+<h2>Overview</h2>
+<ul>
+<li><strong>Maintainer:</strong> MITRE Corporation</li>
+<li><strong>First released:</strong> 2013 (car.mitre.org; migrated from MediaWiki to GitHub ~2019)</li>
+<li><strong>URL:</strong> https://car.mitre.org · https://github.com/mitre-attack/car</li>
+<li><strong>Licence:</strong> Apache 2.0</li>
+<li><strong>Form:</strong> Structured YAML analytics + pseudocode + per-tool implementations (Splunk, EQL, Sigma, Logpoint, Dnif)</li>
+</ul>
+<h2>What an Analytic Contains</h2>
+<p>Each CAR analytic (e.g. <code>CAR-2013-05-004</code> Execution with AT) is a self-contained detection package:</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hypothesis</strong></td>
+<td>The detection theory — what behaviour should be observable</td>
+</tr>
+<tr>
+<td><strong>Information domain</strong></td>
+<td>Host, network, process, or external</td>
+</tr>
+<tr>
+<td><strong>ATT&amp;CK references</strong></td>
+<td>The techniques and tactics the analytic detects</td>
+</tr>
+<tr>
+<td><strong>Glossary / data model</strong></td>
+<td>Names the events and fields used (partnered with OSSEM's Common Data Model)</td>
+</tr>
+<tr>
+<td><strong>Pseudocode</strong></td>
+<td>Implementation-agnostic description of the analytic logic</td>
+</tr>
+<tr>
+<td><strong>Unit test</strong></td>
+<td>A trigger you can run to validate the analytic fires</td>
+</tr>
+<tr>
+<td><strong>Implementations</strong></td>
+<td>Real queries for specific tools (Splunk, EQL, Sigma, …)</td>
+</tr>
+</tbody>
+</table>
+<h2>Methodology</h2>
+<p>CAR analytics are developed in four steps:</p>
+<ol>
+<li><strong>Identify and prioritise</strong> adversary behaviours from ATT&amp;CK</li>
+<li><strong>Identify the data</strong> necessary to detect the behaviour</li>
+<li><strong>Identify or create a sensor</strong> to collect that data</li>
+<li><strong>Build the analytic</strong> to detect the behaviour</li>
+</ol>
+<p>CAR was intended as shared community content: contributions must address an ATT&amp;CK technique, should have been used operationally, must detect <em>behaviours</em> (not malware artifacts/IOCs), and — for sensor mappings — only built-in OS utilities or open-source tools are accepted (no commercial product vendor mappings).</p>
+<h2>Relationship to ATT&amp;CK</h2>
+<ul>
+<li>ATT&amp;CK is the <strong>adversary-side</strong> language; CAR is the <strong>detector-side</strong> layer against it</li>
+<li><a href="mitre-attack.html">Mitre Attack</a> and CAR are deliberately separate projects: keeping threat articulation separate from possible detections avoids ATT&amp;CK's defensive content being overly prescriptive — there are many valid ways to detect a technique, and organisations must choose what fits their environment</li>
+<li>CAR is a starting point and platform for open analytic collaboration, explicitly <em>not</em> the be-all/end-all for defending against ATT&amp;CK techniques</li>
+<li>The <strong>BZAR</strong> library (Bro/Zeek ATT&amp;CK-Based Analytics and Reporting) ships as CAR source code for the Zeek network sensor</li>
+</ul>
+<h2>Relationship to D3FEND</h2>
+<p>CAR and <a href="d3fend.html">D3Fend</a> are <strong>sibling</strong> defensive projects — both hang off ATT&amp;CK as the common language, answering different questions:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>CAR</th>
+<th>D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Layer</td>
+<td>Detection</td>
+<td>Defence / countermeasures</td>
+</tr>
+<tr>
+<td>Format</td>
+<td>Analytics (pseudocode + queries + tests)</td>
+<td>Machine-readable knowledge graph</td>
+</tr>
+<tr>
+<td>Question answered</td>
+<td>"How do I write the detection?"</td>
+<td>"What do I harden, isolate, deceive, or evict with?"</td>
+</tr>
+</tbody>
+</table>
+<p>CAR was never formally mapped into D3FEND; they are complementary rather than linked. In practice: D3FEND selects the countermeasure, CAR-style analytics (and ATT&amp;CK's native detections) implement the visibility.</p>
+<h2>Status: Superseded in Role</h2>
+<p>CAR is largely <strong>historical</strong> — MITRE moved detection engineering <em>into ATT&amp;CK itself</em>:</p>
+<ul>
+<li><strong>ATT&amp;CK v15 (Apr 2024):</strong> the Detections sections swapped CAR-style pseudocode for real-world query languages (e.g. Splunk SPL)</li>
+<li><strong>ATT&amp;CK v16:</strong> added ~231 native analytics (85 Execution, 120 Credential Access, 26 Cloud) plus a STIX analytic-extraction script</li>
+<li>The standalone CAR repository has not been meaningfully updated in years</li>
+</ul>
+<p>Its lasting value is <strong>methodological</strong> — analytics as testable hypotheses (data model → sensor → pseudocode → unit test) — which remains the backbone of modern detection engineering. Sigma rules still carry <code>car.*</code> tags linking back to the repository.</p>
+<h2>Australian Angle</h2>
+<p>CAR's hypothesis-driven analytic structure is a standard reference in detection-engineering work delivered to Australian government and critical-infrastructure clients (including the CyberCX Assessments practice), and remains useful training material for structuring SIEM detections. For production coverage, ATT&amp;CK's native detections and Sigma rules — mapped against the ACSC Essential Eight / ISM mitigations for control validation — have superseded it.</p>
+<h2>Related Pages</h2>
+<ul>
+<li><a href="mitre-attack.html">Mitre Attack</a> — the adversary-side knowledge base CAR detects against</li>
+<li><a href="d3fend.html">D3Fend</a> — MITRE's defensive-countermeasure counterpart; CAR's sibling project</li>
+<li><a href="cyber-kill-chain.html">Cyber Kill Chain</a> — the higher-level intrusion lifecycle model ATT&amp;CK (and therefore CAR) refines</li>
+<li><a href="security-control-frameworks.html">Security Control Frameworks</a> — the operational control catalogues that translate detections into policy</li>
+</ul></div>
+            </div></main>
+<div class="footer">
+  <div class="links">
+    <a href="https://cyber.peterjaycox.com/index.html">Home</a>
+    <a href="https://cyber.peterjaycox.com/stories.html">Story DB</a>
+    <a href="https://cyber.peterjaycox.com/daily/">Daily</a>
+    <a href="https://cyber.peterjaycox.com/monthly/index.html">Monthly</a>
+    <a href="https://cyber.peterjaycox.com/reports/index.html">Reports</a>
+    <a href="https://cyber.peterjaycox.com/wiki/index.html">Wiki</a>
+    <a href="https://cyber.peterjaycox.com/feed.xml">RSS</a>
+  </div>
+  Cyber Digest public site · built 2026-08-30 19:59
+</div>
+<script>
+var _t=document.documentElement;
+var _b=document.querySelector(".theme-toggle");
+function toggleTheme(){var n=_t.getAttribute("data-theme")==="dark"?"light":"dark";_t.setAttribute("data-theme",n);if(_b)_b.textContent=n==="dark"?"🌙":"☀️";try{if(n==="dark")localStorage.removeItem("cd-theme");else localStorage.setItem("cd-theme",n)}catch(e){}}
+(function(){try{var s=localStorage.getItem("cd-theme");if(s){_t.setAttribute("data-theme",s);if(_b)_b.textContent="☀️"}}catch(e){}})()
+</script>
+</body></html>
