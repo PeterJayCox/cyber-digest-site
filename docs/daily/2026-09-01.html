@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Digest — 2026-09-01</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0e1a;--surface:#111827;--surface2:#1a2332;--surface-hover:#1e293b;--text:#e2e8f0;--text-secondary:#b0c0d0;--text-muted:#8a9cb6;--text-dim:#64748b;--border:rgba(255,255,255,0.06);--border-light:rgba(255,255,255,0.1);--accent:#00b4d8;--accent-glow:rgba(0,180,216,.08);--accent-bg:rgba(0,180,216,.1);--vuln:#f43f5e;--geo:#8b5cf6;--crime:#f59e0b;--iot:#10b981;--govt:#3b82f6;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--purple:#8b5cf6;--nav-blur:rgba(10,14,26,.88);--kicker-color:#22d3ee;--kicker-bg:rgba(0,180,216,.08);--kicker-border:rgba(0,180,216,.2)}
+[data-theme="light"]{--bg:#ffffff;--surface:#fafafa;--surface2:#f3f4f5;--surface-hover:#ebebeb;--text:#171717;--text-secondary:#4d4d4d;--text-muted:#666666;--text-dim:#808080;--border:rgba(0,0,0,0.06);--border-light:rgba(0,0,0,0.1);--accent:#0072f5;--accent-glow:rgba(0,114,245,.06);--accent-bg:#ebf5ff;--vuln:#f43f5e;--geo:#8b5cf6;--crime:#f59e0b;--iot:#10b981;--govt:#3b82f6;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--purple:#8b5cf6;--nav-blur:rgba(255,255,255,.88);--kicker-color:#0068d6;--kicker-bg:#ebf5ff;--kicker-border:rgba(0,114,245,.2)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:Inter,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;min-height:100vh;transition:background .25s,color .25s}
+.skip-link{position:absolute;left:-9999px;top:0;z-index:2000;background:var(--accent);color:#fff;padding:8px 14px;border-radius:0 0 8px 0;font-size:13px;font-weight:600}
+.skip-link:focus{left:0}
+#progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--purple));z-index:10000;width:0%;transition:width .15s}
+/* Top nav */
+.topnav{position:sticky;top:0;z-index:9999;background:var(--nav-blur);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);-webkit-transform:translateZ(0);transform:translateZ(0);will-change:transform;transition:background .25s,border .25s}
+.topnav .inner{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;align-items:center;height:56px;gap:8px}
+.brand{font-size:16px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:8px;letter-spacing:-.3px}
+.brand .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);flex-shrink:0;transition:background .25s}
+.brand small{font-size:10px;color:var(--text-dim);font-weight:400;letter-spacing:1px;text-transform:uppercase}
+.navlinks{display:flex;gap:2px;margin-left:auto;align-items:center}
+.navlinks a{color:var(--text-muted);font-size:13px;font-weight:500;padding:6px 12px;border-radius:6px;transition:all .12s}
+.navlinks a:hover{color:var(--text);background:var(--surface2);text-decoration:none}
+.navlinks a.active{color:var(--text);background:var(--surface-hover);font-weight:600}
+.theme-toggle{display:flex;align-items:center;justify-content:center;margin-left:8px;width:34px;height:34px;border-radius:8px;background:var(--surface2);cursor:pointer;border:1px solid var(--border);transition:all .25s;user-select:none;flex-shrink:0;font-size:16px}
+.theme-toggle:hover{background:var(--surface-hover);border-color:var(--border-light)}
+/* Layout */
+.wrap{max-width:1100px;margin:auto;padding:0 28px 60px;display:flex;gap:32px;position:relative;z-index:1}
+#toc{position:sticky;top:80px;width:210px;flex-shrink:0;height:fit-content;max-height:calc(100vh-100px);overflow-y:auto;padding:18px 14px;background:var(--surface);border:1px solid var(--border);border-radius:10px;font-size:12px;transition:background .25s,border .25s}
+#toc h3{color:var(--accent);font-size:10px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px}
+#toc a{display:block;color:var(--text-muted);text-decoration:none;padding:3px 8px;border-radius:6px;margin-bottom:2px;transition:all .2s;border-left:2px solid transparent;font-size:12px}
+#toc a:hover{color:var(--text);background:var(--accent-bg)}
+#toc a.active{color:var(--accent);border-left-color:var(--accent);background:var(--accent-bg)}
+#toc a .sicon{display:inline-flex;width:15px;height:15px;flex-shrink:0;color:currentColor}
+#toc a .sicon svg{width:100%;height:100%}
+.main{flex:1;min-width:0}
+/* Header / Hero */
+.hero{position:relative;overflow:hidden;padding:44px 36px 30px;text-align:center;border:1px solid var(--border);border-radius:16px;background:linear-gradient(160deg,var(--surface) 0%,var(--surface2) 55%,var(--surface) 100%);margin-bottom:28px}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border-light) 1px,transparent 1px),linear-gradient(90deg,var(--border-light) 1px,transparent 1px);background-size:44px 44px;opacity:.35;-webkit-mask-image:radial-gradient(ellipse at center top,#000 20%,transparent 72%);mask-image:radial-gradient(ellipse at center top,#000 20%,transparent 72%);pointer-events:none}
+.hero>*:not(.hero-grid){position:relative;z-index:1}
+.hero .kicker{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;letter-spacing:1px;color:var(--kicker-color);margin-bottom:14px;padding:5px 16px;border-radius:6px;display:inline-block;background:var(--kicker-bg);border:1px solid var(--kicker-border)}
+.hero-date{font-family:'JetBrains Mono',monospace;font-size:clamp(1.7rem,4.5vw,2.5rem);font-weight:800;letter-spacing:-.02em;line-height:1.15;background:linear-gradient(120deg,var(--text) 55%,var(--accent));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
+.hero-date .sep{margin:0 12px;opacity:.45;font-weight:400}
+.hero h1{font-size:.95rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px}
+.hero .subtitle{color:var(--text-secondary);font-size:13.5px;margin-bottom:18px}
+.hero-chips{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;padding:5px 13px;border-radius:999px;border:1px solid var(--border);background:var(--surface2);color:var(--text-secondary);font-family:'JetBrains Mono',monospace}
+.chip-accent{border-color:rgba(0,180,216,.35);color:var(--accent);background:var(--accent-bg)}
+[data-theme="light"] .chip-accent{border-color:rgba(0,114,245,.35)}
+.chip-guard i{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(34,197,94,.6);display:inline-block}
+.chip-au{border-color:rgba(59,130,246,.3)}
+/* Sections */
+.section{margin-bottom:28px;scroll-margin-top:80px}
+.section h2{font-size:1.15rem;font-weight:600;color:var(--text);margin-bottom:14px;border-bottom:1px solid var(--border);padding-bottom:10px;display:flex;align-items:center;gap:10px}
+.section h2 .icon{display:inline-flex;width:19px;height:19px;line-height:1;color:var(--accent)}
+.section h2 .icon svg{width:100%;height:100%}
+.section h2 .count{margin-left:auto;background:var(--surface2);color:var(--text-muted);padding:2px 10px;border-radius:100px;font-size:11px;font-weight:600;white-space:nowrap}
+/* Exec summary */
+.exec-summary{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px 30px;margin-bottom:28px;position:relative;overflow:hidden;transition:background .25s,border .25s}
+.exec-summary::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--vuln),var(--purple))}
+.exec-summary h2{font-size:11px;text-transform:uppercase;letter-spacing:.15em;color:var(--accent);font-weight:700;margin-bottom:14px;border:none;padding:0;display:flex;align-items:center;gap:8px}
+.exec-summary h2 .icon svg{width:16px;height:16px}
+.exec-summary p{color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:14px}
+.exec-summary p:last-child{margin-bottom:0}
+.exec-summary p strong{color:var(--text);font-weight:600}
+/* AU context */
+.au-context-box{background:linear-gradient(135deg,rgba(0,180,216,.06),rgba(59,130,246,.06));border:1px solid rgba(0,180,216,.15);border-radius:10px;padding:18px 22px;margin:14px 0;position:relative}
+.au-context-box::before{content:'AU';position:absolute;top:-8px;right:14px;background:var(--accent);color:#fff;font-size:10px;font-weight:800;padding:1px 7px;border-radius:4px;letter-spacing:.05em}
+.au-context-box p{color:var(--text-muted);font-size:13px;line-height:1.65}
+/* Stats */
+.stats-row{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap;justify-content:center}
+.stat-card{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 20px;text-align:center;font-size:13px;color:var(--text-muted);min-width:130px;overflow:hidden;transition:border-color .2s,transform .2s,background .25s}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--sc,var(--accent))}
+.stat-card:hover{transform:translateY(-2px);border-color:var(--sc,var(--accent))}
+.stat-card .stat-num{font-weight:800;color:var(--text);font-size:20px;font-feature-settings:'tnum';line-height:1.2}
+.stat-card .stat-label{font-size:10.5px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+.stat-geo{--sc:#00b4d8}.stat-govt{--sc:#3b82f6}.stat-crime{--sc:#f59e0b}.stat-iot{--sc:#10b981}.stat-vuln{--sc:#f43f5e}
+[data-theme="light"] .stat-geo{--sc:#0072f5}
+/* Monthly reader-first blocks (At a Glance + Month at a Glance) */
+.glance-box{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:12px;padding:20px 24px;margin-bottom:28px}
+.glance-box ul{margin:0;padding-left:20px;display:grid;gap:8px}
+.glance-box li{font-size:14px;line-height:1.55;color:var(--text-muted)}
+.glance-box li strong{color:var(--text);font-weight:600}
+.month-glance{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:28px}
+.month-glance .stats-row{margin-bottom:0}
+.mg-headline{color:var(--text-muted);font-size:14px;line-height:1.6;margin:14px 0 0}
+.mg-headline strong{color:var(--text);font-weight:600}
+/* Severity scan heat-strip (monthly) */
+.severity-scan{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:28px;transition:background .25s,border .25s}
+.severity-scan .ss-note{color:var(--text-dim);font-size:11.5px;margin:0 0 14px}
+.ss-grid{display:grid;grid-template-columns:repeat(31,1fr);gap:3px}
+.ss-cell{height:52px;border-radius:5px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:4px;font-variant-numeric:tabular-nums;border:1px solid transparent;transition:transform .1s}
+.ss-cell b{font-size:11px;font-weight:800;color:var(--text-dim);line-height:1}
+.ss-cell i{font-style:normal;font-size:8.5px;font-weight:600;opacity:.78;line-height:1.2;margin-top:2px}
+.ss-cell:hover{outline:2px solid var(--accent);outline-offset:-1px;cursor:help;transform:scale(1.04)}
+.ss-cell.crit{background:linear-gradient(180deg,rgba(244,63,94,.35),rgba(244,63,94,.78));color:#fff}
+.ss-cell.sev{background:linear-gradient(180deg,rgba(245,158,11,.3),rgba(245,158,11,.72));color:#fff}
+.ss-cell.elev{background:linear-gradient(180deg,rgba(14,165,233,.3),rgba(14,165,233,.68));color:#fff}
+.ss-cell.guard{background:linear-gradient(180deg,rgba(100,116,139,.24),rgba(100,116,139,.5));color:#e2e8f0}
+.ss-cell.gap{background:repeating-linear-gradient(45deg,rgba(120,140,180,.1) 0 4px,transparent 4px 8px);color:var(--text-dim);font-style:italic;border:1px dashed var(--border-light)}
+.ss-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:10.5px;color:var(--text-dim)}
+.ss-lg{display:flex;align-items:center;gap:5px}
+.ss-lg i{width:10px;height:10px;border-radius:3px;display:inline-block}
+@media(max-width:640px){.ss-grid{grid-template-columns:repeat(16,1fr)}.ss-cell{height:38px}}
+/* Bar charts */
+.bar-chart{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:18px;transition:background .25s,border .25s}
+.bar-chart h3{font-size:13px;font-weight:600;color:var(--text);margin-bottom:12px}
+.bar-row{display:flex;align-items:center;margin-bottom:6px;gap:8px}
+.bar-row .bar-label{font-size:12px;color:var(--text-muted);width:130px;flex-shrink:0;text-align:right}
+.bar-row .bar-track{flex:1;height:16px;background:var(--surface2);border-radius:99px;overflow:hidden}
+.bar-row .bar-fill{height:100%;border-radius:99px;transition:width .6s ease;min-width:4px}
+.bar-row .bar-val{font-size:11px;font-weight:600;color:var(--text);width:36px;flex-shrink:0;font-family:'JetBrains Mono',monospace}
+.bar-cyan .bar-fill{background:linear-gradient(90deg,var(--accent),#0096c7)}
+.bar-purple .bar-fill{background:linear-gradient(90deg,var(--purple),#a78bfa)}
+.bar-amber .bar-fill{background:linear-gradient(90deg,var(--amber),#fbbf24)}
+.bar-red .bar-fill{background:linear-gradient(90deg,var(--vuln),#fb7185)}
+.bar-green .bar-fill{background:linear-gradient(90deg,var(--green),#4ade80)}
+.bar-blue .bar-fill{background:linear-gradient(90deg,var(--govt),#60a5fa)}
+/* Pie */
+.pie-container{display:flex;align-items:center;gap:28px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px 28px;margin:18px 0;transition:background .25s,border .25s}
+.pie{width:150px;height:150px;border-radius:50%;flex-shrink:0;position:relative;display:flex;align-items:center;justify-content:center}
+.pie-total{position:absolute;width:94px;height:94px;border-radius:50%;background:var(--surface);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:var(--text);font-feature-settings:'tnum';line-height:1.1}
+.pie-total small{font-size:9px;font-weight:600;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em}
+.pie-legend{display:flex;flex-direction:column;gap:6px;flex:1}
+.pie-legend .legend-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-muted)}
+.pie-legend .legend-item .dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.pie-legend .legend-item .val{margin-left:auto;font-weight:600;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:12px}
+/* Table */
+.data-table{width:100%;border-collapse:collapse;font-size:13px;background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:18px 0;transition:background .25s,border .25s}
+.data-table th{background:var(--surface2);color:var(--text-muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.08em;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border)}
+.data-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-muted)}
+.data-table tr:last-child td{border-bottom:none}
+.data-table .tier-badge{display:inline-flex;align-items:center;gap:6px;padding:2px 8px;border-radius:100px;font-size:11px;font-weight:600}
+.data-table .tier-1{background:rgba(34,197,94,.1);color:var(--green)}
+.data-table .tier-2{background:rgba(245,158,11,.1);color:var(--amber)}
+.data-table .tier-3{background:rgba(148,163,184,.1);color:var(--text-muted)}
+.data-table .tier-4{background:rgba(239,68,68,.1);color:var(--red)}
+/* Story cards */
+.story-grid{display:flex;flex-direction:column;gap:16px}
+.story-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 26px 18px 58px;transition:border-color .2s,box-shadow .2s,transform .2s;position:relative;overflow:hidden}
+.story-card:hover{border-color:var(--border-light);transform:translateY(-2px);box-shadow:0 8px 24px -12px rgba(0,0,0,.5),0 0 0 1px var(--accent-glow)}
+[data-theme="light"] .story-card:hover{box-shadow:0 8px 24px -14px rgba(0,40,80,.25)}
+.story-card .card-accent{position:absolute;top:0;left:0;bottom:0;width:4px;border-radius:0}
+.story-card.num-1 .card-accent{background:linear-gradient(180deg,var(--vuln),rgba(244,63,94,.25))}.story-card.num-2 .card-accent{background:linear-gradient(180deg,var(--purple),rgba(139,92,246,.25))}.story-card.num-3 .card-accent{background:linear-gradient(180deg,var(--crime),rgba(245,158,11,.25))}.story-card.num-4 .card-accent{background:linear-gradient(180deg,var(--green),rgba(34,197,94,.25))}.story-card.num-5 .card-accent{background:linear-gradient(180deg,var(--govt),rgba(59,130,246,.25))}
+.story-number{position:absolute;left:0;top:0;bottom:0;width:42px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:17px;font-weight:700;color:var(--text-dim);border-right:1px solid var(--border);background:var(--surface2)}
+.story-card.num-1 .story-number{color:#fb7185}.story-card.num-2 .story-number{color:#a78bfa}.story-card.num-3 .story-number{color:#fbbf24}
+.story-card h3{font-size:1.02rem;font-weight:600;color:var(--text);margin-bottom:7px;line-height:1.4}
+.story-card p.summary{color:var(--text-muted);font-size:13px;line-height:1.68;margin-bottom:12px}
+.story-card .meta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:12px}
+.story-card .meta .source{color:var(--accent);text-decoration:none;font-weight:500;padding:2px 10px;border:1px solid var(--border);border-radius:999px;transition:all .15s}
+span.source{padding:2px 10px;border:1px solid var(--border);border-radius:999px;display:inline-block}
+.story-card .meta .source:hover{border-color:var(--accent);background:var(--accent-bg)}
+.story-card .meta .reliability{display:inline-flex;align-items:center;gap:4px;color:var(--text-dim)}
+.story-card .meta .reliability .tier-1{color:var(--green)}
+.story-card .meta .reliability .tier-2{color:var(--amber)}
+.story-card .meta .reliability .tier-3{color:var(--text-muted)}
+.story-card .meta .reliability .tier-4{color:var(--red)}
+.story-card .meta .date{color:var(--text-dim);margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px}
+/* Tag badge */
+.tag{display:inline-block;font-size:11px;font-weight:500;padding:3px 10px;border-radius:999px;letter-spacing:.3px}
+.tag.blue{background:var(--accent-bg);color:var(--accent)}
+.tag.cyan{background:var(--accent-bg);color:var(--accent)}
+.tag.purple{background:rgba(139,92,246,.1);color:#a78bfa}
+.tag.green{background:rgba(34,197,94,.1);color:#4ade80}
+.tag.amber{background:rgba(245,158,11,.1);color:#fbbf24}
+.tag.red{background:rgba(239,68,68,.1);color:#f87171}
+/* Also notable */
+.bundle-box{background:var(--surface);border:1px dashed var(--border);border-radius:8px;padding:14px 18px;margin-top:6px}
+.bundle-box .bundle-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);font-weight:600;margin-bottom:6px}
+.bundle-box ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+.bundle-box ul li{font-size:13px;color:var(--text-muted);padding-left:12px;position:relative;line-height:1.5}
+.bundle-box ul li::before{content:'\25B8';position:absolute;left:0;color:var(--text-dim)}
+/* Controls */
+.controls{display:flex;gap:10px;margin-bottom:20px}
+.btn{font-size:12px;font-weight:600;padding:6px 16px;border-radius:99px;border:1px solid var(--border);background:var(--surface);color:var(--text-muted);cursor:pointer;transition:all .2s;font-family:inherit}
+.btn:hover{background:var(--surface2);color:var(--text)}
+.btn.active{background:var(--accent-bg);border-color:var(--accent);color:var(--accent)}
+#back-top{position:fixed;bottom:28px;right:28px;width:42px;height:42px;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--accent);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;z-index:9000;font-family:inherit}
+#back-top.visible{opacity:1}
+#back-top:hover{background:var(--surface2)}
+/* Footer */
+.footer{text-align:center;padding:28px 0 10px;border-top:1px solid var(--border);margin-top:32px;transition:border .25s}
+.footer .source-line{font-size:12px;color:var(--text-dim);font-family:'JetBrains Mono',monospace;margin-bottom:6px}
+.footer .note{font-size:11px;color:var(--text-dim);font-style:italic}
+.footer .links{display:flex;justify-content:center;gap:20px;margin-bottom:12px}
+.footer .links a{color:var(--text-dim);font-size:12px;font-weight:500;transition:color .15s}
+.footer .links a:hover{color:var(--text-secondary)}
+/* Executive view */
+body.exec-view .hide-exec,
+body.exec-view .story-card .meta,
+body.exec-view .story-card p.summary,
+body.exec-view .bundle-box,
+body.exec-view .bar-chart,
+body.exec-view .pie-container,
+body.exec-view .data-table,
+body.exec-view #incident-map{display:none!important}
+body.exec-view .story-card{padding:10px 18px;margin-bottom:4px;cursor:pointer}
+body.exec-view .story-card h3{font-size:14px;margin-bottom:0}
+body.exec-view .story-number{display:none}
+body.exec-view .story-grid{gap:6px}
+body.exec-view .story-card::after{content:'\25B6 Click to expand';display:block;font-size:10px;color:var(--text-dim);margin-top:4px;opacity:.5;transition:opacity .2s}
+body.exec-view .story-card:hover::after{opacity:1}
+body.exec-view .story-card.expanded::after{content:'\25BC Click to collapse'}
+body.exec-view .story-card.expanded .meta,
+body.exec-view .story-card.expanded p.summary{display:block!important}
+body.exec-view .story-card.expanded{padding:14px 18px}
+body.exec-view .story-card.expanded .story-number{display:block}
+body.exec-view .story-card.expanded h3{margin-bottom:6px;font-size:1rem}
+body.exec-view .story-card.expanded p.summary{margin-bottom:10px}
+body.exec-view .story-card .card-accent{width:4px}
+body.exec-view .story-card{padding-left:50px}
+body.exec-view .story-card.expanded{padding-left:50px}
+/* SVG icon helper */
+.sicon{display:inline-flex;width:19px;height:19px;color:var(--accent)}
+.sicon svg{width:100%;height:100%}
+/* Analytics grid */
+.analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.incident-map{overflow:hidden}
+.incident-map .map-fallback{padding-top:4px}
+.incident-map .map-fallback .bar-label{width:150px}
+.incident-map .map-fallback{border:1px solid var(--border);border-radius:12px;padding:12px 14px;background:var(--surface2)}
+.incident-map .bar-row{cursor:pointer;transition:opacity .15s}
+.incident-map .bar-row:hover{opacity:.85}
+.incident-map .bar-crit .bar-fill{background:linear-gradient(90deg,#ff4d5a,#fb7185)}
+.incident-map .bar-sev  .bar-fill{background:linear-gradient(90deg,#ffa62b,#fbbf24)}
+.incident-map .bar-elev .bar-fill{background:linear-gradient(90deg,#0096c7,#35c6e8)}
+.incident-map .bar-guard .bar-fill{background:linear-gradient(90deg,#5aa9e6,#7cc4f0)}
+.incident-map .bar-unknown .bar-fill{background:var(--surface2)}
+.incident-map .im-legend{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 8px}
+.incident-map .im-lg{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;color:var(--text-muted);padding:2px 9px;border:1px solid var(--border);border-radius:99px;background:var(--surface2)}
+.incident-map .im-lg i{width:9px;height:9px;border-radius:2px;display:inline-block}
+.incident-map .im-note{font-size:10.5px;color:var(--text-dim);margin-left:auto}
+.incident-map .im-attr{font-size:10.5px;color:var(--text-dim);margin-top:8px;line-height:1.5}
+.incident-map .pan-chip{display:inline-block;font-size:11px;padding:2px 10px;margin:0 6px 4px 0;border-radius:99px;border:1px dashed var(--border);color:var(--text-muted);background:repeating-linear-gradient(45deg,var(--surface2),var(--surface2)4px,rgba(127,127,127,.08)4px,rgba(127,127,127,.08)6px)}
+.incident-map .im-story-panel{margin-top:12px;border:1px solid var(--border);border-radius:12px;padding:14px 16px;background:var(--surface2);display:none}
+.incident-map .im-story-panel.open{display:block}
+.incident-map .im-story-panel .im-shot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.incident-map .im-story-panel h4{margin:0;font-size:14px;color:var(--text)}
+.incident-map .im-globe-btn{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;color:#0d1b3e;background:var(--accent);border-radius:99px;padding:6px 14px;text-decoration:none;white-space:nowrap}
+.incident-map .im-globe-btn:hover{filter:brightness(1.08)}
+.incident-map .im-story-panel ul{margin:0;padding:0;list-style:none}
+.incident-map .im-story-panel li{padding:7px 0;border-bottom:1px solid var(--border);font-size:12.5px}
+.incident-map .im-story-panel li:last-child{border-bottom:none}
+.incident-map .im-story-panel a{color:var(--accent);text-decoration:none;font-weight:600}
+.incident-map .im-story-panel a:hover{text-decoration:underline}
+.incident-map .im-tag{font-size:9.5px;padding:1px 7px;border-radius:99px;margin-left:8px;font-weight:700;border:1px solid}
+@media(max-width:860px){.wrap{flex-direction:column}#toc{position:static;width:100%;max-height:unset;margin-bottom:20px}.pie-container{flex-direction:column;align-items:center;gap:16px}.stats-row{gap:8px}.analytics-grid{grid-template-columns:1fr}}
+@media(max-width:620px){.navlinks a span.t{display:none}.hero{padding:32px 18px 24px}.story-card{padding-left:50px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important;scroll-behavior:auto!important}}
+@media print{body{background:#fff!important;color:#111!important;font-size:11pt}body::before:before,.orb{display:none}#toc{display:none}.wrap{display:block;max-width:100%;padding:0}.main{width:100%}.exec-summary p,.story-card p.summary,.bar-chart,.au-context-box p,.bundle-box ul li{color:#333!important}.exec-summary,.story-card,.bar-chart,.pie-container{break-inside:avoid}@page{margin:2cm 2.5cm;@bottom-right{content:counter(page)" / "counter(pages);font-size:9pt;color:#999}}}
+</style>
+</head>
+<body>
+<nav class="topnav"><div class="inner">
+  <a class="brand" href="https://cyber.peterjaycox.com/index.html"><span class="dot"></span>Cyber&nbsp;Digest<small>daily</small></a>
+  <div class="navlinks">
+    <a href="https://cyber.peterjaycox.com/index.html"><span class="t">Home</span></a>
+    <a href="https://cyber.peterjaycox.com/stories.html"><span class="t">Story DB</span></a>
+    <a href="https://cyber.peterjaycox.com/daily/" class="active"><span class="t">Daily</span></a>
+    <a href="https://cyber.peterjaycox.com/monthly/index.html"><span class="t">Monthly</span></a>
+    <a href="https://cyber.peterjaycox.com/wiki/index.html"><span class="t">Wiki</span></a>
+  </div>
+  <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light">🌙</div>
+</div></nav>
+
+<a href="#main" class="skip-link">Skip to content</a>
+<div id="progress"></div>
+<div class="wrap">
+<nav id="toc" aria-label="Table of contents">
+<h3>Daily Digest</h3>
+<a href="#exec" data-section="exec"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M9 13h6M9 17h4"/></svg></span><span>Executive summary</span></a>
+<a href="#incident-map" data-section="incident-map"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.1-6-10a6 6 0 0 1 12 0c0 4.9-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg></span><span>Incident Map</span></a>
+<a href="#sector-healthcare" data-section="sector-healthcare"><span>Healthcare</span></a>
+<a href="#sector-defence" data-section="sector-defence"><span>Defence</span></a>
+<a href="#sector-government" data-section="sector-government"><span>Government</span></a>
+<a href="#sector-global-macro" data-section="sector-global-macro"><span>Global (Macro)</span></a>
+<a href="#sector-legal-services" data-section="sector-legal-services"><span>Legal Services</span></a>
+<a href="#analytics" data-section="analytics"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-8M21 20H3"/></svg></span><span>Analytics</span></a>
+</nav>
+<main id="main" class="main">
+
+<header class="hero">
+<div class="hero-grid"></div>
+<div class="kicker">// daily digest · 2026-09-01</div>
+<div class="hero-date"><div class="hero-date">Tuesday<span class="sep">&middot;</span>1 September 2026</div></div>
+<h1>Cyber Digest</h1>
+<p class="subtitle">A daily roundup of key cybersecurity developments across sectors</p>
+<div class="hero-chips"><div class="hero-chips"><span class="chip chip-accent">8 stories</span><span class="chip">5 sectors</span><span class="chip">7 sources</span><span class="chip chip-guard"><i></i>AU/NZ watchlist active</span></div></div>
+</header>
+
+<div class="controls">
+<button class="btn active" id="btn-full" onclick="setView('full')">Full report</button>
+<button class="btn" id="btn-exec" onclick="setView('exec')">Executive view</button>
+</div>
+
+<section id="exec" class="exec-summary">
+<h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M9 13h6M9 17h4"/></svg></span> Executive Summary</h2>
+<p>ShinyHunters has moved from claiming the McKesson breach to attaching a price to it: the group told BleepingComputer it exfiltrated roughly 1 TB of data over four days (21–25 August) and demanded $55.2 million from the pharmaceutical distributor — a figure McKesson did not answer or negotiate, and the clearest escalation of the breach already disclosed in Sunday&#x27;s digest. The extortionist&#x27;s new detail that vishing against multiple employees led to compromise of Okta single sign-on accounts, which were then used to reach McKesson&#x27;s Salesforce and Snowflake environments, sharpens the &quot;safe SaaS vendor, compromised customer&quot; exposure that Australian and allied pharma supply chains should now audit — names, SSNs, dates of birth, medical record and Medicaid numbers, medication and allergy data, and appointment records are all claimed to be in the haul, which ReliaQuest independently tied to ShinyHunters&#x27; `.claims`-domain help-desk-impersonation campaign. In parallel, China-linked espionage pulled further into trusted network infrastructure: Sygnia documented the Fire Ant cluster pivoting from VMware hypervisors to Cisco IOS XR routers, TACACS servers and Linux management hosts, installing a new backdoor — BridgeAgent — and using concealed GRE tunnels to turn compromised routers into traffic-collection vantage points in a &quot;target behind the target&quot; access strategy that overlaps Google&#x27;s UNC3886.</p>
+<div class="au-context-box"><p>No new ACSC alerts were published in this window; the operative advisory remains the 24 August high-rated alert on active exploitation of TeamCity On-Premises servers within Australia (CVE-2026-63077). Two Australian developments anchor today&#x27;s local angle, one regulatory and one threat-facing. On regulation, the Attorney-General&#x27;s Department has released the *Privacy Amendment (Personal Data Protection) Bill 2026* for consultation, replacing the &quot;as soon as practicable&quot; notifiable-data-breach standard with a fixed 72-hour deadline for notifying the Information Commissioner — aligning the NDB scheme with the SOCI Act&#x27;s 72-hour critical-infrastructure reporting and the *Cyber Security Act 2024*&#x27;s ransomware-payment notification, while introducing a deliberately narrow erasure right binding only &quot;large digital platforms&quot; above a $500m gross-revenue or 2.5-million-user threshold. On the threat side, Huntress flagged three workers at an Australian healthcare company in February 2026 as suspected North Korean IT-worker-scheme participants impersonating Chinese nationals — caught through Astrill VPN and IPRoyal proxy use, fraudulent identity documents and biographical word anomalies in their onboarding paperwork — a direct, local instance of the DPRK insider-threat expansion detailed today. The McKesson escalation is the allied item Australian health organisations should monitor most closely: the vishing-to-Okta-to-SaaS access chain is the same initial-access class flagged repeatedly in ShinyHunters&#x27; Medtronic, DentaQuest, iRhythm and AdaptHealth targets, and Health-ISAC&#x27;s warning against the group&#x27;s social-engineering wave should reset verification rituals across Australian medical supply chains and distributors.</p></div>
+<p>Two through-lines collide today. First, the ShinyHunters healthcare wave has consolidated into a single dominant campaign with commercial discipline attached: McKesson&#x27;s $55.2 million demand — 72 hours to respond, no negotiation — follows Baxter (7.1M), CareCloud, iRhythm, Medtronic and Boston Scientific in the same weeks, and ReliaQuest&#x27;s `.claims`-domain documentation means the group&#x27;s help-desk vishing is now a named, repeatable tradecraft rather than opportunistic. Second, state-sponsored network-infrastructure compromise is being reported with new technical granularity: Fire Ant&#x27;s shift to routers, GRE tunneling and log-suppressing malware arrives days after the QTFY domain-seizure messaging correction (covered 30 August) and fits a broader Five Eyes pattern of Chinese espionage prioritising trusted-path collection over endpoint dwell — a through-line that carries the specific operational lesson to validate infrastructure logs against independent data, since Fire Ant tampers with syslog and timestamps. The agentic-AI line that dominated last week now has a financially-motivated echo: Aurora ransomware operators are documented using Cursor (running Claude Sonnet) to plan attacks in Russian and offload exploitation tasks against at least 10 victims, moving the AI-assistance story from Anthropic&#x27;s infostealer-hijacking warning (30 August) to attackers using commercial coding agents as first-class exploitation tooling. Watch in the week ahead: whether McKesson revises the 284-million-record raw-rows estimate into a unique-individual figure, whether Fire Ant&#x27;s Cisco campaign reappears outside the observed US targets, and whether the 72-hour Australian NDB proposal accelerates the Privacy Act&#x27;s long-deferred passage.</p>
+</section>
+
+<div class="stats-row"><div class="stat-card stat-geo"><div class="stat-num">1</div><div class="stat-label">Healthcare</div></div>
+<div class="stat-card stat-govt"><div class="stat-num">1</div><div class="stat-label">Defence</div></div>
+<div class="stat-card stat-crime"><div class="stat-num">1</div><div class="stat-label">Government</div></div>
+<div class="stat-card stat-iot"><div class="stat-num">4</div><div class="stat-label">Global (Macro)</div></div>
+<div class="stat-card stat-vuln"><div class="stat-num">1</div><div class="stat-label">Legal Services</div></div></div>
+
+<section id="incident-map" class="section"><h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.1-6-10a6 6 0 0 1 12 0c0 4.9-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg></span> Incident Map</h2><div class="bar-chart incident-map"><div id="incident-map-status" style="font-size:11px;color:var(--text-dim);font-weight:400;margin-bottom:8px">(static view)</div><div class="im-legend"><span class="im-lg"><i style="background:#ff4d5a"></i>Critical</span><span class="im-lg"><i style="background:#ffa62b"></i>Severe</span><span class="im-lg"><i style="background:#0096c7"></i>Elevated</span><span class="im-lg"><i style="background:#5aa9e6"></i>Guarded</span><span class="im-note">darker = more incidents</span></div><div id="incident-map-chart" style="height:400px;width:100%;display:block"></div><div id="incident-map-fallback"><div class="map-fallback"><div class="bar-row bar-guard im-row" data-name="China" title="severity: Guarded — top story: Fire Ant Pivots to Cisco Routers, Deploys &#x27;BridgeAgent&#x27; Backdoor for Traffic Collection"><span class="bar-label">China</span><div class="bar-track"><div class="bar-fill" style="width:25%"></div></div><span class="bar-val">2</span></div><div class="bar-row bar-crit im-row" data-name="Germany" title="severity: Critical — top story: Berlin Confirms Data Theft After Rhysida Attack; Election Systems Ruled Safe"><span class="bar-label">Germany</span><div class="bar-track"><div class="bar-fill" style="width:25%"></div></div><span class="bar-val">2</span></div><div class="bar-row bar-crit im-row" data-name="United States" title="severity: Critical — top story: ShinyHunters Demands $55.2M From McKesson After 1 TB Data-Theft Claim"><span class="bar-label">United States</span><div class="bar-track"><div class="bar-fill" style="width:12.5%"></div></div><span class="bar-val">1</span></div><div class="bar-row bar-guard im-row" data-name="Dem. Rep. Korea" title="severity: Guarded — top story: North Korean Job Fraud Expands Beyond IT Into Healthcare and Sales"><span class="bar-label">Dem. Rep. Korea</span><div class="bar-track"><div class="bar-fill" style="width:12.5%"></div></div><span class="bar-val">1</span></div><div class="bar-row bar-elev im-row" data-name="Australia" title="severity: Elevated — top story: Australia Releases Privacy Amendment Bill With 72-Hour Breach-Reporting Deadline"><span class="bar-label">Australia</span><div class="bar-track"><div class="bar-fill" style="width:12.5%"></div></div><span class="bar-val">1</span></div><p class="im-pan-note" style="margin:8px 0 0;color:var(--text-dim);font-size:11.5px">Pan-regional / not map-pinned: <span class="pan-chip">🌐 Global: 1</span></p><p style="color:var(--text-dim);font-size:11px;margin-top:8px;line-height:1.5">5 countries · 8 stories · click a country for its stories. Interactive map loads on the hosted site.</p><p class="im-attr" style="font-size:10.5px;color:var(--text-dim);margin-top:5px;line-height:1.5">🎯 Geo-attribution: <b>6</b>/8 stories located directly from text (75%). Low-confidence (region-bucket only, check): <b>United States</b>.</p></div></div><div id="incident-map-stories" class="im-story-panel"></div><div class="im-attr"><p class="im-attr" style="font-size:10.5px;color:var(--text-dim);margin-top:5px;line-height:1.5">🎯 Geo-attribution: <b>6</b>/8 stories located directly from text (75%). Low-confidence (region-bucket only, check): <b>United States</b>.</p></div>
+<script>
+(function(){
+  var payload = {"date": "2026-09-01", "mode": "daily", "title": "Incident Map", "countries": [{"name": "China", "value": 2, "sev": "Guarded", "color": "#5aa9e6", "alpha": 0.96, "secs": [["Defence", 1], ["Global (Macro)", 1]], "topThreat": "Malware", "top": {"headline": "Fire Ant Pivots to Cisco Routers, Deploys 'BridgeAgent' Backdoor for Traffic Collection", "url": "https://www.sygnia.co/blog/fire-ant-evolves-from-hypervisors-to-trusted-infrastructure/", "sev": "Guarded"}, "stories": [{"headline": "Fire Ant Pivots to Cisco Routers, Deploys 'BridgeAgent' Backdoor for Traffic Collection", "sector": "Defence", "threat": "Malware", "url": "https://www.sygnia.co/blog/fire-ant-evolves-from-hypervisors-to-trusted-infrastructure/", "date": "2026-09-01", "sev": "Guarded"}, {"headline": "Silver Fox Distributes ValleyRAT Inside Signed Chinese Adware", "sector": "Global (Macro)", "threat": "Malware", "url": "https://securelist.com/valleyrat-in-signed-adware/116770/", "date": "2026-09-01", "sev": "Guarded"}], "attrDirect": 2, "attrRegion": 0}, {"name": "Germany", "value": 2, "sev": "Critical", "color": "#ff4d5a", "alpha": 0.96, "secs": [["Government \u0026 Policy", 1], ["Global (Macro)", 1]], "topThreat": "Ransomware", "top": {"headline": "Berlin Confirms Data Theft After Rhysida Attack; Election Systems Ruled Safe", "url": "https://www.bleepingcomputer.com/news/security/berlin-confirms-data-theft-after-rhysida-ransomware-attack-claims/", "sev": "Critical"}, "stories": [{"headline": "Berlin Confirms Data Theft After Rhysida Attack; Election Systems Ruled Safe", "sector": "Government \u0026 Policy", "threat": "Ransomware", "url": "https://www.bleepingcomputer.com/news/security/berlin-confirms-data-theft-after-rhysida-ransomware-attack-claims/", "date": "2026-09-01", "sev": "Critical"}, {"headline": "Aurora Ransomware Operators Use Cursor AI to Plan and Execute Attacks", "sector": "Global (Macro)", "threat": "Ransomware", "url": "https://thehackernews.com/2026/08/aurora-ransomware-operators-use-cursor.html", "date": "2026-09-01", "sev": "Critical"}], "attrDirect": 2, "attrRegion": 0}, {"name": "United States", "value": 1, "sev": "Critical", "color": "#ff4d5a", "alpha": 0.67, "secs": [["Healthcare", 1]], "topThreat": "Breach / Data Leak", "top": {"headline": "ShinyHunters Demands $55.2M From McKesson After 1 TB Data-Theft Claim", "url": "https://www.hipaajournal.com/mckesson-data-breach/", "sev": "Critical"}, "stories": [{"headline": "ShinyHunters Demands $55.2M From McKesson After 1 TB Data-Theft Claim", "sector": "Healthcare", "threat": "Breach / Data Leak", "url": "https://www.hipaajournal.com/mckesson-data-breach/", "date": "2026-09-01", "sev": "Critical"}], "attrDirect": 0, "attrRegion": 1}, {"name": "Dem. Rep. Korea", "value": 1, "sev": "Guarded", "color": "#5aa9e6", "alpha": 0.67, "secs": [["Global (Macro)", 1]], "topThreat": "APT / Nation-State", "top": {"headline": "North Korean Job Fraud Expands Beyond IT Into Healthcare and Sales", "url": "https://thehackernews.com/2026/08/north-korean-job-fraud-expands-beyond.html", "sev": "Guarded"}, "stories": [{"headline": "North Korean Job Fraud Expands Beyond IT Into Healthcare and Sales", "sector": "Global (Macro)", "threat": "APT / Nation-State", "url": "https://thehackernews.com/2026/08/north-korean-job-fraud-expands-beyond.html", "date": "2026-09-01", "sev": "Guarded"}], "attrDirect": 1, "attrRegion": 0}, {"name": "Australia", "value": 1, "sev": "Elevated", "color": "#0096c7", "alpha": 0.67, "secs": [["Legal Services", 1]], "topThreat": "Breach / Data Leak", "top": {"headline": "Australia Releases Privacy Amendment Bill With 72-Hour Breach-Reporting Deadline", "url": "https://www.itnews.com.au/news/privacy-act-overhaul-to-tighten-72-hour-breach-reporting-deadline-628568", "sev": "Elevated"}, "stories": [{"headline": "Australia Releases Privacy Amendment Bill With 72-Hour Breach-Reporting Deadline", "sector": "Legal Services", "threat": "Breach / Data Leak", "url": "https://www.itnews.com.au/news/privacy-act-overhaul-to-tighten-72-hour-breach-reporting-deadline-628568", "date": "2026-09-01", "sev": "Elevated"}], "attrDirect": 1, "attrRegion": 0}], "pan": {"Global": 1}, "attrs": {"direct": 6, "region": 2, "total": 8, "weak": {"United States": 1}}, "sevColor": {"Critical": "#ff4d5a", "Severe": "#ffa62b", "Elevated": "#0096c7", "Guarded": "#5aa9e6"}};
+  var panel  = document.getElementById('incident-map-stories');
+  if(!panel) return;
+
+  // -------- Click-through: show a country's stories in the inline panel -------
+  var GLOBE_BASE = '../globe.html';  // deployed daily/ & monthly/ both sit one
+                                     // level below the root where globe.html lives
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function sevClass(s){return esc(s||'Guarded');}
+  function showCountry(name){
+    var c=null;
+    payload.countries.forEach(function(x){ if(x.name===name) c=x; });
+    if(!c||!c.stories.length) return;
+    var globeParams='?country='+encodeURIComponent(c.name);
+    if(payload.mode==='daily'){ globeParams+='&date='+encodeURIComponent(payload.date);
+    }else{ globeParams+='&month='+encodeURIComponent(payload.date); }
+    var rows=c.stories.map(function(s,ix){
+      var link=s.url
+        ? '<a href="'+esc(s.url)+'" target="_blank" rel="noopener">'+esc(s.headline)+'</a>'
+        : esc(s.headline);
+      var tag=s.sev
+        ? '<span class="im-tag" style="color:'+esc(payload.sevColor[s.sev])+'">'+esc(s.sev)+'</span>'
+        : '';
+      return '<li>'+link+tag+'<div style="font-size:10px;color:var(--text-dim);margin-top:1px">'+
+             esc(s.sector||'')+(s.date?' · '+esc(s.date):'')+'</div></li>';
+    }).join('');
+    panel.innerHTML =
+      '<div class="im-shot">'+
+        '<h4>'+esc(c.name)+' — '+c.value+' incident'+(c.value>1?'s':'')+'</h4>'+
+        '<a class="im-globe-btn" href="'+GLOBE_BASE+globeParams+'">🌍 Open in 3D globe</a>'+
+      '</div>'+
+      (c.sev?'<div style="font-size:11px;color:var(--text-muted);margin-bottom:6px">'+
+        'Worst severity: <b style="color:'+esc(payload.sevColor[c.sev])+'">'+esc(c.sev)+
+        '</b>'+(c.topThreat?' · top actor: '+esc(c.topThreat):'')+'</div>':'')+
+      '<ul>'+rows+'</ul>';
+    panel.classList.add('open');
+    panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+
+  // Static-fallback bars are clickable too.
+  var fallback=document.getElementById('incident-map-fallback');
+  if(fallback){ fallback.addEventListener('click',function(e){
+    var row=e.target.closest('.im-row');
+    if(row) showCountry(row.getAttribute('data-name'));
+  }); }
+
+  // -------- ECharts interactive map ----------
+  function renderMap(){
+    if(!window.echarts) return;
+    var host=document.getElementById('incident-map-chart');
+    if(!host) return;
+    fetch("https://cdn.jsdelivr.net/npm/echarts@4.9.0/map/json/world.json")
+      .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+      .then(function(world){
+        window.echarts.registerMap('world', world);
+        var chart=window.echarts.init(host);
+        // ---- theme helpers: live base land fill + which theme is active ----
+        function baseCol(){
+          var el=document.createElement('div');
+          el.style.cssText='position:absolute;visibility:hidden;width:0;height:0';
+          document.body.appendChild(el);
+          var col=getComputedStyle(document.body).getPropertyValue('--surface2').trim()||'#1a2332';
+          el.remove();
+          return col;
+        }
+        function lightMode(){
+          var t=document.documentElement.getAttribute('data-theme');
+          if(t==='light'||t==='dark') return t==='light';
+          var m=baseCol().match(/^#([0-9a-f]{6})$/i);
+          if(m){
+            var v=parseInt(m[1],16);
+            return (0.2126*((v>>16)&255)+0.7152*((v>>8)&255)+0.0722*(v&255))>150;
+          }
+          return false;
+        }
+        // Full option with theme-appropriate colours. In light mode the
+        // severity fills are softened to pastel tints (lower alpha) and
+        // country borders are fainter, so the map never reads dark/harsh
+        // against the white page.
+        function buildOption(){
+          var light=lightMode();
+          var aScale=light?0.55:1;
+          var border=light?'rgba(0,0,0,.10)':'rgba(0,0,0,.25)';
+          // Merge per-country overrides (severity colour + alpha intensity).
+          var data=payload.countries.map(function(c){
+            var rgb = c.color.replace('#','');
+            var r=parseInt(rgb.substring(0,2),16), g=parseInt(rgb.substring(2,4),16);
+            var b=parseInt(rgb.substring(4,6),16);
+            return {
+              name:c.name, value:c.value,
+              itemStyle:{areaColor:'rgba('+r+','+g+','+b+','+(c.alpha*aScale).toFixed(2)+')'}
+            };
+          });
+          return {
+            tooltip:{
+              trigger:'item',
+              backgroundColor:'var(--surface2,#111827)',
+              borderColor:'var(--border,rgba(255,255,255,.1))',
+              textStyle:{color:'var(--text,#e2e8f0)',fontSize:12},
+              extraCssText:'max-width:70vw;',
+              appendToBody:true,
+              position:function(pt,params,dom,rect,size){
+                var cw=size.contentSize[0]||0, ch=size.contentSize[1]||0;
+                var x=pt[0]+12, y=pt[1]+12;
+                if(x+cw>window.innerWidth){ x=Math.max(4,window.innerWidth-cw-8); }
+                if(y+ch>window.innerHeight){ y=Math.max(4,window.innerHeight-ch-8); }
+                if(x<4){ x=4; } if(y<4){ y=4; }
+                return [x,y];
+              },
+              formatter:function(p){
+                var c=null; payload.countries.forEach(function(x){ if(x.name===p.name) c=x; });
+                if(!c) return p.name;
+                var h='<b>'+esc(p.name)+'</b> — '+c.value+' incident'+(c.value>1?'s':'');
+                if(c.sev) h+='<br/><span style="color:'+esc(payload.sevColor[c.sev])+
+                         ';font-weight:700">● '+esc(c.sev)+'</span> worst';
+                if(c.secs.length) h+='<br/><div style="color:var(--text-muted);margin-top:4px">'+
+                   c.secs.map(function(s){return esc(s[0])+' <b>('+s[1]+')</b>'}).join(' · ')+'</div>';
+                if(c.topThreat && c.topThreat!==c.sev)
+                  h+='<br/><div style="color:var(--text-muted)">Top actor: <b>'+esc(c.topThreat)+'</b></div>';
+                if(c.top && c.top.url)
+                  h+='<br/><a href="'+esc(c.top.url)+'" target="_blank" rel="noopener" '+
+                     'style="color:var(--accent);font-weight:600">'+esc(c.top.headline)+' ↗</a>';
+                h+='<div style="color:var(--text-dim);font-size:10px;margin-top:6px">Click for all stories</div>';
+                return h;
+              }
+            },
+            series:[{
+              name:'Incidents', type:'map', map:'world', roam:true,
+              scaleLimit:{min:1,max:12},
+              label:{show:false},
+              emphasis:{label:{show:true,color:'var(--text,#e2e8f0)'},
+                itemStyle:{areaColor:'var(--accent,#00b4d8)',borderColor:'#fff'}},
+              itemStyle:{borderColor:border,borderWidth:.5,areaColor:baseCol()},
+              data:data
+            }]
+          };
+        }
+        chart.setOption(buildOption());
+        chart.on('click',function(params){
+          if(params && params.componentType==='series') showCountry(params.name);
+        });
+        window.addEventListener('resize',function(){ chart.resize(); });
+        // Live re-theme: the page defaults to dark and only restores a saved
+        // light preference in a script at the bottom of <body>, and the user
+        // can flip the 🌙/☀️ toggle at any time — watch data-theme so the map
+        // repaints instead of keeping the theme that was active at load.
+        if(window.MutationObserver){
+          new MutationObserver(function(){
+            chart.setOption(buildOption());
+          }).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+        }
+        if(fallback) fallback.style.display='none';
+        var done=document.getElementById('incident-map-status');
+        if(done) done.textContent='✓ interactive map ready — click a country';
+      }).catch(function(){});
+  }
+  var done=document.getElementById('incident-map-status');
+  if(window.echarts){ renderMap(); }
+  else{
+    var s=document.createElement('script');
+    s.src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js";
+    s.onload=renderMap;
+    document.head.appendChild(s);
+  }
+})();
+</script>
+</div></section>
+<section id="sector-healthcare" class="section"><h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5s-7.5-4.7-7.5-10A4.3 4.3 0 0 1 12 7a4.3 4.3 0 0 1 7.5 3.5c0 5.3-7.5 10-7.5 10z"/><path d="M8 12h2l1.5-3 2 5L15 12h2"/></svg></span> Healthcare <span class="count">1 story</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>ShinyHunters Demands $55.2M From McKesson After 1 TB Data-Theft Claim</h3><p class="summary">ShinyHunters told BleepingComputer it demanded $55,236,150 from McKesson after exfiltrating roughly 1 TB of data between 21 and 25 August, giving the company 72 hours to respond — a demand McKesson did not answer or negotiate. The group said vishing against multiple employees now-compromised Okta single sign-on accounts, which it used to reach McKesson&#x27;s Salesforce and Snowflake environments, and claimed the Snowflake haul holds ~284 million patient-related raw data records (a line count, not a unique-individual figure) spanning names, addresses, dates of birth, Social Security numbers, patient IDs, phone numbers, email addresses, Medicaid and medical record numbers, medication/allergy information, illnesses, disabilities, appointment and physician information, plus data on deceased and terminally ill patients. ReliaQuest independently tied the campaign to ShinyHunters&#x27; pattern of registering `.claims` domains (here `mckesson[.]claims`) to impersonate IT help desks. McKesson, which disclosed the incident on 28 August and detected it on 25 August, has not confirmed what was stolen, said the investigation is ongoing and that it has not determined materiality. **Verification:** Reported **Breach:** Probable breach</p><div class="meta"><a class="source" href="https://www.hipaajournal.com/mckesson-data-breach/" target="_blank" rel="noopener">HIPAA Journal</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-08-31</span></div></div>
+</div>
+</section>
+<section id="sector-defence" class="section"><h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 7.9-8 9-4.6-1.1-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span> Defence <span class="count">1 story</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Fire Ant Pivots to Cisco Routers, Deploys &#x27;BridgeAgent&#x27; Backdoor for Traffic Collection</h3><p class="summary">Incident-response firm Sygnia documented the China-linked Fire Ant cluster shifting from VMware hypervisors to compromising Cisco IOS XR routers, TACACS authentication servers and Linux management hosts, after finding an active GRE tunnel interface on a router that no running configuration or commit history could explain. The attackers installed custom malware persisting through a fake system service that runs only during alternating hours, selectively suppressed syslog messages, established outbound Telnet connections to Fire Ant infrastructure and provided logging-free interactive shell access; they also captured traffic from multiple routers and uploaded PCAP files to external FTP servers. Sygnia dubbed the tactic &quot;target behind the target&quot; — using a compromised router as a covert vantage point on trusted network paths to probe connected critical-infrastructure environments over SSH, SMB/RPC and RDP. A newly documented backdoor, BridgeAgent, disguises itself as a legitimate Zabbix monitoring agent, persists as a root systemd service and supports TLS reverse shells. Sygnia says the activity strongly overlaps Google&#x27;s UNC3886 with differences in filenames and paths, and warns the group tampers with system logs and file timestamps, so recovered evidence must be validated against independent sources. **Verification:** Verified</p><div class="meta"><a class="source" href="https://www.sygnia.co/blog/fire-ant-evolves-from-hypervisors-to-trusted-infrastructure/" target="_blank" rel="noopener">Sygnia</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-08-31</span></div></div>
+</div>
+</section>
+<section id="sector-government" class="section"><h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21h16M5 18h14M6 10v8M10 10v8M14 10v8M18 10v8M3 10h18L12 4z"/></svg></span> Government <span class="count">1 story</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Berlin Confirms Data Theft After Rhysida Attack; Election Systems Ruled Safe</h3><p class="summary">Berlin&#x27;s city administration confirmed that cybercriminals are attempting to extort it after the Rhysida ransomware gang — claimed the attack on 28 August — listed the city on its leak site, and Governing Mayor Kai Wegner said Berlin will not pay. Rhysida claims 5.79 TB and approximately 1.44 million files exfiltrated, including plaintext credentials, password vaults, database accounts, personnel files, NDA documents and a critical-infrastructure security assessment of Berlin&#x27;s water supply, and is using GDPR violation exposure as leverage with a four-day publication deadline. Forensic work found data was also taken from the Senate Department for Mobility, Transport, Climate Protection and the Environment between 7 and 12 August; the affected departments were disconnected from the state network on 14 August. Senator Iris Spranger said investigators found no evidence election data was compromised and the environment supporting Berlin&#x27;s upcoming House of Representatives election is considered secure. **Verification:** Verified **Breach:** Confirmed breach</p><div class="meta"><a class="source" href="https://www.bleepingcomputer.com/news/security/berlin-confirms-data-theft-after-rhysida-ransomware-attack-claims/" target="_blank" rel="noopener">BleepingComputer</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-08-31</span></div></div>
+</div>
+</section>
+<section id="sector-global-macro" class="section"><h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.7 2.6 4 5.6 4 9s-1.3 6.4-4 9c-2.7-2.6-4-5.6-4-9s1.3-6.4 4-9z"/></svg></span> Global (Macro) <span class="count">4 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Aurora Ransomware Operators Use Cursor AI to Plan and Execute Attacks</h3><p class="summary">Security firms CloudSEK and Gambit Security independently documented Aurora (Aur0ra) ransomware operators using SpaceX-affiliated AI coding assistant Cursor to plan and carry out attacks, after an exposed open directory leaked the group&#x27;s toolkit, shell history and encryptor. CloudSEK said the exposed directory revealed &quot;months of activity&quot; against more than 20 organisations across nine countries between April and July 2026, with the operator using Cursor &quot;to plan attacks in Russian&quot; while excluding CIS ranges and domains. Gambit Security observed the operator running Cursor Agent (on Claude Sonnet) for hands-on exploitation against 10 targets between 8 April and 21 May, giving the agent credentials or an existing route into victims and tasking it with VPN/proxychains setup, Nmap and NetExec subnet scans, BloodHound domain enumeration, NTLM-relay via PetitPotam/Coerce/PrinterBug, and Certipy certificate attacks — with attackers sometimes accepting the agent&#x27;s suggested next steps by replying with a number. The Windows and Linux/ESXi encryptors are static builds from a single Zig codebase; the Linux variant kills every VM on the host before encryption. Ransomware.Live lists 33 Aurora victims, mostly in the US, Germany, the Netherlands, Canada and the UK. **Verification:** Verified</p><div class="meta"><a class="source" href="https://thehackernews.com/2026/08/aurora-ransomware-operators-use-cursor.html" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-08-31</span></div></div>
+<div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>North Korean Job Fraud Expands Beyond IT Into Healthcare and Sales</h3><p class="summary">Huntress and Recorded Future&#x27;s Insikt Group documented North Korea&#x27;s fraudulent-remote-worker scheme broadening beyond the IT sector into sales, marketing and medicine. Huntress flagged three workers at an Australian healthcare company (February 2026) as suspected DPRK workers impersonating Chinese nationals — caught via Astrill VPN and IPRoyal proxy use, fraudulent identity documents and biographical word anomalies — and a second case at a financial-services firm where a device was joined to PiKVM and a Guermok USB capture card for covert webcam input. Recorded Future&#x27;s PurpleDelta cluster applied to jobs at more than 1,100 companies between late 2024 and early 2025, maintaining 22 fabricated personas — some AI-generated using the illicit TrustID Card identity service — and applying to 60 positions a day across 10 platforms while using screen-recording software, AI transcription and chatbot tools to answer interviews in real time. **Verification:** Verified</p><div class="meta"><a class="source" href="https://thehackernews.com/2026/08/north-korean-job-fraud-expands-beyond.html" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-08-31</span></div></div>
+<div class="story-card num-3"><div class="card-accent"></div><div class="story-number">3</div><h3>Silver Fox Distributes ValleyRAT Inside Signed Chinese Adware</h3><p class="summary">Kaspersky documented Silver Fox distributing the ValleyRAT backdoor disguised as QN Wallpaper, a genuine signed Chinese desktop-wallpaper adware tool, using DLL sideloading — the installer runs the signed `QnWallpaper.exe`, which loads a malicious `libcef.dll` so the backdoor executes inside a legitimately signed process. Before the adware runs, the installer disables Windows Defender via the `DisableAntiSpyware` registry key and registers the program in autorun; the malware can flag its own process as critical so terminating it triggers a blue screen. ValleyRAT (tracked as Winos 4.0) collects keystrokes, clipboard contents and screenshots and delivers further modules. Across 2026 Kaspersky recorded more than 100,000 ValleyRAT detections affecting over 1,500 unique users, mostly in China and India. **Verification:** Verified</p><div class="meta"><a class="source" href="https://securelist.com/valleyrat-in-signed-adware/116770/" target="_blank" rel="noopener">Kaspersky</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-08-31</span></div></div>
+<div class="story-card num-4"><div class="card-accent"></div><div class="story-number">4</div><h3>Unit 42 Details &#x27;Spring Ring&#x27; Teams Vishing Campaign With NTLM-Relay Escalation</h3><p class="summary">Palo Alto Networks Unit 42 detailed Spring Ring, a social-engineering operation between January and April 2026 that used external Microsoft Teams accounts to impersonate IT help-desk staff, targeting more than 150 employees across at least 10 companies. Attackers used Teams&#x27; default &quot;Chat with Anyone&quot; to coerce victims into running remote-monitoring-and-management tools or custom malware, and in a more advanced variant pivoted from vishing to an NTLM-relay attack against the target&#x27;s domain controller. Unit 42 said collaboration-tool phishing represented 42% of all Cortex phishing alerts in the first four months of 2026 (up from 30%), and KnowBe4 data shows Teams-based attacks rose 41% between October 2025 and March 2026. **Verification:** Verified</p><div class="meta"><a class="source" href="https://unit42.paloaltonetworks.com/spring-ring-voice-phishing-campaigns/" target="_blank" rel="noopener">Unit 42</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-08-31</span></div></div>
+</div>
+</section>
+<section id="sector-legal-services" class="section"><h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.7 2.6 4 5.6 4 9s-1.3 6.4-4 9c-2.7-2.6-4-5.6-4-9s1.3-6.4 4-9z"/></svg></span> Legal Services <span class="count">1 story</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Australia Releases Privacy Amendment Bill With 72-Hour Breach-Reporting Deadline</h3><p class="summary">The Attorney-General&#x27;s Department released the *Privacy Amendment (Personal Data Protection) Bill 2026* for consultation, proposing to replace the notifiable-data-breach scheme&#x27;s &quot;as soon as practicable&quot; standard with a fixed 72-hour deadline for notifying the Information Commissioner, running from when an entity has reasonable grounds to believe an eligible breach occurred — while leaving the existing 30-day assessment window unchanged. Entities unable to file a complete statement could file an incomplete one with written notice of what is missing; failing to file anything within 72 hours could attract an infringement or compliance notice. The bill also introduces a narrow erasure right binding only &quot;large digital platforms&quot; (Online Safety Act services clearing a $500m gross-revenue test or 2.5 million average monthly Australian users), with broad exceptions for law enforcement, legal retention, technical impossibility and ongoing service delivery. The consultation paper flags concerns about discreet recording by smart glasses but stops short of banning them, leaving personal use outside the Act&#x27;s scope. **Verification:** Verified</p><div class="meta"><a class="source" href="https://www.itnews.com.au/news/privacy-act-overhaul-to-tighten-72-hour-breach-reporting-deadline-628568" target="_blank" rel="noopener">iTnews</a><span class="reliability"><span class="tier-2">●</span> Tier 3/4 — Moderate</span><span class="date">2026-09-01</span></div></div>
+</div>
+</section>
+
+<!-- Analytics Section -->
+<section id="analytics" class="section">
+<h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-8M21 20H3"/></svg></span> Analytics</h2>
+<div class="analytics-grid"><div class="bar-chart"><h3>Sector distribution</h3><div class="bar-row bar-red"><span class="bar-label">Healthcare</span><div class="bar-track"><div class="bar-fill" style="width:12%"></div></div><span class="bar-val">1</span></div>
+<div class="bar-row bar-blue"><span class="bar-label">Defence</span><div class="bar-track"><div class="bar-fill" style="width:12%"></div></div><span class="bar-val">1</span></div>
+<div class="bar-row bar-blue"><span class="bar-label">Government</span><div class="bar-track"><div class="bar-fill" style="width:12%"></div></div><span class="bar-val">1</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">Global (Macro)</span><div class="bar-track"><div class="bar-fill" style="width:50%"></div></div><span class="bar-val">4</span></div>
+<div class="bar-row bar-purple"><span class="bar-label">Legal Services</span><div class="bar-track"><div class="bar-fill" style="width:12%"></div></div><span class="bar-val">1</span></div></div><div class="bar-chart"><h3>Source breakdown</h3><div class="bar-row bar-cyan"><span class="bar-label">The Hacker News</span><div class="bar-track"><div class="bar-fill" style="width:25%"></div></div><span class="bar-val">2</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">HIPAA Journal</span><div class="bar-track"><div class="bar-fill" style="width:12%"></div></div><span class="bar-val">1</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">Sygnia</span><div class="bar-track"><div class="bar-fill" style="width:12%"></div></div><span class="bar-val">1</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">BleepingComputer</span><div class="bar-track"><div class="bar-fill" style="width:12%"></div></div><span class="bar-val">1</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">Kaspersky</span><div class="bar-track"><div class="bar-fill" style="width:12%"></div></div><span class="bar-val">1</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">Unit 42</span><div class="bar-track"><div class="bar-fill" style="width:12%"></div></div><span class="bar-val">1</span></div>
+<div class="bar-row bar-cyan"><span class="bar-label">iTnews</span><div class="bar-track"><div class="bar-fill" style="width:12%"></div></div><span class="bar-val">1</span></div></div></div>
+<div class="pie-container"><div class="pie" style="background:conic-gradient(var(--accent) 0deg 45deg,var(--purple) 45deg 90deg,var(--govt) 90deg 135deg,var(--vuln) 135deg 315deg,var(--crime) 315deg 360deg);"><span class="pie-total">8<small>stories</small></span></div><div class="pie-legend"><div class="legend-item"><span class="dot" style="background:var(--accent)"></span> Healthcare <span class="val">1</span></div><div class="legend-item"><span class="dot" style="background:var(--purple)"></span> Defence <span class="val">1</span></div><div class="legend-item"><span class="dot" style="background:var(--govt)"></span> Government <span class="val">1</span></div><div class="legend-item"><span class="dot" style="background:var(--vuln)"></span> Global (Macro) <span class="val">4</span></div><div class="legend-item"><span class="dot" style="background:var(--crime)"></span> Legal Services <span class="val">1</span></div></div></div>
+<h3 style="font-size:14px;color:var(--text);margin-bottom:10px">Source Reliability Index</h3>
+<table class="data-table">
+<thead><tr><th>Tier</th><th>Label</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><span class="tier-badge tier-1">● Tier 1</span></td><td>Very High</td><td>Official / first-party</td></tr>
+<tr><td><span class="tier-badge tier-2">● Tier 2</span></td><td>High</td><td>Established cyber journalism</td></tr>
+<tr><td><span class="tier-badge tier-3">● Tier 3</span></td><td>Moderate</td><td>General tech/news media</td></tr>
+<tr><td><span class="tier-badge tier-4">● Tier 4</span></td><td>Low</td><td>Social / unverified</td></tr>
+</tbody>
+</table>
+</section>
+
+<footer class="footer">
+<div class="links">
+  <a href="https://cyber.peterjaycox.com/index.html">Home</a>
+  <a href="https://cyber.peterjaycox.com/stories.html">Story DB</a>
+  <a href="https://cyber.peterjaycox.com/daily/">Daily</a>
+  <a href="https://cyber.peterjaycox.com/monthly/index.html">Monthly</a>
+  <a href="https://cyber.peterjaycox.com/wiki/index.html">Wiki</a>
+</div>
+<div class="source-line">Digest generated 2026-09-01.</div>
+<div class="note">Digest prepared 1 September 2026. 48-hour freshness window (72-hour max for weekend bridging).</div>
+</footer>
+</main>
+</div>
+
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+
+<script>
+var _t=document.documentElement;
+var _b=document.querySelector(".theme-toggle");
+function toggleTheme(){var n=_t.getAttribute("data-theme")==="dark"?"light":"dark";_t.setAttribute("data-theme",n);if(_b)_b.textContent=n==="dark"?"🌙":"☀️";try{if(n==="dark")localStorage.removeItem("cd-theme");else localStorage.setItem("cd-theme",n)}catch(e){}}
+(function(){try{var s=localStorage.getItem("cd-theme");if(s){_t.setAttribute("data-theme",s);if(_b)_b.textContent="☀️"}}catch(e){}})();
+
+window.addEventListener('scroll',function(){
+var h=document.documentElement;
+var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+document.getElementById('progress').style.width=Math.min(p,100)+'%';
+var bt=document.getElementById('back-top');
+bt.classList.toggle('visible',(h.scrollTop||document.body.scrollTop)>300);
+var sections=document.querySelectorAll('section[id],.exec-summary');
+var links=document.querySelectorAll('#toc a');
+var cur='';
+sections.forEach(function(s){
+var t=s.getBoundingClientRect().top;
+if(t<250) cur=s.id;
+});
+links.forEach(function(l){
+l.classList.toggle('active',l.dataset.section===cur);
+});
+});
+function setView(m){
+document.body.classList.toggle('exec-view',m==='exec');
+document.getElementById('btn-full').classList.toggle('active',m==='full');
+document.getElementById('btn-exec').classList.toggle('active',m==='exec');
+document.querySelectorAll('.story-card').forEach(function(c){
+var interactive=m==='exec';
+c.setAttribute('role',interactive?'button':null);
+c.setAttribute('tabindex',interactive?'0':null);
+c.setAttribute('aria-expanded',interactive?(c.classList.contains('expanded')?'true':'false'):null);
+});
+}
+document.addEventListener('keydown',function(e){
+if(e.key==='Escape') setView('full');
+});
+function toggleCard(c){ if(!document.body.classList.contains('exec-view'))return; c.classList.toggle('expanded'); c.setAttribute('aria-expanded',c.classList.contains('expanded')?'true':'false'); }
+document.querySelectorAll('.story-card').forEach(function(c){
+c.addEventListener('click',function(e){
+if(e.target.closest('a')) return;
+toggleCard(this);
+});
+c.addEventListener('keydown',function(e){
+if(e.target.closest('a')) return;
+if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggleCard(this); }
+});
+});
+document.querySelectorAll('#toc a').forEach(function(l){
+l.setAttribute('role','navigation');
+});
+var _tocObs=new MutationObserver(function(){
+document.querySelectorAll('#toc a.active').forEach(function(a){a.setAttribute('aria-current','location');});
+document.querySelectorAll('#toc a:not(.active)').forEach(function(a){a.removeAttribute('aria-current');});
+});
+_tocObs.observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['class']});
+</script>
+</body>
+</html>
