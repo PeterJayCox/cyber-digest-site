@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>Cyber Digest — Monthly Editions</title>
+  <link>https://cyber.peterjaycox.com/monthly/index.html</link>
+<description>Aggregated, source-rated monthly analysis of global cybersecurity developments with sector, threat and AU/NZ breakdowns.</description>
+  <language>en-au</language>
+  <atom:link href="https://cyber.peterjaycox.com/feed-monthly.xml" rel="self" type="application/rss+xml"/>
+  <lastBuildDate>Wed, 02 Sep 2026 12:15:02 GMT</lastBuildDate>
+<item>
+  <title>Cyber Digest — August 2026</title>
+  <link>https://cyber.peterjaycox.com/monthly/2026-08.html</link>
+  <guid isPermaLink="true">https://cyber.peterjaycox.com/monthly/2026-08.html</guid>
+  <pubDate>Mon, 31 Aug 2026 00:00:00 GMT</pubDate>
+  <description>&lt;p&gt;August 2026 has been defined by a single dominating narrative: frontier AI models and autonomous agents crossing from...&lt;/p&gt;&lt;p&gt;55 stories.&lt;/p&gt;</description>
+</item>
+<item>
+  <title>Cyber Digest — July 2026</title>
+  <link>https://cyber.peterjaycox.com/monthly/2026-07.html</link>
+  <guid isPermaLink="true">https://cyber.peterjaycox.com/monthly/2026-07.html</guid>
+  <pubDate>Fri, 31 Jul 2026 00:00:00 GMT</pubDate>
+  <description>&lt;p&gt;July 2026 was defined by coordinated international action against Russian state-sponsored cyber operations, a...&lt;/p&gt;&lt;p&gt;32 stories.&lt;/p&gt;</description>
+</item>
+</channel>
+</rss>

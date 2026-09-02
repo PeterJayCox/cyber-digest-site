@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Responsible Disclosure — Security</title>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+<link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png">
+<link rel="alternate" type="application/rss+xml" title="Cyber Digest" href="https://cyber.peterjaycox.com/feed.xml">
+<link rel="alternate" type="application/rss+xml" title="Cyber Digest — Monthly Editions" href="https://cyber.peterjaycox.com/feed-monthly.xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Responsible Disclosure — Security">
+<meta property="og:description" content="Curated sector-by-sector roundup of global cybersecurity developments with source-reliability indexing, AU/NZ context, and searchable knowledge base.">
+<meta property="og:url" content="https://cyber.peterjaycox.com/">
+<meta property="og:image" content="https://cyber.peterjaycox.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"Cyber Digest","alternateName":"Cyber Digest — public site","url":"https://cyber.peterjaycox.com/","description":"Curated, source-rated roundup of global cybersecurity developments with AU/NZ context.","inLanguage":"en-AU","publisher":{"@type":"Organization","name":"Cyber Digest","url":"https://cyber.peterjaycox.com/"},"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://cyber.peterjaycox.com/stories.html?q={search_term_string}"},"query-input":"required name=search_term_string"}}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=202609022215"></head><body>
+<nav class="topnav"><div class="inner">
+        <a class="brand" href="https://cyber.peterjaycox.com/index.html"><span class="brand-logo" aria-hidden="true"></span> Cyber&nbsp;Digest<small>public site</small></a>
+        <div class="navlinks"><a href="https://cyber.peterjaycox.com/index.html" class="active"><span class="t">🏠 Home</span></a><a href="https://cyber.peterjaycox.com/stories.html" class=""><span class="t">📚 Story DB</span></a><a href="https://cyber.peterjaycox.com/globe.html" class=""><span class="t">🌍 Globe</span></a><a href="https://cyber.peterjaycox.com/daily/" class=""><span class="t">🗓️ Daily</span></a><a href="https://cyber.peterjaycox.com/monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="https://cyber.peterjaycox.com/reports/index.html" class=""><span class="t">📑 Reports</span></a><a href="https://cyber.peterjaycox.com/wiki/index.html" class=""><span class="t">🧠 Wiki</span></a><a href="https://cyber.peterjaycox.com/flashcards.html" class=""><span class="t">🗂️ Flashcards</span></a></div>
+        <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light">🌙</div></div></nav><main class="container"><div class="hero hero-band"><div class="kicker">// responsible disclosure</div><h1>Responsible <span class="accent">Disclosure</span></h1><p class="sub">How to report a security issue in this site.</p></div><div class="wiki-body"><p>If you have found a security issue on this site, thank you — please send a
+confidential, plain-text description to <code>mailto:flagon_plazas0x@icloud.com</code>. Reports are
+handled personally; there is <b>no bug-bounty programme</b>, no financial reward, and
+no public acknowledgement unless you ask for one.</p>
+
+<h2>What is in scope</h2>
+<p>This is a static publishing site (daily/monthly cyber-intelligence digests, a story
+database, a wiki and a 3D incident globe) built from public sources. Realistic in-scope
+findings include:</p>
+<ul>
+  <li>Stored or reflected cross-site scripting, broken access control, or injection in
+      the client-side app pages (story database, globe, flashcards, CVE matrix).</li>
+  <li>Malicious or self-XSS vectors that could affect a reader.</li>
+  <li>Supply-chain / dependency integrity gaps in the site's bundled scripts.</li>
+  <li>Misconfigurations allowing content tampering or credential exposure in the hosting
+      or publishing accounts that feed this site.</li>
+</ul>
+
+<h2>Out of scope (by design)</h2>
+<ul>
+  <li>Provider-managed infrastructure: the site is hosted on GitHub Pages (to be fronted
+      by Cloudflare). TLS config, edge security headers and platform access control are
+      the provider's responsibility, not a vulnerability of this project.</li>
+  <li>Phishing, spam, or abuse of the domain <em>about</em> the site (report those to the
+      registrar / mailbox provider).</li>
+  <li>Any issue involving attack of this site's readers or of third-party systems.</li>
+  <li>Self-XSS (pasting into your own browser), or issues requiring the victim to disable
+      security controls.</li>
+  <li>Rate-limiting or denial-of-service findings against a static CDN.</li>
+</ul>
+
+<h2>What we promise</h2>
+<ul>
+  <li>We will acknowledge receipt within 7 days and aim for a first response with a
+      disposition (accepted / wontfix / needs-verification) within 30 days.</li>
+  <li>We will not pursue legal action against good-faith researchers acting within these
+      scope rules and not causing harm.</li>
+  <li>We ask that you give us a reasonable window to fix and publish before public
+      disclosure, and that you avoid actions that disrupt the site or other users.</li>
+</ul>
+
+<h2>OPSEC note</h2>
+<p>This site names threat actors and incident victims. A few things are fixed policy and
+do not constitute a vulnerability to report: incident summaries link to their public
+sources, only publicly-reported facts are reproduced, and PII is never unnecessarily
+included. Constructive review of the fact-checking pipeline is welcome at the same
+contact.</p>
+</div></main>
+<div class="footer">
+  <div class="links">
+    <a href="https://cyber.peterjaycox.com/index.html">Home</a>
+    <a href="https://cyber.peterjaycox.com/stories.html">Story DB</a>
+    <a href="https://cyber.peterjaycox.com/daily/">Daily</a>
+    <a href="https://cyber.peterjaycox.com/monthly/index.html">Monthly</a>
+    <a href="https://cyber.peterjaycox.com/reports/index.html">Reports</a>
+    <a href="https://cyber.peterjaycox.com/wiki/index.html">Wiki</a>
+    <a href="https://cyber.peterjaycox.com/feed.xml">RSS</a>
+    <a href="https://cyber.peterjaycox.com/privacy.html">Privacy</a>
+    <a href="https://cyber.peterjaycox.com/corrections.html">Corrections</a>
+    <a href="https://cyber.peterjaycox.com/licensing.html">Licensing</a>
+    <a href="https://cyber.peterjaycox.com/security.html">Security</a>
+  </div>
+  Cyber Digest public site · built 2026-09-02 22:15
+</div>
+<script>
+var _t=document.documentElement;
+var _b=document.querySelector(".theme-toggle");
+function toggleTheme(){var n=_t.getAttribute("data-theme")==="dark"?"light":"dark";_t.setAttribute("data-theme",n);if(_b)_b.textContent=n==="dark"?"🌙":"☀️";try{if(n==="dark")localStorage.removeItem("cd-theme");else localStorage.setItem("cd-theme",n)}catch(e){}}
+(function(){try{var s=localStorage.getItem("cd-theme");if(s){_t.setAttribute("data-theme",s);if(_b)_b.textContent="☀️"}}catch(e){}})()
+</script>
+</body></html>

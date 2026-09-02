@@ -1,0 +1,5 @@
+Canonical: https://cyber.peterjaycox.com/.well-known/security.txt
+Contact: mailto:flagon_plazas0x@icloud.com
+Preferred-Languages: en, en-AU
+Policy: https://cyber.peterjaycox.com/security.html
+Expires: 2027-09-02T00:00:00Z

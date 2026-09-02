@@ -5,7 +5,7 @@ Cyber workspace (daily/monthly digests, story SQLite DB, wiki pages).
 Output: <repo>/docs/  (GitHub Pages publishes from the /docs folder of main)
 """
 import argparse, base64, calendar, email.utils, html, json, math, os, re, shutil, sqlite3, sys, time
-from datetime import datetime, date, timedelta
+from datetime import datetime, date, timedelta, timezone
 
 VAULT = "/Users/petercox/Library/Mobile Documents/iCloud~md~obsidian/Documents/Peter's Vault/Cyber"
 ROOT  = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # <repo>/
@@ -264,6 +264,12 @@ def nav_html(active="", root=""):
         <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light">\U0001f319</div></div></nav>'''
 
 SHARE_CSS = "assets/site.css"
+# JSON-LD structured data injected into every page's <head> ({JSONLD} token).
+# Kept as a plain string so its braces are never parsed by head()'s f-string.
+JSONLD = """<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"Cyber Digest","alternateName":"Cyber Digest — public site","url":"https://cyber.peterjaycox.com/","description":"Curated, source-rated roundup of global cybersecurity developments with AU/NZ context.","inLanguage":"en-AU","publisher":{"@type":"Organization","name":"Cyber Digest","url":"https://cyber.peterjaycox.com/"},"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://cyber.peterjaycox.com/stories.html?q={search_term_string}"},"query-input":"required name=search_term_string"}}
+</script>"""
+
 def head(title, active="", root=""):
     return f'''<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -272,6 +278,7 @@ def head(title, active="", root=""):
 <link rel="icon" type="image/x-icon" href="{root}assets/img/favicon.ico">
 <link rel="apple-touch-icon" sizes="180x180" href="{root}assets/img/apple-touch-icon.png">
 <link rel="alternate" type="application/rss+xml" title="Cyber Digest" href="https://cyber.peterjaycox.com/feed.xml">
+<link rel="alternate" type="application/rss+xml" title="Cyber Digest — Monthly Editions" href="https://cyber.peterjaycox.com/feed-monthly.xml">
 <meta property="og:type" content="website">
 <meta property="og:title" content="{esc(title)}">
 <meta property="og:description" content="Curated sector-by-sector roundup of global cybersecurity developments with source-reliability indexing, AU/NZ context, and searchable knowledge base.">
@@ -280,6 +287,7 @@ def head(title, active="", root=""):
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+{JSONLD}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{root}{SHARE_CSS}?v={datetime.now().strftime('%Y%m%d%H%M')}"></head><body>
@@ -298,6 +306,10 @@ def foot():
     <a href="https://cyber.peterjaycox.com/reports/index.html">Reports</a>
     <a href="https://cyber.peterjaycox.com/wiki/index.html">Wiki</a>
     <a href="https://cyber.peterjaycox.com/feed.xml">RSS</a>
+    <a href="https://cyber.peterjaycox.com/privacy.html">Privacy</a>
+    <a href="https://cyber.peterjaycox.com/corrections.html">Corrections</a>
+    <a href="https://cyber.peterjaycox.com/licensing.html">Licensing</a>
+    <a href="https://cyber.peterjaycox.com/security.html">Security</a>
   </div>
   Cyber Digest public site · built {datetime.now().strftime("%Y-%m-%d %H:%M")}
 </div>
@@ -629,6 +641,71 @@ def build_feed(stories, days):
     open(os.path.join(DOCS, "feed.xml"), "w", encoding="utf-8").write(feed)
     return "feed.xml"
 
+def build_feed_monthly(months):
+    """RSS 2.0 feed of monthly editions -> docs/feed-monthly.xml.
+
+    One <item> per month edition, latest first. Title carries the month, link
+    points at the edition, description = the exec-summary blurb + story count
+    from parse_monthly_md (fallback: generic text if parse fails). pubDate uses
+    the month's last calendar day UTC via the same _rfc822 helper.
+    """
+    items = []
+    today = email.utils.formatdate(time.time(), usegmt=True)
+    for m in sorted(months, reverse=True):
+        d = {}
+        try:
+            d = parse_monthly_md(m)
+        except Exception:
+            d = {}
+        title_m = m.replace("-", " ").title()  # "2026-08" -> "2026 08"? -> readable below
+        y, mm = "", ""
+        try:
+            y, mm = m.split("-")
+            from calendar import monthrange
+            _, last = monthrange(int(y), int(mm))
+            pub = f"{y}-{mm}-{last:02d}"
+        except Exception:
+            pub = f"{m}-01"
+        # friendly title e.g. "August 2026"
+        _MONTHS = ["January","February","March","April","May","June","July",
+                   "August","September","October","November","December"]
+        try:
+            friendly = f"{_MONTHS[int(mm)-1]} {y}"
+        except Exception:
+            friendly = title_m
+        cnt = d.get("story_count") or ""
+        blurb = (d.get("blurb") or "").strip()
+        if blurb:
+            desc = f"<p>{xml_esc(blurb)}</p>"
+            if cnt:
+                desc += f"<p>{cnt} {'story' if cnt == 1 else 'stories'}.</p>"
+        else:
+            desc = f"<p>Monthly Cyber Digest edition for {friendly}.</p>"
+        guid = f"{SITE_BASE}/monthly/{m}.html"
+        items.append(
+            "<item>\n"
+            f"  <title>{xml_esc(f'Cyber Digest — {friendly}')}</title>\n"
+            f"  <link>{guid}</link>\n"
+            f"  <guid isPermaLink=\"true\">{guid}</guid>\n"
+            f"  <pubDate>{_rfc822(pub)}</pubDate>\n"
+            f"  <description>{xml_esc(desc)}</description>\n"
+            "</item>")
+    feed = (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">\n'
+        "<channel>\n"
+        "  <title>Cyber Digest — Monthly Editions</title>\n"
+        f"  <link>{SITE_BASE}/monthly/index.html</link>\n"
+        "<description>Aggregated, source-rated monthly analysis of global cybersecurity "
+        "developments with sector, threat and AU/NZ breakdowns.</description>\n"
+        "  <language>en-au</language>\n"
+        f"  <atom:link href=\"{SITE_BASE}/feed-monthly.xml\" rel=\"self\" type=\"application/rss+xml\"/>\n"
+        f"  <lastBuildDate>{today}</lastBuildDate>\n"
+        + "\n".join(items) +
+        "\n</channel>\n</rss>\n")
+    open(os.path.join(DOCS, "feed-monthly.xml"), "w", encoding="utf-8").write(feed)
+    return "feed-monthly.xml"
+
 SITEMAP_SECTIONS = ("pages", "daily", "monthly", "reports", "wiki")
 
 def _sitemap_urlset(entries):
@@ -677,6 +754,10 @@ def build_sitemap(days, months, pages, reports):
         ("stories.html", _mtime("stories.html")),
         ("globe.html", _mtime("globe.html")),
         ("methodology.html", _mtime("methodology.html")),
+        ("security.html", _mtime("security.html")),
+        ("privacy.html", _mtime("privacy.html")),
+        ("corrections.html", _mtime("corrections.html")),
+        ("licensing.html", _mtime("licensing.html")),
     ]
 
     # Daily digests: lastmod = publish date; archive index uses build mtime.
@@ -1204,8 +1285,11 @@ def build_daily(days):
     # Build enhanced daily index with month groups — current month expanded,
     # previous months nested in collapsible <details> groups so the page stays short.
     dag=daily_agg()
-    month_order=["August","July","June","May","April","March","February","January"]
-    current_month = days[0][1] if days else None
+    # months present in the data, newest-first (days is already reverse-sorted),
+    # so a new month (e.g. September) can never fall off a hardcoded list
+    seen=set()
+    month_order=[mo for d,mo in days if not (mo in seen or seen.add(mo))]
+    current_month = month_order[0] if month_order else (days[0][1] if days else None)
     cards=""
     for m in month_order:
         mdays=[(d,mo) for d,mo in days if mo==m]
@@ -1900,6 +1984,242 @@ def build_cve_matrix():
     open(os.path.join(wiki_dir, "cve-attack-matrix.html"), "w", encoding="utf-8").write(html)
     print("✅ CVE matrix -> docs/wiki/cve-attack-matrix.html (standalone + site nav)")
 
+# ---------------- security.txt + responsible disclosure ----------------
+SECURITY_CONTACT = "flagon_plazas0x@icloud.com"
+SECURITY_PAGE = f"{SITE_BASE}/security.html"
+
+def build_securitytxt():
+    """RFC 9116 security.txt -> docs/.well-known/security.txt + docs/security.txt.
+
+    Regenerated EVERY build so `Expires:` stays <= 1 year ahead (a static
+    committed copy silently rots; Pages can't 301, so we serve both paths
+    with a canonical pointer at the well-known one). Requires .nojekyll in
+    docs/ (built in main()) or Jekyll drops the dotfile dir and this 404s.
+    """
+    from datetime import timedelta
+    expires = (datetime.now(timezone.utc) + timedelta(days=365)).strftime("%Y-%m-%dT00:00:00Z")
+    body = (
+        f"Canonical: {SITE_BASE}/.well-known/security.txt\n"
+        f"Contact: mailto:{SECURITY_CONTACT}\n"
+        "Preferred-Languages: en, en-AU\n"
+        f"Policy: {SECURITY_PAGE}\n"
+        f"Expires: {expires}\n"
+    )
+    wk = os.path.join(DOCS, ".well-known")
+    os.makedirs(wk, exist_ok=True)
+    open(os.path.join(wk, "security.txt"), "w", encoding="utf-8").write(body)
+    open(os.path.join(DOCS, "security.txt"), "w", encoding="utf-8").write(body)
+    print("✅ security.txt -> docs/.well-known/security.txt + docs/security.txt")
+    return "security.txt"
+
+SECURITY_BODY = """<p>If you have found a security issue on this site, thank you — please send a
+confidential, plain-text description to <code>mailto:{contact}</code>. Reports are
+handled personally; there is <b>no bug-bounty programme</b>, no financial reward, and
+no public acknowledgement unless you ask for one.</p>
+
+<h2>What is in scope</h2>
+<p>This is a static publishing site (daily/monthly cyber-intelligence digests, a story
+database, a wiki and a 3D incident globe) built from public sources. Realistic in-scope
+findings include:</p>
+<ul>
+  <li>Stored or reflected cross-site scripting, broken access control, or injection in
+      the client-side app pages (story database, globe, flashcards, CVE matrix).</li>
+  <li>Malicious or self-XSS vectors that could affect a reader.</li>
+  <li>Supply-chain / dependency integrity gaps in the site's bundled scripts.</li>
+  <li>Misconfigurations allowing content tampering or credential exposure in the hosting
+      or publishing accounts that feed this site.</li>
+</ul>
+
+<h2>Out of scope (by design)</h2>
+<ul>
+  <li>Provider-managed infrastructure: the site is hosted on GitHub Pages (to be fronted
+      by Cloudflare). TLS config, edge security headers and platform access control are
+      the provider's responsibility, not a vulnerability of this project.</li>
+  <li>Phishing, spam, or abuse of the domain <em>about</em> the site (report those to the
+      registrar / mailbox provider).</li>
+  <li>Any issue involving attack of this site's readers or of third-party systems.</li>
+  <li>Self-XSS (pasting into your own browser), or issues requiring the victim to disable
+      security controls.</li>
+  <li>Rate-limiting or denial-of-service findings against a static CDN.</li>
+</ul>
+
+<h2>What we promise</h2>
+<ul>
+  <li>We will acknowledge receipt within 7 days and aim for a first response with a
+      disposition (accepted / wontfix / needs-verification) within 30 days.</li>
+  <li>We will not pursue legal action against good-faith researchers acting within these
+      scope rules and not causing harm.</li>
+  <li>We ask that you give us a reasonable window to fix and publish before public
+      disclosure, and that you avoid actions that disrupt the site or other users.</li>
+</ul>
+
+<h2>OPSEC note</h2>
+<p>This site names threat actors and incident victims. A few things are fixed policy and
+do not constitute a vulnerability to report: incident summaries link to their public
+sources, only publicly-reported facts are reproduced, and PII is never unnecessarily
+included. Constructive review of the fact-checking pipeline is welcome at the same
+contact.</p>
+""".format(contact=SECURITY_CONTACT)
+
+def build_security_page():
+    """docs/security.html — responsible-disclosure policy, shared chrome."""
+    page = head("Responsible Disclosure — Security", "index.html", root="")
+    page += (
+        '<div class="hero hero-band"><div class="kicker">// responsible disclosure</div>'
+        '<h1>Responsible <span class="accent">Disclosure</span></h1>'
+        '<p class="sub">How to report a security issue in this site.</p></div>'
+        '<div class="wiki-body">'
+        + SECURITY_BODY
+        + "</div>"
+        + foot()
+    )
+    open(os.path.join(DOCS, "security.html"), "w", encoding="utf-8").write(page)
+    print("✅ security.html -> docs/security.html")
+    return "security.html"
+
+# ---------------- governance / policy pages (privacy, corrections, licensing) ----------------
+# Each body is a module-level string rendered through the shared chrome. Imports
+# are high-level; specific figures (cookie/source counts) belong on the pages they
+# describe and are sourced from the build where possible.
+
+_PRIVACY_BODY = """<p><b>In short:</b> this site does not use advertising, cross-site tracking or
+analytics cookies, and does not set any persistent personal identifiers on your device
+other than a <code>localStorage</code> flag remembering your light/dark theme
+preference (stored on your own machine, under key <code>cd-theme</code>, and never sent
+to us).</p>
+
+<h2>What we collect</h2>
+<p>This is a static site: there is no login, no comment system, and no server-side
+application of our own. When you view a page, the hosting/edge providers involved may
+see standard connection metadata (your IP address, user-agent, requested URL, timestamp)
+as part of serving you the page. This site is hosted on GitHub Pages and, in the future,
+may be fronted by a CDN such as Cloudflare. Their default access logs and any
+privacy-relevant behaviours are governed by their respective privacy policies.</p>
+
+<h2>Cookies and local storage</h2>
+<ul>
+  <li><b>Theme preference</b> — <code>cd-theme</code> is written to your browser's
+      <code>localStorage</code> only when you switch to light mode. It stays on your
+      device; we never read it server-side. No cookie.</li>
+  <li><b>No analytics, no trackers, no advertising.</b> There is no web-beacon or
+      third-party marketing script on any page. If a privacy-respecting, cookieless
+      analytics option (for example, a single maintainer-hosted counter) is ever added,
+      this policy will be updated to say so plainly before that happens.</li>
+  <li><b>Fonts and CDN assets</b> — pages load the Inter/JetBrains Mono webfonts from
+      Google Fonts and, on the map/globe pages, scripts from jsDelivr. Those third
+      parties may log the request in the normal course of serving it. We intend to
+      vendor the largest assets (echarts, world map) locally to reduce call-outs.</li>
+</ul>
+
+<h2>What this site does <em>not</em> do with your data</h2>
+<ul>
+  <li>No account creation, no email capture, no contact form (reports go to a mailbox,
+      not a form).</li>
+  <li>No fingerprinting, no profiling, no sale or share of any data.</li>
+  <li>The <code>security.txt</code> mailbox is for vulnerability reports only; messages
+      are handled personally and not used for marketing.</li>
+</ul>
+
+<h2>Email contact</h2>
+<p>If you email the security/disclosure address, we receive whatever you send. We treat
+reports confidentially and retain only what is needed to triage and fix the issue.</p>
+
+<h2>Changes</h2>
+<p>If this policy changes in any material way, the change is noted in the
+<a href="methodology.html">methodology changelog</a> and reflected here the same day the
+site is rebuilt.</p>
+"""
+
+_CORRECTIONS_BODY = """<p>This site curates and re-publishes publicly-reported cybersecurity
+developments. Accuracy is the core product: stories are source-linked, rated for
+source reliability, and fact-checked as part of the monthly edition process. When we
+get something wrong, we fix it and <b>disclose the correction in place</b> rather than
+silently editing.</p>
+
+<h2>Types of correction</h2>
+<ul>
+  <li><b>Fix</b> — a straightforward factual error (wrong date, name, figure, sector, or
+      severity) corrected in the affected story or digest, with the change noted.</li>
+  <li><b>Clarification</b> — a point that was technically correct but misleading;
+      expanded or re-worded, with a note.</li>
+  <li><b>Retraction</b> — a story that should not have been published or that was based
+      on a source that has since been withdrawn; the story is marked retracted and the
+      reason stated, rather than silently removed (we treat the digest archive as an
+      immutable record).</li>
+</ul>
+
+<h2>How we decide</h2>
+<p>Every correction request is assessed against the primary source and, where relevant,
+the source's own correction. We weight official/first-party statements over secondary
+reporting. When sources disagree, we state both rather than guess. Corrections are
+logged with the date applied and (for retractions) the reason.</p>
+
+<h2>How to ask for a correction</h2>
+<p>Email the details to the
+<a href="security.html">disclosure contact</a>. Include the page/link, the disputed
+claim, and your source. We respond to well-founded requests; anonymous or baseless
+requests are noted and not acted on.</p>
+
+<h2>Publishing policy</h2>
+<p>The daily digest database and wiki are append-only by design. Individual story cards
+link to their live source so readers can verify; if a source is later corrected or
+taken down, we add a correction note to the affected story card rather than rewriting
+history.</p>
+"""
+
+_LICENSING_BODY = """<h2>Overview</h2>
+<p>Two layers of rights apply to the content on this site:</p>
+<ul>
+  <li><b>Original commentary, analysis, methodology text and site code</b> — created by
+      the site maintainer.</li>
+  <li><b>Curated news items and incident summaries</b> — reproduced or summarised from
+      publicly-reported sources, each attributed and deep-linked to its origin.</li>
+</ul>
+
+<h2>Original content</h2>
+<p>Unless otherwise stated, the site's original writing, methodology, and the build
+scripts are licensed under the
+<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">
+Creative Commons Attribution 4.0 International (CC BY 4.0)</a> licence. You are free to
+share and adapt with attribution. This does not cover the third-party material below.</p>
+
+<h2>Curated third-party material</h2>
+<p>Headlines, summaries and incident details reproduce or condense facts from the listed
+source publications for the purposes of news commentary and education (fair
+dealing/<i>fair use</i>). Copyright in the underlying reporting remains with the original
+publisher. Each item links to its source; please refer to, and respect, the originating
+publisher's own terms. We do not grant any licence to this third-party content beyond
+what the original publisher permits.</p>
+
+<h2>Data and abuse</h2>
+<p>The site does not include PII of private individuals beyond what appears in the
+public reporting we link. If you find content that infringes your rights or personal
+privacy, contact us via the
+<a href="security.html">disclosure contact</a> and we will review it, including per
+applicable takedown provisions, while preserving the site's record-keeping duty.</p>
+"""
+
+def build_static_pages(months, reports):
+    """docs/privacy.html, docs/corrections.html, docs/licensing.html — shared chrome."""
+    specs = [
+        ("Privacy Policy", "privacy.html", "// privacy", "Privacy <span class=\"accent\">Policy</span>",
+         "What this site does and does not collect from you.", _PRIVACY_BODY, "index.html"),
+        ("Corrections & Retractions", "corrections.html", "// corrections", "Corrections <span class=\"accent\">& Retractions</span>",
+         "How factual errors are fixed and disclosed.", _CORRECTIONS_BODY, "index.html"),
+        ("Content Licensing & Terms", "licensing.html", "// licensing", "L &amp; <span class=\"accent\">Licensing</span>",
+         "Rights in the site's own content and in curated news.", _LICENSING_BODY, "index.html"),
+    ]
+    for title, fn, kicker, h1, sub, body, active in specs:
+        page = head(title, active, root="")
+        page += (
+            f'<div class="hero hero-band"><div class="kicker">{kicker}</div>'
+            f'<h1>{h1}</h1><p class="sub">{sub}</p></div>'
+            '<div class="wiki-body">' + body + "</div>" + foot()
+        )
+        open(os.path.join(DOCS, fn), "w", encoding="utf-8").write(page)
+        print(f"✅ {fn} -> docs/{fn}")
+    return ["privacy.html", "corrections.html", "licensing.html"]
+
 def build_404():
     """Custom 404 page — SIGNAL LOST radar art + site nav."""
     p = os.path.join(DOCS, "404.html")
@@ -1926,10 +2246,19 @@ def main():
     os.makedirs(os.path.join(DOCS,"assets"),exist_ok=True)
     if os.path.exists(os.path.join(ROOT,"assets")):
         shutil.copytree(os.path.join(ROOT,"assets"), os.path.join(DOCS,"assets"), dirs_exist_ok=True)
+    # vendored third-party assets (echarts + world.geojson) -> docs/assets/vendor/
+    vendor_src=os.path.join(ROOT,"vendor")
+    if os.path.isdir(vendor_src):
+        shutil.copytree(vendor_src, os.path.join(DOCS,"assets","vendor"), dirs_exist_ok=True)
     # preserve CNAME for custom domain (git-tracked at repo root)
     cname_src=os.path.join(ROOT,"CNAME")
     if os.path.exists(cname_src):
         shutil.copy(cname_src, os.path.join(DOCS,"CNAME"))
+    # .nojekyll: without it Jekyll runs over docs/ and drops dotfile dirs
+    # (.well-known/) -> security.txt 404s. Tracked at repo root alongside CNAME.
+    nj_src=os.path.join(ROOT,".nojekyll")
+    if os.path.exists(nj_src):
+        shutil.copy(nj_src, os.path.join(DOCS,".nojekyll"))
 
     stories=load_db()
     pages,linkmap=scan_wiki()
@@ -1947,7 +2276,11 @@ def main():
     build_flashcards()
     build_cve_matrix()
     build_404()
+    build_securitytxt()
+    build_security_page()
+    build_static_pages(months, reports)
     build_feed(stories, days)
+    build_feed_monthly(months)
     build_sitemap(days, months, pages, reports)
     print(f"✅ Site built -> {DOCS}")
     print(f"   {len(stories)} stories, {len(days)} daily, {len(months)} monthly, {sum(len(v) for v in pages.values())} wiki pages")
