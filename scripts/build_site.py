@@ -1914,8 +1914,48 @@ METHODOLOGY_BODY = """<h2>What this measures (and what it does not)</h2>
     <li>Kill-chain phase as severity — Lockheed Martin, <a href="https://www.lockheedmartin.com/en-us/capabilities/cyber/cyber-kill-chain.html" target="_blank" rel="noopener">Cyber Kill Chain</a>; TTP vocabulary — <a href="https://attack.mitre.org/" target="_blank" rel="noopener">MITRE ATT&amp;CK</a></li>
   </ul>
 
+  <h2>How the site is produced (pipeline disclosure)</h2>
+  <p>This is a <b>largely automated, single-maintainer operation</b>. The daily digests are
+  assembled from publicly-reported sources, then rated and indexed by a Python pipeline
+  backed by a SQLite database. The monthly editions and wiki are likewise generated from
+  that database and from curated markdown. Some stages are <b>AI-assisted</b> — notably
+  drafting, summarising and fact-checking support — but every story is tied to a
+  deep-linked source, is rated for source reliability, and the monthly edition carries an
+  explicit fact-check pass. Nothing on this site is fabricated or backdated to fill a
+  quota; the <a href="stories.html">Story DB</a> and the digest archive are the same data
+  you see everywhere else on the site.</p>
+  <p>You can audit the pipeline yourself: the build is reproducible from the vault, the
+  database is the single source of truth, and every number on the homepage is computed
+  from it at build time rather than hand-entered. Corrections and retractions are handled
+  under the <a href="corrections.html">corrections policy</a>.</p>
+
+  <h2>Where the homepage numbers come from (provenance)</h2>
+  <p>The threat index, story counts, sector and threat breakdowns, and the daily/monthly
+  cards are all computed from the <b>published digest archive in the SQLite database</b>
+  (the <code>stories</code> and <code>digests</code> tables) at every site build. They are
+  <b>not</b> synthetic, hand-entered or backdated figures, and they are not a prediction.
+  The 14-day rolling index described above is a real computation over the stories
+  ingested in that window.</p>
+  <p><b>Why the globe count differs from the total.</b> The homepage and full-page 3D
+  globes plot a <b>geolocatable subset</b> of the story database — stories that resolve to
+  a country or region with coordinates. Stories that are global, regional, or lack a
+  reliable location are excluded, so the globe's "N stories" is always lower than the
+  total in the Story DB. The two numbers answer different questions: the total is "how
+  many stories we hold", the globe is "how many we can place on a map".</p>
+
   <h2>Revision discipline</h2>
   <p>This index is recomputed from the database on every site build. As the corpus grows the calibrations (band thresholds, decay half-life, weights) may be re-tuned — when that happens the values on this page and the homepage will change together, and the change is disclosed here. If a rating looks wrong, the relevant story card links to its source for verification.</p>
+
+  <h2>Changelog</h2>
+  <ul>
+    <li><b>2026-09-02</b> — Added pipeline/AI disclosure, threat-index provenance and a
+        globe-vs-total count explanation. Added the responsible-disclosure, privacy,
+        corrections and licensing policy pages. Vendored the echarts + world-map assets
+        locally (no more runtime CDN calls on the map pages). Added a monthly RSS feed.
+        Added JSON-LD structured data to every page.</li>
+    <li><b>2026-08-31</b> — Site audit; methodology page rewritten to use the shared site
+        chrome (previously a standalone document).</li>
+  </ul>
 """
 
 def build_globe():

@@ -104,6 +104,8 @@ body{font-family:Inter,-apple-system,sans-serif;background:var(--bg);color:var(-
 .ss-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:10.5px;color:var(--text-dim)}
 .ss-lg{display:flex;align-items:center;gap:5px}
 .ss-lg i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.ss-defs{margin-top:8px;font-size:11px;line-height:1.6;color:var(--text-dim);max-width:64em}
+.ss-defs b{font-weight:600}
 @media(max-width:640px){.ss-grid{grid-template-columns:repeat(16,1fr)}.ss-cell{height:38px}}
 /* Bar charts */
 .bar-chart{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:18px;transition:background .25s,border .25s}
@@ -370,7 +372,7 @@ body.exec-view .story-card.expanded{padding-left:50px}
     if(!window.echarts) return;
     var host=document.getElementById('incident-map-chart');
     if(!host) return;
-    fetch("https://cdn.jsdelivr.net/npm/echarts@4.9.0/map/json/world.json")
+    fetch("/assets/vendor/world.json")
       .then(function(r){ if(!r.ok) throw 0; return r.json(); })
       .then(function(world){
         window.echarts.registerMap('world', world);
@@ -479,7 +481,7 @@ body.exec-view .story-card.expanded{padding-left:50px}
   if(window.echarts){ renderMap(); }
   else{
     var s=document.createElement('script');
-    s.src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js";
+    s.src="/assets/vendor/echarts.min.js";
     s.onload=renderMap;
     document.head.appendChild(s);
   }

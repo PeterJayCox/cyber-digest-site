@@ -169,7 +169,7 @@
 </head>
 <body>
 <div class="bar"></div>
-<div id="globe"></div>
+<div id="globe" role="img" aria-label="Interactive 3D globe of cybersecurity incidents. Drag to rotate, scroll to zoom, click a dot for details."></div>
 
 <header>
   <div class="brand">
@@ -191,7 +191,7 @@
     <a href="reports/index.html">📑 Reports</a>
     <a href="wiki/index.html">🧠 Wiki</a>
   </nav>
-  <button class="sidebtn" id="side-toggle">☰ Stories</button>
+  <button class="sidebtn" id="side-toggle" aria-expanded="false" aria-controls="side">☰ Stories</button>
 </header>
 
 <!-- Sidebar: filters + analysis + story list -->
@@ -207,8 +207,8 @@
     <select id="sec"><option value="">All sectors</option></select>
     <select id="cou"><option value="">All countries / regions</option><option value="__region__">🌐 Pan-region stories</option></select>
     <div class="timebar">
-      <button id="play-btn" title="Play through time">▶</button>
-      <input type="range" id="time-range" min="0" max="100" value="100">
+      <button id="play-btn" title="Play through time" aria-label="Play through time">▶</button>
+      <input type="range" id="time-range" min="0" max="100" value="100" aria-label="Filter by date range">
       <span id="time-label">all dates</span>
     </div>
     <div class="analysis">
