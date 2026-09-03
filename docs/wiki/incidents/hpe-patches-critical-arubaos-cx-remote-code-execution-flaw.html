@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HPE Patches Critical ArubaOS-CX Remote Code Execution Flaw</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png">
+<link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png">
+<link rel="alternate" type="application/rss+xml" title="Cyber Digest" href="https://cyber.peterjaycox.com/feed.xml">
+<link rel="alternate" type="application/rss+xml" title="Cyber Digest — Monthly Editions" href="https://cyber.peterjaycox.com/feed-monthly.xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="HPE Patches Critical ArubaOS-CX Remote Code Execution Flaw">
+<meta property="og:description" content="Curated sector-by-sector roundup of global cybersecurity developments with source-reliability indexing, AU/NZ context, and searchable knowledge base.">
+<meta property="og:url" content="https://cyber.peterjaycox.com/">
+<meta property="og:image" content="https://cyber.peterjaycox.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"Cyber Digest","alternateName":"Cyber Digest — public site","url":"https://cyber.peterjaycox.com/","description":"Curated, source-rated roundup of global cybersecurity developments with AU/NZ context.","inLanguage":"en-AU","publisher":{"@type":"Organization","name":"Cyber Digest","url":"https://cyber.peterjaycox.com/"},"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://cyber.peterjaycox.com/stories.html?q={search_term_string}"},"query-input":"required name=search_term_string"}}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/site.css?v=202609040639"></head><body>
+<nav class="topnav"><div class="inner">
+        <a class="brand" href="https://cyber.peterjaycox.com/index.html"><span class="brand-logo" aria-hidden="true"></span> Cyber&nbsp;Digest<small>public site</small></a>
+        <div class="navlinks"><a href="https://cyber.peterjaycox.com/index.html" class=""><span class="t">🏠 Home</span></a><a href="https://cyber.peterjaycox.com/stories.html" class=""><span class="t">📚 Story DB</span></a><a href="https://cyber.peterjaycox.com/globe.html" class=""><span class="t">🌍 Globe</span></a><a href="https://cyber.peterjaycox.com/daily/" class=""><span class="t">🗓️ Daily</span></a><a href="https://cyber.peterjaycox.com/monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="https://cyber.peterjaycox.com/reports/index.html" class=""><span class="t">📑 Reports</span></a><a href="https://cyber.peterjaycox.com/wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a><a href="https://cyber.peterjaycox.com/flashcards.html" class=""><span class="t">🗂️ Flashcards</span></a></div>
+        <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light">🌙</div></div></nav><main class="container">
+            <div class="container">
+            <div class="crumb"><a href="../../index.html">Home</a> · <a href="../../wiki/index.html">Wiki</a> · Incidents &amp; Campaigns</div>
+            <div class="wiki-body"><div class="frontmatter">type: incident · created: 2026-09-04 · updated: 2026-09-04 · tags: [incident, network-switch, rce, vendor-patch] · confidence: high · severity: critical · affected_sectors: [government, technology] · au_impact: true</div><h1>HPE Patches Critical ArubaOS-CX Remote Code Execution Flaw</h1>
+<p>Hewlett Packard Enterprise has patched a critical unauthenticated buffer-overflow vulnerability in its ArubaOS-CX switch operating system that allows remote code execution with elevated privileges, alongside more than twenty further flaws.</p>
+<h2>Assessment</h2>
+<p>The headline issue, CVE-2026-73749, is a critical unauthenticated buffer-overflow in an ArubaOS-CX daemon that permits remote code execution via crafted packets. HPE also addressed 23 further flaws spanning CVE-2026-73750 to CVE-2026-73782, rated up to 8.8, which include command injection through the web interface, arbitrary-file-write via an API endpoint, a predictable factory-default password and authentication-bypass issues. Affected release branches span AOS-CX 10.10 through 10.18, with fixed versions named (for example 10.18.1002+, 10.17.1030+ and 10.16.1060+).</p>
+<p>HPE reported no evidence of active exploitation or public proof-of-concept code at publication. However, ArubaOS-CX runs HPE enterprise network switches widely used by large businesses, government agencies, universities, healthcare organisations and service providers, so the patching exposure is broad.</p>
+<p>The affected switch operating system underpins enterprise, government and university networks in Australia, including education and government sectors. Australian network operators should track HPE's security bulletin and apply the fixed AOS-CX releases as a priority. Because the flaws include an unauthenticated remote-code-execution path, treating this as an unpatched-in-the-wild risk and watching for a possible CISA KEV listing is warranted.</p>
+<p><strong>Sources:</strong> HPE Security Bulletin via BleepingComputer — https://www.bleepingcomputer.com/news/security/hpe-patches-critical-arubaos-cx-remote-code-execution-flaw/</p></div>
+            </div></main>
+<div class="footer">
+  <div class="links">
+    <a href="https://cyber.peterjaycox.com/index.html">Home</a>
+    <a href="https://cyber.peterjaycox.com/stories.html">Story DB</a>
+    <a href="https://cyber.peterjaycox.com/daily/">Daily</a>
+    <a href="https://cyber.peterjaycox.com/monthly/index.html">Monthly</a>
+    <a href="https://cyber.peterjaycox.com/reports/index.html">Reports</a>
+    <a href="https://cyber.peterjaycox.com/wiki/index.html">Wiki</a>
+    <a href="https://cyber.peterjaycox.com/feed.xml">RSS</a>
+    <a href="https://cyber.peterjaycox.com/privacy.html">Privacy</a>
+    <a href="https://cyber.peterjaycox.com/corrections.html">Corrections</a>
+    <a href="https://cyber.peterjaycox.com/licensing.html">Licensing</a>
+    <a href="https://cyber.peterjaycox.com/security.html">Security</a>
+  </div>
+  Cyber Digest public site · built 2026-09-04 06:39
+</div>
+<script>
+var _t=document.documentElement;
+var _b=document.querySelector(".theme-toggle");
+function toggleTheme(){var n=_t.getAttribute("data-theme")==="dark"?"light":"dark";_t.setAttribute("data-theme",n);if(_b)_b.textContent=n==="dark"?"🌙":"☀️";try{if(n==="dark")localStorage.removeItem("cd-theme");else localStorage.setItem("cd-theme",n)}catch(e){}}
+(function(){try{var s=localStorage.getItem("cd-theme");if(s){_t.setAttribute("data-theme",s);if(_b)_b.textContent="☀️"}}catch(e){}})()
+</script>
+</body></html>
