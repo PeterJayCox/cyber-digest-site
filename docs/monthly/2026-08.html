@@ -594,7 +594,7 @@ body.exec-view .story-card.expanded{padding-left:50px}
 <h3>Top techniques</h3>
 <div class="data-table"><table><thead><tr><th>Technique</th><th>ATT&amp;CK ID</th><th>CVEs</th><th>Notable example</th></tr></thead><tbody><tr><td>Exploit Public-Facing Application</td><td>T1190</td><td>19</td><td>CVE-2025-62593</td></tr><tr><td>Command and Scripting Interpreter</td><td>T1059</td><td>5</td><td>CVE-2025-62593</td></tr><tr><td>Exploitation of Remote Services</td><td>T1210</td><td>5</td><td>CVE-2026-45659</td></tr><tr><td>Valid Accounts</td><td>T1078</td><td>3</td><td>CVE-2026-72529</td></tr><tr><td>External Remote Services</td><td>T1133</td><td>2</td><td>CVE-2025-24472</td></tr><tr><td>Remote Access Tools</td><td>T1219</td><td>2</td><td>CVE-2026-18577</td></tr><tr><td>Data Encrypted for Impact</td><td>T1486</td><td>1</td><td>CVE-2024-5559</td></tr><tr><td>Protocol Tunneling</td><td>T1572</td><td>1</td><td>CVE-2026-18577</td></tr></tbody></table></div>
 <h3>Entry-vector vs post-access</h3>
-<ul><li><strong>Entry vector:</strong> 21 of 28 CVEs (75%) map to a primary initial-access technique (T1190 Exploit Public-Facing Application, T1133 External Remote Services, T1078 Valid Accounts, T1189 Drive-by).</li><li><strong>Post-access only:</strong> 7 of 28 CVEs (25%) map solely to execution/persistence/privilege/lateral/impact techniques — the local or post-breach chain rather than an external initial foothold.</li><li><strong>Dominant single technique:</strong> T1190 accounts for 19 of 28 CVEs (68% of the cohort).</li></ul>
+<ul><li><strong>Entry vector:</strong> 26 of 28 CVEs (93%) are reached via an external internet-facing vector — T1190 Exploit Public-Facing Application, T1210 Exploitation of Remote Services, T1133 External Remote Services, T1078 Valid Accounts, or T1189 Drive-by Compromise.</li><li><strong>Post-access only:</strong> 2 of 28 CVEs (7%) map solely to credential-access / privilege-escalation / other post-access techniques — the local post-breach chain rather than an external foothold.</li><li><strong>Reconciliation:</strong> the tactic profile above counts the Initial Access tactic as 24 technique-instances; as unique CVEs with an entry vector (adding the matrix&#x27;s lateral-movement-tagged T1210 remote-service RCEs, which are external pre-auth footholds in practice) the cohort is 26 of 28.</li><li><strong>Dominant single technique:</strong> T1190 accounts for 19 of 28 CVEs (68% of the cohort).</li></ul>
 <h3>KEV contrast</h3>
 <ul><li><strong>KEV-listed in cohort:</strong> 7 of 28 CVEs.</li><li><strong>KEV → T1190:</strong> 6 of 7 KEV CVEs (86%).</li></ul>
 <h3>D3FEND coverage</h3>
@@ -668,7 +668,7 @@ body.exec-view .story-card.expanded{padding-left:50px}
   <a href="https://cyber.peterjaycox.com/security.html">Security</a>
 </div>
 <div class="source-line">Monthly digest.</div>
-<div class="note">Digest prepared 4 September 2026. 48-hour freshness window (72-hour max for weekend bridging).</div>
+<div class="note">Digest prepared 5 September 2026. 48-hour freshness window (72-hour max for weekend bridging).</div>
 </footer>
 </main>
 </div>
