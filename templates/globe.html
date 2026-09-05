@@ -488,19 +488,6 @@
     return out;
   }
 
-  // Text labels for the aggregated region rings (rings can't carry labels or
-  // clicks in this globe.gl build, so we render a companion label point on the
-  // labels layer). label object carries its region + strongest story so a click
-  // on the label can open that story.
-  function regionLabels(){
-    if(viewMode!=="cluster") return [];
-    return regionRings().map(function(r){
-      return {kind:"region-label", region:r.region, count:r.count,
-              severity:r.severity, sample:r.sample,
-              lat:r.lat, lon:r.lon};
-    });
-  }
-
   // soft halo rings for the cluster bubbles — one translucent glow ring centred
   // on each country bubble so the hard polygon edge reads as a luminous glow
   // rather than a flat geometric chip. Only rendered in cluster view (there are
@@ -517,7 +504,6 @@
     if(!globeInstance) return;
     globeInstance.pointsData(currentViewData());
     globeInstance.ringsData(regionRings().concat(haloRings()));
-    globeInstance.labelsData(regionLabels());
     paintViews();
   }
 
@@ -552,15 +538,6 @@
       .ringRepeatPeriod(function(){ return 0; })
       .ringPropagationSpeed(function(){ return 0; })
       .ringResolution(48);
-    // Text labels for the aggregated region rings (rings can't carry labels in
-    // this globe.gl build, so the label is a companion point on the labels
-    // layer). Only the region rings get visible text; halos render nothing.
-    globeInstance
-      .labelText(function(l){ return (l.kind==="region-label") ? l.region : ""; })
-      .labelSize(function(l){ return (l.kind==="region-label") ? 26 : 0; })
-      .labelColor(function(l){ return (l.kind==="region-label") ? "#9aa7bd" : "rgba(0,0,0,0)"; })
-      .labelAltitude(function(){ return 0.05; })
-      .labelIncludeDot(false);
     paintPoints();
   }
 
@@ -844,12 +821,6 @@
         .pointLat('lat').pointLng('lon')
         .ringsData([])
         .ringLat('lat').ringLng('lon')
-        .labelsData([])
-        .labelLat('lat').labelLng('lon')
-        .onLabelClick(function(l){
-          // click a region label -> open that region's strongest story
-          if(l && l.kind==="region-label" && l.sample){ openStory(l.sample); return; }
-        })
         .onPointClick(function(p){
           if(isCluster(p)){
             // single-story bubble: open that exact story (a cluster of one has
