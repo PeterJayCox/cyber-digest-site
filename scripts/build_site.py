@@ -152,7 +152,8 @@ def parse_monthly_md(m):
                 info["date_range"] = f"{date_nums[0]}–{date_nums[-1]} {mn}"
 
     # Exec summary blurb
-    es_match = re.search(r"Executive Summary\s*\n\n([^#]+?)(?:\.(?:\s|$))", body, re.I | re.DOTALL)
+    # Support ### Lead-in headers directly after Executive Summary (e.g. August 2026 format)
+    es_match = re.search(r"Executive Summary\s*\n+(?:###[^\n]+\n+)?([^#\n][^#]+?)(?:\.(?:\s|$))", body, re.I | re.DOTALL)
     if es_match:
         raw = es_match.group(1).strip().replace("\n", " ")
         # Strip markdown emphasis/bold markers (**, *, __) so the card summary renders clean
