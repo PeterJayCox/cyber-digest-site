@@ -430,12 +430,27 @@
     return filtered.filter(function(p){return p.kind==="region";});
   }
 
+  // soft halo rings for the cluster bubbles — one translucent glow ring centred
+  // on each country bubble so the hard polygon edge reads as a luminous glow
+  // rather than a flat geometric chip. Only rendered in cluster view (there are
+  // no cluster bubbles once exploded to individual story dots).
+  function haloRings(){
+    if(viewMode!=="cluster") return [];
+    return buildClientClusters(filtered).map(function(c){
+      return {kind:"halo", country:c.country, lat:c.lat, lon:c.lon,
+              count:c.count, severity:c.severity};
+    });
+  }
+
   function renderView(){
     if(!globeInstance) return;
     globeInstance.pointsData(currentViewData());
-    globeInstance.ringsData(regionRings());
+    globeInstance.ringsData(regionRings().concat(haloRings()));
     paintViews();
   }
+
+  // rgb(hex) -> "r,g,b" (no alpha) for building rgba() strings
+  function rgb(hex){ return parseInt(hex.slice(1,3),16)+","+parseInt(hex.slice(3,5),16)+","+parseInt(hex.slice(5,7),16); }
 
   // styling for the points layer — cluster markers vs individual dots
   function paintViews(){
@@ -445,15 +460,23 @@
       .pointAltitude(function(p){ return clusterAltitude(p); })
       .pointRadius(function(p){ return clusterRadius(p); })
       .pointLabel(clusterLabel)
-      .pointResolution(16)
+      .pointResolution(64)
       // pan-region markers: translucent rings tinted by threat severity
-      // (broad region, not a city) — each ring's colour matches its story's severity
+      // (broad region, not a city) — each ring's colour matches its story's
+      // severity. Cluster halos (kind==='halo') render fainter, slightly wider
+      // than the bubble, just off the surface — a soft glow beneath the dot.
       .ringColor(function(p){
+        if(p.kind==="halo"){
+          return "rgba("+rgb(SEV_COLOR[p.severity]||REGION_COLOR)+",0.26)";
+        }
         var h=SEV_COLOR[p.severity]||REGION_COLOR;
-        return "rgba("+parseInt(h.slice(1,3),16)+","+parseInt(h.slice(3,5),16)+","+parseInt(h.slice(5,7),16)+",0.4)";
+        return "rgba("+rgb(h)+",0.4)";
       })
-      .ringMaxRadius(function(p){ return p.region==="Global"?3.0:(p.region==="APAC"?2.5:2.0); })
-      .ringAltitude(function(){ return 0.020; })
+      .ringMaxRadius(function(p){
+        if(p.kind==="halo") return clusterBubbleRadius(p.count)*1.18;
+        return p.region==="Global"?3.0:(p.region==="APAC"?2.5:2.0);
+      })
+      .ringAltitude(function(p){ return p.kind==="halo"?0.012:0.020; })
       .ringRepeatPeriod(function(){ return 0; })
       .ringPropagationSpeed(function(){ return 0; })
       .ringResolution(48);
@@ -463,12 +486,18 @@
   function isCluster(p){ return p && p.kind==="cluster"; }
 
   function clusterColor(p){
-    if(isCluster(p)) return SEV_COLOR[p.severity]||"#ffffff";
+    if(isCluster(p)) return "rgba("+rgb(SEV_COLOR[p.severity]||"#ffffff")+",0.85)";
     if(activeStory && p.headline===activeStory.headline) return "#ffffff";
     return pColor(p);
   }
+  function clusterBubbleRadius(count){
+    // larger bubble for more stories (log-ish scale), but soft-capped so the
+    // biggest countries don't grow into solid blobs and any residual facet is
+    // small enough to read as a round dot rather than a polygon
+    return Math.min(1.4, 0.55 + 0.32*Math.min(4.5, Math.pow(count,0.5)));
+  }
   function clusterAltitude(p){
-    if(isCluster(p)) return 0.04;
+    if(isCluster(p)) return 0.015;
     if(p.kind==="region") return 0.015;
     if(barMode){
       // bars: lift the dot into a short vertical column by severity so a
@@ -478,10 +507,7 @@
     return p.severity==="Critical"?0.06:(p.severity==="Severe"?0.045:0.028);
   }
   function clusterRadius(p){
-    if(isCluster(p)){
-      // larger bubble for more stories (log-ish scale, capped)
-      return 0.55 + 0.32*Math.min(4.5, Math.pow(p.count,0.5));
-    }
+    if(isCluster(p)) return clusterBubbleRadius(p.count);
     if(p.kind==="region") return 0.22;
     // in bar mode shrink radius so columns stay thin and read as bars
     var r = barMode
@@ -756,7 +782,7 @@
       // hemisphere so the cluster view opens on the interesting landmass
       globe.pointOfView({lat:18,lng:-25,alt:2.1});
       globe.controls().autoRotate=true;
-      globe.controls().autoRotateSpeed=0.6;
+      globe.controls().autoRotateSpeed=0.3;
       globeInstance=globe;
       // apply the zoom-aware styling + initial (cluster) view
       paintViews();
