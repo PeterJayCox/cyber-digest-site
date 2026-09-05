@@ -390,27 +390,64 @@
   // current zoom level wants. Region (pan-region) stories are NOT clustered —
   // they render as a dedicated static ring layer so they read as "broad
   // region", not a precise country.
+  // Cluster stories by COUNTRY first, then split each country's dots into a few
+  // spatially-separated sub-bubbles (coarse lat/lon grid, capped at 4 per
+  // country) so the zoomed-out view shows real distribution — big spread
+  // countries read as several bubbles (US east/west, Australia east/west),
+  // small or concentrated countries stay one — instead of a reductive single
+  // "dot per country".
+  var CLUSTER_GRID_LAT=8, CLUSTER_GRID_LON=10, CLUSTER_MAX_PER_COUNTRY=4;
+
   function buildClientClusters(pts){
-    var map={};
+    var byCountry={};
     pts.forEach(function(p){
       if(p.kind==="region") return; // handled by the rings layer
-      var key="c:"+(p.country||"");
-      if(!(key in map)) map[key]={key:key, kind:"cluster",
-        label:(p.country||""),
-        count:0, sevIdx:0, sumLat:0, sumLon:0};
-      var b=map[key];
-      b.count++;
-      b.sumLat+=p.lat; b.sumLon+=p.lon;
-      var si=SEV_ORDER.indexOf(p.severity); if(si> b.sevIdx) b.sevIdx=si;
+      (byCountry[p.country||""] || (byCountry[p.country||""]=[])).push(p);
     });
+
     var out=[];
-    Object.keys(map).forEach(function(k){
-      var b=map[k];
-      out.push({kind:"cluster", country:b.label, geo_label:b.label,
-        lat:b.sumLat/b.count, lon:b.sumLon/b.count,
-        count:b.count, severity:SEV_ORDER[b.sevIdx]});
+    Object.keys(byCountry).forEach(function(cname){
+      var list=byCountry[cname];
+      var cells={};
+      list.forEach(function(p){
+        var gk="g:"+Math.round(p.lat/CLUSTER_GRID_LAT)+":"+Math.round(p.lon/CLUSTER_GRID_LON);
+        var c=cells[gk];
+        if(!c){ c=cells[gk]={count:0, sevIdx:0, sumLat:0, sumLon:0, sample:null}; }
+        c.count++; c.sumLat+=p.lat; c.sumLon+=p.lon;
+        var si=SEV_ORDER.indexOf(p.severity); if(si>c.sevIdx) c.sevIdx=si;
+        if(!c.sample) c.sample=p; // single-story cells use this to open the exact story
+      });
+
+      var keys=Object.keys(cells);
+      if(keys.length>CLUSTER_MAX_PER_COUNTRY){
+        // fold the smallest cells into their nearest kept cell so the biggest
+        // countries don't re-clutter into too many bubbles
+        var arr=keys.map(function(k){
+          var c=cells[k]; return {k:k, c:c, lat:c.sumLat/c.count, lon:c.sumLon/c.count};
+        });
+        arr.sort(function(a,b){ return b.c.count-a.c.count; });
+        var keep=arr.slice(0,CLUSTER_MAX_PER_COUNTRY);
+        arr.slice(CLUSTER_MAX_PER_COUNTRY).forEach(function(d){
+          var best=keep[0], bd=1e9;
+          keep.forEach(function(b){
+            var dd=(b.lat-d.lat)*(b.lat-d.lat)+(b.lon-d.lon)*(b.lon-d.lon);
+            if(dd<bd){ bd=dd; best=b; }
+          });
+          best.c.count+=d.c.count; best.c.sumLat+=d.c.sumLat; best.c.sumLon+=d.c.sumLon;
+          if(d.c.sevIdx>best.c.sevIdx) best.c.sevIdx=d.c.sevIdx;
+        });
+        keys=keep.map(function(b){ return b.k; });
+      }
+
+      keys.forEach(function(k){
+        var c=cells[k];
+        out.push({kind:"cluster", country:cname, geo_label:cname,
+          lat:c.sumLat/c.count, lon:c.sumLon/c.count,
+          count:c.count, severity:SEV_ORDER[c.sevIdx], sample:c.sample});
+      });
     });
-    out.sort(function(a,b){return b.count-a.count;});
+
+    out.sort(function(a,b){ return b.count-a.count; });
     return out;
   }
 
@@ -765,15 +802,9 @@
         .ringLat('lat').ringLng('lon')
         .onPointClick(function(p){
           if(isCluster(p)){
-            // single-story country bubble: open that story straight away
-            // (no point exploding a cluster of one)
-            if(p.count===1){
-              for(var i=0;i<filtered.length;i++){
-                if(filtered[i].kind!=="region" && filtered[i].country===p.country){
-                  openStory(filtered[i]); return;
-                }
-              }
-            }
+            // single-story bubble: open that exact story (a cluster of one has
+            // no point exploding — sample holds the original story point)
+            if(p.count===1 && p.sample){ openStory(p.sample); return; }
             zoomToCluster(p); return;
           }
           openStory(p);
