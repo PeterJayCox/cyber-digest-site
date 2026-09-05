@@ -560,6 +560,14 @@ def threat_trend_html(series, wrap=True):
     line = (f'<polyline points="{pts}" fill="none" stroke="var(--accent)" stroke-width="2.5" '
             'stroke-linejoin="round" stroke-linecap="round"/>') if n > 1 else ""
     dot = f'<circle cx="{X(n-1):.1f}" cy="{Y(series[-1]["pct"]):.1f}" r="4" fill="var(--accent)"/>'
+    # Label the latest point directly so a boundary-adjacent value doesn't read
+    # as the band below it (e.g. 56 = "Elevated" hugging the "Guarded" line).
+    band_col = {lbl: col for lbl, col, _ in bands}
+    lastval = series[-1]
+    lastx, lasty = X(n - 1), Y(lastval["pct"])
+    lastlab = (f'<text x="{lastx - 10:.1f}" y="{lasty - 9:.1f}" text-anchor="end" '
+               f'fill="{band_col.get(lastval["band"], "var(--accent)")}" font-size="11" '
+               f'font-weight="700">{lastval["band"]} · {lastval["pct"]:.0f}</text>')
 
     step = max(1, n // 7)
     xticks = "".join(
@@ -579,6 +587,7 @@ def threat_trend_html(series, wrap=True):
   <rect x="{pad}" y="{pad}" width="{iw}" height="{ih}" fill="none" stroke="currentColor" stroke-opacity="0.06"/>
   {grid}
   {area}{line}{dot}
+  {lastlab}
   {xticks}
   {yaxis}
   {blab}
