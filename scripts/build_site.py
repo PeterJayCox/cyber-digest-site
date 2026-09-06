@@ -913,15 +913,27 @@ def build_index(stories):
         mo_link=f"monthly/{latest_mo}.html"
     else: latest_mo=None; mo_link="#"
     latest_daily_card=""
+    latest_cta=""
     if days:
         d,month=days[0]
         la=dag.get(d,{})
         ln=la.get("count") or 0
+        try:
+            latest_date=datetime.strptime(d,"%Y-%m-%d")
+            latest_date_label=latest_date.strftime("%d %b").lstrip("0")
+            latest_date_badge=(f'<div class="daily-date" aria-label="{latest_date.strftime("%-d %B %Y")}">'
+                               f'<span>{latest_date.strftime("%b").upper()}</span><b>{latest_date.strftime("%d")}</b></div>')
+        except ValueError:
+            latest_date_label=d
+            latest_date_badge='<div class="daily-date" aria-hidden="true">📅</div>'
+        latest_cta=(f'<div class="cta-row"><a class="btn" href="daily/{d}.html">'
+                    f'Read the latest digest — {latest_date_label} &rarr;</a>'
+                    f'<a class="btn ghost" href="stories.html">Browse {n_stories} stories</a></div>')
         latest_daily_card=f'''<a class="card card-daily-feature" href="daily/{d}.html">
         <div style="display:flex;align-items:flex-start;gap:14px">
-          <div style="font-size:2.2rem;line-height:1;flex-shrink:0;margin-top:2px">📅</div>
+          {latest_date_badge}
           <div style="flex:1;min-width:0"><h3>Latest Daily</h3><div class="meta">{d} · {ln} {"story" if ln==1 else "stories"}</div></div>
-          <span class="tag cyan">today</span>
+          <span class="tag cyan">latest</span>
         </div>
         <p class="daily-theme">{_trunc(la.get("top") or "Full sector-by-sector roundup with source reliability indexing and executive summary.")}</p>
         <span class="go">Read →</span></a>'''
@@ -1079,7 +1091,7 @@ def build_index(stories):
 <div class="hero"><div class="kicker">// independent security intelligence</div>
 <h1>Cyber <span class="accent">Digest</span></h1>
 <p class="sub">A curated, sector-by-sector roundup of global cybersecurity developments with source-reliability indexing, Australian &amp; New Zealand context, and a searchable knowledge base of every story we've covered.</p>
-{f'<div class="cta-row"><a class="btn" href="daily/{days[0][0]}.html">Read today&rsquo;s digest &rarr;</a><a class="btn ghost" href="stories.html">Browse {n_stories} stories</a></div>' if days else ""}</div>
+{latest_cta}</div>
 
 <div class="stats">
 <div class="stat"><span class="num">{n_stories}</span><span class="lbl">Stories</span></div>
@@ -1948,8 +1960,8 @@ METHODOLOGY_BODY = """<h2>What this measures (and what it does not)</h2>
   ingested in that window.</p>
   <p><b>Why the globe count differs from the total.</b> The homepage and full-page 3D
   globes plot a <b>geolocatable subset</b> of the story database — stories that resolve to
-  a country or region with coordinates. Stories that are global, regional, or lack a
-  reliable location are excluded, so the globe's "N stories" is always lower than the
+  a reliable country-level location. Stories that are global, regional, or lack a
+  reliable country are excluded, so the globe's "N stories" is always lower than the
   total in the Story DB. The two numbers answer different questions: the total is "how
   many stories we hold", the globe is "how many we can place on a map".</p>
 

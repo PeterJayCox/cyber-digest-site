@@ -24,14 +24,14 @@
      mini-globe replaces it when WebGL + CDN are available (hosted site). -->
 <div class="section"><div class="sec-head"><h2><span class="bar"></span>3D Incident Globe</h2><a class="seeall" href="globe.html">Open full globe →</a></div>
 <div class="globe-card" id="home-globe-card">
-  <div class="globe-badge">🌍 all stories · 3D</div>
+  <div class="globe-badge">🌍 country-resolved stories · 3D</div>
   <div id="home-globe"></div>
   <div class="globe-static" id="home-globe-static" style="display:none">
     <div class="big">🌐</div>
-    <div>Every story in the database plotted by country &amp; severity.<br>Drag the globe to spin it, or open the full page.</div>
+    <div>Country-resolved incidents plotted by severity.<br>Drag the globe to spin it, or open the full page.</div>
   </div>
   <div class="globe-card-caption">
-    <span>Drag to spin · <b id="home-globe-count">490 stories</b> · click to open</span>
+    <span>Drag to spin · <b id="home-globe-count">loading location data</b> · click to open</span>
   </div>
 </div></div>
 <script>
@@ -62,12 +62,11 @@
           .globeImageUrl('//cdn.jsdelivr.net/npm/three-globe/example/img/earth-night.jpg')
           .backgroundColor('rgba(0,0,0,0)')
           .atmosphereColor('#00b4d8').atmosphereAltitude(0.15)
-          .pointsData(data.points.slice(0,600))
+          .pointsData(data.points)
           .pointLat('lat').pointLng('lon')
-          .pointColor(function(p){ return p.kind==='region' ? '#9aa7bd' :
-            ({Guarded:'#5aa9e6',Elevated:'#0096c7',Severe:'#ffa62b',Critical:'#ff4d5a'})[p.severity]||'#fff'; })
-          .pointAltitude(function(p){ return p.kind==='region'?0.012:0.03; })
-          .pointRadius(function(p){ return p.kind==='region'?0.16:0.3; })
+          .pointColor(function(p){ return ({Guarded:'#5aa9e6',Elevated:'#0096c7',Severe:'#ffa62b',Critical:'#ff4d5a'})[p.severity]||'#fff'; })
+          .pointAltitude(0.03)
+          .pointRadius(0.3)
           .pointResolution(4);
         globe.pointOfView({lat:22,lng:14,alt:1.15});
         globe.controls().autoRotate=true;
@@ -86,7 +85,7 @@
           if(!moved){ window.location.href='globe.html'; }
         });
         var cap=document.getElementById('home-globe-count');
-        if(cap) cap.textContent=data.total+' stories';
+        if(cap) cap.textContent=data.plotted+' geolocated stories';
         if(stat) stat.style.display='none';
       }).catch(fail);
     }catch(e){ fail(); }

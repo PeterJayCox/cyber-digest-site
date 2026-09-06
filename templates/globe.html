@@ -174,11 +174,11 @@
 <header>
   <div class="brand">
     <h1>Cyber Digest <span class="dot">·</span> Incident Globe</h1>
-    <div class="sub" id="sub">Plotting every story from the database…</div>
+    <div class="sub" id="sub">Mapping country-resolved incidents…</div>
   </div>
   <div class="stats">
-    <div class="stat"><b id="st-total">·</b><span>stories</span></div>
-    <div class="stat"><b id="st-plotted">·</b><span>located</span></div>
+    <div class="stat"><b id="st-total">·</b><span>archive stories</span></div>
+    <div class="stat"><b id="st-plotted">·</b><span>mapped</span></div>
     <div class="stat"><b id="st-country">·</b><span>countries</span></div>
   </div>
   <!-- Site navigation: back to the rest of the site (docked into the header row) -->
@@ -205,7 +205,7 @@
       <span class="chip viewchip" data-v="bars">Bars</span>
     </div>
     <select id="sec"><option value="">All sectors</option></select>
-    <select id="cou"><option value="">All countries / regions</option><option value="__region__">🌐 Pan-region stories</option></select>
+    <select id="cou"><option value="">All countries</option></select>
     <div class="timebar">
       <button id="play-btn" title="Play through time" aria-label="Play through time">▶</button>
       <input type="range" id="time-range" min="0" max="100" value="100" aria-label="Filter by date range">
@@ -217,7 +217,7 @@
       <div class="a-sev" id="a-sev"></div>
       <div class="a-top" id="a-top"></div>
     </div>
-    <div class="count"><b id="show-n">·</b> of <span id="show-total">·</span> stories <a class="clear" id="clear-f">clear filters</a></div>
+    <div class="count"><b id="show-n">·</b> of <span id="show-total">·</span> mapped stories <a class="clear" id="clear-f">clear filters</a></div>
   </div>
   <div id="list"></div>
 </aside>
@@ -783,7 +783,7 @@
 
   function renderStatic(data){
     $("fallback").style.display="flex";
-    $("sub").textContent=data.total+" stories · "+data.plotted+" located · "+
+    $("sub").textContent=data.total+" archive stories · "+data.plotted+" country-resolved stories mapped · "+
       Object.keys(countries(data.points)).length+" countries. 3D unavailable here.";
     var html="";
     SEV_ORDER.forEach(function(s){
@@ -803,11 +803,11 @@
   fetch('data/globe.json').then(function(r){ return r.json(); }).then(function(data){
     all=data.points;
     $("st-total").textContent=data.total;
-    $("st-plotted").textContent=countryStoryCount(data.points);
+    $("st-plotted").textContent=data.plotted;
     $("st-country").textContent=Object.keys(countries(data.points)).length;
     $("show-total").textContent=data.plotted;
-    $("sub").textContent=data.total+" stories plotted · "+countryStoryCount(data.points)+" located · "+
-      data.pan+" pan-region · generated "+data.generated;
+    $("sub").textContent=data.plotted+" country-resolved stories mapped · "+
+      data.pan+" global or regional stories not mapped · "+data.total+" archive stories · generated "+data.generated;
     buildSeverityChips(); buildSelects(); buildDates();
 
     try{
