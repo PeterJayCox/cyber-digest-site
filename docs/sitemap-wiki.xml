@@ -87,8 +87,10 @@
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/atf-confirms-major-incident-after-qilin-breach-claims.html</loc><lastmod>2026-08-27</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/atlassian-rovo-ai-assistant-can-be-tricked-into-exfiltrating-jira-and-confluence.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/attackers-chain-microsoft-sharepoint-rce-flaws-cve-2026-55040-cve-2026-63520-in-.html</loc><lastmod>2026-08-26</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/attackers-conceal-phishing-lures-with-invisible-unicode-characters.html</loc><lastmod>2026-09-06</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/attackers-exploit-papercut-flaws-to-steal-credentials-from-schools-and-universit.html</loc><lastmod>2026-09-05</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/attackers-exploit-sharepoint-authentication-bypass-after-public-poc-release.html</loc><lastmod>2026-08-30</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/attackers-hijack-mikrotik-routers-via-internet-exposed-ssh.html</loc><lastmod>2026-09-06</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/aurora-ransomware-operators-use-cursor-ai-to-plan-and-execute-attacks.html</loc><lastmod>2026-08-31</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/australia-charges-two-men-as-teampcp-s-principal-participants-after-supply-chain.html</loc><lastmod>2026-08-27</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/australia-releases-privacy-amendment-bill-with-72-hour-breach-reporting-deadline.html</loc><lastmod>2026-08-31</lastmod></url>
@@ -331,7 +333,9 @@
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/reliaquest-failed-shinyhunters-vishing-attack-2026-08-24.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/researchers-report-84-flaws-in-4g-and-5g-cores-including-session-hijacking.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/researchers-use-claude-to-port-pre-auth-rce-exploit-between-wago-plcs.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/resource-center-of-dallas-notifies-12-500-patients-about-cyber-incident.html</loc><lastmod>2026-09-06</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/revenue-cycle-management-group-mcbs-discloses-data-incident-affecting-1-26m-pati.html</loc><lastmod>2026-08-30</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/revstealer-modules-disable-windows-update-and-defender-for-crypto-mining.html</loc><lastmod>2026-09-06</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/rust-registry-supply-chain-attack-plants-build-time-malware-in-crates-with-245-m.html</loc><lastmod>2026-08-21</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/sable-squirrel-dropcatch-domains.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/safepal-crypto-hardware-wallet-maker-confirms-breach-affecting-nearly-40-000-cus.html</loc><lastmod>2026-08-30</lastmod></url>
@@ -395,6 +399,7 @@
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/us-state-department-imposes-visa-restrictions-on-foreign-cyber-scammers.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/us-treasury-sanctions-four-alleged-mois-directed-iranian-hackers-behind-critical.html</loc><lastmod>2026-08-25</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/vishing-attack-gives-threat-actor-access-to-quantum-health-network.html</loc><lastmod>2026-08-30</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/vocus-australia-singapore-cable-break.html</loc><lastmod>2026-09-06</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/vulnerability-giving-attackers-full-control-of-macs-is-under-active-exploitation.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/we-now-have-a-better-understanding-how-openai-hacked-into-hugging-face.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/weedhack-malware-ai-built-fake-minecraft-sites-2026-08-24.html</loc><lastmod>2026-08-24</lastmod></url>
