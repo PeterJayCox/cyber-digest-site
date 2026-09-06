@@ -114,6 +114,27 @@ Key style/asset gotchas (full details in the skill):
 - Keep privacy: never browse the user's filesystem for unrelated documents; work
   only with files the task needs.
 
+## Multi-agent collaboration
+
+This repo is designed for Codex + Hermes to collaborate without stepping on each
+other. **Read `COORDINATION.md` at the repo root** for the live work board +
+path-ownership table + release rules. The essentials:
+
+- **Codex owns the site presentation layer** (`templates/*`, `assets/*`,
+  `scripts/build_site.py`, `scripts/generate_assets.py`, `tests`, `mockups/*`).
+  **Hermes owns data/content** (ingest, daily/monthly content, vault DB, the
+  `Cyber Digest` generators) **plus the final build/deploy**.
+- **Work on a `codex/<task>` branch** in this repo. Commit only files owned by
+  your task. Never `git add -A` at `~/Desktop/Hermes` (outer repo) — it tracks
+  unrelated projects.
+- **Do not run the site build from a worktree** — `build_site.py` hard-codes the
+  vault DB + project paths; a worktree build reads the wrong data. Source edits
+  in a worktree are fine, but merge into the integration checkout first, then the
+  release owner builds.
+- **Release owner = human / Hermes**: after your branch merges, the human/Hermes
+  runs `build_site.py --fresh` + `cyber-site-deploy.sh`. Do not merge to main
+  or deploy yourself unless told.
+
 ## Improvement backlog (canonical task list)
 
 The authoritative list of planned work lives in the `cyber-site-publishing` skill
