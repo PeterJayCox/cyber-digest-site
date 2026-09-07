@@ -19,7 +19,7 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=202609080522"></head><body>
+<link rel="stylesheet" href="assets/site.css?v=202609080551"></head><body>
 <nav class="topnav"><div class="inner">
         <a class="brand" href="https://cyber.peterjaycox.com/index.html"><span class="brand-logo" aria-hidden="true"></span> Cyber&nbsp;Digest<small>public site</small></a>
         <div class="navlinks"><a href="https://cyber.peterjaycox.com/index.html" class=""><span class="t">🏠 Home</span></a><a href="https://cyber.peterjaycox.com/stories.html" class="active"><span class="t">📚 Story DB</span></a><a href="https://cyber.peterjaycox.com/globe.html" class=""><span class="t">🌍 Globe</span></a><a href="https://cyber.peterjaycox.com/daily/" class=""><span class="t">🗓️ Daily</span></a><a href="https://cyber.peterjaycox.com/monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="https://cyber.peterjaycox.com/reports/index.html" class=""><span class="t">📑 Reports</span></a><a href="https://cyber.peterjaycox.com/wiki/index.html" class=""><span class="t">🧠 Wiki</span></a><a href="https://cyber.peterjaycox.com/flashcards.html" class=""><span class="t">🗂️ Flashcards</span></a></div>
@@ -38,7 +38,7 @@
   <p><b>Confidence is the gate:</b> an <code>Unverified</code> story can never be rated <code>Critical</code> severity or <code>Observed</code> urgency — analysts never round up on an unattributed single-source claim.</p>
 
   <h2>Layer 2 — the homepage threat index</h2>
-  <p>A <b>rolling window</b> — selectable on the homepage as <b>14, 30 or 90 days</b> (default 14). Each story’s weight = <code>severity_weight × urgency_weight × confidence_weight × (1 + 0.12 × ANZ relevance) × recency decay</code>, summed per day and averaged across the days covered. The result maps onto a coarse band:</p>
+  <p>A <b>rolling window</b> — selectable on the homepage as <b>14, 30 or 90 days</b> (default 14). Each story’s weight = <code>severity_weight × urgency_weight × confidence_weight × (1 + 0.12 × ANZ relevance) × recency decay</code> — recency decay is <b>matched to the window</b> (half-life = window length ÷ 2, so a story from the far edge of the window keeps about a quarter of its weight) — summed per day and averaged across the days covered. The result maps onto a coarse band:</p>
   <table>
     <tr><th>Band</th><th>Meter /100</th><th>Meaning</th></tr>
     <tr><td>Low</td><td>0–39</td><td>Little severe, actively-exploited reporting</td></tr>
@@ -48,7 +48,7 @@
     <tr><td>Critical</td><td>85–100</td><td>Sustained critical-incident reporting</td></tr>
   </table>
   <p><b>Momentum</b> compares the current window against the prior window of equal length (each window decayed relative to its own end, so it is a real trend, not a recency artefact).</p>
-  <p><b>Choosing a window.</b> The homepage threat panel lets you switch between the <b>14-, 30- and 90-day</b> views, changing both the index window and the trend chart's horizon. Because of recency decay, a longer window scores systematically lower — the same day can read <em>Elevated</em> at 14 days but <em>Guarded</em> at 90. Both are correct for their own horizon, not a contradiction. The 90-day view is labelled <b>partial coverage</b> while the archive is younger than the window (collection began 7 July 2026), and its momentum line is hidden until a full prior window exists to compare against.</p>
+  <p><b>Choosing a window.</b> The homepage threat panel lets you switch between the <b>14-, 30- and 90-day</b> views, changing both the index window and the trend chart's horizon. Recency decay is matched to each window (half-life = window ÷ 2), so a 90-day view uses a 45-day half-life and measures a full quarter of reported activity rather than collapsing to the most recent fortnight — and a longer window can legitimately read <em>higher</em> or <em>lower</em> than a shorter one depending on the reporting trend (a heavy quarter shows up in the 90-day score even while the latest fortnight is quiet). The 90-day view is labelled <b>partial coverage</b> while the archive is younger than the window (collection began 7 July 2026), and its momentum line is hidden until a full prior window exists to compare against.</p>
 
   <h2>How the labels are assigned (auditable rubric)</h2>
   <p>The rules live in <code>threat_rating.py</code> (Cyber Digest project). Signals are matched against headline + summary text; the highest-matching severity band wins, then confidence caps it. Examples: a KEV-listed bug “exploited in the wild” → <code>Critical / Observed</code>; a new zero-day with no exploitation reported → <code>Severe–Elevated / Not yet observed</code>; an unconfirmed single-source claim stays <code>Elevated / Unverified</code>.</p>
@@ -99,6 +99,10 @@
 
   <h2>Changelog</h2>
   <ul>
+    <li><b>2026-09-07</b> — Recency decay is now <b>matched to the selected window</b>
+        (half-life = window ÷ 2). The 14-day view keeps its ≈7-day half-life; the 30- and
+        90-day views now weigh their full span instead of collapsing to the most recent
+        fortnight, and are directly comparable with the 14-day view.</li>
     <li><b>2026-09-02</b> — Added pipeline/AI disclosure, threat-index provenance and a
         globe-vs-total count explanation. Added the responsible-disclosure, privacy,
         corrections and licensing policy pages. Vendored the echarts + world-map assets
@@ -122,7 +126,7 @@
     <a href="https://cyber.peterjaycox.com/licensing.html">Licensing</a>
     <a href="https://cyber.peterjaycox.com/security.html">Security</a>
   </div>
-  Cyber Digest public site · built 2026-09-08 05:22
+  Cyber Digest public site · built 2026-09-08 05:51
 </div>
 <script>
 var _t=document.documentElement;
