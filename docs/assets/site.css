@@ -292,6 +292,11 @@ a:hover{text-decoration:underline}
 .sec-head h2{margin-bottom:0;border-bottom:none;padding-bottom:0;flex:1;min-width:0}
 .seeall{font-size:13px;font-weight:500;color:var(--accent);white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;gap:5px;padding:6px 14px;border:1px solid var(--border);border-radius:999px;background:var(--surface2);transition:all .15s;flex-shrink:0}
 .seeall:hover{border-color:var(--accent);box-shadow:0 0 12px var(--accent-glow)}
+.threat-win-sel{display:inline-flex;gap:5px;margin-left:10px;margin-right:6px;align-items:center;vertical-align:middle}
+.threat-win-sel button{font-size:12px;font-weight:600;padding:3px 11px;border:1px solid var(--border);background:var(--surface2);color:var(--text-secondary);border-radius:999px;cursor:pointer;font-family:inherit;transition:all .15s}
+.threat-win-sel button:hover{border-color:var(--accent);color:var(--text)}
+.threat-win-sel button.active{background:var(--accent);color:#ffffff;border-color:var(--accent);box-shadow:0 0 10px var(--accent-glow)}
+.threat-window[hidden]{display:none}
 
 /* ---- Generated brand assets ---- */
 /* sector icon thumbnails in cards/badges */

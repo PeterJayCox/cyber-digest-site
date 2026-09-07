@@ -438,90 +438,185 @@ def md_to_html(md, linkmap, mdpath=""):
     return body_html
 
 # ---------------- Threat-rating engine (Layer 2 panel) ----------------
-def threat_panel_html():
-    """Layer-2 Reported Threat Activity index over a 14-day window + momentum.
-    Returns '' if the engine isn't available."""
+# ---------------- Threat-rating engine (Layer 2 panel) ----------------
+# The homepage "Reported Threat Activity" section offers three selectable
+# windows (14/30/90 days). All three are precomputed at build time and served
+# as stacked panels under a segmented control; a small client-side script
+# toggles visibility, persists the choice in localStorage and mirrors it in a
+# shareable #14d/#30d/#90d URL hash (default 14-day).
+THREAT_WINDOWS = [14, 30, 90]
+THREAT_MAX_POINTS = {14: 45, 30: 60, 90: 90}   # chart history depth per window
+
+# Client-side selector script — a PLAIN string (braces are literal); it is
+# injected into the page by referencing {THREAT_SEL_JS} inside the f-string.
+THREAT_SEL_JS = """<script>
+(function(){
+  var sels = document.querySelectorAll('.threat-win-sel button');
+  var blocks = document.querySelectorAll('.threat-window');
+  var WIN = [14,30,90];
+  function pick(w){
+    for (var i=0;i<sels.length;i++){
+      var on = sels[i].getAttribute('data-w') == String(w);
+      sels[i].className = on ? 'active' : '';
+      sels[i].setAttribute('aria-pressed', on ? 'true' : 'false');
+    }
+    for (var j=0;j<blocks.length;j++){
+      var show = blocks[j].getAttribute('data-window') == String(w);
+      if (show){ blocks[j].removeAttribute('hidden'); } else { blocks[j].setAttribute('hidden',''); }
+      blocks[j].style.display = show ? '' : 'none';
+    }
+    try{ localStorage.setItem('cd-threat-win', String(w)); }catch(e){}
+    try{ history.replaceState(null, '', '#' + w + 'd'); }catch(e){}
+  }
+  var w = 0;
+  var m = (location.hash || '').match(/^#?(\\d+)d$/);
+  if (m && WIN.indexOf(parseInt(m[1],10)) >= 0){ w = parseInt(m[1],10); }
+  if (!w){
+    try{ var s = parseInt(localStorage.getItem('cd-threat-win') || '0', 10);
+         if (WIN.indexOf(s) >= 0){ w = s; } }catch(e){}
+  }
+  if (WIN.indexOf(w) < 0){ w = WIN[0]; }
+  pick(w);
+  for (var k=0;k<sels.length;k++){
+    sels[k].addEventListener('click', function(ev){
+      pick(parseInt(this.getAttribute('data-w'),10));
+    });
+  }
+})();
+</script>"""
+
+def _threat_load():
+    """Load the rating engine + story rows once. Returns (tr, stories) or (None, None)."""
     try:
         sys.path.insert(0, os.path.expanduser("~/Desktop/Hermes/Cyber Digest/scripts"))
         import threat_rating as tr
-        idx = tr.compute_index(tr.load_stories(DB), window_days=14)
+        return tr, tr.load_stories(DB)
     except Exception as e:
         print(f"[threat_panel] engine unavailable: {e}")
-        return ""
-    band = idx["band"]; pct = idx["pct"]; mom = idx.get("momentum_pct")
-    conf_cls = {"Low":"green","Guarded":"amber","Elevated":"red","Severe":"red","Critical":"red"}[band]
+        return None, None
 
-    # --- Live SVG gauge dial: needle angle driven by the real index value ---
-    # Semicircle 180deg -> left=0, right=100. Arc centre (cx,cy), radius r.
+def _threat_gauge(pct, band):
+    """Live SVG gauge dial: needle angle driven by the real index value."""
     gcx, gcy, gr = 90.0, 82.0, 64.0
-    ang = math.pi * (1.0 - max(0.0, min(100.0, float(pct))) / 100.0)   # radians
+    ang = math.pi * (1.0 - max(0.0, min(100.0, float(pct))) / 100.0)
     nx, ny = gcx + gr * math.cos(ang), gcy - gr * math.sin(ang)
     def _arc(a0, a1):
         x0, y0 = gcx + gr * math.cos(math.pi * (1 - a0 / 100)), gcy - gr * math.sin(math.pi * (1 - a0 / 100))
         x1, y1 = gcx + gr * math.cos(math.pi * (1 - a1 / 100)), gcy - gr * math.sin(math.pi * (1 - a1 / 100))
         return f'M {x0:.1f} {y0:.1f} A {gr} {gr} 0 0 1 {x1:.1f} {y1:.1f}'
-    segs = [(0,40,"#22c55e"),(40,55,"#f59e0b"),(55,70,"#f97316"),(70,85,"#ef4444"),(85,100,"#dc2626")]
-    gauge_svg = f'''<svg width="180" height="96" viewBox="0 0 180 96" role="img" aria-label="Threat index {pct:.0f} of 100, band {band}" style="flex-shrink:0">
-  {''.join(f'<path d="{_arc(a,b)}" stroke="{c}" stroke-width="7" fill="none" stroke-linecap="round" stroke-opacity=".55"/>' for a,b,c in segs)}
-  <path d="{_arc(max(0,pct-2.5),min(100,pct+2.5)) if pct>2 else ''}" stroke="var(--accent)" stroke-width="7" fill="none" stroke-linecap="round" style="filter:drop-shadow(0 0 3px var(--accent-glow))"/>
+    segs = [(0, 40, "#22c55e"), (40, 55, "#f59e0b"), (55, 70, "#f97316"), (70, 85, "#ef4444"), (85, 100, "#dc2626")]
+    return f'''<svg width="180" height="96" viewBox="0 0 180 96" role="img" aria-label="Threat index {pct:.0f} of 100, band {band}" style="flex-shrink:0">
+  {''.join(f'<path d="{_arc(a, b)}" stroke="{c}" stroke-width="7" fill="none" stroke-linecap="round" stroke-opacity=".55"/>' for a, b, c in segs)}
+  <path d="{_arc(max(0, pct - 2.5), min(100, pct + 2.5)) if pct > 2 else ''}" stroke="var(--accent)" stroke-width="7" fill="none" stroke-linecap="round" style="filter:drop-shadow(0 0 3px var(--accent-glow))"/>
   <line x1="{gcx}" y1="{gcy}" x2="{nx:.1f}" y2="{ny:.1f}" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" style="filter:drop-shadow(0 0 3px var(--accent-glow))"/>
   <circle cx="{gcx}" cy="{gcy}" r="4" fill="var(--accent)"/>
-  <text x="{gcx}" y="{gcy-12}" text-anchor="middle" fill="var(--text)" font-size="20" font-weight="800">{pct:.0f}</text>
+  <text x="{gcx}" y="{gcy - 12}" text-anchor="middle" fill="var(--text)" font-size="20" font-weight="800">{pct:.0f}</text>
 </svg>'''
-    mom_html = ""
-    if mom is not None:
-        arrow = "▲" if mom > 0 else "▼"
-        mcol = "var(--tag-red-text)" if abs(mom) >= 15 else "var(--text-dim)"
-        mom_html = (f'<span style="font-size:13px;color:{mcol}">{arrow} {abs(mom):.0f}% '
-                    f'{"rise" if mom>0 else "fall"} against prior 14 days</span>')
-    # Rolling trend chart lives in the same section, directly under the panel
-    series = threat_trend()
-    chart_html = threat_trend_html(series, wrap=False) if series else ""
-    return f'''
-<div class="section" style="margin-top:6px">
-<h2><span class="bar"></span>Reported Threat Activity <span style="font-size:13px;font-weight:400;color:var(--text-dim)">· 14-day window · as of {idx["as_of"]}</span></h2>
+
+def _threat_panel_body(tr, st, w):
+    """Panel + trend chart for one window `w`. Returns '' on any failure so a
+    single bad window can't take down the homepage build."""
+    try:
+        idx = tr.compute_index(st, window_days=w)
+        band, pct, mom = idx["band"], idx["pct"], idx.get("momentum_pct")
+        conf_cls = {"Low": "green", "Guarded": "amber", "Elevated": "red", "Severe": "red", "Critical": "red"}[band]
+        asof = date.fromisoformat(idx["as_of"])
+        oldest = min((s["_date"] for s in st), default=asof)
+        # window start predates the archive -> partial coverage
+        partial = (asof - timedelta(days=w - 1)) < oldest
+        # momentum needs a comparable prior window: the engine returns None when
+        # the prior window is empty, and we also suppress it while THIS window is
+        # still partial so it never compares against an underweighted baseline.
+        mom_html = ""
+        if mom is not None and not partial:
+            arrow = "▲" if mom > 0 else "▼"
+            mcol = "var(--tag-red-text)" if abs(mom) >= 15 else "var(--text-dim)"
+            mom_html = (f'<span style="font-size:13px;color:{mcol}">{arrow} {abs(mom):.0f}% '
+                        f'{"rise" if mom > 0 else "fall"} against prior {w} days</span>')
+        note = (f'<div style="margin-top:2px">{idx["current_count"]} stories rated this window ({w}-day). '
+                f'This measures <strong>reported</strong> activity — frequency and severity of publicly '
+                f'reported incidents — not a prediction of attack, and only as current as the last digest. '
+                f'<a href="methodology.html" style="color:var(--cyan);font-weight:600">Methodology &amp; caveats →</a></div>')
+        if partial:
+            note += (f'<div style="margin-top:2px"><span class="tag amber">partial coverage</span> this '
+                     f'window begins before the archive started ({oldest.isoformat()}) — the index uses '
+                     f'only the stories available.</div>')
+        series = threat_trend(st, tr, window_days=w, max_points=THREAT_MAX_POINTS[w])
+        chart_html = threat_trend_html(series, window_days=w) if series else ""
+        return f'''
 <div class="threat-panel" style="display:flex;flex-wrap:wrap;gap:22px;align-items:center;background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:20px 24px">
-  {gauge_svg}
+  {_threat_gauge(pct, band)}
   <div style="display:flex;align-items:center;gap:16px;flex:1;min-width:200px">
     <span class="tag {conf_cls}" style="font-size:15px;padding:6px 14px;border-radius:16px"><strong>{band}</strong> · {pct}/100</span>
   </div>
   <div style="font-size:13px;color:var(--text-dim);line-height:1.5;flex:1;min-width:220px">
     {mom_html}
-    <div style="margin-top:2px">{idx['current_count']} stories rated this window. This measures <strong>reported</strong> activity — frequency and severity of publicly reported incidents — not a prediction of attack, and only as current as the last digest. <a href="methodology.html" style="color:var(--cyan);font-weight:600">Methodology &amp; caveats →</a></div>
+    {note}
   </div>
 </div>
-{chart_html}
+{chart_html}'''
+    except Exception as e:
+        print(f"[threat_panel] window {w}: {e}")
+        return ""
+
+def threat_panel_html():
+    """Layer-2 Reported Threat Activity index over selectable windows + momentum.
+    Precomputes every window (14/30/90) so the client-side selector needs no
+    data fetch. Returns '' if the engine isn't available."""
+    tr, st = _threat_load()
+    if not st:
+        return ""
+    sel = ('<span class="threat-win-sel" role="group" aria-label="Reporting window">'
+           + "".join(
+               f'<button type="button" data-w="{w}" class="{"active" if w == THREAT_WINDOWS[0] else ""}" '
+               f'aria-pressed="{"true" if w == THREAT_WINDOWS[0] else "false"}">{w} day</button>'
+               for w in THREAT_WINDOWS)
+           + "</span>")
+    blocks = "\n".join(
+        f'<div class="threat-window" data-window="{w}"{" hidden" if w != THREAT_WINDOWS[0] else ""}>'
+        f'{_threat_panel_body(tr, st, w)}</div>'
+        for w in THREAT_WINDOWS)
+    return f'''
+<div class="section" style="margin-top:6px">
+<h2><span class="bar"></span>Reported Threat Activity {sel}<span style="font-size:13px;font-weight:400;color:var(--text-dim)">· as of {date.today().isoformat()}</span></h2>
+{blocks}
+<div style="font-size:12px;color:var(--text-dim);margin-top:5px">Note: longer windows score lower — recency decay means older stories count less, so the same day can read <em>Elevated</em> at 14 days but <em>Guarded</em> at 90. Both are correct for their own horizon. <a href="methodology.html" style="color:var(--cyan);font-weight:600">Methodology →</a></div>
+{THREAT_SEL_JS}
 </div>'''
 
 # ---------------- Threat-index trend series (homepage chart) ----------------
-def threat_trend(max_points=45):
-    """Daily 14-day rolling threat index over time -> [{date, pct, band}, ...]."""
-    try:
-        sys.path.insert(0, os.path.expanduser("~/Desktop/Hermes/Cyber Digest/scripts"))
-        import threat_rating as tr
-        st = tr.load_stories(DB)
-    except Exception as e:
-        print(f"[threat_trend] engine unavailable: {e}")
-        return []
+def threat_trend(st=None, tr=None, window_days=14, max_points=45):
+    """Daily rolling threat index over time -> [{date, pct, band}, ...].
+
+    Each point is the `window_days`-day index asof that digest date, so both
+    the chart's horizon and each point's rolling window follow the selector.
+    Pass pre-loaded (tr, st) to avoid re-loading the DB per call; a final point
+    is appended for today so the chart's last value matches the panel above it.
+    """
+    if st is None or tr is None:
+        tr, st = _threat_load()
+        if not st:
+            return []
     dates = sorted({s["_date"] for s in st})
     if not dates:
         return []
     dates = dates[-max_points:]
     series = []
     for d in dates:
-        idx = tr.compute_index(st, window_days=14, asof=d)
+        idx = tr.compute_index(st, window_days=window_days, asof=d)
         series.append({"date": d.isoformat(), "pct": idx["pct"], "band": idx["band"]})
     # append today's point so the chart's last value matches the panel above it
     tod = date.today()
     if not series or series[-1]["date"] != tod.isoformat():
-        idx = tr.compute_index(st, window_days=14, asof=tod)
+        idx = tr.compute_index(st, window_days=window_days, asof=tod)
         series.append({"date": tod.isoformat(), "pct": idx["pct"], "band": idx["band"]})
     return series
 
-def threat_trend_html(series, wrap=True):
-    """Inline SVG area chart of the daily 14-day rolling threat index.
-    `wrap=False` returns just the card (for embedding under the panel in one
-    section); `wrap=True` returns a standalone section with its own header."""
+def threat_trend_html(series, window_days=14, wrap=False):
+    """Inline SVG area chart of the rolling threat index.
+    `wrap=False` returns just the card (for embedding under the panel in the
+    windowed section); `wrap=True` returns a standalone section with a header.
+    The caption names the rolling window so the chart stays self-describing."""
     if not series:
         return ""
     n = len(series)
@@ -582,6 +677,8 @@ def threat_trend_html(series, wrap=True):
              f'<text x="{pad-4}" y="{Y(ylo)+3:.1f}" fill="currentColor" opacity="0.5" font-size="10" '
              f'text-anchor="end">{ylo:.0f}</text>')
     last = series[-1]
+    caption = (f'Daily {window_days}-day rolling threat index · as of {last["date"]} '
+               f'· latest <strong>{last["band"]}</strong> · axis {ylo:.0f}–{yhi:.0f} of 100 (zoomed)')
     chart = f'''<div style="background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:16px 20px;margin-top:14px;overflow-x:auto">
 <svg viewBox="0 0 {W} {H}" width="100%" role="img" aria-label="Reported threat activity index over time" style="display:block;max-width:820px;margin:0 auto;color:var(--text-secondary)">
   <rect x="{pad}" y="{pad}" width="{iw}" height="{ih}" fill="none" stroke="currentColor" stroke-opacity="0.06"/>
@@ -592,11 +689,13 @@ def threat_trend_html(series, wrap=True):
   {yaxis}
   {blab}
 </svg>
-<div style="font-size:12px;color:var(--text-dim);margin-top:6px;text-align:center">Daily 14-day rolling threat index · as of {last["date"]} · latest <strong>{last["band"]}</strong> · axis {ylo:.0f}–{yhi:.0f} of 100 (zoomed)</div>
+<div style="font-size:12px;color:var(--text-dim);margin-top:6px;text-align:center">{caption}</div>
 </div>'''
     if not wrap:
         return chart
-    return f'<div class="section" style="margin-top:6px"><h2><span class="bar"></span>Reported Threat Activity <span style="font-size:13px;font-weight:400;color:var(--text-dim)">· trend · 14-day rolling window</span></h2>\n{chart}\n</div>'
+    return (f'<div class="section" style="margin-top:6px"><h2><span class="bar"></span>'
+            f'Reported Threat Activity <span style="font-size:13px;font-weight:400;color:var(--text-dim)">'
+            f'· trend · {window_days}-day rolling window</span></h2>\n{chart}\n</div>')
 
 # ---------------- RSS feed + sitemap ----------------
 def build_feed(stories, days):
@@ -1910,7 +2009,7 @@ METHODOLOGY_BODY = """<h2>What this measures (and what it does not)</h2>
   <p><b>Confidence is the gate:</b> an <code>Unverified</code> story can never be rated <code>Critical</code> severity or <code>Observed</code> urgency — analysts never round up on an unattributed single-source claim.</p>
 
   <h2>Layer 2 — the homepage threat index</h2>
-  <p>A <b>14-day rolling window</b>. Each story’s weight = <code>severity_weight × urgency_weight × confidence_weight × (1 + 0.12 × ANZ relevance) × recency decay</code>, summed per day and averaged across the days covered. The result maps onto a coarse band:</p>
+  <p>A <b>rolling window</b> — selectable on the homepage as <b>14, 30 or 90 days</b> (default 14). Each story’s weight = <code>severity_weight × urgency_weight × confidence_weight × (1 + 0.12 × ANZ relevance) × recency decay</code>, summed per day and averaged across the days covered. The result maps onto a coarse band:</p>
   <table>
     <tr><th>Band</th><th>Meter /100</th><th>Meaning</th></tr>
     <tr><td>Low</td><td>0–39</td><td>Little severe, actively-exploited reporting</td></tr>
@@ -1919,7 +2018,8 @@ METHODOLOGY_BODY = """<h2>What this measures (and what it does not)</h2>
     <tr><td>Severe</td><td>70–84</td><td>Widespread critical or observed-exploitation activity</td></tr>
     <tr><td>Critical</td><td>85–100</td><td>Sustained critical-incident reporting</td></tr>
   </table>
-  <p><b>Momentum</b> compares the current window against the prior 14 days (each window decayed relative to its own end, so it is a real trend, not a recency artefact).</p>
+  <p><b>Momentum</b> compares the current window against the prior window of equal length (each window decayed relative to its own end, so it is a real trend, not a recency artefact).</p>
+  <p><b>Choosing a window.</b> The homepage threat panel lets you switch between the <b>14-, 30- and 90-day</b> views, changing both the index window and the trend chart's horizon. Because of recency decay, a longer window scores systematically lower — the same day can read <em>Elevated</em> at 14 days but <em>Guarded</em> at 90. Both are correct for their own horizon, not a contradiction. The 90-day view is labelled <b>partial coverage</b> while the archive is younger than the window (collection began 7 July 2026), and its momentum line is hidden until a full prior window exists to compare against.</p>
 
   <h2>How the labels are assigned (auditable rubric)</h2>
   <p>The rules live in <code>threat_rating.py</code> (Cyber Digest project). Signals are matched against headline + summary text; the highest-matching severity band wins, then confidence caps it. Examples: a KEV-listed bug “exploited in the wild” → <code>Critical / Observed</code>; a new zero-day with no exploitation reported → <code>Severe–Elevated / Not yet observed</code>; an unconfirmed single-source claim stays <code>Elevated / Unverified</code>.</p>
@@ -1956,7 +2056,7 @@ METHODOLOGY_BODY = """<h2>What this measures (and what it does not)</h2>
   cards are all computed from the <b>published digest archive in the SQLite database</b>
   (the <code>stories</code> and <code>digests</code> tables) at every site build. They are
   <b>not</b> synthetic, hand-entered or backdated figures, and they are not a prediction.
-  The 14-day rolling index described above is a real computation over the stories
+  The rolling index described above is a real computation over the stories
   ingested in that window.</p>
   <p><b>Why the globe count differs from the total.</b> The homepage and full-page 3D
   globes plot a <b>geolocatable subset</b> of the story database — stories that resolve to
