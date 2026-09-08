@@ -665,10 +665,12 @@ var body=c.querySelector('.exec-body');var prev=c.querySelector('.exec-preview')
 function setOpen(open){body.hidden=!open;if(prev)prev.hidden=open;btn.setAttribute('aria-expanded',open?'true':'false');btn.textContent=open?'Collapse':'Expand';}
 btn.addEventListener('click',function(){setOpen(body.hidden);});
 });
-if('IntersectionObserver' in window){
-var _exio=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){var id=en.target.id;document.querySelectorAll('.exec-toc-link').forEach(function(a){a.classList.toggle('active',a.dataset.threadTarget===id);});}});},{rootMargin:'-40% 0px -55% 0px'});
-document.querySelectorAll('.exec-thread').forEach(function(t){_exio.observe(t);});
-}
+/* mini-TOC scrollspy (progressive enhancement): highlight the thread whose
+   card top has just crossed the top threshold — mirrors the main rail pattern. */
+var _excur=null;
+function execScrollSpy(){var cur=null;document.querySelectorAll('.exec-thread').forEach(function(t){if(t.getBoundingClientRect().top<=150){cur=t.id;}});if(cur!==_excur){_excur=cur;document.querySelectorAll('.exec-toc-link').forEach(function(a){a.classList.toggle('active',a.dataset.threadTarget===cur);});}}
+window.addEventListener('scroll',execScrollSpy,{passive:true});
+execScrollSpy();
 </script>
 </body>
 </html>
