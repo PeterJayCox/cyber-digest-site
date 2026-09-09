@@ -1,0 +1,97 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Patch-Gap Zero-Day Weaponisation</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png">
+<link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png">
+<link rel="alternate" type="application/rss+xml" title="Cyber Digest" href="https://cyber.peterjaycox.com/feed.xml">
+<link rel="alternate" type="application/rss+xml" title="Cyber Digest — Monthly Editions" href="https://cyber.peterjaycox.com/feed-monthly.xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Patch-Gap Zero-Day Weaponisation">
+<meta property="og:description" content="Curated sector-by-sector roundup of global cybersecurity developments with source-reliability indexing, AU/NZ context, and searchable knowledge base.">
+<meta property="og:url" content="https://cyber.peterjaycox.com/">
+<meta property="og:image" content="https://cyber.peterjaycox.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"Cyber Digest","alternateName":"Cyber Digest — public site","url":"https://cyber.peterjaycox.com/","description":"Curated, source-rated roundup of global cybersecurity developments with AU/NZ context.","inLanguage":"en-AU","publisher":{"@type":"Organization","name":"Cyber Digest","url":"https://cyber.peterjaycox.com/"},"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://cyber.peterjaycox.com/stories.html?q={search_term_string}"},"query-input":"required name=search_term_string"}}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/site.css?v=202609100854"></head><body>
+<nav class="topnav"><div class="inner">
+        <a class="brand" href="https://cyber.peterjaycox.com/index.html"><span class="brand-logo" aria-hidden="true"></span> Cyber&nbsp;Digest<small>public site</small></a>
+        <div class="navlinks"><a href="https://cyber.peterjaycox.com/index.html" class=""><span class="t">🏠 Home</span></a><a href="https://cyber.peterjaycox.com/stories.html" class=""><span class="t">📚 Story DB</span></a><a href="https://cyber.peterjaycox.com/globe.html" class=""><span class="t">🌍 Globe</span></a><a href="https://cyber.peterjaycox.com/daily/" class=""><span class="t">🗓️ Daily</span></a><a href="https://cyber.peterjaycox.com/monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="https://cyber.peterjaycox.com/reports/index.html" class=""><span class="t">📑 Reports</span></a><a href="https://cyber.peterjaycox.com/wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a><a href="https://cyber.peterjaycox.com/flashcards.html" class=""><span class="t">🗂️ Flashcards</span></a></div>
+        <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light">🌙</div></div></nav><main class="container">
+            <div class="container">
+            <div class="crumb"><a href="../../index.html">Home</a> · <a href="../../wiki/index.html">Wiki</a> · Concepts &amp; Frameworks</div>
+            <div class="wiki-body"><div class="frontmatter">type: concept · created: 2026-09-10 · updated: 2026-09-10 · tags: [technique, zero-day, exploitation, supply-chain, defender-lesson] · confidence: high · affected_sectors: [technology, government, defence, critical-infrastructure] · au_impact: true</div><h1>Patch-Gap Zero-Day Weaponisation</h1>
+<p><strong>Patch-gap weaponisation</strong> is an exploitation technique in which a vulnerability is <strong>fixed in an upstream, open-source or source-supplied codebase but has not yet reached the shipped product</strong> that end users run. Threat actors weaponise the flaw in the gap between the upstream fix and the downstream release, exploiting a window defenders perceive — incorrectly — as already patched.</p>
+<h2>The mechanism</h2>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1. Upstream fix</strong></td>
+<td>Maintainer patches the defect in the source repository or a staged channel (e.g. Chromium source, an SDK, a framework)</td>
+</tr>
+<tr>
+<td><strong>2. Gap opens</strong></td>
+<td>The patched code has not been packaged into a stable, auto-updated release that reaches users</td>
+</tr>
+<tr>
+<td><strong>3. Actor weaponises</strong></td>
+<td>The flaw remains exploitable in production even though a fix "exists" — public or reverse-engineering visibility of the upstream patch can even hand actors the diff</td>
+</tr>
+<tr>
+<td><strong>4. Defender confusion</strong></td>
+<td>Organisations believe they are patched because the fix exists and may be flagged in the product's repo or a partial advisory; the shipped binary is still vulnerable</td>
+</tr>
+</tbody>
+</table>
+<h2>BlueMoon case (2026-09)</h2>
+<p>The canonical instance is the <strong>China-linked "BlueMoon" browser chain</strong> — CVE-2026-85046 (Chrome V8 type confusion), CVE-2026-87491 (WebAssembly sandbox escape) and CVE-2026-85880 (Windows kernel): multiple Chinese espionage clusters exploited all three after the Chromium fix had <strong>"shipped upstream but not yet reached users"</strong> — a window the actors weaponised within days. The chain is notable for its <strong>byte-identical reuse</strong> across distinct clusters (JungleBamboo/APT31, UTA0560 and others), indicating a shared exploit supply chain. Google's response — moving Chrome to a <strong>two-week release cycle</strong> — was a direct structural effort to shrink the gap.</p>
+<h2>Why it matters for defenders</h2>
+<ul>
+<li><strong>"Patched" is a release-state claim, not a source-state claim.</strong> Verify the <em>shipped</em> version, not merely that a fix exists upstream.</li>
+<li><strong>Track upstream patches actively</strong> — especially for browsers, frameworks and open-source dependencies — and re-check the running version when a fix lands in source.</li>
+<li><strong>Patch-gap windows are asymmetrically valuable to adversaries</strong> precisely because they combine exploitability with a false sense of security among defenders.</li>
+<li><strong>Shared, byte-identical kit reuse is an attribution signal</strong>, but it can equally reflect a <strong>single exploit broker/vendor</strong> selling the same chain to multiple independent state customers — the common-channel inference strengthens the "supply-chain" picture while complicating individual-actor attribution.</li>
+</ul>
+<h2>Related Pages</h2>
+<ul>
+<li><a href="../incidents/multiple-chinese-hacking-groups-chain-chrome-zero-day-bluemoon-exploit-in-espion.html">Multiple Chinese Hacking Groups Chain Chrome Zero Day Bluemoon Exploit In Espion</a> — the BlueMoon campaign exploiting this gap</li>
+<li><a href="../entities/junglebamboo.html">Junglebamboo</a>, <a href="../entities/uta0560.html">Uta0560</a> — the China-linked actors involved</li>
+<li><a href="../vulnerabilities/cve-2026-85046.html">Cve 2026 85046</a>, <a href="../vulnerabilities/cve-2026-87491.html">Cve 2026 87491</a>, <a href="../vulnerabilities/cve-2026-85880.html">Cve 2026 85880</a> — the chained zero-days</li>
+<li><a href="../incidents/cisa-adds-metabase-sql-injection-flaw-cve-2026-72898-to-known-exploited-vulnerab.html">Cisa Adds Metabase Sql Injection Flaw Cve 2026 72898 To Known Exploited Vulnerab</a> — related expression of upstream-then-exploited pressure</li>
+</ul></div>
+            </div></main>
+<div class="footer">
+  <div class="links">
+    <a href="https://cyber.peterjaycox.com/index.html">Home</a>
+    <a href="https://cyber.peterjaycox.com/stories.html">Story DB</a>
+    <a href="https://cyber.peterjaycox.com/daily/">Daily</a>
+    <a href="https://cyber.peterjaycox.com/monthly/index.html">Monthly</a>
+    <a href="https://cyber.peterjaycox.com/reports/index.html">Reports</a>
+    <a href="https://cyber.peterjaycox.com/wiki/index.html">Wiki</a>
+    <a href="https://cyber.peterjaycox.com/feed.xml">RSS</a>
+    <a href="https://cyber.peterjaycox.com/privacy.html">Privacy</a>
+    <a href="https://cyber.peterjaycox.com/corrections.html">Corrections</a>
+    <a href="https://cyber.peterjaycox.com/licensing.html">Licensing</a>
+    <a href="https://cyber.peterjaycox.com/security.html">Security</a>
+  </div>
+  Cyber Digest public site · built 2026-09-10 08:54
+</div>
+<script>
+var _t=document.documentElement;
+var _b=document.querySelector(".theme-toggle");
+function toggleTheme(){var n=_t.getAttribute("data-theme")==="dark"?"light":"dark";_t.setAttribute("data-theme",n);if(_b)_b.textContent=n==="dark"?"🌙":"☀️";try{if(n==="dark")localStorage.removeItem("cd-theme");else localStorage.setItem("cd-theme",n)}catch(e){}}
+(function(){try{var s=localStorage.getItem("cd-theme");if(s){_t.setAttribute("data-theme",s);if(_b)_b.textContent="☀️"}}catch(e){}})()
+</script>
+</body></html>
