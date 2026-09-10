@@ -127,6 +127,21 @@ body{font-family:Inter,-apple-system,sans-serif;background:var(--bg);color:var(-
 .ss-cell i{font-style:normal;font-size:8.5px;font-weight:600;opacity:.78;line-height:1.2;margin-top:2px}
 .ss-cell:hover{outline:2px solid var(--accent);outline-offset:-1px;cursor:help;transform:scale(1.04)}
 .ss-cell[data-tip]:hover::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#0f172a;color:#f1f5f9;border:1px solid #1e293b;border-radius:5px;padding:4px 8px;font-size:10.5px;font-weight:600;white-space:nowrap;line-height:1.3;z-index:30;box-shadow:0 4px 12px rgba(0,0,0,.35)}
+/* Severity-scan keyboard/touch access: the tooltip must not be hover-only */
+.ss-cell:focus{outline:none}
+.ss-cell:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ss-cell[data-tip]:focus::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#0f172a;color:#f1f5f9;border:1px solid #1e293b;border-radius:5px;padding:4px 8px;font-size:10.5px;font-weight:600;white-space:nowrap;line-height:1.3;z-index:30;box-shadow:0 4px 12px rgba(0,0,0,.35)}
+/* Section-level denominator/context note */
+.section-note{font-size:12px;color:var(--text-muted);line-height:1.55;margin:0 0 16px;max-width:78ch}
+.section-note b{color:var(--text-secondary)}
+/* Collapsed fact-check verification log */
+.fc-details>summary{cursor:pointer;font-size:12px;font-weight:700;color:var(--accent);list-style:none;display:inline-block;padding:2px 0}
+.fc-details>summary::-webkit-details-marker{display:none}
+.fc-details>summary::before{content:"▸ ";font-size:11px}
+.fc-details[open]>summary::before{content:"▾ "}
+.fc-detail-list{margin:8px 0 0;padding-left:18px}
+.fc-detail-list li{margin-bottom:8px;font-size:12px;line-height:1.6;color:var(--text-secondary)}
+.factcheck-notes{margin-top:14px}
 @media(max-width:640px){.ss-cell[data-tip]:hover::after{left:auto;right:0;transform:none;white-space:normal;max-width:200px}}
 .ss-cell.crit{background:linear-gradient(180deg,rgba(244,63,94,.35),rgba(244,63,94,.78));color:#fff}
 .ss-cell.sev{background:linear-gradient(180deg,rgba(245,158,11,.3),rgba(245,158,11,.72));color:#fff}
