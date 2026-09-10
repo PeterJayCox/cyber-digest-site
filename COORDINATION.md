@@ -19,7 +19,14 @@ the table.
 
 | Task | Agent | Paths owned | Branch | Status |
 |---|---|---|---|---|
-| (empty) | — | — | — | — |
+| Sector-review scoring model v2 (impact scores split from source tier, event-level dedup, actor roll-up, watch-list, methodology block) | Hermes | `scripts/build_site.py` (shared), `Cyber Digest/scripts/{impact_model,incident_flags,sector-review-sync}.py`, vault `Cyber/Cyber Digest/Reports/*` | main | **Shipped 2026-09-11** — `build_reports()` renders Executive Summary → Cross-Sector Themes → Actors & Campaigns → Watch-list → sectors → Methodology. New JSON fields are optional, so July/August report pages are unaffected. Edit `incident_flags.py` (not the JSON) to re-score. |
+
+## Scoring model (read before editing report pages)
+
+`tier` = source reliability only; `impact` (0-100, from `impact_model.py`) is what ranks.
+Sector cap is 6 events, with over-cap items listed under `also_reported`. Every incident
+named in a `change` block or theme must resolve to an entry or an `also_reported` item —
+`rebuild_q3_step3b.py`'s `audit()` enforces it.
 
 ## Path ownership
 

@@ -2097,10 +2097,11 @@ def build_reports(reports):
     for r in reports:
         ninc = sum(len(s.get("incidents", [])) for s in r.get("sectors", []))
         nsect = len(r.get("sectors", []))
+        unit = "events" if r.get("impact_model") else "incidents"
         cards_parts.append(
             '<a class="card" href="' + esc(r["_slug"]) + '.html">'
             '<h3>' + esc(r["report_title"]) + '</h3>'
-            '<div class="meta">' + esc(r.get("period", "")) + ' \u00b7 ' + str(nsect) + ' sectors \u00b7 ' + str(ninc) + ' incidents</div>'
+            '<div class="meta">' + esc(r.get("period", "")) + ' \u00b7 ' + str(nsect) + ' sectors \u00b7 ' + str(ninc) + ' ' + unit + '</div>'
             '<p class="card-summary">' + esc(r.get("subtitle", "")) + '</p>'
             '<span class="go">Open \u2192</span></a>'
         )
