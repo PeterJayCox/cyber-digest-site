@@ -31,7 +31,7 @@ def _rfc822(datestr):
     return email.utils.formatdate(calendar.timegm(d.utctimetuple()), usegmt=True)
 
 SECTOR_EMOJI = {
- "Financial Services":"💰","Legal Services":"⚖️","Defence":"🛰️","Healthcare":"🏥",
+ "Financial Services":"💰","Legal Services":"⚖️","Regulatory & Legal":"⚖️","Defence":"🛰️","Healthcare":"🏥",
  "Education":"🎓","Government":"🏛️","Government & Policy":"🏛️","Energy & Utilities":"⚡","Construction & Property":"🏗️",
  "Retail & Entertainment & Sport":"🛍️","Global (Macro)":"🌐","Transport":"🚚",
  "Technology & AI Governance":"🤖","IT / Technology":"💻","IT":"💻",
@@ -43,7 +43,7 @@ SECTOR_EMOJI = {
 }
 # raster sector icon filename (in assets/img/icons/) per sector name; falls back to a globe
 SECTOR_ICON = {
- "Financial Services":"financial","Legal Services":"legal","Defence":"defence","Healthcare":"healthcare",
+ "Financial Services":"financial","Legal Services":"legal","Regulatory & Legal":"legal","Defence":"defence","Healthcare":"healthcare",
  "Education":"education","Government":"government","Government & Policy":"government",
  "Government, Policy & Infrastructure Security":"government","Energy & Utilities":"energy",
  "Construction & Property":"general","Retail & Entertainment & Sport":"general","Global (Macro)":"general",
@@ -58,7 +58,7 @@ def _sector_icon_img(name, root=""):
     return f'<img class="sicon" src="{root}assets/img/icons/sector-{f}.png" alt="" loading="lazy">'
 # colour tag per sector for badges
 SECTOR_TAG = {
- "Financial Services":"cyan","Legal Services":"purple","Defence":"blue","Healthcare":"red",
+ "Financial Services":"cyan","Legal Services":"purple","Regulatory & Legal":"purple","Defence":"blue","Healthcare":"red",
  "Education":"amber","Government":"blue","Government & Policy":"blue","Energy & Utilities":"amber","Construction & Property":"amber",
  "Retail & Entertainment & Sport":"red","Global (Macro)":"purple","Transport":"green","Technology & AI Governance":"cyan",
  "IT / Technology":"vuln","Legal & Regulatory":"purple","General / Cross-Sector":"blue",
@@ -1840,6 +1840,118 @@ def themes_html(r):
             '<p style="margin:0 0 6px;font-size:13.5px;color:var(--text-secondary)">' + esc(intro) + '</p>'
             + "".join(parts) + '</div>')
 
+def _anchor(name):
+    """Stable, punctuation-free section anchor (handles 'Global (Macro)')."""
+    import re as _re
+    return _re.sub(r"[^a-z0-9]+", "-", str(name).lower()).strip("-")
+
+
+def _ev_badge(v):
+    cls = {"Confirmed": "green", "Probable": "amber", "Reported": "blue",
+           "Claimed": "red", "Thwarted": "blue"}.get(v, "blue")
+    return ('<span class="tag ' + cls + '" style="font-size:10.5px">'
+            + esc(v) + '</span>') if v else ""
+
+
+def actors_html(r):
+    """Render the actor/campaign roll-up — incidents grouped by who did it rather
+    than by who suffered, which is where causation shows up rather than
+    coincidence. Data: r['actor_rollup'] = [{actor, attribution, confidence,
+    incidents, sectors[], summary}]."""
+    rows_in = r.get("actor_rollup") or []
+    if not rows_in:
+        return ""
+    conf_cls = {"High": "green", "Moderate": "amber", "Low": "red"}
+    rows = []
+    for a in rows_in:
+        badges = "".join(
+            '<span class="tag ' + SECTOR_TAG.get(s, "blue") + '" style="font-size:10.5px;margin:0 3px 3px 0">'
+            + SECTOR_EMOJI.get(s, "") + ' ' + esc(s) + '</span>'
+            for s in a.get("sectors", [])
+        )
+        conf = a.get("confidence", "")
+        rows.append(
+            '<div class="story" style="margin-bottom:0;padding:12px 0;border-bottom:1px solid var(--border-light)">'
+            '<div style="display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap">'
+            '<div style="flex:1;min-width:220px">'
+            '<h3 style="margin:0 0 3px;font-size:15px;font-weight:650">' + esc(a.get("actor", ""))
+            + ' <span class="tag blue" style="font-size:10.5px">' + str(a.get("incidents", 0)) + ' datapoints</span></h3>'
+            '<p style="margin:0 0 6px;font-size:13px;color:var(--text-secondary);line-height:1.5">' + esc(a.get("summary", "")) + '</p>'
+            '<div style="font-size:11.5px;color:var(--text-dim);margin-bottom:6px">'
+            + esc(a.get("attribution", ""))
+            + (' &nbsp;' + '<span class="tag ' + conf_cls.get(conf, "blue") + '" style="font-size:10.5px">Confidence: ' + esc(conf) + '</span>' if conf else '')
+            + '</div>'
+            '<div style="display:flex;gap:4px;flex-wrap:wrap">' + badges + '</div>'
+            '</div></div></div>'
+        )
+    return ('<div class="section" id="actors">'
+            '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">'
+            '<span style="font-size:1.6rem">\U0001F3AD</span>'
+            '<h2 style="margin:0;font-size:22px"><span class="bar"></span>Actors &amp; Campaigns</h2>'
+            '<span class="tag blue" style="margin-left:auto">' + str(len(rows_in)) + ' tracked</span></div>'
+            '<p style="margin:0 0 6px;font-size:13.5px;color:var(--text-secondary)">'
+            'The same quarter cut by actor rather than by victim sector. Incidents grouped here are separate events attributed to a common actor or campaign.</p>'
+            + "".join(rows) + '</div>')
+
+
+def watchlist_html(r):
+    """Render the forward-look watch-list — what to monitor next period and the
+    indicator that would confirm it. Data: r['watchlist'] = [{signal, why,
+    indicator}]."""
+    items = r.get("watchlist") or []
+    if not items:
+        return ""
+    rows = []
+    for i, w in enumerate(items, 1):
+        rows.append(
+            '<div class="story" style="margin-bottom:0;padding:12px 0;border-bottom:1px solid var(--border-light)">'
+            '<div style="display:flex;gap:10px;align-items:flex-start">'
+            '<span class="tag amber" style="flex-shrink:0;margin-top:2px;border-radius:50%;width:26px;height:26px;justify-content:center;align-items:center;display:inline-flex;font-weight:700">' + str(i) + '</span>'
+            '<div style="flex:1;min-width:0">'
+            '<h3 style="margin:0 0 4px;font-size:15px;font-weight:650">' + esc(w.get("signal", "")) + '</h3>'
+            '<p style="margin:0 0 6px;font-size:13px;color:var(--text-secondary);line-height:1.5">' + esc(w.get("why", "")) + '</p>'
+            '<p style="margin:0;font-size:12.5px;color:var(--text-dim)"><strong>Indicator:</strong> ' + esc(w.get("indicator", "")) + '</p>'
+            '</div></div></div>'
+        )
+    return ('<div class="section" id="watchlist">'
+            '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">'
+            '<span style="font-size:1.6rem">\U0001F441\uFE0F</span>'
+            '<h2 style="margin:0;font-size:22px"><span class="bar"></span>Watch-list</h2>'
+            '<span class="tag amber" style="margin-left:auto">Next period</span></div>'
+            '<p style="margin:0 0 6px;font-size:13.5px;color:var(--text-secondary)">'
+            'Forward indicators for the coming period. Each states what would confirm the direction of travel.</p>'
+            + "".join(rows) + '</div>')
+
+
+def methodology_html(r):
+    """Render the methodology / provenance block: collection window, how entries
+    were selected and scored, evidence grades, and the pipeline disclosure.
+    Data: r['methodology'] = {window, collection, ranking, grading, ai, caveats[]}"""
+    m = r.get("methodology") or {}
+    if not m:
+        return ""
+    rows = []
+    for k, label in (("window", "Collection window"), ("collection", "Collection"),
+                     ("ranking", "Ranking"), ("grading", "Evidence grading"),
+                     ("ai", "How this is produced")):
+        if m.get(k):
+            rows.append('<p style="margin:0 0 9px;font-size:13px;color:var(--text-secondary);line-height:1.55">'
+                        '<strong style="color:var(--text)">' + esc(label) + ':</strong> ' + esc(m[k]) + '</p>')
+    caveats = m.get("caveats") or []
+    cav_html = ""
+    if caveats:
+        cav_html = ('<p style="margin:12px 0 6px;font-size:13px;font-weight:650;color:var(--text)">Limitations</p>'
+                    '<ul style="margin:0;padding-left:18px;font-size:13px;color:var(--text-secondary);line-height:1.55">'
+                    + "".join('<li style="margin-bottom:5px">' + esc(c) + '</li>' for c in caveats)
+                    + '</ul>')
+    return ('<div class="section" id="methodology">'
+            '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">'
+            '<span style="font-size:1.6rem">\U0001F4D0</span>'
+            '<h2 style="margin:0;font-size:22px"><span class="bar"></span>Methodology &amp; Caveats</h2>'
+            '<span class="tag blue" style="margin-left:auto">Provenance</span></div>'
+            + "".join(rows) + cav_html + '</div>')
+
+
 def build_reports(reports):
     """Build /reports/ section: index.html + one styled page per report JSON."""
     if not reports:
@@ -1852,6 +1964,16 @@ def build_reports(reports):
         sectors = r.get("sectors", [])
         total_inc = sum(len(s.get("incidents", [])) for s in sectors)
         full = sum(1 for s in sectors if len(s.get("incidents", [])) >= 3)
+        incs_all = [i for s in sectors for i in s.get("incidents", [])]
+        n_conf = sum(1 for i in incs_all if i.get("verification") in ("Confirmed", "Probable"))
+        n_exp = sum(1 for i in incs_all if i.get("exploited_wild"))
+        n_au = sum(1 for i in incs_all if i.get("au_relevance") in ("direct", "indirect"))
+        n_folded = sum(len(i.get("folded") or []) for i in incs_all)
+        n_also = sum(len(s.get("also_reported") or []) for s in sectors)
+        prov = (esc(r.get("period", "")) + ' \u00b7 Generated ' + esc(r.get("generated", "")))
+        if n_folded:
+            prov += (' \u00b7 ' + str(n_folded + total_inc) + ' digest entries folded into '
+                     + str(total_inc) + ' events')
 
         sec_html = []
         for sec in sectors:
@@ -1864,7 +1986,22 @@ def build_reports(reports):
                 tier = int(inc.get("tier", 2))
                 tlabel = TIER_LBL.get(tier, "")
                 datebit = (' \u00b7 ' + esc(inc.get("date", ""))) if inc.get("date") else ""
-                scorebit = (' \u00b7 Score ' + esc(str(inc.get("score", "")))) if inc.get("score") is not None else ""
+                imp = inc.get("impact")
+                impbit = (' \u00b7 <strong style="color:var(--accent)">Impact ' + esc(str(imp)) + '</strong>') if imp is not None else ""
+                aubit = (' <span class="tag green" style="font-size:10px">AU/NZ</span>'
+                         if inc.get("au_relevance") == "direct" else
+                         (' <span class="tag blue" style="font-size:10px">AU/NZ indirect</span>'
+                          if inc.get("au_relevance") == "indirect" else ""))
+                note = inc.get("impact_note")
+                notebit = ('<div style="font-size:11.5px;color:var(--text-dim);font-style:italic;margin-top:3px">'
+                           + esc(note) + '</div>') if note else ""
+                folded = inc.get("folded") or []
+                foldbit = ""
+                if folded:
+                    foldbit = ('<div style="font-size:11.5px;color:var(--text-dim);margin-top:4px">'
+                               'Also reported as part of this event: '
+                               + "; ".join(esc(f.get("headline", "")) + (' (' + esc(f.get("date", "")) + ')' if f.get("date") else "")
+                                           for f in folded) + '</div>')
                 incs_parts.append(
                     '<div class="story" style="margin-bottom:0;padding:12px 0;border-bottom:1px solid var(--border-light)">'
                     '<div style="display:flex;gap:10px;align-items:flex-start">'
@@ -1874,8 +2011,9 @@ def build_reports(reports):
                     '<p style="margin:0 0 6px;font-size:13px;color:var(--text-secondary);line-height:1.45">' + esc(inc["summary"]) + '</p>'
                     '<div style="font-size:12px;color:var(--text-dim)">Source: '
                     '<a href="' + esc(url) + '" target="_blank" rel="noopener" style="color:var(--accent)">' + esc(inc.get("source", "")) + '</a>'
-                    ' \u00b7 Tier ' + str(tier) + '/4 \u2014 ' + tlabel + datebit + scorebit +
-                    '</div></div></div></div>'
+                    ' \u00b7 Tier ' + str(tier) + '/4 \u2014 ' + tlabel + datebit + impbit
+                    + ' \u00b7 ' + _ev_badge(inc.get("verification", "")) + aubit +
+                    '</div>' + notebit + foldbit + '</div></div></div>'
                 )
             incs = "".join(incs_parts)
 
@@ -1892,42 +2030,64 @@ def build_reports(reports):
                     '<p style="margin:0;font-size:13px;color:var(--text-secondary);line-height:1.5">' + esc(chg.get("detail", "")) + '</p>'
                     + chg_src + '</div>')
 
-            anchor = sec["name"].lower().replace(" & ", "-").replace(" ", "-")
+            anchor = _anchor(sec["name"])
+            scope = sec.get("scope", "")
+            scope_html = ('<p style="margin:0 0 12px;font-size:12.5px;color:var(--text-dim)">'
+                          + esc(scope) + '</p>') if scope else ""
+            also = sec.get("also_reported") or []
+            also_html = ""
+            if also:
+                also_html = ('<p style="margin:14px 0 0;font-size:12px;color:var(--text-dim);line-height:1.5">'
+                             '<strong>Also reported in this window:</strong> '
+                             + "; ".join(esc(a.get("headline", "")) for a in also) + '</p>')
             sec_html.append(
                 '<div class="section" id="' + esc(anchor) + '">'
                 '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">'
                 '<span style="font-size:1.6rem">' + emoji + '</span>'
                 '<h2 style="margin:0;font-size:22px"><span class="bar"></span>' + esc(sec["name"]) + '</h2>'
-                '<span class="tag ' + cls + '" style="margin-left:auto">' + str(len(sec.get("incidents", []))) + ' incident' + ('s' if len(sec.get("incidents", [])) != 1 else '') + '</span></div>'
+                '<span class="tag ' + cls + '" style="margin-left:auto">' + str(len(sec.get("incidents", []))) + ' event' + ('s' if len(sec.get("incidents", [])) != 1 else '') + '</span></div>'
+                + scope_html +
                 '<div class="grid" style="grid-template-columns:1.9fr 1fr;gap:20px;align-items:start">'
-                '<div>' + incs + '</div>' + chg_html + '</div></div>'
+                '<div>' + incs + also_html + '</div>' + chg_html + '</div></div>'
             )
         sec_html_s = "".join(sec_html)
 
         toc_parts = []
         for s in sectors:
-            anchor = s["name"].lower().replace(" & ", "-").replace(" ", "-")
+            anchor = _anchor(s["name"])
             toc_parts.append(
                 '<a href="#' + esc(anchor) + '" class="tag ' + SECTOR_TAG.get(s["name"], "blue") + '" style="text-decoration:none;margin:0 4px 4px 0;display:inline-block">'
                 + SECTOR_EMOJI.get(s["name"], "\U0001F4CB") + ' ' + esc(s["name"]) + '</a>'
             )
         toc = "".join(toc_parts)
 
+        jump = ('<a href="#executive-summary" class="tag blue" style="text-decoration:none;margin:0 4px 4px 0;display:inline-block">\U0001F4CB Executive Summary</a>'
+                '<a href="#cross-sector-themes" class="tag blue" style="text-decoration:none;margin:0 4px 4px 0;display:inline-block">\U0001F3AF Themes</a>'
+                '<a href="#actors" class="tag blue" style="text-decoration:none;margin:0 4px 4px 0;display:inline-block">\U0001F3AD Actors</a>'
+                '<a href="#watchlist" class="tag amber" style="text-decoration:none;margin:0 4px 4px 0;display:inline-block">\U0001F441\uFE0F Watch-list</a>'
+                '<a href="#methodology" class="tag blue" style="text-decoration:none;margin:0 4px 4px 0;display:inline-block">\U0001F4D0 Methodology</a>')
         page = head(esc(r["report_title"]), "reports/", root="../") + (
             '<div class="hero hero-band"><div class="kicker">// incident review</div>'
             '<h1>' + esc(r["report_title"]) + '</h1>'
             '<p class="sub">' + esc(r.get("subtitle", "")) + '</p>'
+            '<p style="margin:10px 0 0;font-size:12.5px;color:var(--text-muted)">' + prov + '</p>'
             '<div class="stats">'
             '<div class="stat"><span class="num">' + str(len(sectors)) + '</span> Sectors</div>'
-            '<div class="stat"><span class="num">' + str(total_inc) + '</span> Incidents</div>'
-            '<div class="stat"><span class="num">' + str(full) + '</span> With 3+</div>'
+            '<div class="stat"><span class="num">' + str(total_inc) + '</span> Events</div>'
+            '<div class="stat"><span class="num">' + str(n_conf) + '</span> Confirmed or probable</div>'
+            '<div class="stat"><span class="num">' + str(n_exp) + '</span> Actively exploited</div>'
+            '<div class="stat"><span class="num">' + str(n_au) + '</span> AU/NZ nexus</div>'
             '</div>'
             '<div class="crumb"><a href="../index.html">Home</a> \u00b7 <a href="index.html">Reports</a> \u00b7 ' + esc(r["report_title"]) + '</div>'
-            '<div class="section" style="margin-top:6px"><div style="display:flex;gap:6px;flex-wrap:wrap">' + toc + '</div></div>'
+            '<div class="section" style="margin-top:6px"><div style="display:flex;gap:6px;flex-wrap:wrap">'
+            + jump + toc + '</div></div>'
             '</div>'
             + exec_summary_html(r)
             + themes_html(r)
+            + actors_html(r)
+            + watchlist_html(r)
             + sec_html_s
+            + methodology_html(r)
             + foot()
         )
         open(os.path.join(DOCS, "reports", slug + ".html"), "w", encoding="utf-8").write(page)
