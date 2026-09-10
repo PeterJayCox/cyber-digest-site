@@ -1,13 +1,13 @@
 <!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CVE-2019-1068 — Microsoft SQL Server Remote Code Execution Vulnerability</title>
+<title>DoppelCart&#x27; Fraud Network Runs 119,000 Fake Shops to Steal Payment Cards</title>
 <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png">
 <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
 <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png">
 <link rel="alternate" type="application/rss+xml" title="Cyber Digest" href="https://cyber.peterjaycox.com/feed.xml">
 <link rel="alternate" type="application/rss+xml" title="Cyber Digest — Monthly Editions" href="https://cyber.peterjaycox.com/feed-monthly.xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="CVE-2019-1068 — Microsoft SQL Server Remote Code Execution Vulnerability">
+<meta property="og:title" content="DoppelCart&#x27; Fraud Network Runs 119,000 Fake Shops to Steal Payment Cards">
 <meta property="og:description" content="Curated sector-by-sector roundup of global cybersecurity developments with source-reliability indexing, AU/NZ context, and searchable knowledge base.">
 <meta property="og:url" content="https://cyber.peterjaycox.com/">
 <meta property="og:image" content="https://cyber.peterjaycox.com/assets/img/og-image.png">
@@ -25,10 +25,48 @@
         <div class="navlinks"><a href="https://cyber.peterjaycox.com/index.html" class=""><span class="t">🏠 Home</span></a><a href="https://cyber.peterjaycox.com/stories.html" class=""><span class="t">📚 Story DB</span></a><a href="https://cyber.peterjaycox.com/globe.html" class=""><span class="t">🌍 Globe</span></a><a href="https://cyber.peterjaycox.com/daily/" class=""><span class="t">🗓️ Daily</span></a><a href="https://cyber.peterjaycox.com/monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="https://cyber.peterjaycox.com/reports/index.html" class=""><span class="t">📑 Reports</span></a><a href="https://cyber.peterjaycox.com/wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a><a href="https://cyber.peterjaycox.com/flashcards.html" class=""><span class="t">🗂️ Flashcards</span></a></div>
         <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light">🌙</div></div></nav><main class="container">
             <div class="container">
-            <div class="crumb"><a href="../../index.html">Home</a> · <a href="../../wiki/index.html">Wiki</a> · Vulnerabilities &amp; CVEs</div>
-            <div class="wiki-body"><div class="frontmatter">type: cve · created: 2026-08-27 · updated: 2026-08-27 · tags: [cve, rce, kev, database] · confidence: high · severity: critical · affected_sectors: [technology, finance, government, healthcare] · au_impact: true</div><h1>CVE-2019-1068 — Microsoft SQL Server Remote Code Execution</h1>
-<p><strong>CVE-2019-1068</strong> is a remote code execution vulnerability in Microsoft SQL Server, added to the CISA KEV Catalog on <strong>2026-08-26</strong> based on active exploitation. SQL Server is one of the most widely deployed relational databases across finance, government, healthcare and enterprise, so RCE in it carries broad cross-sector exposure.</p>
-<p><strong>Type:</strong> Remote code execution | <strong>Exploitation:</strong> Active (KEV) | <strong>Mitigation:</strong> apply Microsoft updates; restrict network exposure</p></div>
+            <div class="crumb"><a href="../../index.html">Home</a> · <a href="../../wiki/index.html">Wiki</a> · Incidents &amp; Campaigns</div>
+            <div class="wiki-body"><div class="frontmatter">type: incident · created: 2026-09-10 · updated: 2026-09-10 · tags: [incident, e-commerce, fraud, fake-shops, card-theft, scam-network] · confidence: high · affected_sectors: [retail, finance, technology] · au_impact: true</div><h1>'DoppelCart' Fraud Network Runs 119,000 Fake Shops</h1>
+<p>German cybersecurity startup <strong>Nebty</strong> documented <strong>"DoppelCart"</strong>, the largest publicly known fake-shop cluster by domain count, using over <strong>119,000 domains</strong> — mostly under the .SHOP TLD, accounting for 2.72% of all sites on that TLD — to run counterfeit e-commerce stores that imitate <strong>44,182 brands</strong> and harvest payment-card details at checkout.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Scale</strong></td>
+<td>119,000+ domains (~105,000 still active)</td>
+</tr>
+<tr>
+<td><strong>Brands imitated</strong></td>
+<td>44,182</td>
+</tr>
+<tr>
+<td><strong>Mechanism</strong></td>
+<td>Copy catalogues, branding, images (sometimes loading assets from the real company's servers); discounts up to 65%</td>
+</tr>
+<tr>
+<td><strong>Data exfil</strong></td>
+<td>Card numbers, expiry, security codes, cardholder names, contact data — transmitted live over WebSockets to C2</td>
+</tr>
+<tr>
+<td><strong>Advanced capability</strong></td>
+<td>Some sites relay one-time bank confirmation codes to bypass protections</td>
+</tr>
+<tr>
+<td><strong>Source</strong></td>
+<td>Nebty (via The Hacker News) — Tier 2/4</td>
+</tr>
+</tbody>
+</table>
+<p>The cluster far surpasses the prior <strong>"BogusBazaar"</strong> network. The large-scale brand impersonation and live over-the-wire card theft make this a first-order retail/e-commerce consumer-fraud and payment-fraud threat with direct implications for card-issuing banks and shoppers in Australia and New Zealand.</p>
+<h2>Source</h2>
+<ul>
+<li><a href="https://thehackernews.com/2026/09/doppelcart-fraud-network-runs-119-000-fake-shops.html">The Hacker News — DoppelCart</a></li>
+</ul></div>
             </div></main>
 <div class="footer">
   <div class="links">
