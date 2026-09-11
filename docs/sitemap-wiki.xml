@@ -83,7 +83,7 @@
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/aesto-health-discloses-breach-affecting-9-5-million-patients.html</loc><lastmod>2026-09-02</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/ai-assisted-http-terminator-finds-novel-http-desync-techniques-and-apache-zero-d.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/ai-coding-agents-installed-unowned-code-inside-corporate-networks-via-llms-txt-t.html</loc><lastmod>2026-08-29</lastmod></url>
-  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/ai-orchestrated-papercut-campaign-compromised-395-organisations-most-in-educatio.html</loc><lastmod>2026-09-10</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/ai-orchestrated-papercut-campaign-compromised-395-organisations-most-in-educatio.html</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/ai-s-middle-class-has-gotten-dramatically-better-at-hacking.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/akira-ransomware-breach-at-benefits-platform-paylogix-exposed-ssns-health-and-fi.html</loc><lastmod>2026-08-25</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/american-vision-partners-settles-2023-data-breach-litigation-for-1-75-million.html</loc><lastmod>2026-09-10</lastmod></url>
@@ -94,6 +94,7 @@
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/anthropic-discloses-fourth-incident-of-its-models-breaching-real-systems.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/anthropic-is-finding-bugs-faster-than-microsoft-can-fix-them.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/anthropic-reveals-claude-models-breached-three-organisations-after-mistaking-int.html</loc><lastmod>2026-08-17</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/anthropic-s-september-threat-report-names-a-russian-espionage-cluster-that.html</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/anthropic-warns-infostealer-malware-is-hijacking-claude-sessions-to-drain-usage.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/apollo-global-discloses-breach-from-blackfile-wave-hitting-financial-sector.html</loc><lastmod>2026-08-21</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/apple-launches-new-legal-challenge-against-uk-over-icloud-access.html</loc><lastmod>2026-08-30</lastmod></url>
@@ -103,6 +104,7 @@
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/atf-confirms-major-incident-after-qilin-breach-claims.html</loc><lastmod>2026-08-27</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/atlassian-rovo-ai-assistant-can-be-tricked-into-exfiltrating-jira-and-confluence.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/attackers-chain-microsoft-sharepoint-rce-flaws-cve-2026-55040-cve-2026-63520-in-.html</loc><lastmod>2026-08-26</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/attackers-chain-two-jfrog-artifactory-flaws-to-take-admin-control-and-plan.html</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/attackers-compile-khunt-inside-oracle-to-turn-sql-injection-into-windows-system.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/attackers-conceal-phishing-lures-using-invisible-unicode-characters.html</loc><lastmod>2026-09-09</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/attackers-conceal-phishing-lures-with-invisible-unicode-characters.html</loc><lastmod>2026-09-06</lastmod></url>
@@ -147,6 +149,7 @@
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/chatgpt-agentforger-flaw-could-deploy-rogue-workspace-agents-via-a-phishing-link.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/check-point-patches-two-cvss-9-8-vpn-certificate-flaws-allowing-unauthenticated-rce.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/china-linked-hackers-deploy-new-stormencryptor-ransomware-likely-via-n-central-f.html</loc><lastmod>2026-08-30</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/china-linked-unc3569-exploited-a-sogou-input-method-flaw-to-install-the-gr.html</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/china-nexus-jadeprox-uses-triback-loader-in-government-and-healthcare-attacks.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/china-proposes-significant-amendments-to-national-standard-on-personal-informati.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/china-s-regulation-on-ai-companions-takes-force.html</loc><lastmod>2026-08-30</lastmod></url>
@@ -164,10 +167,12 @@
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/cisa-adds-ray-project-ray-code-injection-flaw-to-known-exploited-vulnerabilities.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/cisa-adds-seven-vulnerabilities-to-known-exploited-catalog.html</loc><lastmod>2026-09-02</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/cisa-adds-six-known-exploited-vulnerabilities-to-the-kev-catalog.html</loc><lastmod>2026-08-26</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/cisa-adds-three-exploited-vulnerabilities-to-kev-catalog-including-the-cha.html</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/cisa-adds-three-known-exploited-vulnerabilities-to-catalog.html</loc><lastmod>2026-08-18</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/cisa-adds-three-known-exploited-vulnerabilities-to-the-kev-catalog.html</loc><lastmod>2026-08-27</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/cisa-adds-two-known-exploited-vulnerabilities-to-kev-catalogue.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/cisa-adds-two-trueconf-server-cves-to-known-exploited-vulnerabilities.html</loc><lastmod>2026-08-20</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/cisa-advisory-covers-four-flaws-in-aveva-pipeline-integrity-monitor-includ.html</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/cisa-advisory-improve-router-hygiene-to-protect-against-russian-state-sponsored-.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/cisa-advisory-johnson-controls-simplex-incident-manager-credential-leak.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/cisa-confirms-watchguard-firebox-rce-flaw-is-now-used-by-ransomware-gangs.html</loc><lastmod>2026-09-10</lastmod></url>
@@ -183,6 +188,7 @@
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/cisa-tells-us-agencies-to-fix-security-bugs-in-as-little-as-3-days-thanks-to-ai.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/cisa-urges-water-and-wastewater-systems-sector-to-protect-ot-against-activity-ta.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/cisa-urges-water-and-wastewater-systems-to-protect-ot-against-activity-targeting.html</loc><lastmod>2026-08-17</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/cisa-warns-of-heap-overflow-in-orthanc-dicom-server-used-for-medical-imagi.html</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/cisco-confirms-cvss-10-secure-fmc-auth-bypass-exploited-added-to-cisa-kev.html</loc><lastmod>2026-09-09</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/cisco-patches-nine-crosswork-and-secure-workload-flaws-five-scoring-cvss-10-0.html</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/claude-cowork-sharedroot-escape.html</loc><lastmod>2026-08-17</lastmod></url>
@@ -194,6 +200,7 @@
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/colorado-behavioral-healthcare-insider-breach.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/congressional-stalemates-take-wind-out-of-us-digital-policy-sails.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/connecticut-ag-leads-42-state-settlement-with-23andme-over-2023-data-breach.html</loc><lastmod>2026-08-30</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/conti-ransomware-developer-sentenced-to-four-years-in-the-united-states.html</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/craneware-cyberattack.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/critical-cisco-nexus-9000-flaw-lets-unauthenticated-remote-attackers-run-code-as.html</loc><lastmod>2026-09-03</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/critical-cpanel-flaw-could-let-one-hosting-customer-take-root-control-of-a-whole.html</loc><lastmod>2026-08-29</lastmod></url>
@@ -244,8 +251,10 @@
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/fbi-releases-its-first-ever-public-cybersecurity-strategy.html</loc><lastmod>2026-09-09</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/fbi-seeks-truck-drivers-nationwide-who-may-be-victims-in-54-count-tax-fraud-case.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/fbi-warns-of-social-engineering-attacks-to-steal-accounts-and-explicit-content.html</loc><lastmod>2026-08-30</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/fda-opens-feedback-period-on-regulating-generative-ai-medical-devices.html</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/federal-agencies-broaden-alert-on-iran-linked-ot-attacks.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/financial-stability-board-warns-frontier-ai-cyber-risk-is-most-immediate-concern.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/fincen-urges-banks-to-file-cyber-scam-reports-citing-12-7-billion-in-crypt.html</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/finland-to-disconnect-fiber-optic-link-to-russia-as-lease-expires.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/finland-to-disconnect-fibre-optic-link-to-russia-as-lease-expires.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/fire-ant-pivots-to-cisco-routers-deploys-bridgeagent-backdoor-for-traffic-collec.html</loc><lastmod>2026-08-31</lastmod></url>
@@ -272,6 +281,7 @@
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/germany-moves-to-give-spy-agencies-hacking-and-sabotage-powers.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/gigabud-banking-trojan-builds-android-work-profiles-to-evade-fraud-checks.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/gitlab-cve-2026-19478-comes-under-active-exploitation-within-days-of-disclosure.html</loc><lastmod>2026-08-21</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/gitlab-patches-a-cvss-10-0-path-traversal-flaw-already-drawing-internet-wi.html</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/global-data-breach-cost-rises-12-to-almost-5-million-ibm-2026-study.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/golden-chickens-resurfaces-with-four-new-malware-families.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/google-deletes-3-adk-ai-workflows-after-malicious-github-issue-could-trigger-pri.html</loc><lastmod>2026-08-30</lastmod></url>
@@ -344,6 +354,7 @@
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/microsoft-defender-s-own-signed-btr-sys-driver-weaponised-for-kernel-level-attac.html</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/microsoft-patches-398-flaws-including-a-windows-driver-zero-day-under-active-att.html</loc><lastmod>2026-08-18</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/microsoft-ties-30-rotating-domains-to-macsync-stealer-infrastructure.html</loc><lastmod>2026-09-10</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/microsoft-warns-extortion-gangs-are-using-passkey-and-sso-lures-to-steal-m.html</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/military-device-manufacturer-discloses-cyber-incident-to-sec.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/modu-ui-changup-south-korean-startup-platform-breach-2026-08-24.html</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/more-than-half-of-ai-generated-security-patches-are-broken-study-finds.html</loc><lastmod>2026-09-10</lastmod></url>
@@ -407,6 +418,7 @@
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/poland-probes-mydr-healthcare-software-breach-potentially-affecting-19-million-p.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/poland-uncovers-second-heat-plant-cyberattack-that-went-hidden-for-months.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/polish-convenience-store-chain-abka-hacked-through-third-party-account.html</loc><lastmod>2026-08-30</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/port-of-tanjung-pelepas-suspends-terminal-operations-after-cyber-incident.html</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/postgresql-fixes-12-year-old-flaw-enabling-code-execution-on-replication-role.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/privacy-concerns-raised-over-government-demand-for-hospital-emergency-room-data.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/public-exploit-released-for-patched-vbulletin-pre-auth-code-execution-flaw-cve-2.html</loc><lastmod>2026-08-18</lastmod></url>
@@ -425,7 +437,7 @@
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/senate-democrats-introduce-bill-distributing-300-million-annually-for-water-syst.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/senators-press-tiktok-over-internal-experiment-withholding-safety-features.html</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/shai-hulud-infostealer-expands-to-469-credential-locations.html</loc><lastmod>2026-09-03</lastmod></url>
-  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/shinyhunters-claims-breach-of-florida-david-dmv-database.html</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/shinyhunters-claims-breach-of-florida-david-dmv-database.html</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/shinyhunters-demands-55-2m-from-mckesson-after-1-tb-data-theft-claim.html</loc><lastmod>2026-08-31</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/shinyhunters-infiltrates-teampcp.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/shinyhunters-leaks-7-1-million-records-claimed-from-medical-device-maker-baxter-.html</loc><lastmod>2026-08-26</lastmod></url>
@@ -458,6 +470,7 @@
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/tiktok-agrees-to-400-million-settlement-in-us-child-privacy-lawsuit.html</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/toxicpanda-2-0-abuses-vpn-permissions-to-blind-google-play-during-installation.html</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/toxicpanda-2-0-and-golddigger-expand-android-banking-attacks-with-on-device-frau.html</loc><lastmod>2026-08-20</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/trezor-says-347-000-customer-email-addresses-targeted-after-the-brevo-comp.html</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/trezor-says-shipmonk-breach-exposed-67-000-more-us-customers-it-was-told-had-bee.html</loc><lastmod>2026-09-05</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/triwest-healthcare-alliance-announces-breach-affecting-12-000-tricare-beneficiar.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/triwest-healthcare-breach.html</loc><lastmod>2026-08-17</lastmod></url>
@@ -564,6 +577,8 @@
   <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-32475.html</loc><lastmod>2026-09-03</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-33824.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-41940.html</loc><lastmod>2026-08-29</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-42016.html</loc><lastmod>2026-09-11</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-42018.html</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-42533-nginx-heap-overflow.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-45659-sharepoint-exploited.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-45659.html</loc><lastmod>2026-08-26</lastmod></url>
@@ -623,6 +638,10 @@
   <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-78224.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-8037-progress-loadmaster-rce.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-81578.html</loc><lastmod>2026-08-31</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-81821.html</loc><lastmod>2026-09-11</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-81822.html</loc><lastmod>2026-09-11</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-81823.html</loc><lastmod>2026-09-11</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-81824.html</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-81963.html</loc><lastmod>2026-09-09</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-82078.html</loc><lastmod>2026-08-31</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-82329.html</loc><lastmod>2026-09-02</lastmod></url>
@@ -632,13 +651,16 @@
   <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-83548.html</loc><lastmod>2026-09-02</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-83549.html</loc><lastmod>2026-09-02</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-8452.html</loc><lastmod>2026-08-26</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-84869.html</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-85046.html</loc><lastmod>2026-09-09</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-85102.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-85103.html</loc><lastmod>2026-09-10</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-85706.html</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-85880.html</loc><lastmod>2026-09-09</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-86206.html</loc><lastmod>2026-09-09</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-86207.html</loc><lastmod>2026-09-09</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-86218.html</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-87020.html</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-87491.html</loc><lastmod>2026-09-09</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-8933-snap-confine.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/vulnerabilities/cve-2026-9586.html</loc><lastmod>2026-09-02</lastmod></url>

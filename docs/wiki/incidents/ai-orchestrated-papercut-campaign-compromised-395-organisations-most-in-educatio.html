@@ -19,14 +19,14 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../assets/site.css?v=202609120541"></head><body>
+<link rel="stylesheet" href="../../assets/site.css?v=202609120610"></head><body>
 <nav class="topnav"><div class="inner">
         <a class="brand" href="https://cyber.peterjaycox.com/index.html"><span class="brand-logo" aria-hidden="true"></span> Cyber&nbsp;Digest<small>public site</small></a>
         <div class="navlinks"><a href="https://cyber.peterjaycox.com/index.html" class=""><span class="t">🏠 Home</span></a><a href="https://cyber.peterjaycox.com/stories.html" class=""><span class="t">📚 Story DB</span></a><a href="https://cyber.peterjaycox.com/globe.html" class=""><span class="t">🌍 Globe</span></a><a href="https://cyber.peterjaycox.com/daily/" class=""><span class="t">🗓️ Daily</span></a><a href="https://cyber.peterjaycox.com/monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="https://cyber.peterjaycox.com/reports/index.html" class=""><span class="t">📑 Reports</span></a><a href="https://cyber.peterjaycox.com/wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a><a href="https://cyber.peterjaycox.com/flashcards.html" class=""><span class="t">🗂️ Flashcards</span></a></div>
         <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light">🌙</div></div></nav><main class="container">
             <div class="container">
             <div class="crumb"><a href="../../index.html">Home</a> · <a href="../../wiki/index.html">Wiki</a> · Incidents &amp; Campaigns</div>
-            <div class="wiki-body"><div class="frontmatter">type: incident · created: 2026-09-11 · updated: 2026-09-11 · tags: [incident, papercut, ai-orchestrated, education, exploitation, russia, agentic-ai] · confidence: high · severity: critical · affected_sectors: [education, government, technology] · au_impact: true</div><p>A suspected Russian-speaking operator used hundreds of AI agents, built on OpenAI's Codex and a DeepSeek model alongside commodity offensive tooling (Mimikatz, SharpHound, Certipy, Rubeus, Impacket), to research, build and validate exploits against PaperCut NG/MF and compromise at least 440 instances across 395 named victim organisations in 48 countries. Education was the dominant target vertical at roughly half of all victims. The entry vector was CVE-2026-81578 (authentication bypass) chained with CVE-2026-82078 (remote code execution), both patched in PaperCut's 27–28 August 2026 releases and already being exploited when disclosed. Australia appears on the list of targeted countries, and the vendor PaperCut Software is Melbourne-headquartered.</p>
+            <div class="wiki-body"><div class="frontmatter">type: incident · created: 2026-09-11 · updated: 2026-09-12 · tags: [incident, papercut, ai-orchestrated, education, exploitation, russia, agentic-ai] · confidence: high · severity: critical · affected_sectors: [education, government, technology] · au_impact: true</div><p>A suspected Russian-speaking operator used hundreds of AI agents, built on OpenAI's Codex and a DeepSeek model alongside commodity offensive tooling (Mimikatz, SharpHound, Certipy, Rubeus, Impacket), to research, build and validate exploits against PaperCut NG/MF and compromise at least 440 instances across 395 named victim organisations in 48 countries. Education was the dominant target vertical at roughly half of all victims. The entry vector was CVE-2026-81578 (authentication bypass) chained with CVE-2026-82078 (remote code execution), both patched in PaperCut's 27–28 August 2026 releases and already being exploited when disclosed. Australia appears on the list of targeted countries, and the vendor PaperCut Software is Melbourne-headquartered.</p>
 <table>
 <thead>
 <tr>
@@ -62,7 +62,11 @@
 </tbody>
 </table>
 <p>GreyNoise recorded the operator moving from an empty workspace to real-world remote code execution in under four hours, then compromising at least 11 organisations in 26 seconds once the campaign launched; against one US high school, initial access to full domain administrator took seven minutes. Post-exploitation yielded credential dumps from 280 victims, OS or domain secrets from 147, and domain administrator access at 12 organisations, achieved via LSASS memory dumping, pass-the-hash, noPac and DCSync NTDS.dit extraction. The operator's own infrastructure shows an AI-assisted pipeline: comparing patched and unpatched PaperCut builds, generating target lists through the Netlas internet-scanning service, filtering candidates by country against an exclusion list of 28 jurisdictions (Russia, China, Iran and others — restraint that GreyNoise found the agents did not consistently apply), then categorising targets by OS and environment and running repeated retry waves. The end goal is unconfirmed; Blackpoint assesses the methodology as consistent with initial-access activity but has not established whether the operator is acting as an access broker.</p>
-<p>This is an escalation of the PaperCut exploitation first covered in the 2026-09-09/10 digests (see <code>attackers-exploit-papercut-flaws-to-steal-credentials-from-schools-and-universit.md</code> and <code>papercut-warns-of-ng-mf-flaw-actively-exploited-in-zero-day-attacks.md</code>), adding agentic AI orchestration, the victim count and the measured attack tempo.</p></div>
+<p>This is an escalation of the PaperCut exploitation first covered in the 2026-09-09/10 digests (see <code>attackers-exploit-papercut-flaws-to-steal-credentials-from-schools-and-universit.md</code> and <code>papercut-warns-of-ng-mf-flaw-actively-exploited-in-zero-day-attacks.md</code>), adding agentic AI orchestration, the victim count and the measured attack tempo.</p>
+<h2>Update — 2026-09-12: vendor ships validated maintenance releases</h2>
+<p>PaperCut released security maintenance releases <strong>26.0.5</strong>, <strong>25.0.13</strong> and <strong>24.1.10</strong> that supersede all three emergency patch releases issued during the campaign. The vendor states they contain every security fix from Emergency Patch Releases 1–3 plus additional hardening, and that unlike the emergency patches they have been through the full standard QA cycle.</p>
+<p>For affected estates — education above all, at roughly half of the 395 compromised organisations — this replaces a stack of sequenced emergency patches with a single validated target version.</p>
+<p><em>Source: <a href="https://thehackernews.com/2026/09/papercut-replaces-emergency-patches.html">The Hacker News</a>, {DATE}.</em></p></div>
             </div></main>
 <div class="footer">
   <div class="links">
@@ -78,7 +82,7 @@
     <a href="https://cyber.peterjaycox.com/licensing.html">Licensing</a>
     <a href="https://cyber.peterjaycox.com/security.html">Security</a>
   </div>
-  Cyber Digest public site · built 2026-09-12 05:41
+  Cyber Digest public site · built 2026-09-12 06:10
 </div>
 <script>
 var _t=document.documentElement;
