@@ -147,6 +147,17 @@ body{font-family:Inter,-apple-system,sans-serif;background:var(--bg);color:var(-
 .ss-cell.sev{background:linear-gradient(180deg,rgba(245,158,11,.3),rgba(245,158,11,.72));color:#fff}
 .ss-cell.elev{background:linear-gradient(180deg,rgba(14,165,233,.3),rgba(14,165,233,.68));color:#fff}
 .ss-cell.guard{background:linear-gradient(180deg,rgba(100,116,139,.24),rgba(100,116,139,.5));color:#e2e8f0}
+/* Share-of-Critical shading — severity scan re-encode 2026-09-14. Replaces the
+   worst-band colour, which saturated to all-red whenever every day held one
+   Critical story. s0 = 0% Critical, s5 = 50%+. */
+.ss-cell.s0{background:linear-gradient(180deg,rgba(100,116,139,.2),rgba(100,116,139,.42));color:#e2e8f0}
+.ss-cell.s1{background:linear-gradient(180deg,rgba(244,63,94,.12),rgba(244,63,94,.22));color:#fecdd3}
+.ss-cell.s2{background:linear-gradient(180deg,rgba(244,63,94,.23),rgba(244,63,94,.42));color:#fff}
+.ss-cell.s3{background:linear-gradient(180deg,rgba(244,63,94,.34),rgba(244,63,94,.62));color:#fff}
+.ss-cell.s4{background:linear-gradient(180deg,rgba(244,63,94,.44),rgba(244,63,94,.8));color:#fff}
+.ss-cell.s5{background:linear-gradient(180deg,rgba(244,63,94,.52),rgba(244,63,94,.95));color:#fff}
+.ss-cell u{text-decoration:none;font-style:normal;font-size:9px;font-weight:800;line-height:1.2;margin-top:1px;opacity:.95}
+.ss-cell.s3 b,.ss-cell.s4 b,.ss-cell.s5 b{color:rgba(255,255,255,.85)}
 .ss-cell.gap{background:repeating-linear-gradient(45deg,rgba(120,140,180,.1) 0 4px,transparent 4px 8px);color:var(--text-dim);font-style:italic;border:1px dashed var(--border-light)}
 .ss-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:10.5px;color:var(--text-dim)}
 .ss-lg{display:flex;align-items:center;gap:5px}
