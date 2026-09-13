@@ -427,6 +427,62 @@ def generate_monthly_covers():
                     write_to=os.path.join(IMG_DIR, "monthly-2026-08.png"),
                     output_width=1200, output_height=400)
 
+    # September 2026 Cover (PARTIAL — closed 14 September) - AI-Orchestrated Attacks
+    september_svg = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400">
+  <defs>
+    <linearGradient id="sep-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0e1a" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="400" fill="url(#sep-bg)"/>
+  <rect width="1200" height="400" fill="none" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- Agent-orchestration mesh: one hub, many workers, edge nodes on the right -->
+  <g transform="translate(900, 200)" stroke="#22d3ee" fill="none" opacity="0.45">
+    <circle r="140" stroke-dasharray="3 5" stroke-width="1"/>
+    <circle r="95" stroke-dasharray="3 5" stroke-width="1" stroke="#8b5cf6"/>
+    <g stroke-width="1.2">
+      <line x1="0" y1="0" x2="0" y2="-95"/>
+      <line x1="0" y1="0" x2="82" y2="47"/>
+      <line x1="0" y1="0" x2="-82" y2="47"/>
+      <line x1="0" y1="0" x2="0" y2="95"/>
+      <line x1="0" y1="0" x2="82" y2="-47"/>
+      <line x1="0" y1="0" x2="-82" y2="-47"/>
+      <line x1="0" y1="0" x2="-140" y2="0"/>
+      <line x1="0" y1="0" x2="140" y2="0"/>
+    </g>
+    <circle cx="0" cy="-95" r="5" fill="#22d3ee" stroke="none"/>
+    <circle cx="82" cy="47" r="5" fill="#22d3ee" stroke="none"/>
+    <circle cx="-82" cy="47" r="5" fill="#22d3ee" stroke="none"/>
+    <circle cx="0" cy="95" r="5" fill="#a78bfa" stroke="none"/>
+    <circle cx="82" cy="-47" r="5" fill="#a78bfa" stroke="none"/>
+    <circle cx="-82" cy="-47" r="5" fill="#a78bfa" stroke="none"/>
+    <circle cx="-140" cy="0" r="6" fill="#f43f5e" stroke="none"/>
+    <circle cx="140" cy="0" r="6" fill="#f43f5e" stroke="none"/>
+    <circle cx="0" cy="0" r="12" fill="#22d3ee" stroke="#ffffff" stroke-width="2"/>
+    <circle cx="0" cy="0" r="20" fill="none" stroke="#00b4d8" stroke-width="1" opacity="0.7"/>
+  </g>
+
+  <!-- Typography -->
+  <g transform="translate(80, 120)">
+    <rect x="0" y="0" width="250" height="28" rx="14" fill="rgba(244, 63, 94, 0.12)" stroke="rgba(244, 63, 94, 0.35)" stroke-width="1"/>
+    <text x="14" y="18" font-family="-apple-system, sans-serif" font-weight="700" font-size="12" fill="#fb7185" letter-spacing="1">PARTIAL MONTH · 1–14 SEPTEMBER</text>
+
+    <text x="0" y="80" font-family="-apple-system, sans-serif" font-weight="800" font-size="42" fill="#e2e8f0">CYBER DIGEST · <tspan fill="#00b4d8">SEPTEMBER 2026</tspan></text>
+    <text x="0" y="120" font-family="-apple-system, sans-serif" font-weight="400" font-size="20" fill="#b0c0d0">AI-Orchestrated Attacks &amp; Exploited Edge Infrastructure</text>
+    <text x="0" y="160" font-family="SFMono-Regular, Consolas, monospace" font-size="14" fill="#64748b">157 Deduped Stories · 14 Days Covered · 13 Sectors · 43 Sources</text>
+  </g>
+</svg>'''
+
+    with open(os.path.join(SVG_DIR, "monthly-2026-09.svg"), "w") as f:
+        f.write(september_svg)
+
+    cairosvg.svg2png(bytestring=september_svg.encode('utf-8'),
+                    write_to=os.path.join(IMG_DIR, "monthly-2026-09.png"),
+                    output_width=1200, output_height=400)
+
 
 def main():
     generate_logos()
