@@ -311,6 +311,7 @@ a:hover{text-decoration:underline}
    highlight, severity isolation and tooltips. Severity colours reuse the same
    tokens the story tags use (see SEV_CLS in build_site.py): Guarded=amber,
    Elevated=vuln, Severe=tag-red-text, Critical=red. */
+.act-intro{font-size:13px;color:var(--text-dim);line-height:1.55;margin:-4px 0 12px;max-width:92ch}
 .act-wrap{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 20px 16px}
 .act-bar{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;justify-content:space-between;margin-bottom:12px}
 .act-readout{font-size:13px;color:var(--text-dim);line-height:1.5;flex:1 1 380px;min-width:240px}
@@ -327,12 +328,12 @@ a:hover{text-decoration:underline}
 .act-reset{font:inherit;font-size:12px;color:var(--accent);background:var(--accent-bg);
   border:1px solid var(--accent);border-radius:999px;padding:4px 13px;cursor:pointer}
 .act-reset:hover{background:var(--surface-hover)}
-#act-svg{cursor:crosshair;user-select:none;-webkit-user-select:none;display:block;max-width:100%}
+#act-svg{cursor:crosshair;user-select:none;-webkit-user-select:none;display:block;width:100%;height:auto;max-width:100%}
 #act-svg:focus{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
 .act-grid{stroke:var(--border-light);stroke-width:1}
 .act-axis{fill:var(--text-dim);font-size:10px}
-.act-col{cursor:pointer}
-.act-col:hover{opacity:.82}
+.act-col{cursor:crosshair}
+.act-col:hover rect:not([fill="transparent"]){filter:brightness(1.12)}
 .sev-guarded{fill:var(--amber)}
 .sev-elevated{fill:var(--vuln)}
 .sev-severe{fill:var(--tag-red-text)}

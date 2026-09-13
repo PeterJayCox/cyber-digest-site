@@ -1003,7 +1003,7 @@ ACTIVITY_JS = """<script>
       KEYS = ['g','e','s','c'],
       NAMES = ['Guarded','Elevated','Severe','Critical'],
       days = [], idx = {}, n = cols.length, a = 0, b = n - 1,
-      on = {g:true,e:true,s:true,c:true}, drag = null, moved = false;
+      on = {g:true,e:true,s:true,c:true}, drag = null, moved = false, dragWasSingle = false;
   function num(v){ var x = parseInt(v, 10); return isNaN(x) ? 0 : x; }
   cols.forEach(function(g, i){
     var o = {d: g.getAttribute('data-d'), i: i};
@@ -1013,14 +1013,6 @@ ACTIVITY_JS = """<script>
   });
   function fmt(iso){ var p = iso.split('-'); return parseInt(p[2],10) + ' ' + MON[parseInt(p[1],10)-1] + ' ' + p[0]; }
   function fmtS(iso){ var p = iso.split('-'); return parseInt(p[2],10) + ' ' + MON[parseInt(p[1],10)-1]; }
-  function hostRect(){ return svg.getBoundingClientRect(); }
-  var _x0 = num(cols[0].querySelector('rect').getAttribute('x')) - 0.6;
-  var _cw = n > 1 ? (num(cols[1].querySelector('rect').getAttribute('x')) - num(cols[0].querySelector('rect').getAttribute('x'))) : 1;
-  function idxAt(e){
-    var r = hostRect(), sc = 1100 / r.width, x = (e.clientX - r.left) * sc;
-    var i = Math.floor((x - _x0) / _cw);
-    return Math.max(0, Math.min(n - 1, i));
-  }
   function totals(){
     var t = 0, hi = 0;
     for (var i = a; i <= b; i++){
@@ -1037,10 +1029,12 @@ ACTIVITY_JS = """<script>
     var narrow = (b - a) < (n - 1), s = totals();
     for (var i = 0; i < n; i++) cols[i].setAttribute('opacity', (i >= a && i <= b) ? '1' : '0.26');
     if (narrow && brush){
-      var rad = hostRect(), sc = 1100 / rad.width;
-      var c0 = cols[a].getBoundingClientRect(), c1 = cols[b].getBoundingClientRect();
-      brush.setAttribute('x', ((c0.left - rad.left) * sc).toFixed(1));
-      brush.setAttribute('width', Math.max(1, (c1.right - c0.left) * sc).toFixed(1));
+      // position from the columns' own layout boxes (exact under any SVG scaling)
+      var sr = svg.getBoundingClientRect(),
+          c0 = cols[a].getBoundingClientRect(), c1 = cols[b].getBoundingClientRect(),
+          k = 1100 / sr.width;
+      brush.setAttribute('x', ((c0.left - sr.left) * k).toFixed(1));
+      brush.setAttribute('width', Math.max(1, (c1.right - c0.left) * k).toFixed(1));
       brush.style.display = '';
     } else if (brush){ brush.style.display = 'none'; }
     cells.forEach(function(c){
@@ -1058,13 +1052,13 @@ ACTIVITY_JS = """<script>
     } else {
       readout.innerHTML = '<b>' + n + '</b> digest days · <b>' + s.t + '</b> stories · ' +
         fmt(days[0].d) + ' → ' + fmt(days[n-1].d) +
-        ' · drag across the chart to select a window, or click a day to isolate it';
+        ' · drag to select a window · Esc for the whole archive';
     }
   }
   function showTip(e, d){
     if (!tip) return;
     var o = days[idx[d]], parts = [];
-    for (var j = 0; j < 4; j++) if (on[KEYS[j]] && o[KEYS[j]]) parts.push(NAMES[j] + ' ' + o[KEYS[j]]);
+    for (var j = 0; j < 4; j++) if (o[KEYS[j]]) parts.push(NAMES[j] + ' ' + o[KEYS[j]]);
     tip.innerHTML = '<b>' + fmt(d) + '</b>' + o.total + ' stories' +
       (parts.length ? '<div class="tm">' + parts.join(' · ') + '</div>' : '') +
       '<div class="tm">' + (o.total ? 'click to isolate this day' : 'no stories this day') + '</div>';
@@ -1075,23 +1069,34 @@ ACTIVITY_JS = """<script>
     tip.style.left = x + 'px'; tip.style.top = y + 'px';
   }
   function hideTip(){ if (tip) tip.style.display = 'none'; }
-  svg.addEventListener('mousedown', function(e){ drag = idxAt(e); moved = false; e.preventDefault(); });
-  svg.addEventListener('mousemove', function(e){
-    var i = idxAt(e);
-    if (drag === null){ showTip(e, days[i].d); return; }
-    if (i !== drag) moved = true;
-    a = Math.min(drag, i); b = Math.max(drag, i); paint();
-    showTip(e, days[i].d);
+  cols.forEach(function(g){
+    g.addEventListener('mousedown', function(e){
+      drag = num(g.getAttribute('data-i')); moved = false;
+      dragWasSingle = (a === b && a === drag);   // snapshot the pre-click state
+      e.preventDefault();
+    });
+    g.addEventListener('mousemove', function(e){
+      var i = num(g.getAttribute('data-i'));
+      if (drag === null){ showTip(e, days[i].d); return; }
+      if (i !== drag) moved = true;
+      a = Math.min(drag, i); b = Math.max(drag, i); paint();
+      showTip(e, days[i].d);
+    });
+    g.addEventListener('mouseleave', hideTip);
   });
   svg.addEventListener('mouseleave', hideTip);
   window.addEventListener('mouseup', function(e){
     if (drag === null) return;
-    if (!moved){ a = b = drag; }
+    if (!moved){
+      // a plain click isolates that day; clicking the isolated day again returns to the default view
+      if (dragWasSingle){ a = 0; b = n - 1; } else { a = b = drag; }
+    }
     drag = null; paint();
   });
   svg.addEventListener('keydown', function(e){
     var k = e.key, i = b;
     if (k === 'ArrowRight' || k === 'ArrowLeft'){
+      if (a === 0 && b === n - 1){ a = b = (k === 'ArrowRight' ? 0 : n - 1); e.preventDefault(); paint(); return; }
       i = Math.max(0, Math.min(n - 1, b + (k === 'ArrowRight' ? 1 : -1)));
       if (e.shiftKey && i > a){ b = i; } else { a = b = i; }
       e.preventDefault(); paint();
@@ -1099,8 +1104,11 @@ ACTIVITY_JS = """<script>
   });
   cells.forEach(function(c){
     var date = c.getAttribute('data-d');
-    c.addEventListener('click', function(){ a = b = idx[date]; paint(); });
-    c.addEventListener('mouseenter', function(){ a = a; });
+    c.addEventListener('click', function(){
+      var i = idx[date];
+      if (a === b && a === i){ a = 0; b = n - 1; } else { a = b = i; }
+      paint();
+    });
     c.addEventListener('keydown', function(e){
       if (e.key === 'Enter' || e.key === ' '){ a = b = idx[date]; paint(); e.preventDefault(); }
     });
@@ -1109,14 +1117,28 @@ ACTIVITY_JS = """<script>
     c.addEventListener('click', function(){
       var k = c.getAttribute('data-sev').charAt(0).toLowerCase();
       on[k] = !on[k];
-      svg.className = (on.g ? '' : ' off-g') + (on.e ? '' : ' off-e') + (on.s ? '' : ' off-s') + (on.c ? '' : ' off-c');
+      svg.classList.toggle('off-g', !on.g); svg.classList.toggle('off-e', !on.e);
+      svg.classList.toggle('off-s', !on.s); svg.classList.toggle('off-c', !on.c);
       c.classList.toggle('off', !on[k]);
       c.setAttribute('aria-pressed', on[k] ? 'true' : 'false');
       paint();
     });
   });
-  if (reset) reset.addEventListener('click', function(){ a = 0; b = n - 1; paint(); });
-  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && drag === null){ hideTip(); } });
+  function restore(){
+    a = 0; b = n - 1;
+    ['g','e','s','c'].forEach(function(k){ on[k] = true; });
+    svg.classList.remove('off-g','off-e','off-s','off-c');
+    document.querySelectorAll('.act-chip').forEach(function(c){
+      c.classList.remove('off'); c.setAttribute('aria-pressed','true'); });
+    paint();
+  }
+  if (reset) reset.addEventListener('click', function(){ restore(); });
+  document.addEventListener('keydown', function(e){
+    if (e.key !== 'Escape' || drag !== null) return;
+    hideTip();
+    if (document.activeElement === svg) return;   // the chart's own Esc is handled above
+    restore();
+  });
   svg.setAttribute('tabindex', '0');
   paint();
 })();
@@ -1163,7 +1185,7 @@ def _activity_timeline(series):
     mx = max(totals) if totals else 1
     def y(v):
         return T + (1 - v / float(mx)) * ph
-    out = [f'<svg id="act-svg" viewBox="0 0 {W} {H}" width="100%" height="{H}" role="img" '
+    out = [f'<svg id="act-svg" viewBox="0 0 {W} {H}" width="100%" preserveAspectRatio="xMidYMid meet" role="img" '
            f'aria-label="Daily story volume by severity, {n} digest days from {series[0][0]} to {series[-1][0]}. '
            f'Drag across the chart to select a date window; a table of the same figures follows the chart.">']
     for v in (0, int(round(mx / 2.0)), mx):
@@ -1176,8 +1198,9 @@ def _activity_timeline(series):
             c = counts.get(b, 0)
             if not c:
                 continue
+            prev = run                    # cumulative BEFORE this band — y() decreases as volume grows
             y2, run = y(run + c), run + c
-            h = max(1.0, y(run) - y2)
+            h = max(1.0, y(prev) - y2)
             bars.append(f'<rect class="{SEV_CSS[b]}" x="{L + i * colw + 0.6:.1f}" y="{y2:.1f}" '
                         f'width="{max(0.8, colw - 1.2):.1f}" height="{h:.1f}" rx="1"/>')
         attrs = " ".join(f'data-{SEV_KEY[b]}="{counts.get(b, 0)}"' for b in SEV_ORDER)
@@ -1253,11 +1276,14 @@ def activity_section_html(stories):
 <div class="section" id="reporting-activity">
 <div class="sec-head"><h2><span class="bar"></span>Reporting Activity</h2>
 <a class="seeall" href="daily/">Browse the archive →</a></div>
+<div class="act-intro">Every digest day's story volume, stacked by severity band — the raw counts behind the
+rolling index above. Drag across the chart to select a window, hover a day for its breakdown, or click a
+day (or a calendar cell) to isolate it. Full figures in the table under the chart.</div>
 <div class="act-wrap">
   <div class="act-bar">
     <div class="act-readout" id="act-readout" aria-live="polite">
       <b>{n}</b> digest days · <b>{tot}</b> stories · {first} → {last} ·
-      drag across the chart to select a window, or click a day to isolate it
+      drag to select a window · Esc for the whole archive
     </div>
     <div class="act-tools">
       <span class="act-legend" role="group" aria-label="Severity bands shown">{chips}</span>
