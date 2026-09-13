@@ -158,6 +158,31 @@ body{font-family:Inter,-apple-system,sans-serif;background:var(--bg);color:var(-
 .ss-cell.s5{background:linear-gradient(180deg,rgba(244,63,94,.52),rgba(244,63,94,.95));color:#fff}
 .ss-cell u{text-decoration:none;font-style:normal;font-size:9px;font-weight:800;line-height:1.2;margin-top:1px;opacity:.95}
 .ss-cell.s3 b,.ss-cell.s4 b,.ss-cell.s5 b{color:rgba(255,255,255,.85)}
+/* Confidence ledger — appendix section (moved from the top block 2026-09-14).
+   Was three long bullets in one box (a wall of text); now one status row each:
+   a coloured spine + monospace chip in the left column, prose in the right. */
+.conf-ledger .conf-row{display:grid;grid-template-columns:170px minmax(0,1fr);gap:16px;
+  align-items:start;padding:15px 17px;margin:10px 0;border-radius:12px;
+  background:var(--surface);border:1px solid var(--border-light);
+  border-left:3px solid var(--border-light)}
+.conf-ledger .conf-row.ok{border-left-color:var(--green)}
+.conf-ledger .conf-row.warn{border-left-color:var(--amber)}
+.conf-ledger .conf-row.bad{border-left-color:var(--red)}
+.conf-ledger .conf-row.loose{border-left-color:var(--text-dim)}
+.conf-chip{display:flex;flex-direction:column;gap:5px}
+.conf-icon{font-size:15px;line-height:1}
+.conf-label{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:800;
+  letter-spacing:.07em;text-transform:uppercase;color:var(--text-dim)}
+.conf-ledger .conf-row.ok .conf-label{color:var(--green)}
+.conf-ledger .conf-row.warn .conf-label{color:var(--amber)}
+.conf-ledger .conf-row.bad .conf-label{color:var(--red)}
+.conf-note{font-size:11.5px;line-height:1.45;color:var(--text-dim)}
+.conf-text p{margin:0}
+.conf-text p+p{margin-top:.6em}
+.conf-trailer{margin:16px 0 0;padding-top:12px;border-top:1px dashed var(--border-light);
+  font-size:11.5px;line-height:1.55;font-style:italic;color:var(--text-muted)}
+.conf-trailer p{margin:0}
+@media(max-width:760px){.conf-ledger .conf-row{grid-template-columns:1fr;gap:8px}}
 .ss-cell.gap{background:repeating-linear-gradient(45deg,rgba(120,140,180,.1) 0 4px,transparent 4px 8px);color:var(--text-dim);font-style:italic;border:1px dashed var(--border-light)}
 .ss-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:10.5px;color:var(--text-dim)}
 .ss-lg{display:flex;align-items:center;gap:5px}
