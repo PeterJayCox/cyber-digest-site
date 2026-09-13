@@ -182,6 +182,15 @@ body{font-family:Inter,-apple-system,sans-serif;background:var(--bg);color:var(-
 .conf-trailer{margin:16px 0 0;padding-top:12px;border-top:1px dashed var(--border-light);
   font-size:11.5px;line-height:1.55;font-style:italic;color:var(--text-muted)}
 .conf-trailer p{margin:0}
+/* One-line confidence note above the executive summary (skim-protection for the
+   ledger, which now lives in the appendix). */
+.conf-line{margin:14px 0 18px;padding:9px 14px;border-radius:10px;
+  background:var(--surface2,var(--surface));border:1px solid var(--border-light);
+  font-size:12.5px;line-height:1.5;color:var(--text-muted)}
+.conf-line-tag{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:800;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-right:9px}
+.conf-line a{color:var(--accent);text-decoration:none}
+.conf-line a:hover{text-decoration:underline}
 @media(max-width:760px){.conf-ledger .conf-row{grid-template-columns:1fr;gap:8px}}
 .ss-cell.gap{background:repeating-linear-gradient(45deg,rgba(120,140,180,.1) 0 4px,transparent 4px 8px);color:var(--text-dim);font-style:italic;border:1px dashed var(--border-light)}
 .ss-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:10.5px;color:var(--text-dim)}
