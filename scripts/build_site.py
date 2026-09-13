@@ -974,6 +974,308 @@ def _trunc(s,n=82):
     if len(s)<=n: return s
     return s[:n].rsplit(" ",1)[0]+"…"
 
+# ---------------- Homepage: reporting-activity timeline + collection calendar ----------------
+# Two linked, dependency-free graphics that sit directly under Reported Threat
+# Activity (requested 2026-09-14; prototypes: ~/Desktop/hermes/interactive-elements/).
+# Both are SERVER-RENDERED (inline SVG + a CSS grid of cells) so the numbers are in
+# the HTML for crawlers and for readers with JS off; a small inline script adds the
+# brush, the linked highlight, severity isolation and tooltips. No library, no fetch,
+# no new data source — the day series comes from the same vault DB rows the rest of
+# the homepage already reads.
+ACTIVITY_HORIZON = 120                       # chart horizon, in digest days
+SEV_ORDER = ["Guarded", "Elevated", "Severe", "Critical"]
+SEV_CSS = {"Guarded": "sev-guarded", "Elevated": "sev-elevated",
+           "Severe": "sev-severe", "Critical": "sev-critical"}
+SEV_KEY = {"Guarded": "g", "Elevated": "e", "Severe": "s", "Critical": "c"}
+CAL_STEPS = 4                                # heat-ramp steps (d1..d4 + empty)
+ACTIVITY_JS = """<script>
+(function(){
+  var svg = document.getElementById('act-svg');
+  if (!svg) return;
+  var cols = [].slice.call(svg.querySelectorAll('.act-col'));
+  if (!cols.length) return;
+  var brush = document.getElementById('act-brush'),
+      readout = document.getElementById('act-readout'),
+      tip = document.getElementById('act-tip'),
+      reset = document.getElementById('act-reset'),
+      cells = [].slice.call(document.querySelectorAll('.cal-grid .cal-cell[data-d]')),
+      MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+      KEYS = ['g','e','s','c'],
+      NAMES = ['Guarded','Elevated','Severe','Critical'],
+      days = [], idx = {}, n = cols.length, a = 0, b = n - 1,
+      on = {g:true,e:true,s:true,c:true}, drag = null, moved = false;
+  function num(v){ var x = parseInt(v, 10); return isNaN(x) ? 0 : x; }
+  cols.forEach(function(g, i){
+    var o = {d: g.getAttribute('data-d'), i: i};
+    KEYS.forEach(function(k){ o[k] = num(g.getAttribute('data-' + k)); });
+    o.total = o.g + o.e + o.s + o.c;
+    days.push(o); idx[o.d] = i;
+  });
+  function fmt(iso){ var p = iso.split('-'); return parseInt(p[2],10) + ' ' + MON[parseInt(p[1],10)-1] + ' ' + p[0]; }
+  function fmtS(iso){ var p = iso.split('-'); return parseInt(p[2],10) + ' ' + MON[parseInt(p[1],10)-1]; }
+  function hostRect(){ return svg.getBoundingClientRect(); }
+  var _x0 = num(cols[0].querySelector('rect').getAttribute('x')) - 0.6;
+  var _cw = n > 1 ? (num(cols[1].querySelector('rect').getAttribute('x')) - num(cols[0].querySelector('rect').getAttribute('x'))) : 1;
+  function idxAt(e){
+    var r = hostRect(), sc = 1100 / r.width, x = (e.clientX - r.left) * sc;
+    var i = Math.floor((x - _x0) / _cw);
+    return Math.max(0, Math.min(n - 1, i));
+  }
+  function totals(){
+    var t = 0, hi = 0;
+    for (var i = a; i <= b; i++){
+      for (var j = 0; j < 4; j++){
+        if (!on[KEYS[j]]) continue;
+        var v = days[i][KEYS[j]];
+        t += v;
+        if (j >= 2) hi += v;
+      }
+    }
+    return {t: t, hi: hi};
+  }
+  function paint(){
+    var narrow = (b - a) < (n - 1), s = totals();
+    for (var i = 0; i < n; i++) cols[i].setAttribute('opacity', (i >= a && i <= b) ? '1' : '0.26');
+    if (narrow && brush){
+      var rad = hostRect(), sc = 1100 / rad.width;
+      var c0 = cols[a].getBoundingClientRect(), c1 = cols[b].getBoundingClientRect();
+      brush.setAttribute('x', ((c0.left - rad.left) * sc).toFixed(1));
+      brush.setAttribute('width', Math.max(1, (c1.right - c0.left) * sc).toFixed(1));
+      brush.style.display = '';
+    } else if (brush){ brush.style.display = 'none'; }
+    cells.forEach(function(c){
+      var i = idx[c.getAttribute('data-d')], inR = (i >= a && i <= b);
+      c.classList.toggle('sel', narrow && inR);
+      c.classList.toggle('mute', !inR);
+    });
+    if (!readout) return;
+    if (narrow){
+      var pct = s.t ? Math.round(s.hi * 100 / s.t) : 0;
+      readout.innerHTML = '<b>' + (b - a + 1) + '</b> ' + ((b - a + 1) === 1 ? 'day' : 'days') +
+        ' · ' + fmtS(days[a].d) + (a === b ? '' : ' → ' + fmt(days[b].d)) + ' · <b>' + s.t + '</b> stories' +
+        (s.t ? ' · ' + pct + '% Severe or Critical' : '') +
+        ' <span class="dim">· press Esc or Reset for the whole archive</span>';
+    } else {
+      readout.innerHTML = '<b>' + n + '</b> digest days · <b>' + s.t + '</b> stories · ' +
+        fmt(days[0].d) + ' → ' + fmt(days[n-1].d) +
+        ' · drag across the chart to select a window, or click a day to isolate it';
+    }
+  }
+  function showTip(e, d){
+    if (!tip) return;
+    var o = days[idx[d]], parts = [];
+    for (var j = 0; j < 4; j++) if (on[KEYS[j]] && o[KEYS[j]]) parts.push(NAMES[j] + ' ' + o[KEYS[j]]);
+    tip.innerHTML = '<b>' + fmt(d) + '</b>' + o.total + ' stories' +
+      (parts.length ? '<div class="tm">' + parts.join(' · ') + '</div>' : '') +
+      '<div class="tm">' + (o.total ? 'click to isolate this day' : 'no stories this day') + '</div>';
+    tip.style.display = 'block';
+    var w = tip.offsetWidth, h = tip.offsetHeight, x = e.clientX + 14, y = e.clientY - h - 12;
+    if (x + w > window.innerWidth - 10) x = e.clientX - w - 14;
+    if (y < 6) y = e.clientY + 16;
+    tip.style.left = x + 'px'; tip.style.top = y + 'px';
+  }
+  function hideTip(){ if (tip) tip.style.display = 'none'; }
+  svg.addEventListener('mousedown', function(e){ drag = idxAt(e); moved = false; e.preventDefault(); });
+  svg.addEventListener('mousemove', function(e){
+    var i = idxAt(e);
+    if (drag === null){ showTip(e, days[i].d); return; }
+    if (i !== drag) moved = true;
+    a = Math.min(drag, i); b = Math.max(drag, i); paint();
+    showTip(e, days[i].d);
+  });
+  svg.addEventListener('mouseleave', hideTip);
+  window.addEventListener('mouseup', function(e){
+    if (drag === null) return;
+    if (!moved){ a = b = drag; }
+    drag = null; paint();
+  });
+  svg.addEventListener('keydown', function(e){
+    var k = e.key, i = b;
+    if (k === 'ArrowRight' || k === 'ArrowLeft'){
+      i = Math.max(0, Math.min(n - 1, b + (k === 'ArrowRight' ? 1 : -1)));
+      if (e.shiftKey && i > a){ b = i; } else { a = b = i; }
+      e.preventDefault(); paint();
+    } else if (k === 'Escape'){ a = 0; b = n - 1; paint(); }
+  });
+  cells.forEach(function(c){
+    var date = c.getAttribute('data-d');
+    c.addEventListener('click', function(){ a = b = idx[date]; paint(); });
+    c.addEventListener('mouseenter', function(){ a = a; });
+    c.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' || e.key === ' '){ a = b = idx[date]; paint(); e.preventDefault(); }
+    });
+  });
+  document.querySelectorAll('.act-chip').forEach(function(c){
+    c.addEventListener('click', function(){
+      var k = c.getAttribute('data-sev').charAt(0).toLowerCase();
+      on[k] = !on[k];
+      svg.className = (on.g ? '' : ' off-g') + (on.e ? '' : ' off-e') + (on.s ? '' : ' off-s') + (on.c ? '' : ' off-c');
+      c.classList.toggle('off', !on[k]);
+      c.setAttribute('aria-pressed', on[k] ? 'true' : 'false');
+      paint();
+    });
+  });
+  if (reset) reset.addEventListener('click', function(){ a = 0; b = n - 1; paint(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && drag === null){ hideTip(); } });
+  svg.setAttribute('tabindex', '0');
+  paint();
+})();
+</script>"""
+
+_MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+def sev_day_series(stories):
+    """[(date, {severity: count}), ...] oldest -> newest; rows with no digest date are skipped."""
+    per = {}
+    for s in stories:
+        d = (s.get("digest_date") or "").strip()
+        if not d:
+            continue
+        band = (s.get("severity_band") or "").strip()
+        if band not in SEV_ORDER:
+            band = "Guarded"
+        per.setdefault(d, {})
+        per[d][band] = per[d].get(band, 0) + 1
+    return sorted(per.items())
+
+def _sev_total(counts):
+    """Stories in a per-day severity dict."""
+    return sum(counts.values())
+
+def _sev_line(counts):
+    """'Guarded 6 · Elevated 4' — only non-zero bands, in severity order."""
+    parts = [f"{b} {counts[b]}" for b in SEV_ORDER if counts.get(b)]
+    return " · ".join(parts) if parts else "no stories"
+
+def _cal_class(total, mx):
+    if not total:
+        return "cal-cell"
+    step = 1 + min(CAL_STEPS - 1, int((total / float(mx)) * CAL_STEPS))
+    return f"cal-cell d{step}"
+
+def _activity_timeline(series):
+    """Brushable stacked-severity column chart + the non-JS table fallback."""
+    n = len(series)
+    W, H, L, R, T, B = 1100, 260, 38, 12, 14, 30
+    pw, ph = W - L - R, H - T - B
+    colw = pw / float(n or 1)
+    totals = [_sev_total(c) for _, c in series]
+    mx = max(totals) if totals else 1
+    def y(v):
+        return T + (1 - v / float(mx)) * ph
+    out = [f'<svg id="act-svg" viewBox="0 0 {W} {H}" width="100%" height="{H}" role="img" '
+           f'aria-label="Daily story volume by severity, {n} digest days from {series[0][0]} to {series[-1][0]}. '
+           f'Drag across the chart to select a date window; a table of the same figures follows the chart.">']
+    for v in (0, int(round(mx / 2.0)), mx):
+        out.append(f'<line class="act-grid" x1="{L}" x2="{W - R}" y1="{y(v):.1f}" y2="{y(v):.1f}"/>'
+                   f'<text class="act-axis" x="{L - 7}" y="{y(v) + 3.5:.1f}" text-anchor="end">{v}</text>')
+    for i, (d, counts) in enumerate(series):
+        run = 0.0
+        bars = []
+        for b in SEV_ORDER:
+            c = counts.get(b, 0)
+            if not c:
+                continue
+            y2, run = y(run + c), run + c
+            h = max(1.0, y(run) - y2)
+            bars.append(f'<rect class="{SEV_CSS[b]}" x="{L + i * colw + 0.6:.1f}" y="{y2:.1f}" '
+                        f'width="{max(0.8, colw - 1.2):.1f}" height="{h:.1f}" rx="1"/>')
+        attrs = " ".join(f'data-{SEV_KEY[b]}="{counts.get(b, 0)}"' for b in SEV_ORDER)
+        out.append(f'<g class="act-col" data-d="{d}" data-i="{i}" {attrs} role="listitem">'
+                   f'<rect x="{L + i * colw:.1f}" y="{T}" width="{colw:.1f}" height="{ph}" '
+                   f'fill="transparent"/><title>{d}: {_sev_line(counts)}</title>{"".join(bars)}</g>')
+        if i % 7 == 0 or i == n - 1:
+            lbl = f"{int(d[8:10])} {_MON[int(d[5:7]) - 1]}"
+            out.append(f'<text class="act-axis" x="{L + i * colw + colw / 2:.1f}" y="{H - 9}" '
+                       f'text-anchor="middle">{lbl}</text>')
+    out.append(f'<rect id="act-brush" class="act-brush" x="{L}" y="{T}" width="{pw}" height="{ph}" '
+               f'pointer-events="none" style="display:none"/>')
+    out.append('</svg>')
+    # non-JS / screen-reader fallback: the same figures as a real table
+    rows = "".join(
+        f'<tr><td>{d}</td><td>{_sev_total(c)}</td>'
+        + "".join(f'<td>{c.get(b, 0)}</td>' for b in SEV_ORDER) + '</tr>'
+        for d, c in reversed(series))
+    out.append('<details class="act-table"><summary>View this timeline as a table (accessible fallback)</summary>'
+               '<div class="act-tablewrap"><table><thead><tr><th>Digest day</th><th>Stories</th>'
+               + "".join(f'<th>{b}</th>' for b in SEV_ORDER)
+               + f'</tr></thead><tbody>{rows}</tbody></table></div></details>')
+    return "".join(out)
+
+def _activity_calendar(series):
+    """Collection heat calendar: one cell per digest day, shaded by volume."""
+    totals = {d: _sev_total(c) for d, c in series}
+    mx = max(totals.values()) if totals else 1
+    from datetime import date as _d
+    lead = _d.fromisoformat(series[0][0]).weekday() if series else 0
+    cells = ['<div class="cal-cell cal-lead" aria-hidden="true"></div>'] * lead
+    for d, counts in series:
+        t = totals[d]
+        cells.append(f'<div class="{_cal_class(t, mx)}" data-d="{d}" data-t="{t}" '
+                     f'role="button" tabindex="0" aria-label="{d}: {t} stories" '
+                     f'title="{d} · {t} stories"></div>')
+    # month labels: keyed to the grid COLUMN each month first appears in (7 rows/column)
+    labels, seen = {}, set()
+    for i, (d, _c) in enumerate(series):
+        mon = d[5:7]
+        if mon in seen:
+            continue
+        seen.add(mon)
+        col = (i + lead) // 7
+        if col not in labels:
+            labels[col] = _MON[int(mon) - 1]
+    ncol = (len(series) + lead + 6) // 7
+    mons = "".join(f'<span style="width:18px;flex:0 0 18px">{labels.get(c, "")}</span>' for c in range(ncol))
+    mons += '<span class="cal-scale">fewer</span>'
+    mons += "".join(f'<span class="cal-sw d{q}"></span>' for q in range(1, CAL_STEPS + 1))
+    mons += '<span class="cal-scale">more</span>'
+    dows = "".join(f"<div>{x[0]}</div>" for x in ("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"))
+    return (f'<div class="cal-months">{mons}</div>'
+            f'<div class="cal-body"><div class="cal-dows">{dows}</div>'
+            f'<div class="cal-grid">{"".join(cells)}</div></div>'
+            f'<div class="cal-note">{len(series)} digest days · one cell per day, shaded by story volume · '
+            f'click a day to isolate it on the timeline above</div>')
+
+def activity_section_html(stories):
+    """The whole 'Reporting Activity' section (timeline + calendar, one shared brush).
+    Returns '' on any failure so a bad dataset can never break the homepage build."""
+    try:
+        series = sev_day_series(stories)[-ACTIVITY_HORIZON:]
+        if not series:
+            return ""
+        n = len(series)
+        first, last = series[0][0], series[-1][0]
+        tot = sum(_sev_total(c) for _, c in series)
+        chips = "".join(
+            f'<button type="button" class="act-chip" data-sev="{b}" aria-pressed="true">'
+            f'<span class="dot {SEV_CSS[b]}"></span>{b}</button>' for b in SEV_ORDER)
+        return f'''
+<div class="section" id="reporting-activity">
+<div class="sec-head"><h2><span class="bar"></span>Reporting Activity</h2>
+<a class="seeall" href="daily/">Browse the archive →</a></div>
+<div class="act-wrap">
+  <div class="act-bar">
+    <div class="act-readout" id="act-readout" aria-live="polite">
+      <b>{n}</b> digest days · <b>{tot}</b> stories · {first} → {last} ·
+      drag across the chart to select a window, or click a day to isolate it
+    </div>
+    <div class="act-tools">
+      <span class="act-legend" role="group" aria-label="Severity bands shown">{chips}</span>
+      <button type="button" class="act-reset" id="act-reset">Reset</button>
+    </div>
+  </div>
+  {_activity_timeline(series)}
+  <div class="act-sub"><h3>Collection calendar</h3>
+    <span>the whole archive at a glance — volume per digest day</span></div>
+  {_activity_calendar(series)}
+</div>
+<div class="act-tip" id="act-tip" role="tooltip"></div>
+{ACTIVITY_JS}
+</div>'''
+    except Exception as e:                       # never break the homepage build
+        print(f"[activity] section skipped: {e}")
+        return ""
+
 def build_index(stories):
     daily=os.path.join(VAULT,"Cyber Digest","Daily")
     days=[]
@@ -1186,6 +1488,8 @@ def build_index(stories):
     except OSError:
         print("⚠️ templates/home-globe.html missing; homepage globe skipped")
 
+    activity_section = activity_section_html(stories)
+
     html= head("Cyber Digest — Home","index.html")+f'''
 <div class="hero"><div class="kicker">// independent security intelligence</div>
 <h1>Cyber <span class="accent">Digest</span></h1>
@@ -1211,6 +1515,8 @@ def build_index(stories):
 <div class="section"><h2><span class="bar"></span>Monthly Editions</h2><div class="grid cards grid-monthly">{monthlist}</div></div>
 
 {threat_panel_html()}
+
+{activity_section}
 
 {rptsec}
 

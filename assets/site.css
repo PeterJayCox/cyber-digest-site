@@ -304,3 +304,83 @@ a:hover{text-decoration:underline}
 .tag .sicon{width:14px;height:14px;vertical-align:-3px;border-radius:3px}
 /* monthly edition cover art at top of monthly cards */
 .mcover{display:block;width:100%;height:110px;object-fit:cover;border-radius:8px;margin:-4px 0 10px;border:1px solid var(--border-light)}
+
+/* ===== Reporting Activity: brushable severity timeline + collection calendar =====
+   Homepage section directly under Reported Threat Activity (2026-09-14).
+   Server-rendered SVG/CSS; the inline script only adds the brush, the linked
+   highlight, severity isolation and tooltips. Severity colours reuse the same
+   tokens the story tags use (see SEV_CLS in build_site.py): Guarded=amber,
+   Elevated=vuln, Severe=tag-red-text, Critical=red. */
+.act-wrap{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 20px 16px}
+.act-bar{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;justify-content:space-between;margin-bottom:12px}
+.act-readout{font-size:13px;color:var(--text-dim);line-height:1.5;flex:1 1 380px;min-width:240px}
+.act-readout b{color:var(--text);font-weight:600}
+.act-readout .dim{color:var(--text-muted)}
+.act-tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.act-legend{display:flex;flex-wrap:wrap;gap:6px}
+.act-chip{font:inherit;font-size:12px;color:var(--text-secondary);background:var(--surface2);
+  border:1px solid var(--border-light);border-radius:999px;padding:4px 11px;cursor:pointer;
+  display:inline-flex;align-items:center;gap:6px}
+.act-chip:hover{background:var(--surface-hover);color:var(--text)}
+.act-chip.off{opacity:.42;text-decoration:line-through}
+.act-chip .dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex:0 0 auto}
+.act-reset{font:inherit;font-size:12px;color:var(--accent);background:var(--accent-bg);
+  border:1px solid var(--accent);border-radius:999px;padding:4px 13px;cursor:pointer}
+.act-reset:hover{background:var(--surface-hover)}
+#act-svg{cursor:crosshair;user-select:none;-webkit-user-select:none;display:block;max-width:100%}
+#act-svg:focus{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.act-grid{stroke:var(--border-light);stroke-width:1}
+.act-axis{fill:var(--text-dim);font-size:10px}
+.act-col{cursor:pointer}
+.act-col:hover{opacity:.82}
+.sev-guarded{fill:var(--amber)}
+.sev-elevated{fill:var(--vuln)}
+.sev-severe{fill:var(--tag-red-text)}
+.sev-critical{fill:var(--red)}
+.act-chip .dot.sev-guarded,.cal-sw.d1,.cal-sw.d2,.cal-sw.d3,.cal-sw.d4{background:var(--accent)}
+#act-svg.off-g .sev-guarded,#act-svg.off-e .sev-elevated,
+#act-svg.off-s .sev-severe,#act-svg.off-c .sev-critical{display:none}
+.act-brush{fill:var(--accent);fill-opacity:.13;stroke:var(--accent);stroke-width:1}
+.act-tip{position:fixed;z-index:60;pointer-events:none;display:none;background:var(--surface2);
+  border:1px solid var(--border-light);border-radius:8px;padding:8px 10px;font-size:12px;
+  color:var(--text);max-width:260px;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+.act-tip b{display:block;margin-bottom:3px}
+.act-tip .tm{color:var(--text-muted)}
+.act-table{margin-top:14px;font-size:12.5px}
+.act-table summary{cursor:pointer;color:var(--text-muted);list-style:revert}
+.act-table summary:hover{color:var(--text)}
+.act-tablewrap{margin-top:10px;max-height:320px;overflow:auto;border:1px solid var(--border);border-radius:8px}
+.act-table table{width:100%;border-collapse:collapse;font-size:12.5px}
+.act-table th,.act-table td{padding:5px 10px;text-align:right;border-bottom:1px solid var(--border);white-space:nowrap}
+.act-table th:first-child,.act-table td:first-child{text-align:left}
+.act-table thead th{position:sticky;top:0;background:var(--surface2);color:var(--text-secondary);font-weight:600;z-index:1}
+.act-sub{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;margin:22px 0 10px;
+  padding-top:16px;border-top:1px solid var(--border)}
+.act-sub h3{font-size:15px;font-weight:600}
+.act-sub span{font-size:12.5px;color:var(--text-dim)}
+.cal-months{display:flex;font-size:10px;color:var(--text-dim);margin:0 0 4px 27px;align-items:center}
+.cal-scale{margin-left:12px;flex:0 0 auto}
+.cal-sw{width:12px;height:12px;border-radius:3px;margin-left:3px;flex:0 0 auto;display:inline-block}
+.cal-body{display:flex;align-items:flex-start;overflow-x:auto;padding-bottom:4px}
+.cal-dows{display:grid;grid-template-rows:repeat(7,15px);gap:3px;font-size:9px;color:var(--text-dim);
+  margin-right:6px;text-align:right;flex:0 0 auto}
+.cal-grid{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,15px);grid-auto-columns:15px;gap:3px}
+.cal-cell{width:15px;height:15px;border-radius:3px;background:var(--surface2);cursor:pointer}
+.cal-cell:hover{outline:1.5px solid var(--accent)}
+.cal-cell:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.cal-cell.sel{outline:1.5px solid var(--text);outline-offset:.5px}
+.cal-cell.mute{opacity:.35}
+.cal-cell.cal-lead{background:transparent;cursor:default;pointer-events:none}
+.cal-cell.d1{background:rgba(0,180,216,.22)}
+.cal-cell.d2{background:rgba(0,180,216,.42)}
+.cal-cell.d3{background:rgba(0,180,216,.66)}
+.cal-cell.d4{background:rgba(0,180,216,.92)}
+.cal-note{font-size:12px;color:var(--text-dim);margin-top:10px}
+[data-theme="light"] .cal-cell.d1{background:rgba(0,114,245,.18)}
+[data-theme="light"] .cal-cell.d2{background:rgba(0,114,245,.36)}
+[data-theme="light"] .cal-cell.d3{background:rgba(0,114,245,.58)}
+[data-theme="light"] .cal-cell.d4{background:rgba(0,114,245,.85)}
+@media(max-width:760px){
+  .act-bar{flex-direction:column;align-items:flex-start}
+  .act-readout{flex:1 1 auto}
+}
