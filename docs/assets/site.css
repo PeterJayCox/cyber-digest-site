@@ -338,7 +338,11 @@ a:hover{text-decoration:underline}
 .sev-elevated{fill:var(--vuln)}
 .sev-severe{fill:var(--tag-red-text)}
 .sev-critical{fill:var(--red)}
-.act-chip .dot.sev-guarded,.cal-sw.d1,.cal-sw.d2,.cal-sw.d3,.cal-sw.d4{background:var(--accent)}
+/* legend dots must show each band's own colour — the same tokens the bars use */
+.act-chip .dot.sev-guarded{background:var(--amber)}
+.act-chip .dot.sev-elevated{background:var(--vuln)}
+.act-chip .dot.sev-severe{background:var(--tag-red-text)}
+.act-chip .dot.sev-critical{background:var(--red)}
 #act-svg.off-g .sev-guarded,#act-svg.off-e .sev-elevated,
 #act-svg.off-s .sev-severe,#act-svg.off-c .sev-critical{display:none}
 .act-brush{fill:var(--accent);fill-opacity:.13;stroke:var(--accent);stroke-width:1}
@@ -372,15 +376,15 @@ a:hover{text-decoration:underline}
 .cal-cell.sel{outline:1.5px solid var(--text);outline-offset:.5px}
 .cal-cell.mute{opacity:.35}
 .cal-cell.cal-lead{background:transparent;cursor:default;pointer-events:none}
-.cal-cell.d1{background:rgba(0,180,216,.22)}
-.cal-cell.d2{background:rgba(0,180,216,.42)}
-.cal-cell.d3{background:rgba(0,180,216,.66)}
-.cal-cell.d4{background:rgba(0,180,216,.92)}
+.cal-cell.d1,.cal-sw.d1{background:rgba(0,180,216,.22)}
+.cal-cell.d2,.cal-sw.d2{background:rgba(0,180,216,.42)}
+.cal-cell.d3,.cal-sw.d3{background:rgba(0,180,216,.66)}
+.cal-cell.d4,.cal-sw.d4{background:rgba(0,180,216,.92)}
 .cal-note{font-size:12px;color:var(--text-dim);margin-top:10px}
-[data-theme="light"] .cal-cell.d1{background:rgba(0,114,245,.18)}
-[data-theme="light"] .cal-cell.d2{background:rgba(0,114,245,.36)}
-[data-theme="light"] .cal-cell.d3{background:rgba(0,114,245,.58)}
-[data-theme="light"] .cal-cell.d4{background:rgba(0,114,245,.85)}
+[data-theme="light"] .cal-cell.d1,[data-theme="light"] .cal-sw.d1{background:rgba(0,114,245,.18)}
+[data-theme="light"] .cal-cell.d2,[data-theme="light"] .cal-sw.d2{background:rgba(0,114,245,.36)}
+[data-theme="light"] .cal-cell.d3,[data-theme="light"] .cal-sw.d3{background:rgba(0,114,245,.58)}
+[data-theme="light"] .cal-cell.d4,[data-theme="light"] .cal-sw.d4{background:rgba(0,114,245,.85)}
 @media(max-width:760px){
   .act-bar{flex-direction:column;align-items:flex-start}
   .act-readout{flex:1 1 auto}
