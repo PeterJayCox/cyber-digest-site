@@ -1,0 +1,82 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DDRop Breaks the Integrity Guarantee Behind Intel TDX and AMD SEV-SNP With a Sub-$200 Interposer</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png">
+<link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png">
+<link rel="alternate" type="application/rss+xml" title="Cyber Digest" href="https://cyber.peterjaycox.com/feed.xml">
+<link rel="alternate" type="application/rss+xml" title="Cyber Digest — Monthly Editions" href="https://cyber.peterjaycox.com/feed-monthly.xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="DDRop Breaks the Integrity Guarantee Behind Intel TDX and AMD SEV-SNP With a Sub-$200 Interposer">
+<meta property="og:description" content="Curated sector-by-sector roundup of global cybersecurity developments with source-reliability indexing, AU/NZ context, and searchable knowledge base.">
+<meta property="og:url" content="https://cyber.peterjaycox.com/">
+<meta property="og:image" content="https://cyber.peterjaycox.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"Cyber Digest","alternateName":"Cyber Digest — public site","url":"https://cyber.peterjaycox.com/","description":"Curated, source-rated roundup of global cybersecurity developments with AU/NZ context.","inLanguage":"en-AU","publisher":{"@type":"Organization","name":"Cyber Digest","url":"https://cyber.peterjaycox.com/"},"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://cyber.peterjaycox.com/stories.html?q={search_term_string}"},"query-input":"required name=search_term_string"}}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/site.css?v=202609150816"></head><body>
+<nav class="topnav"><div class="inner">
+        <a class="brand" href="https://cyber.peterjaycox.com/index.html"><span class="brand-logo" aria-hidden="true"></span> Cyber&nbsp;Digest<small>public site</small></a>
+        <div class="navlinks"><a href="https://cyber.peterjaycox.com/index.html" class=""><span class="t">🏠 Home</span></a><a href="https://cyber.peterjaycox.com/stories.html" class=""><span class="t">📚 Story DB</span></a><a href="https://cyber.peterjaycox.com/globe.html" class=""><span class="t">🌍 Globe</span></a><a href="https://cyber.peterjaycox.com/daily/" class=""><span class="t">🗓️ Daily</span></a><a href="https://cyber.peterjaycox.com/monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="https://cyber.peterjaycox.com/reports/index.html" class=""><span class="t">📑 Reports</span></a><a href="https://cyber.peterjaycox.com/wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a><a href="https://cyber.peterjaycox.com/flashcards.html" class=""><span class="t">🗂️ Flashcards</span></a></div>
+        <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light">🌙</div></div></nav><main class="container">
+            <div class="container">
+            <div class="crumb"><a href="../../index.html">Home</a> · <a href="../../wiki/index.html">Wiki</a> · Incidents &amp; Campaigns</div>
+            <div class="wiki-body"><div class="frontmatter">type: incident · created: 2026-09-15 · updated: 2026-09-15 · tags: [incident, global] · confidence: high · severity: medium · affected_sectors: [global] · au_impact: false</div><p>Researchers at KU Leuven, ETH Zurich, Durham University and Google have disclosed <strong>DDRop</strong>, a hardware attack that breaks the memory protection used by Intel and AMD confidential computing by silently dropping writes to a server's memory, so the processor keeps reading stale encrypted data as though the update had happened. The attack requires an adversary who already controls the server's software and can briefly access the machine to insert a small circuit board — an <strong>interposer costing under US$200 to build</strong> — between the processor and a memory module; the board forces an error on the command bus and then cuts the wire the module uses to report that error, so the write is quietly discarded and the processor is never told. DDRop works against <strong>Intel TDX, Intel Scalable SGX and AMD SEV-SNP</strong>, the hardware cloud providers offer to keep customer workloads private from the provider itself. The underlying weakness is architectural rather than a coding error: these designs encrypt memory but omit a <strong>freshness guarantee</strong>, so the processor can confirm that memory is encrypted but not that it holds the latest written value, and old ciphertext still decrypts correctly. On Intel TDX the researchers turned write-dropping into full control of a protected virtual machine — dropping trusted firmware's writes of empty page-table entries so the table retains attacker-chosen data, mapping the attacker's own VM onto arbitrary physical addresses, reading a victim VM's private memory, switching a victim machine into debug mode and copying its memory in plaintext, and overwriting the launch measurement a VM uses to prove to a remote customer that it started in a known trusted state. They characterise the result as the <strong>first active interposer attack against the DDR5 memory in current cloud servers</strong> and the first to break the integrity of an up-to-date Intel TDX system rather than merely read from it, distinguishing it from the passive TEE.fail approach and from Battering RAM, which required DDR4. Their test system did not support TDX's stronger cryptographic-integrity mode, which they assess would block the memory-reading and debug-mode results but not the attestation forgery, because that write happens inside the attacker's own VM under its own key; AMD SEV-SNP gives a narrower result, copying one victim page into another during page relocation. NVIDIA's confidential-computing GPUs are out of reach because their memory sits inside the chip package, Arm's CCA was not tested, and the older Intel Client SGX uses a hardware integrity tree that catches stale data. There is no simple patch. The work is due to be presented at ACM CCS 2026 in November, with board designs, controller firmware and attack code to be released on GitHub, and the researchers told The Hacker News they have <strong>no evidence of the attack or a comparable active interposer being used outside a laboratory</strong> — no cloud service has been shown to be broken into.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sector</strong></td>
+<td>Global (Macro)</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td>2026-09-15</td>
+</tr>
+<tr>
+<td><strong>Source</strong></td>
+<td>The Hacker News</td>
+</tr>
+<tr>
+<td><strong>Reliability</strong></td>
+<td>Tier 2</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><a href="https://thehackernews.com/2026/09/new-ddrop-attack-breaks-intel-tdx-and.html">Source article</a></li>
+</ul></div>
+            </div></main>
+<div class="footer">
+  <div class="links">
+    <a href="https://cyber.peterjaycox.com/index.html">Home</a>
+    <a href="https://cyber.peterjaycox.com/stories.html">Story DB</a>
+    <a href="https://cyber.peterjaycox.com/daily/">Daily</a>
+    <a href="https://cyber.peterjaycox.com/monthly/index.html">Monthly</a>
+    <a href="https://cyber.peterjaycox.com/reports/index.html">Reports</a>
+    <a href="https://cyber.peterjaycox.com/wiki/index.html">Wiki</a>
+    <a href="https://cyber.peterjaycox.com/feed.xml">RSS</a>
+    <a href="https://cyber.peterjaycox.com/privacy.html">Privacy</a>
+    <a href="https://cyber.peterjaycox.com/corrections.html">Corrections</a>
+    <a href="https://cyber.peterjaycox.com/licensing.html">Licensing</a>
+    <a href="https://cyber.peterjaycox.com/security.html">Security</a>
+  </div>
+  Cyber Digest public site · built 2026-09-15 08:16
+</div>
+<script>
+var _t=document.documentElement;
+var _b=document.querySelector(".theme-toggle");
+function toggleTheme(){var n=_t.getAttribute("data-theme")==="dark"?"light":"dark";_t.setAttribute("data-theme",n);if(_b)_b.textContent=n==="dark"?"🌙":"☀️";try{if(n==="dark")localStorage.removeItem("cd-theme");else localStorage.setItem("cd-theme",n)}catch(e){}}
+(function(){try{var s=localStorage.getItem("cd-theme");if(s){_t.setAttribute("data-theme",s);if(_b)_b.textContent="☀️"}}catch(e){}})()
+</script>
+</body></html>
