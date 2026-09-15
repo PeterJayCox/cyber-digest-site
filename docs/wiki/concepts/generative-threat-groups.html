@@ -1,0 +1,72 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generative Threat Groups (GTG) Designators</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png">
+<link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png">
+<link rel="alternate" type="application/rss+xml" title="Cyber Digest" href="https://cyber.peterjaycox.com/feed.xml">
+<link rel="alternate" type="application/rss+xml" title="Cyber Digest — Monthly Editions" href="https://cyber.peterjaycox.com/feed-monthly.xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Generative Threat Groups (GTG) Designators">
+<meta property="og:description" content="Curated sector-by-sector roundup of global cybersecurity developments with source-reliability indexing, AU/NZ context, and searchable knowledge base.">
+<meta property="og:url" content="https://cyber.peterjaycox.com/">
+<meta property="og:image" content="https://cyber.peterjaycox.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"Cyber Digest","alternateName":"Cyber Digest — public site","url":"https://cyber.peterjaycox.com/","description":"Curated, source-rated roundup of global cybersecurity developments with AU/NZ context.","inLanguage":"en-AU","publisher":{"@type":"Organization","name":"Cyber Digest","url":"https://cyber.peterjaycox.com/"},"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://cyber.peterjaycox.com/stories.html?q={search_term_string}"},"query-input":"required name=search_term_string"}}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/site.css?v=202609160848"></head><body>
+<nav class="topnav"><div class="inner">
+        <a class="brand" href="https://cyber.peterjaycox.com/index.html"><span class="brand-logo" aria-hidden="true"></span> Cyber&nbsp;Digest<small>public site</small></a>
+        <div class="navlinks"><a href="https://cyber.peterjaycox.com/index.html" class=""><span class="t">🏠 Home</span></a><a href="https://cyber.peterjaycox.com/stories.html" class=""><span class="t">📚 Story DB</span></a><a href="https://cyber.peterjaycox.com/globe.html" class=""><span class="t">🌍 Globe</span></a><a href="https://cyber.peterjaycox.com/daily/" class=""><span class="t">🗓️ Daily</span></a><a href="https://cyber.peterjaycox.com/monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="https://cyber.peterjaycox.com/reports/index.html" class=""><span class="t">📑 Reports</span></a><a href="https://cyber.peterjaycox.com/wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a><a href="https://cyber.peterjaycox.com/flashcards.html" class=""><span class="t">🗂️ Flashcards</span></a></div>
+        <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light">🌙</div></div></nav><main class="container">
+            <div class="container">
+            <div class="crumb"><a href="../../index.html">Home</a> · <a href="../../wiki/index.html">Wiki</a> · Concepts &amp; Frameworks</div>
+            <div class="wiki-body"><div class="frontmatter">type: concept · created: 2026-09-11 · updated: 2026-09-11 · tags: [framework, ai-uplift, intel-cycle] · confidence: high · affected_sectors: [technology, government, defence] · au_impact: true</div><h1>Generative Threat Groups (GTG) Designators</h1>
+<p><strong>Generative Threat Groups (GTGs)</strong> are Anthropic's internal designators for threat actors observed abusing AI. They appear as <code>GTG-NNNNN</code> labels in that vendor's <em>Detecting and countering misuse of AI</em> reporting, and they are increasingly quoted second-hand in news coverage of AI-enabled intrusions.</p>
+<h2>What a GTG identifier is — and is not</h2>
+<p>A GTG identifier is an <strong>account-cluster handle</strong>, not an actor name. It labels a set of accounts and activity the vendor observed on its own platform during a fixed reporting window. It is not:</p>
+<ul>
+<li>a mapping to ATT&amp;CK groups, government cryptonyms, or the intrusion-set names used in <a href="mitre-attack.html">Mitre Attack</a> (no public crosswalk exists);</li>
+<li>a persistent identity — the vendor's IDs are allocated to accounts and clustering of activity, so they should not be treated as durable actor identities across reports;</li>
+<li>an attribution. Where the vendor does reach a judgement about state sponsorship, it says so separately and hedges it, e.g. GTG-20006 is described as "consistent with public reporting linking the actor to Midnight Blizzard".</li>
+</ul>
+<h2>Scale and shape of the September 2026 set</h2>
+<p>The September 2026 edition carries <strong>37 distinct GTG designators</strong>, of which 36 appear as case-study headings, spread across <strong>seven harm areas</strong>: cyber operations, influence operations, surveillance operations, conventional weapons, biological misuse, scams and fraud, and illicit distillation. Case studies in this series are not limited to cyber: the same designator space covers influence networks, commercial surveillance vendors and weapons-development assistance.</p>
+<p>The designator style is also a reporting tell. A GTG ID in a news story almost always means the story traces back to a first-party vendor disclosure rather than to independent collection — useful when judging whether a "new" AI-enabled actor claim has a real evidentiary basis behind it.</p>
+<h2>Handling rule for this wiki</h2>
+<ol>
+<li><strong>Quote the designator, never substitute for it.</strong> Write "GTG-20006 (Anthropic designator; vendor assesses activity consistent with Midnight Blizzard)" rather than presenting GTG-20006 as a synonym for the named group.</li>
+<li><strong>Keep the vendor's hedge attached.</strong> Where the vendor says "consistent with", "suspected" or "likely", carry the same qualifier into the page.</li>
+<li><strong>Do not create actor pages off a GTG alone.</strong> A GTG that maps to an existing actor page belongs in that page's activity history, not in a new entity page.</li>
+<li><strong>Distinguish the two claim types.</strong> What the vendor observed on its own platform (tooling, workflows, targets, techniques) is first-party and citable; who the actor is remains an assessment.</li>
+</ol>
+<p>Related: <a href="ai-uplift.html">Ai Uplift</a>, <a href="../entities/anthropic-threat-intelligence.html">Anthropic Threat Intelligence</a>, <a href="cyber-kill-chain.html">Cyber Kill Chain</a></p></div>
+            </div></main>
+<div class="footer">
+  <div class="links">
+    <a href="https://cyber.peterjaycox.com/index.html">Home</a>
+    <a href="https://cyber.peterjaycox.com/stories.html">Story DB</a>
+    <a href="https://cyber.peterjaycox.com/daily/">Daily</a>
+    <a href="https://cyber.peterjaycox.com/monthly/index.html">Monthly</a>
+    <a href="https://cyber.peterjaycox.com/reports/index.html">Reports</a>
+    <a href="https://cyber.peterjaycox.com/wiki/index.html">Wiki</a>
+    <a href="https://cyber.peterjaycox.com/feed.xml">RSS</a>
+    <a href="https://cyber.peterjaycox.com/privacy.html">Privacy</a>
+    <a href="https://cyber.peterjaycox.com/corrections.html">Corrections</a>
+    <a href="https://cyber.peterjaycox.com/licensing.html">Licensing</a>
+    <a href="https://cyber.peterjaycox.com/security.html">Security</a>
+  </div>
+  Cyber Digest public site · built 2026-09-16 08:48
+</div>
+<script>
+var _t=document.documentElement;
+var _b=document.querySelector(".theme-toggle");
+function toggleTheme(){var n=_t.getAttribute("data-theme")==="dark"?"light":"dark";_t.setAttribute("data-theme",n);if(_b)_b.textContent=n==="dark"?"🌙":"☀️";try{if(n==="dark")localStorage.removeItem("cd-theme");else localStorage.setItem("cd-theme",n)}catch(e){}}
+(function(){try{var s=localStorage.getItem("cd-theme");if(s){_t.setAttribute("data-theme",s);if(_b)_b.textContent="☀️"}}catch(e){}})()
+</script>
+</body></html>

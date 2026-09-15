@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://cyber.peterjaycox.com/wiki/</loc><lastmod>2026-09-15</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/concepts/ai-uplift.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/concepts/bit2watt.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/concepts/car.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/concepts/china-ai-companion-regulation.html</loc><lastmod>2026-08-17</lastmod></url>
@@ -8,6 +9,7 @@
   <url><loc>https://cyber.peterjaycox.com/wiki/concepts/cyber-kill-chain.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/concepts/d3fend.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/concepts/friendly-fire-ai-hijacking.html</loc><lastmod>2026-08-30</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/concepts/generative-threat-groups.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/concepts/ghostapproval.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/concepts/hallusquatting.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/concepts/hindsight-agent-memory-architecture.html</loc><lastmod>2026-08-30</lastmod></url>
@@ -21,6 +23,7 @@
   <url><loc>https://cyber.peterjaycox.com/wiki/concepts/trump-ai-vulnerability-clearinghouse.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/concepts/uk-cyber-shield.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/cve-attack-matrix.html</loc><lastmod>2026-09-15</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/entities/anthropic-threat-intelligence.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/entities/blackcat-alphv.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/entities/cse-canada.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/entities/cylindrical-canine.html</loc><lastmod>2026-08-30</lastmod></url>
@@ -308,6 +311,11 @@
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/google-play-early-access-abused-to-push-thousands-of-deceptive-apps.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/greatness-phaas-adds-device-code-phishing-to-bypass-mfa-and-steal-tokens.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/grindr-to-pay-26-million-to-settle-uk-claims-over-hiv-status-data-sharing.html</loc><lastmod>2026-09-09</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/gtg-10007-changsha-exploit-foundry-agentic-vulnerability-research.html</loc><lastmod>2026-09-10</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/gtg-20006-russian-espionage-autonomous-malware-rebuild.html</loc><lastmod>2026-09-10</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/gtg-50014-shinyhunters-affiliates-ai-uplifted-credential-harvesting.html</loc><lastmod>2026-09-10</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/gtg-50020-ai-vendor-evaluation-sandbox-api-key-theft.html</loc><lastmod>2026-09-10</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/gtg-50029-hacktivist-european-political-entities-stolen-api-keys.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/gunra-ransomware-exploits-fortinet-and-schneider-electric-flaws-to-breach-networ.html</loc><lastmod>2026-08-18</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/hacker-runs-hermes-ai-agent-unattended-for-post-exploitation-at-thai-finance-min.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/hackers-compromised-14-500-dahua-devices-using-credential-attacks-and-p2p.html</loc><lastmod>2026-09-10</lastmod></url>
