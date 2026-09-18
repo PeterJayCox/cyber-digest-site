@@ -272,32 +272,22 @@ NAV_TOOLS_CHILDREN = [
 _NAV_REPORTS_CACHE = None
 
 def _nav_reports_children():
-    """Reports dropdown entries, in the agreed order: Daily, Monthly, then every
-    published report, with the "All reports" archive index last (user decision
-    2026-09-18) — Daily/Monthly are grouped here; their URLs are unchanged,
-    nothing moves."""
+    """Reports dropdown entries: Daily, Monthly, then ONE "Sector reviews" entry
+    that opens the reviews index — the individual review titles are no longer
+    listed in the nav (user decision 2026-09-18, superseding the per-report
+    list) because the dropdown had grown to seven entries with truncated
+    titles. Every published review is still one click away from
+    /reports/index.html, which the trigger itself also targets."""
     global _NAV_REPORTS_CACHE
     if _NAV_REPORTS_CACHE is not None:
         return _NAV_REPORTS_CACHE
-    kids = [
+    _NAV_REPORTS_CACHE = [
         ("daily/", "Daily", "🗓️", "Daily digests, newest first, grouped by month."),
         ("monthly/index.html", "Monthly", "📅", "Monthly editions with sector and threat breakdowns."),
+        ("reports/index.html", "Sector reviews", "📄",
+         "Sector incident reviews and analysis editions — every published report."),
     ]
-    try:
-        for r in _reports_load():
-            title = (r.get("report_title") or r.get("_slug") or "").strip()
-            if len(title) > 46:
-                title = title[:45].rstrip(" ,—-–·") + "…"
-            if not title:
-                continue
-            kids.append((f"reports/{r['_slug']}.html", title, "📄", ""))
-    except Exception as e:                       # never let nav break the build
-        print(f"⚠️  nav: report list unavailable ({e})")
-    # "All reports" (the archive index) closes the list — user decision 2026-09-18.
-    kids.append(("reports/index.html", "All reports", "🗂️",
-                 "Every sector incident review and analysis edition."))
-    _NAV_REPORTS_CACHE = kids
-    return kids
+    return _NAV_REPORTS_CACHE
 
 NAV_ITEMS = [
     {"href": "index.html",          "label": "Home",       "icon": "🏠"},
@@ -2895,12 +2885,27 @@ _NAV_BLOCK_RE = re.compile(r'<nav class="topnav">.*?</nav>', re.S)
 
 # Daily/Monthly sat in the standalone editions' flat footer link list. They now
 # live inside the toolbar's Reports group (user decision 2026-09-18), so the
-# footer link list mirrors that: drop the two plain-text anchors. The nav
-# dropdown's own Daily/Monthly links render as `<a …><span class="t">…`, so a
-# plain-anchor match can never hit them.
+# footer link list mirrors that: drop the two plain-text anchors and make sure
+# the Reports entry is present. The nav dropdown's own Daily/Monthly links render
+# as `<a …><span class="t">…`, so a plain-anchor match can never hit them.
 _FOOTER_DM_RE = re.compile(
     r'\n\s*<a href="https://cyber\.peterjaycox\.com/'
     r'(?:daily/|monthly/index\.html)">(?:Daily|Monthly)</a>')
+_LINKS_BLOCK_RE = re.compile(r'(<div class="links">)(.*?)(</div>)', re.S)
+_STORYDB_ANCHOR_RE = re.compile(
+    r'(\n\s*<a href="https://cyber\.peterjaycox\.com/stories\.html">Story DB</a>)')
+
+def _sync_edition_footer(html):
+    """Mirror the toolbar grouping in every edition link list (footer + the
+    monthly Source Diversity box): no standalone Daily/Monthly, Reports present."""
+    def fix(m):
+        body = _FOOTER_DM_RE.sub("", m.group(2))
+        if "reports/index.html" not in body:
+            body = _STORYDB_ANCHOR_RE.sub(
+                r'\1\n  <a href="https://cyber.peterjaycox.com/reports/index.html">Reports</a>',
+                body, count=1)
+        return m.group(1) + body + m.group(3)
+    return _LINKS_BLOCK_RE.sub(fix, html)
 
 def inject_shared_nav(path, active):
     """Swap the stale hand-rolled <nav> in a standalone page (daily/monthly
@@ -2913,21 +2918,23 @@ def inject_shared_nav(path, active):
         html = open(path, encoding="utf-8").read()
     except OSError:
         return False
-    # Footer strip is idempotent and runs even on a page that already carries the
-    # shared nav (an edition rebuilt before the Daily/Monthly move still needs it).
-    html, stripped = _FOOTER_DM_RE.subn("", html)
+    # Footer sync is idempotent and runs even on a page that already carries the
+    # shared nav (an edition built before the Daily/Monthly move still needs it).
+    before = html
+    html = _sync_edition_footer(html)
+    synced = html != before
     injected = not ('id="cd-nav-shared"' in html or 'id="cd-nav-shared-js"' in html)
     html2, n = _NAV_BLOCK_RE.subn(lambda _m: nav_html(active, ""), html, count=1)
     if injected and n == 0:
         print(f"⚠️  nav: no topnav block found in {os.path.basename(path)}; nav not injected")
-        if stripped:
+        if synced:
             open(path, "w", encoding="utf-8").write(html)
         return False
     if injected:
         nav_css = _nav_css_block(absolute_assets=True)
         html2 = html2.replace("</head>", f'<style id="cd-nav-shared">\n{nav_css}\n</style>\n</head>', 1)
         html2 = html2.replace("</body>", NAV_JS + "\n</body>", 1)
-    if injected or stripped:
+    if injected or synced:
         open(path, "w", encoding="utf-8").write(html2 if injected else html)
     return True
 
