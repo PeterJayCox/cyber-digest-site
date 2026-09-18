@@ -252,11 +252,11 @@ def esc(s):
 # EVERY page's top nav — shared-chrome pages, the standalone daily/monthly
 # editions and the CVE matrix — is rendered from NAV_ITEMS by nav_html().
 # Grouped entries render twice from the SAME data:
-#   * desktop (>=1001px, the measured width the 7-item row needs on one line):
+#   * desktop (>=901px, the measured width the current 6-item row needs on one line):
 #     a real <button aria-haspopup="true" aria-expanded> that click-toggles one
 #     panel at a time, with Escape / outside-click / focusout / link-select
 #     close paths (NAV_JS);
-#   * mobile (<=1000px): one native <details> menu with a nested <details> per
+#   * mobile (<=900px): one native <details> menu with a nested <details> per
 #     group — toggle, keyboard and screen-reader behaviour come free from the
 #     browser, no JS involved. Multi-open by choice: `name` grouping on
 #     <details> is not supported in Safari, so no exclusive-collapse is
