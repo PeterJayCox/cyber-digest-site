@@ -30,14 +30,14 @@ if(mq&&mq.addEventListener){mq.addEventListener('change',followSystem);}}catch(e
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../assets/site.css?v=202609181325"></head><body>
+<link rel="stylesheet" href="../../assets/site.css?v=202609181339"></head><body>
 <nav class="topnav"><div class="inner">
         <a class="brand" href="https://cyber.peterjaycox.com/index.html"><span class="brand-logo" aria-hidden="true"></span> Cyber&nbsp;Digest<small>public site</small></a>
         <div class="navlinks"><a href="https://cyber.peterjaycox.com/index.html" class=""><span class="t">🏠 Home</span></a><a href="https://cyber.peterjaycox.com/stories.html" class=""><span class="t">📚 Story DB</span></a><a href="https://cyber.peterjaycox.com/globe.html" class=""><span class="t">🌍 Globe</span></a><a href="https://cyber.peterjaycox.com/daily/" class=""><span class="t">🗓️ Daily</span></a><a href="https://cyber.peterjaycox.com/monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="https://cyber.peterjaycox.com/reports/index.html" class=""><span class="t">📑 Reports</span></a><a href="https://cyber.peterjaycox.com/wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a><a href="https://cyber.peterjaycox.com/flashcards.html" class=""><span class="t">🗂️ Flashcards</span></a></div>
         <div class="theme-toggle" role="button" tabindex="0" aria-label="Toggle dark or light theme" title="Toggle dark/light &middot; Shift-click to follow your system setting" onclick="toggleTheme(event)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTheme(event)}"><span class="tt-moon">🌙</span><span class="tt-sun">☀️</span></div></div></nav><main class="container">
             <div class="container">
             <div class="crumb"><a href="../../index.html">Home</a> · <a href="../../wiki/index.html">Wiki</a> · Incidents &amp; Campaigns</div>
-            <div class="wiki-body"><div class="frontmatter">type: incident · created: 2026-09-14 · updated: 2026-09-14 · tags: [incident, breach, phishing, financial-services, impersonation] · confidence: high · severity: high · affected_sectors: [Financial Services] · au_impact: true</div><p>Revolut has confirmed that it disclosed sensitive customer data to an unauthorised third party after receiving fraudulent information requests sent from an email account operating inside a real government agency's domain, in a customer notification that began circulating on 11 September 2026 and was reviewed by TechCrunch. The company's notification states that the communication carried <strong>valid domain authentication credentials</strong> and was therefore "fulfilled under the reasonable belief that it was an authentic government agency request" — the impersonation defeated the sender-authentication checks that are supposed to establish that a message genuinely originates from an authority.</p>
+            <div class="wiki-body"><div class="frontmatter">type: incident · created: 2026-09-14 · updated: 2026-09-18 · tags: [incident, breach, phishing, financial-services, impersonation, extortion] · confidence: high · severity: high · affected_sectors: [Financial Services] · au_impact: true</div><p>Revolut has confirmed that it disclosed sensitive customer data to an unauthorised third party after receiving fraudulent information requests sent from an email account operating inside a real government agency's domain, in a customer notification that began circulating on 11 September 2026 and was reviewed by TechCrunch. The company's notification states that the communication carried <strong>valid domain authentication credentials</strong> and was therefore "fulfilled under the reasonable belief that it was an authentic government agency request" — the impersonation defeated the sender-authentication checks that are supposed to establish that a message genuinely originates from an authority.</p>
 <p>The disclosed material covers full name, date of birth and occupation; postal address, email address and telephone number; a copy of the customer's identity document, either passport or driver's licence; and the facial verification image supplied at onboarding. Revolut says the data may also have included account statements and transaction histories, with multiple outlets reporting the transaction data covered Bitcoin, and it has stated specifically that no biometric facial telemetry was involved. The company blocked the email address after discovering the scam, alerted the relevant government agency, law enforcement and financial regulators, and says its systems and customer funds are unaffected.</p>
 <p>The significance is structural rather than volumetric: what left the building is the complete identity-verification package a regulated fintech is obliged to collect, assembled and delivered in a single response to an authority-looking request. The control that failed is one of the few integrity checks an organisation typically applies to inbound government correspondence, and it is a control that a spoofed message which passes domain authentication cannot defeat on its own. Crypto researcher ZachXBT surfaced the notification publicly on 11 September.</p>
 <table>
@@ -68,11 +68,18 @@ if(mq&&mq.addEventListener){mq.addEventListener('change',followSystem);}}catch(e
 <td><strong>Breach class</strong></td>
 <td>Confirmed breach — victim disclosure</td>
 </tr>
+<tr>
+<td><strong>Extortion demand</strong></td>
+<td>6,000 XMR (~US$3 million), 24-hour deadline, 17 September 2026 — disputed between rival claimants</td>
+</tr>
 </tbody>
 </table>
+<h2>Escalation — 18 September 2026</h2>
+<p>The extortion front around the incident sharpened on 17 September, when a group calling itself <strong>IAmNotAVillain</strong> published a countdown demanding <strong>6,000 Monero (about US$3 million)</strong> and threatening to sell the customer records. Revolut says it has received <strong>no direct contact or demand</strong>, the competing claimants publicly dispute which of them actually holds the data, and at least one has accused a former associate of taking credit for material it never had — so the volume claim is a negotiating position rather than a measured figure. Press reporting puts the affected population at roughly <strong>680 of Revolut's 80 million customers</strong>, selected for suspected cryptocurrency holdings. The regulatory footprint widened with it: the UK <strong>Information Commissioner's Office</strong> has an open investigation, and because the fraudulent requests were sent from inside a government email domain, <strong>Italy's National Anti-Mafia and Anti-Terrorism Directorate</strong> is now involved, with prosecutors in Reggio Calabria opening a probe into unauthorised access to a computer system of public interest.</p>
 <h2>Source</h2>
 <ul>
 <li><a href="https://techcrunch.com/2026/09/12/revolut-confirms-customer-data-breach-through-fake-government-requests/">TechCrunch — Revolut confirms customer data breach through fake government requests</a></li>
+<li><a href="https://www.theguardian.com/business/2026/sep/17/revolut-reportedly-facing-3m-ransom-demand-after-hackers-steal-hundreds-of-customers-data">The Guardian — Revolut reportedly facing $3m ransom demand after hackers steal hundreds of customers' data</a></li>
 </ul></div>
             </div></main>
 <div class="footer">
@@ -89,7 +96,7 @@ if(mq&&mq.addEventListener){mq.addEventListener('change',followSystem);}}catch(e
     <a href="https://cyber.peterjaycox.com/licensing.html">Licensing</a>
     <a href="https://cyber.peterjaycox.com/security.html">Security</a>
   </div>
-  Cyber Digest public site · built 2026-09-18 13:25
+  Cyber Digest public site · built 2026-09-18 13:39
 </div>
 <script>
 var _t=document.documentElement;

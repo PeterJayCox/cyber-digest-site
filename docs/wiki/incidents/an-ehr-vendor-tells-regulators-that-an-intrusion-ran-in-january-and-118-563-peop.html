@@ -1,0 +1,94 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+(function(){var d=document.documentElement;
+function sys(){try{return (window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark';}catch(e){return 'dark';}}
+function saved(){try{var s=localStorage.getItem('cd-theme');return (s==='light'||s==='dark')?s:null;}catch(e){return null;}}
+function followSystem(){if(!saved()){d.setAttribute('data-theme',sys());}}
+window.__cdSysTheme=sys;window.__cdFollowSystem=followSystem;
+d.setAttribute('data-theme',saved()||sys());
+try{var mq=window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)');
+if(mq&&mq.addEventListener){mq.addEventListener('change',followSystem);}}catch(e){}
+})();
+</script>
+<title>An EHR Vendor Tells Regulators That an Intrusion Ran in January and 118,563 People Are Only Now Being Told</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png">
+<link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png">
+<link rel="alternate" type="application/rss+xml" title="Cyber Digest" href="https://cyber.peterjaycox.com/feed.xml">
+<link rel="alternate" type="application/rss+xml" title="Cyber Digest — Monthly Editions" href="https://cyber.peterjaycox.com/feed-monthly.xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="An EHR Vendor Tells Regulators That an Intrusion Ran in January and 118,563 People Are Only Now Being Told">
+<meta property="og:description" content="Curated sector-by-sector roundup of global cybersecurity developments with source-reliability indexing, AU/NZ context, and searchable knowledge base.">
+<meta property="og:url" content="https://cyber.peterjaycox.com/">
+<meta property="og:image" content="https://cyber.peterjaycox.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"Cyber Digest","alternateName":"Cyber Digest — public site","url":"https://cyber.peterjaycox.com/","description":"Curated, source-rated roundup of global cybersecurity developments with AU/NZ context.","inLanguage":"en-AU","publisher":{"@type":"Organization","name":"Cyber Digest","url":"https://cyber.peterjaycox.com/"},"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://cyber.peterjaycox.com/stories.html?q={search_term_string}"},"query-input":"required name=search_term_string"}}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/site.css?v=202609181339"></head><body>
+<nav class="topnav"><div class="inner">
+        <a class="brand" href="https://cyber.peterjaycox.com/index.html"><span class="brand-logo" aria-hidden="true"></span> Cyber&nbsp;Digest<small>public site</small></a>
+        <div class="navlinks"><a href="https://cyber.peterjaycox.com/index.html" class=""><span class="t">🏠 Home</span></a><a href="https://cyber.peterjaycox.com/stories.html" class=""><span class="t">📚 Story DB</span></a><a href="https://cyber.peterjaycox.com/globe.html" class=""><span class="t">🌍 Globe</span></a><a href="https://cyber.peterjaycox.com/daily/" class=""><span class="t">🗓️ Daily</span></a><a href="https://cyber.peterjaycox.com/monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="https://cyber.peterjaycox.com/reports/index.html" class=""><span class="t">📑 Reports</span></a><a href="https://cyber.peterjaycox.com/wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a><a href="https://cyber.peterjaycox.com/flashcards.html" class=""><span class="t">🗂️ Flashcards</span></a></div>
+        <div class="theme-toggle" role="button" tabindex="0" aria-label="Toggle dark or light theme" title="Toggle dark/light &middot; Shift-click to follow your system setting" onclick="toggleTheme(event)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTheme(event)}"><span class="tt-moon">🌙</span><span class="tt-sun">☀️</span></div></div></nav><main class="container">
+            <div class="container">
+            <div class="crumb"><a href="../../index.html">Home</a> · <a href="../../wiki/index.html">Wiki</a> · Incidents &amp; Campaigns</div>
+            <div class="wiki-body"><div class="frontmatter">type: incident · created: 2026-09-17 · updated: 2026-09-17 · tags: [incident, healthcare] · confidence: high · severity: high · affected_sectors: [healthcare] · au_impact: true</div><p><strong>zHealth, Inc.</strong>, a San Francisco-based provider of cloud practice-management and electronic health records software, has disclosed a cybersecurity incident affecting <strong>118,563 individuals</strong>, according to the breach notice it provided to the California Attorney General and the count the Oregon Attorney General has been given. The timeline is the operationally significant part: zHealth became aware that information may have been copied on or around <strong>15 June 2026</strong>, its investigation confirmed that an unauthorised third party had accessed its network between <strong>20 and 21 January 2026</strong>, and its review of the impacted data was not completed until <strong>3 September 2026</strong> — a five-month gap between the intrusion and the end of the review, with the intrusion itself predating the company's awareness by roughly five months. The affected information varies by individual and may include names, medical information and health insurance information, and affected individuals have been offered twelve months of single-bureau credit monitoring. The incident is not yet listed on the HHS Office for Civil Rights breach portal. The disclosure arrived in a batch that illustrates how routine the vendor-side breach has become in US healthcare: <strong>Bridgeway Benefit Technologies</strong>, a Baltimore third-party health-plan administrator, notified OCR of a breach affecting <strong>9,268 individuals</strong> arising from an employee email account accessed between <strong>5 March and 19 May 2026</strong> that exposed Social Security numbers, with the company confirming the breach was limited to its own email system and no client systems were compromised; <strong>Longview ER Operations</strong>, trading as Hospitality Health ER in Texas, identified suspicious network activity on <strong>22 July</strong>, confirmed that an unauthorised third party accessed its network and copied files, and has reported to OCR using an estimate of at least 501 individuals pending completion of its file review, with the Tyler and Galveston facilities unaffected; and <strong>HealthStream</strong> also reported. Read together, the three disclosure shapes — a long-dwell network intrusion, a months-long mailbox compromise, and a file review still open — cover the three ways vendor-side healthcare breaches are discovered late.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sector</strong></td>
+<td>Healthcare</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td>2026-09-17</td>
+</tr>
+<tr>
+<td><strong>Source</strong></td>
+<td>HIPAA Journal</td>
+</tr>
+<tr>
+<td><strong>Reliability</strong></td>
+<td>Tier 2</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><a href="https://www.hipaajournal.com/xhealth-data-breach/">Source article</a></li>
+</ul></div>
+            </div></main>
+<div class="footer">
+  <div class="links">
+    <a href="https://cyber.peterjaycox.com/index.html">Home</a>
+    <a href="https://cyber.peterjaycox.com/stories.html">Story DB</a>
+    <a href="https://cyber.peterjaycox.com/daily/">Daily</a>
+    <a href="https://cyber.peterjaycox.com/monthly/index.html">Monthly</a>
+    <a href="https://cyber.peterjaycox.com/reports/index.html">Reports</a>
+    <a href="https://cyber.peterjaycox.com/wiki/index.html">Wiki</a>
+    <a href="https://cyber.peterjaycox.com/feed.xml">RSS</a>
+    <a href="https://cyber.peterjaycox.com/privacy.html">Privacy</a>
+    <a href="https://cyber.peterjaycox.com/corrections.html">Corrections</a>
+    <a href="https://cyber.peterjaycox.com/licensing.html">Licensing</a>
+    <a href="https://cyber.peterjaycox.com/security.html">Security</a>
+  </div>
+  Cyber Digest public site · built 2026-09-18 13:39
+</div>
+<script>
+var _t=document.documentElement;
+function toggleTheme(ev){var n=(_t.getAttribute("data-theme")==="dark")?"light":"dark";
+if(ev&&ev.shiftKey){try{localStorage.removeItem("cd-theme");}catch(e){}n=(window.__cdSysTheme?window.__cdSysTheme():"dark");}
+else{try{localStorage.setItem("cd-theme",n);}catch(e){}}
+_t.setAttribute("data-theme",n);}
+</script>
+</body></html>
