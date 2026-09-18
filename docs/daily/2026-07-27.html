@@ -72,11 +72,18 @@ html[data-theme-mode="light"] .theme-toggle .tt-light{display:inline}
 .wrap{max-width:1100px;margin:auto;padding:0 28px 60px;display:flex;gap:32px;position:relative;z-index:1}
 #toc{position:sticky;top:80px;width:210px;flex-shrink:0;height:fit-content;max-height:calc(100vh - 100px);overflow-y:auto;padding:18px 14px;background:var(--surface);border:1px solid var(--border);border-radius:10px;font-size:12px;transition:background .25s,border .25s}
 #toc h3{color:var(--accent);font-size:10px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px}
-#toc a{display:block;color:var(--text-muted);text-decoration:none;padding:3px 8px;border-radius:6px;margin-bottom:2px;transition:all .2s;border-left:2px solid transparent;font-size:12px}
+#toc a{display:flex;align-items:flex-start;gap:7px;color:var(--text-muted);text-decoration:none;padding:3px 8px;border-radius:6px;margin-bottom:2px;transition:all .2s;border-left:2px solid transparent;font-size:12px}
 #toc a:hover{color:var(--text);background:var(--accent-bg)}
 #toc a.active{color:var(--accent);border-left-color:var(--accent);background:var(--accent-bg)}
-#toc a .sicon{display:inline-flex;width:15px;height:15px;flex-shrink:0;color:currentColor}
+#toc a .sicon{display:inline-flex;width:15px;height:15px;flex-shrink:0;color:currentColor;margin-top:1px}
 #toc a .sicon svg{width:100%;height:100%}
+/* flex-start (not center) so the icon and count badge stay on the FIRST line of
+   a wrapped label — e.g. "Retail & Entertainment & Sport" is 3 lines at the
+   panel's 210px width, and centring left the badge beside the middle line. */
+#toc a .tlabel{flex:1;min-width:0;line-height:1.35}
+#toc a .tcount{flex-shrink:0;font-size:10px;line-height:1.6;font-variant-numeric:tabular-nums;color:var(--text-dim);background:var(--surface2);border:1px solid var(--border);border-radius:99px;padding:0 6px;transition:color .2s,border-color .2s}
+#toc a:hover .tcount{color:var(--text)}
+#toc a.active .tcount{color:var(--accent);border-color:var(--accent)}
 .main{flex:1;min-width:0}
 /* Header / Hero */
 .hero{position:relative;overflow:hidden;padding:44px 36px 30px;text-align:center;border:1px solid var(--border);border-radius:16px;background:linear-gradient(160deg,var(--surface) 0%,var(--surface2) 55%,var(--surface) 100%);margin-bottom:28px}
@@ -465,13 +472,13 @@ body.exec-view .story-card.expanded{padding-left:50px}
 <div class="wrap">
 <nav id="toc" aria-label="Table of contents">
 <h3>Daily Digest</h3>
-<a href="#exec" data-section="exec"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M9 13h6M9 17h4"/></svg></span><span>Executive summary</span></a>
-<a href="#incident-map" data-section="incident-map"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.1-6-10a6 6 0 0 1 12 0c0 4.9-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg></span><span>Incident Map</span></a>
-<a href="#sector-geopolitical-state-sponsored-activity" data-section="sector-geopolitical-state-sponsored-activity"><span>Geopolitical &amp; State-Sponsored Activity</span></a>
-<a href="#sector-healthcare" data-section="sector-healthcare"><span>Healthcare</span></a>
-<a href="#sector-technology-ai-governance" data-section="sector-technology-ai-governance"><span>Technology &amp; AI Governance</span></a>
-<a href="#sector-cybercrime-ransomware" data-section="sector-cybercrime-ransomware"><span>Cybercrime &amp; Ransomware</span></a>
-<a href="#analytics" data-section="analytics"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-8M21 20H3"/></svg></span><span>Analytics</span></a>
+<a href="#exec" data-section="exec"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M9 13h6M9 17h4"/></svg></span><span class="tlabel">Executive summary</span></a>
+<a href="#incident-map" data-section="incident-map"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.1-6-10a6 6 0 0 1 12 0c0 4.9-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg></span><span class="tlabel">Incident Map</span></a>
+<a href="#sector-geopolitical-state-sponsored-activity" data-section="sector-geopolitical-state-sponsored-activity"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.7 2.6 4 5.6 4 9s-1.3 6.4-4 9c-2.7-2.6-4-5.6-4-9s1.3-6.4 4-9z"/></svg></span><span class="tlabel">Geopolitical &amp; State-Sponsored Activity</span><span class="tcount">1</span></a>
+<a href="#sector-healthcare" data-section="sector-healthcare"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5s-7.5-4.7-7.5-10A4.3 4.3 0 0 1 12 7a4.3 4.3 0 0 1 7.5 3.5c0 5.3-7.5 10-7.5 10z"/><path d="M8 12h2l1.5-3 2 5L15 12h2"/></svg></span><span class="tlabel">Healthcare</span><span class="tcount">3</span></a>
+<a href="#sector-technology-ai-governance" data-section="sector-technology-ai-governance"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.7 2.6 4 5.6 4 9s-1.3 6.4-4 9c-2.7-2.6-4-5.6-4-9s1.3-6.4 4-9z"/></svg></span><span class="tlabel">Technology &amp; AI Governance</span><span class="tcount">3</span></a>
+<a href="#sector-cybercrime-ransomware" data-section="sector-cybercrime-ransomware"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.7 2.6 4 5.6 4 9s-1.3 6.4-4 9c-2.7-2.6-4-5.6-4-9s1.3-6.4 4-9z"/></svg></span><span class="tlabel">Cybercrime &amp; Ransomware</span><span class="tcount">1</span></a>
+<a href="#analytics" data-section="analytics"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-8M21 20H3"/></svg></span><span class="tlabel">Analytics</span></a>
 </nav>
 <main id="main" class="main">
 
@@ -726,15 +733,18 @@ body.exec-view .story-card.expanded{padding-left:50px}
 <button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
 
 <script>
-window.addEventListener('scroll',function(){
+function syncScroll(){
 var h=document.documentElement;
 var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
 document.getElementById('progress').style.width=Math.min(p,100)+'%';
 var bt=document.getElementById('back-top');
 bt.classList.toggle('visible',(h.scrollTop||document.body.scrollTop)>300);
-var sections=document.querySelectorAll('section[id],.exec-summary');
+var sections=document.querySelectorAll('section[id]');
 var links=document.querySelectorAll('#toc a');
-var cur='';
+/* Default the marker to the first section so the rail is never blank: with
+   cur starting empty, no link carried .active until a section crossed the
+   250px line, so the panel showed no position marker on load. */
+var cur=sections.length?sections[0].id:'';
 sections.forEach(function(s){
 var t=s.getBoundingClientRect().top;
 if(t<250) cur=s.id;
@@ -742,7 +752,9 @@ if(t<250) cur=s.id;
 links.forEach(function(l){
 l.classList.toggle('active',l.dataset.section===cur);
 });
-});
+}
+window.addEventListener('scroll',syncScroll,{passive:true});
+syncScroll();
 function setView(m){
 document.body.classList.toggle('exec-view',m==='exec');
 document.getElementById('btn-full').classList.toggle('active',m==='full');

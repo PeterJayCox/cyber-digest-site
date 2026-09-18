@@ -72,11 +72,18 @@ html[data-theme-mode="light"] .theme-toggle .tt-light{display:inline}
 .wrap{max-width:1100px;margin:auto;padding:0 28px 60px;display:flex;gap:32px;position:relative;z-index:1}
 #toc{position:sticky;top:80px;width:210px;flex-shrink:0;height:fit-content;max-height:calc(100vh - 100px);overflow-y:auto;padding:18px 14px;background:var(--surface);border:1px solid var(--border);border-radius:10px;font-size:12px;transition:background .25s,border .25s}
 #toc h3{color:var(--accent);font-size:10px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px}
-#toc a{display:block;color:var(--text-muted);text-decoration:none;padding:3px 8px;border-radius:6px;margin-bottom:2px;transition:all .2s;border-left:2px solid transparent;font-size:12px}
+#toc a{display:flex;align-items:flex-start;gap:7px;color:var(--text-muted);text-decoration:none;padding:3px 8px;border-radius:6px;margin-bottom:2px;transition:all .2s;border-left:2px solid transparent;font-size:12px}
 #toc a:hover{color:var(--text);background:var(--accent-bg)}
 #toc a.active{color:var(--accent);border-left-color:var(--accent);background:var(--accent-bg)}
-#toc a .sicon{display:inline-flex;width:15px;height:15px;flex-shrink:0;color:currentColor}
+#toc a .sicon{display:inline-flex;width:15px;height:15px;flex-shrink:0;color:currentColor;margin-top:1px}
 #toc a .sicon svg{width:100%;height:100%}
+/* flex-start (not center) so the icon and count badge stay on the FIRST line of
+   a wrapped label — e.g. "Retail & Entertainment & Sport" is 3 lines at the
+   panel's 210px width, and centring left the badge beside the middle line. */
+#toc a .tlabel{flex:1;min-width:0;line-height:1.35}
+#toc a .tcount{flex-shrink:0;font-size:10px;line-height:1.6;font-variant-numeric:tabular-nums;color:var(--text-dim);background:var(--surface2);border:1px solid var(--border);border-radius:99px;padding:0 6px;transition:color .2s,border-color .2s}
+#toc a:hover .tcount{color:var(--text)}
+#toc a.active .tcount{color:var(--accent);border-color:var(--accent)}
 .main{flex:1;min-width:0}
 /* Header / Hero */
 .hero{position:relative;overflow:hidden;padding:44px 36px 30px;text-align:center;border:1px solid var(--border);border-radius:16px;background:linear-gradient(160deg,var(--surface) 0%,var(--surface2) 55%,var(--surface) 100%);margin-bottom:28px}
@@ -465,14 +472,14 @@ body.exec-view .story-card.expanded{padding-left:50px}
 <div class="wrap">
 <nav id="toc" aria-label="Table of contents">
 <h3>Daily Digest</h3>
-<a href="#exec" data-section="exec"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M9 13h6M9 17h4"/></svg></span><span>Executive summary</span></a>
-<a href="#incident-map" data-section="incident-map"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.1-6-10a6 6 0 0 1 12 0c0 4.9-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg></span><span>Incident Map</span></a>
-<a href="#sector-ai-security-governance" data-section="sector-ai-security-governance"><span>AI Security &amp; Governance</span></a>
-<a href="#sector-geopolitical-espionage" data-section="sector-geopolitical-espionage"><span>Geopolitical &amp; Espionage</span></a>
-<a href="#sector-cybercrime-malware" data-section="sector-cybercrime-malware"><span>Cybercrime &amp; Malware</span></a>
-<a href="#sector-iot-supply-chain-security" data-section="sector-iot-supply-chain-security"><span>IoT &amp; Supply Chain Security</span></a>
-<a href="#sector-government-policy" data-section="sector-government-policy"><span>Government &amp; Policy</span></a>
-<a href="#analytics" data-section="analytics"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-8M21 20H3"/></svg></span><span>Analytics</span></a>
+<a href="#exec" data-section="exec"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M9 13h6M9 17h4"/></svg></span><span class="tlabel">Executive summary</span></a>
+<a href="#incident-map" data-section="incident-map"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.1-6-10a6 6 0 0 1 12 0c0 4.9-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg></span><span class="tlabel">Incident Map</span></a>
+<a href="#sector-ai-security-governance" data-section="sector-ai-security-governance"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.7 2.6 4 5.6 4 9s-1.3 6.4-4 9c-2.7-2.6-4-5.6-4-9s1.3-6.4 4-9z"/></svg></span><span class="tlabel">AI Security &amp; Governance</span><span class="tcount">3</span></a>
+<a href="#sector-geopolitical-espionage" data-section="sector-geopolitical-espionage"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.7 2.6 4 5.6 4 9s-1.3 6.4-4 9c-2.7-2.6-4-5.6-4-9s1.3-6.4 4-9z"/></svg></span><span class="tlabel">Geopolitical &amp; Espionage</span><span class="tcount">3</span></a>
+<a href="#sector-cybercrime-malware" data-section="sector-cybercrime-malware"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.7 2.6 4 5.6 4 9s-1.3 6.4-4 9c-2.7-2.6-4-5.6-4-9s1.3-6.4 4-9z"/></svg></span><span class="tlabel">Cybercrime &amp; Malware</span><span class="tcount">3</span></a>
+<a href="#sector-iot-supply-chain-security" data-section="sector-iot-supply-chain-security"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.7 2.6 4 5.6 4 9s-1.3 6.4-4 9c-2.7-2.6-4-5.6-4-9s1.3-6.4 4-9z"/></svg></span><span class="tlabel">IoT &amp; Supply Chain Security</span><span class="tcount">1</span></a>
+<a href="#sector-government-policy" data-section="sector-government-policy"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21h16M5 18h14M6 10v8M10 10v8M14 10v8M18 10v8M3 10h18L12 4z"/></svg></span><span class="tlabel">Government &amp; Policy</span><span class="tcount">3</span></a>
+<a href="#analytics" data-section="analytics"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-8M21 20H3"/></svg></span><span class="tlabel">Analytics</span></a>
 </nav>
 <main id="main" class="main">
 
@@ -687,7 +694,7 @@ body.exec-view .story-card.expanded{padding-left:50px}
 <section id="sector-iot-supply-chain-security" class="section"><h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.7 2.6 4 5.6 4 9s-1.3 6.4-4 9c-2.7-2.6-4-5.6-4-9s1.3-6.4 4-9z"/></svg></span> IoT &amp; Supply Chain Security <span class="count">1 story</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Cheap Android TV Boxes Pose as Phones and Turn Owners&#x27; Broadband Into Proxies (Fuyao)</h3><p class="summary">BitSight&#x27;s Fuyao operation tracking: cheap Android TV boxes shipped with apps rewriting hardware IDs to mimic Samsung, Huawei, Xiaomi, or Vivo phones for ad fraud. When HDMI signal detected, boxes switch to relaying third-party traffic through the owner&#x27;s broadband as a SOCKS5 exit node. Attributed to Zhejiang Fengwo IoT Technology Co., Ltd. (China, founded 2019).</p><div class="meta"><a class="source" href="https://thehackernews.com/2026/07/cheap-android-tv-boxes-pose-as-phones.html" target="_blank" rel="noopener">The Hacker News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-07-31</span></div></div>
 </div>
 </section>
-<section id="sector-government-policy" class="section"><h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.7 2.6 4 5.6 4 9s-1.3 6.4-4 9c-2.7-2.6-4-5.6-4-9s1.3-6.4 4-9z"/></svg></span> Government &amp; Policy <span class="count">3 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>European Commission Issues Guidance on the Cyber Resilience Act</h3><p class="summary">On July 27, the European Commission published practical guidance on the application of the Cyber Resilience Act (CRA), providing regulated entities with technical implementation pathways for the digital product security regulation. The CRA&#x27;s extraterritorial reach means Australian and NZ manufacturers exporting digital products to the EU market will need to comply — a significant regulatory development for AU/NZ tech exporters.</p><div class="meta"><a class="source" href="https://www.hunton.com/privacy-and-cybersecurity-law-blog/" target="_blank" rel="noopener">Hunton Privacy &amp; Cybersecurity Law Blog</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Legal analysis</span><span class="date">2026-07-29</span></div></div>
+<section id="sector-government-policy" class="section"><h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21h16M5 18h14M6 10v8M10 10v8M14 10v8M18 10v8M3 10h18L12 4z"/></svg></span> Government &amp; Policy <span class="count">3 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>European Commission Issues Guidance on the Cyber Resilience Act</h3><p class="summary">On July 27, the European Commission published practical guidance on the application of the Cyber Resilience Act (CRA), providing regulated entities with technical implementation pathways for the digital product security regulation. The CRA&#x27;s extraterritorial reach means Australian and NZ manufacturers exporting digital products to the EU market will need to comply — a significant regulatory development for AU/NZ tech exporters.</p><div class="meta"><a class="source" href="https://www.hunton.com/privacy-and-cybersecurity-law-blog/" target="_blank" rel="noopener">Hunton Privacy &amp; Cybersecurity Law Blog</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Legal analysis</span><span class="date">2026-07-29</span></div></div>
 <div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>France Becomes First EU Member State to Approve Children&#x27;s Social Media Ban</h3><p class="summary">France approved legislation banning social media access for children under a certain age, the first EU member state to do so. The move is expected to influence similar legislation across the EU and parallels the AU eSafety Commissioner&#x27;s ongoing efforts and the NZ Harmful Digital Communications Act framework.</p><div class="meta"><a class="source" href="https://iapp.org/news/a/france-becomes-first-eu-member-state-to-approve-childrens-social-media-ban" target="_blank" rel="noopener">IAPP News</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism / legal analysis</span><span class="date">2026-07-31</span></div></div>
 <div class="story-card num-3"><div class="card-accent"></div><div class="story-number">3</div><h3>CISA Urges Water and Wastewater Systems Sector to Protect OT Against Activity Targeting PLCs</h3><p class="summary">CISA issued an urgent alert urging the Water and Wastewater Systems Sector to protect OT environments against activity targeting PLCs, following the coordinated cyberattack disabling OT at 30+ Minnesota water systems. The alert is directly relevant to Australian water utilities regulated under the SOCI Act and the ACSC&#x27;s CI Fortify guidance on OT isolation, and to NZ water infrastructure under the NCSC&#x27;s critical infrastructure framework.</p><div class="meta"><a class="source" href="https://www.cisa.gov/news-events/alerts/2026/07/30/cisa-urges-water-and-wastewater-systems-sector-protect-ot-against-activity-targeting-plcs" target="_blank" rel="noopener">CISA</a><span class="reliability"><span class="tier-2">●</span> Tier 1/4 — Official / first-party</span><span class="date">2026-07-30</span></div></div>
 </div>
@@ -738,15 +745,18 @@ body.exec-view .story-card.expanded{padding-left:50px}
 <button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
 
 <script>
-window.addEventListener('scroll',function(){
+function syncScroll(){
 var h=document.documentElement;
 var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
 document.getElementById('progress').style.width=Math.min(p,100)+'%';
 var bt=document.getElementById('back-top');
 bt.classList.toggle('visible',(h.scrollTop||document.body.scrollTop)>300);
-var sections=document.querySelectorAll('section[id],.exec-summary');
+var sections=document.querySelectorAll('section[id]');
 var links=document.querySelectorAll('#toc a');
-var cur='';
+/* Default the marker to the first section so the rail is never blank: with
+   cur starting empty, no link carried .active until a section crossed the
+   250px line, so the panel showed no position marker on load. */
+var cur=sections.length?sections[0].id:'';
 sections.forEach(function(s){
 var t=s.getBoundingClientRect().top;
 if(t<250) cur=s.id;
@@ -754,7 +764,9 @@ if(t<250) cur=s.id;
 links.forEach(function(l){
 l.classList.toggle('active',l.dataset.section===cur);
 });
-});
+}
+window.addEventListener('scroll',syncScroll,{passive:true});
+syncScroll();
 function setView(m){
 document.body.classList.toggle('exec-view',m==='exec');
 document.getElementById('btn-full').classList.toggle('active',m==='full');

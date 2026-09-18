@@ -72,11 +72,18 @@ html[data-theme-mode="light"] .theme-toggle .tt-light{display:inline}
 .wrap{max-width:1100px;margin:auto;padding:0 28px 60px;display:flex;gap:32px;position:relative;z-index:1}
 #toc{position:sticky;top:80px;width:210px;flex-shrink:0;height:fit-content;max-height:calc(100vh - 100px);overflow-y:auto;padding:18px 14px;background:var(--surface);border:1px solid var(--border);border-radius:10px;font-size:12px;transition:background .25s,border .25s}
 #toc h3{color:var(--accent);font-size:10px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px}
-#toc a{display:block;color:var(--text-muted);text-decoration:none;padding:3px 8px;border-radius:6px;margin-bottom:2px;transition:all .2s;border-left:2px solid transparent;font-size:12px}
+#toc a{display:flex;align-items:flex-start;gap:7px;color:var(--text-muted);text-decoration:none;padding:3px 8px;border-radius:6px;margin-bottom:2px;transition:all .2s;border-left:2px solid transparent;font-size:12px}
 #toc a:hover{color:var(--text);background:var(--accent-bg)}
 #toc a.active{color:var(--accent);border-left-color:var(--accent);background:var(--accent-bg)}
-#toc a .sicon{display:inline-flex;width:15px;height:15px;flex-shrink:0;color:currentColor}
+#toc a .sicon{display:inline-flex;width:15px;height:15px;flex-shrink:0;color:currentColor;margin-top:1px}
 #toc a .sicon svg{width:100%;height:100%}
+/* flex-start (not center) so the icon and count badge stay on the FIRST line of
+   a wrapped label — e.g. "Retail & Entertainment & Sport" is 3 lines at the
+   panel's 210px width, and centring left the badge beside the middle line. */
+#toc a .tlabel{flex:1;min-width:0;line-height:1.35}
+#toc a .tcount{flex-shrink:0;font-size:10px;line-height:1.6;font-variant-numeric:tabular-nums;color:var(--text-dim);background:var(--surface2);border:1px solid var(--border);border-radius:99px;padding:0 6px;transition:color .2s,border-color .2s}
+#toc a:hover .tcount{color:var(--text)}
+#toc a.active .tcount{color:var(--accent);border-color:var(--accent)}
 .main{flex:1;min-width:0}
 /* Header / Hero */
 .hero{position:relative;overflow:hidden;padding:44px 36px 30px;text-align:center;border:1px solid var(--border);border-radius:16px;background:linear-gradient(160deg,var(--surface) 0%,var(--surface2) 55%,var(--surface) 100%);margin-bottom:28px}
@@ -465,17 +472,17 @@ body.exec-view .story-card.expanded{padding-left:50px}
 <div class="wrap">
 <nav id="toc" aria-label="Table of contents">
 <h3>Daily Digest</h3>
-<a href="#exec" data-section="exec"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M9 13h6M9 17h4"/></svg></span><span>Executive summary</span></a>
-<a href="#incident-map" data-section="incident-map"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.1-6-10a6 6 0 0 1 12 0c0 4.9-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg></span><span>Incident Map</span></a>
-<a href="#sector-healthcare" data-section="sector-healthcare"><span>Healthcare</span></a>
-<a href="#sector-legal-regulatory" data-section="sector-legal-regulatory"><span>Legal / Regulatory</span></a>
-<a href="#sector-financial-services" data-section="sector-financial-services"><span>Financial Services</span></a>
-<a href="#sector-government" data-section="sector-government"><span>Government</span></a>
-<a href="#sector-defence" data-section="sector-defence"><span>Defence</span></a>
-<a href="#sector-manufacturing" data-section="sector-manufacturing"><span>Manufacturing</span></a>
-<a href="#sector-media-entertainment" data-section="sector-media-entertainment"><span>Media &amp; Entertainment</span></a>
-<a href="#sector-general-cross-sector" data-section="sector-general-cross-sector"><span>General / Cross-Sector</span></a>
-<a href="#analytics" data-section="analytics"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-8M21 20H3"/></svg></span><span>Analytics</span></a>
+<a href="#exec" data-section="exec"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M9 13h6M9 17h4"/></svg></span><span class="tlabel">Executive summary</span></a>
+<a href="#incident-map" data-section="incident-map"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.1-6-10a6 6 0 0 1 12 0c0 4.9-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg></span><span class="tlabel">Incident Map</span></a>
+<a href="#sector-healthcare" data-section="sector-healthcare"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5s-7.5-4.7-7.5-10A4.3 4.3 0 0 1 12 7a4.3 4.3 0 0 1 7.5 3.5c0 5.3-7.5 10-7.5 10z"/><path d="M8 12h2l1.5-3 2 5L15 12h2"/></svg></span><span class="tlabel">Healthcare</span><span class="tcount">2</span></a>
+<a href="#sector-legal-regulatory" data-section="sector-legal-regulatory"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M8 21h8M3 7l5 2-2.2 5.5a4 4 0 0 1-5.6 0zM21 7l-5 2 2.2 5.5a4 4 0 0 0 5.6 0z"/></svg></span><span class="tlabel">Legal / Regulatory</span><span class="tcount">4</span></a>
+<a href="#sector-financial-services" data-section="sector-financial-services"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-6 9 6"/><path d="M4 9h16v2H4zM6 11v7M10 11v7M14 11v7M18 11v7M4 18h16v2H4z"/></svg></span><span class="tlabel">Financial Services</span><span class="tcount">2</span></a>
+<a href="#sector-government" data-section="sector-government"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21h16M5 18h14M6 10v8M10 10v8M14 10v8M18 10v8M3 10h18L12 4z"/></svg></span><span class="tlabel">Government</span><span class="tcount">2</span></a>
+<a href="#sector-defence" data-section="sector-defence"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 7.9-8 9-4.6-1.1-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span><span class="tlabel">Defence</span><span class="tcount">2</span></a>
+<a href="#sector-manufacturing" data-section="sector-manufacturing"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.7 2.6 4 5.6 4 9s-1.3 6.4-4 9c-2.7-2.6-4-5.6-4-9s1.3-6.4 4-9z"/></svg></span><span class="tlabel">Manufacturing</span><span class="tcount">2</span></a>
+<a href="#sector-media-entertainment" data-section="sector-media-entertainment"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.7 2.6 4 5.6 4 9s-1.3 6.4-4 9c-2.7-2.6-4-5.6-4-9s1.3-6.4 4-9z"/></svg></span><span class="tlabel">Media &amp; Entertainment</span><span class="tcount">2</span></a>
+<a href="#sector-general-cross-sector" data-section="sector-general-cross-sector"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.7 2.6 4 5.6 4 9s-1.3 6.4-4 9c-2.7-2.6-4-5.6-4-9s1.3-6.4 4-9z"/></svg></span><span class="tlabel">General / Cross-Sector</span><span class="tcount">2</span></a>
+<a href="#analytics" data-section="analytics"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-8M21 20H3"/></svg></span><span class="tlabel">Analytics</span></a>
 </nav>
 <main id="main" class="main">
 
@@ -676,13 +683,13 @@ body.exec-view .story-card.expanded{padding-left:50px}
 <div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>Atrium Health Pays Up to $1.8M to Resolve Pixel Lawsuit</h3><p class="summary">Charlotte-Mecklenburg Hospital Authority (doing business as Atrium Health) agreed to pay up to $1,800,000 to settle a class action lawsuit over the use of tracking pixels on its patient portal, which allegedly disclosed protected health information to third parties without consent.</p><div class="meta"><a class="source" href="https://www.hipaajournal.com/" target="_blank" rel="noopener">HIPAA Journal</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-17</span></div></div>
 </div>
 </section>
-<section id="sector-legal-regulatory" class="section"><h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.7 2.6 4 5.6 4 9s-1.3 6.4-4 9c-2.7-2.6-4-5.6-4-9s1.3-6.4 4-9z"/></svg></span> Legal / Regulatory <span class="count">4 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Illinois Governor Signs Frontier AI Model Law</h3><p class="summary">Illinois Governor JB Pritzker signed SB 315, the Artificial Intelligence Safety Measures Act, making Illinois the third US state to enact comprehensive safety and transparency requirements for developers of advanced AI systems. The law covers frontier model testing, incident reporting, and pre-deployment assessments.</p><div class="meta"><a class="source" href="https://www.hunton.com/privacy-and-cybersecurity-law-blog/" target="_blank" rel="noopener">Hunton Andrews Kurth Privacy &amp; Cybersecurity Law Blog</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-17</span></div></div>
+<section id="sector-legal-regulatory" class="section"><h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M8 21h8M3 7l5 2-2.2 5.5a4 4 0 0 1-5.6 0zM21 7l-5 2 2.2 5.5a4 4 0 0 0 5.6 0z"/></svg></span> Legal / Regulatory <span class="count">4 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Illinois Governor Signs Frontier AI Model Law</h3><p class="summary">Illinois Governor JB Pritzker signed SB 315, the Artificial Intelligence Safety Measures Act, making Illinois the third US state to enact comprehensive safety and transparency requirements for developers of advanced AI systems. The law covers frontier model testing, incident reporting, and pre-deployment assessments.</p><div class="meta"><a class="source" href="https://www.hunton.com/privacy-and-cybersecurity-law-blog/" target="_blank" rel="noopener">Hunton Andrews Kurth Privacy &amp; Cybersecurity Law Blog</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-17</span></div></div>
 <div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>CISA Plans to Finalize Cyber Incident Reporting Regulations in September 2026</h3><p class="summary">CISA continues to finalise regulations implementing the Cyber Incident Reporting for Critical Infrastructure Act of 2022 (CIRCIA). A final rule is expected in September 2026, requiring covered critical infrastructure entities to report significant cyber incidents within 72 hours and ransomware payments within 24 hours.</p><div class="meta"><a class="source" href="https://www.hunton.com/privacy-and-cybersecurity-law-blog/" target="_blank" rel="noopener">Hunton Andrews Kurth Privacy &amp; Cybersecurity Law Blog</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-17</span></div></div>
 <div class="story-card num-3"><div class="card-accent"></div><div class="story-number">3</div><h3>New Jersey Adopts New Data Broker Registration Regime and Sensitive Data Sale Restrictions</h3><p class="summary">New Jersey Governor Mikie Sherrill signed a new law requiring data brokers and data collectors to register annually, pay a fee, make specified disclosures, and refrain from selling or licensing sensitive data. The law takes effect in 2027.</p><div class="meta"><a class="source" href="https://www.wilmerhale.com/en/insights/blogs/wilmerhale-privacy-and-cybersecurity-law/20260721-new-jersey-enacts-law-establishing-data-broker-registration-regime-and-imposing-prohibitions-on-sensitive-data-sales" target="_blank" rel="noopener">Hunton Andrews Kurth Privacy &amp; Cybersecurity Law Blog</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-17</span></div></div>
 <div class="story-card num-4"><div class="card-accent"></div><div class="story-number">4</div><h3>European Commission Refers Four Member States to CJEU Over NIS2 Transposition Delays</h3><p class="summary">The European Commission referred Ireland, Spain, France, and the Netherlands to the Court of Justice of the EU for failing to notify full transposition of the NIS2 Directive into national law. The action underscores growing EU enforcement pressure on member states lagging behind the October 2024 deadline.</p><div class="meta"><a class="source" href="https://www.hunton.com/privacy-and-cybersecurity-law-blog/" target="_blank" rel="noopener">Hunton Andrews Kurth Privacy &amp; Cybersecurity Law Blog</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-09</span></div></div>
 </div>
 </section>
-<section id="sector-financial-services" class="section"><h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.7 2.6 4 5.6 4 9s-1.3 6.4-4 9c-2.7-2.6-4-5.6-4-9s1.3-6.4 4-9z"/></svg></span> Financial Services <span class="count">2 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>23andMe Reaches $18 Million Settlement with States for Massive Breach</h3><p class="summary">23andMe reached an $18 million settlement with multiple US states over a 2023 data breach that exposed the genetic and personal data of millions of customers. The settlement resolves investigations by state attorneys general into the company&#x27;s security practices.</p><div class="meta"><a class="source" href="https://therecord.media/" target="_blank" rel="noopener">The Record</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-16</span></div></div>
+<section id="sector-financial-services" class="section"><h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-6 9 6"/><path d="M4 9h16v2H4zM6 11v7M10 11v7M14 11v7M18 11v7M4 18h16v2H4z"/></svg></span> Financial Services <span class="count">2 stories</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>23andMe Reaches $18 Million Settlement with States for Massive Breach</h3><p class="summary">23andMe reached an $18 million settlement with multiple US states over a 2023 data breach that exposed the genetic and personal data of millions of customers. The settlement resolves investigations by state attorneys general into the company&#x27;s security practices.</p><div class="meta"><a class="source" href="https://therecord.media/" target="_blank" rel="noopener">The Record</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-16</span></div></div>
 <div class="story-card num-2"><div class="card-accent"></div><div class="story-number">2</div><h3>Cash App Owner to Pay $45 Million to Settle Allegations of Lax Security</h3><p class="summary">The owner of Cash App agreed to pay $45 million to settle allegations of inadequate security practices following a data security incident. The settlement — featured in The Record&#x27;s briefs sidebar — highlights growing regulatory focus on fintech security.</p><div class="meta"><a class="source" href="https://therecord.media/cash-app-owner-to-pay-45-million-security-allegations" target="_blank" rel="noopener">The Record</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-07-09</span></div></div>
 </div>
 </section>
@@ -756,15 +763,18 @@ body.exec-view .story-card.expanded{padding-left:50px}
 <button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
 
 <script>
-window.addEventListener('scroll',function(){
+function syncScroll(){
 var h=document.documentElement;
 var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
 document.getElementById('progress').style.width=Math.min(p,100)+'%';
 var bt=document.getElementById('back-top');
 bt.classList.toggle('visible',(h.scrollTop||document.body.scrollTop)>300);
-var sections=document.querySelectorAll('section[id],.exec-summary');
+var sections=document.querySelectorAll('section[id]');
 var links=document.querySelectorAll('#toc a');
-var cur='';
+/* Default the marker to the first section so the rail is never blank: with
+   cur starting empty, no link carried .active until a section crossed the
+   250px line, so the panel showed no position marker on load. */
+var cur=sections.length?sections[0].id:'';
 sections.forEach(function(s){
 var t=s.getBoundingClientRect().top;
 if(t<250) cur=s.id;
@@ -772,7 +782,9 @@ if(t<250) cur=s.id;
 links.forEach(function(l){
 l.classList.toggle('active',l.dataset.section===cur);
 });
-});
+}
+window.addEventListener('scroll',syncScroll,{passive:true});
+syncScroll();
 function setView(m){
 document.body.classList.toggle('exec-view',m==='exec');
 document.getElementById('btn-full').classList.toggle('active',m==='full');

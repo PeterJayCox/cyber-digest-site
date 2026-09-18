@@ -72,11 +72,18 @@ html[data-theme-mode="light"] .theme-toggle .tt-light{display:inline}
 .wrap{max-width:1100px;margin:auto;padding:0 28px 60px;display:flex;gap:32px;position:relative;z-index:1}
 #toc{position:sticky;top:80px;width:210px;flex-shrink:0;height:fit-content;max-height:calc(100vh - 100px);overflow-y:auto;padding:18px 14px;background:var(--surface);border:1px solid var(--border);border-radius:10px;font-size:12px;transition:background .25s,border .25s}
 #toc h3{color:var(--accent);font-size:10px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px}
-#toc a{display:block;color:var(--text-muted);text-decoration:none;padding:3px 8px;border-radius:6px;margin-bottom:2px;transition:all .2s;border-left:2px solid transparent;font-size:12px}
+#toc a{display:flex;align-items:flex-start;gap:7px;color:var(--text-muted);text-decoration:none;padding:3px 8px;border-radius:6px;margin-bottom:2px;transition:all .2s;border-left:2px solid transparent;font-size:12px}
 #toc a:hover{color:var(--text);background:var(--accent-bg)}
 #toc a.active{color:var(--accent);border-left-color:var(--accent);background:var(--accent-bg)}
-#toc a .sicon{display:inline-flex;width:15px;height:15px;flex-shrink:0;color:currentColor}
+#toc a .sicon{display:inline-flex;width:15px;height:15px;flex-shrink:0;color:currentColor;margin-top:1px}
 #toc a .sicon svg{width:100%;height:100%}
+/* flex-start (not center) so the icon and count badge stay on the FIRST line of
+   a wrapped label — e.g. "Retail & Entertainment & Sport" is 3 lines at the
+   panel's 210px width, and centring left the badge beside the middle line. */
+#toc a .tlabel{flex:1;min-width:0;line-height:1.35}
+#toc a .tcount{flex-shrink:0;font-size:10px;line-height:1.6;font-variant-numeric:tabular-nums;color:var(--text-dim);background:var(--surface2);border:1px solid var(--border);border-radius:99px;padding:0 6px;transition:color .2s,border-color .2s}
+#toc a:hover .tcount{color:var(--text)}
+#toc a.active .tcount{color:var(--accent);border-color:var(--accent)}
 .main{flex:1;min-width:0}
 /* Header / Hero */
 .hero{position:relative;overflow:hidden;padding:44px 36px 30px;text-align:center;border:1px solid var(--border);border-radius:16px;background:linear-gradient(160deg,var(--surface) 0%,var(--surface2) 55%,var(--surface) 100%);margin-bottom:28px}
@@ -465,14 +472,14 @@ body.exec-view .story-card.expanded{padding-left:50px}
 <div class="wrap">
 <nav id="toc" aria-label="Table of contents">
 <h3>Daily Digest</h3>
-<a href="#exec" data-section="exec"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M9 13h6M9 17h4"/></svg></span><span>Executive summary</span></a>
-<a href="#incident-map" data-section="incident-map"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.1-6-10a6 6 0 0 1 12 0c0 4.9-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg></span><span>Incident Map</span></a>
-<a href="#sector-defence" data-section="sector-defence"><span>Defence</span></a>
-<a href="#sector-government" data-section="sector-government"><span>Government</span></a>
-<a href="#sector-healthcare" data-section="sector-healthcare"><span>Healthcare</span></a>
-<a href="#sector-legal-services" data-section="sector-legal-services"><span>Legal Services</span></a>
-<a href="#sector-transport" data-section="sector-transport"><span>Transport</span></a>
-<a href="#analytics" data-section="analytics"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-8M21 20H3"/></svg></span><span>Analytics</span></a>
+<a href="#exec" data-section="exec"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M9 13h6M9 17h4"/></svg></span><span class="tlabel">Executive summary</span></a>
+<a href="#incident-map" data-section="incident-map"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.1-6-10a6 6 0 0 1 12 0c0 4.9-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg></span><span class="tlabel">Incident Map</span></a>
+<a href="#sector-defence" data-section="sector-defence"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 7.9-8 9-4.6-1.1-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span><span class="tlabel">Defence</span><span class="tcount">3</span></a>
+<a href="#sector-government" data-section="sector-government"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21h16M5 18h14M6 10v8M10 10v8M14 10v8M18 10v8M3 10h18L12 4z"/></svg></span><span class="tlabel">Government</span><span class="tcount">10</span></a>
+<a href="#sector-healthcare" data-section="sector-healthcare"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5s-7.5-4.7-7.5-10A4.3 4.3 0 0 1 12 7a4.3 4.3 0 0 1 7.5 3.5c0 5.3-7.5 10-7.5 10z"/><path d="M8 12h2l1.5-3 2 5L15 12h2"/></svg></span><span class="tlabel">Healthcare</span><span class="tcount">1</span></a>
+<a href="#sector-legal-services" data-section="sector-legal-services"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M8 21h8M3 7l5 2-2.2 5.5a4 4 0 0 1-5.6 0zM21 7l-5 2 2.2 5.5a4 4 0 0 0 5.6 0z"/></svg></span><span class="tlabel">Legal Services</span><span class="tcount">1</span></a>
+<a href="#sector-transport" data-section="sector-transport"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8h13v9H1zM14 11h4l3 3v3h-7z"/><circle cx="6" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></svg></span><span class="tlabel">Transport</span><span class="tcount">1</span></a>
+<a href="#analytics" data-section="analytics"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-8M21 20H3"/></svg></span><span class="tlabel">Analytics</span></a>
 </nav>
 <main id="main" class="main">
 
@@ -694,7 +701,7 @@ body.exec-view .story-card.expanded{padding-left:50px}
 <section id="sector-healthcare" class="section"><h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5s-7.5-4.7-7.5-10A4.3 4.3 0 0 1 12 7a4.3 4.3 0 0 1 7.5 3.5c0 5.3-7.5 10-7.5 10z"/><path d="M8 12h2l1.5-3 2 5L15 12h2"/></svg></span> Healthcare <span class="count">1 story</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Ambry Genetics Pays $700,000 and Accepts a Corrective Action Plan Over a 2020 Phishing Breach</h3><p class="summary">The HHS Office for Civil Rights and California-based genetic testing company <strong>Ambry Genetics</strong> agreed a settlement resolving alleged HIPAA violations arising from a breach of the electronic protected health information of <strong>225,370 individuals</strong>. Ambry will pay a <strong>$700,000</strong> penalty and adopt a corrective action plan addressing the non-compliance OCR identified during its investigation. The company detected suspicious activity in its email environment on <strong>22 January 2020</strong>; the forensics found an unauthorised third party had accessed an employee&#x27;s mailbox after the employee <strong>responded to a phishing email</strong>, with access from 22 to 24 January 2020. The exposed data included names, addresses, dates of birth, driver&#x27;s licence numbers, diagnosis and condition information, medications, treatment information and some Social Security numbers. The breach was reported to OCR on 22 March 2020 as affecting 232,772 people, a figure later revised down. The delay between the 2020 breach, the 2020 report and a 2026 financial settlement is itself the enforcement signal. <strong>Verification:</strong> Verified</p><div class="meta"><a class="source" href="https://www.hipaajournal.com/ambry-genetics-hipaa-penalty/" target="_blank" rel="noopener">HIPAA Journal</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-09-18</span></div></div>
 </div>
 </section>
-<section id="sector-legal-services" class="section"><h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.7 2.6 4 5.6 4 9s-1.3 6.4-4 9c-2.7-2.6-4-5.6-4-9s1.3-6.4 4-9z"/></svg></span> Legal Services <span class="count">1 story</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>US Senators Reintroduce Healthcare Cybersecurity Legislation as OCR Logs 426 Hacking Breaches This Year</h3><p class="summary">Senators <strong>Mark Warner</strong> and <strong>Ron Wyden</strong> reintroduced the <strong>Health Infrastructure Security and Accountability Act</strong> on 17 September, seeking to impose cybersecurity standards on the US healthcare system and make funding available for rural and underserved hospitals to invest in essential controls. The bill was first introduced on 25 September 2024 in the 118th Congress, when 394 hacking-related healthcare breaches had been reported to HHS OCR involving the protected health information of 43 million Americans. Two years on, OCR&#x27;s breach portal lists <strong>426 hacking-related breaches for 1 January to 31 August 2026, involving 73 million individuals</strong> — an <strong>8 per cent increase in breach count and a 70 per cent increase in affected individuals</strong>. The senators&#x27; argument is unchanged: attacks delay patient care and the losses stem from lax practices by providers and their business partners. OCR published voluntary cybersecurity performance goals for the sector in January 2024, which as the agency predicted proved insufficient on their own. <strong>Verification:</strong> Reported</p><div class="meta"><a class="source" href="https://www.hipaajournal.com/health-infrastructure-security-and-accountability-act-2026/" target="_blank" rel="noopener">HIPAA Journal</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-09-18</span></div></div>
+<section id="sector-legal-services" class="section"><h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M8 21h8M3 7l5 2-2.2 5.5a4 4 0 0 1-5.6 0zM21 7l-5 2 2.2 5.5a4 4 0 0 0 5.6 0z"/></svg></span> Legal Services <span class="count">1 story</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>US Senators Reintroduce Healthcare Cybersecurity Legislation as OCR Logs 426 Hacking Breaches This Year</h3><p class="summary">Senators <strong>Mark Warner</strong> and <strong>Ron Wyden</strong> reintroduced the <strong>Health Infrastructure Security and Accountability Act</strong> on 17 September, seeking to impose cybersecurity standards on the US healthcare system and make funding available for rural and underserved hospitals to invest in essential controls. The bill was first introduced on 25 September 2024 in the 118th Congress, when 394 hacking-related healthcare breaches had been reported to HHS OCR involving the protected health information of 43 million Americans. Two years on, OCR&#x27;s breach portal lists <strong>426 hacking-related breaches for 1 January to 31 August 2026, involving 73 million individuals</strong> — an <strong>8 per cent increase in breach count and a 70 per cent increase in affected individuals</strong>. The senators&#x27; argument is unchanged: attacks delay patient care and the losses stem from lax practices by providers and their business partners. OCR published voluntary cybersecurity performance goals for the sector in January 2024, which as the agency predicted proved insufficient on their own. <strong>Verification:</strong> Reported</p><div class="meta"><a class="source" href="https://www.hipaajournal.com/health-infrastructure-security-and-accountability-act-2026/" target="_blank" rel="noopener">HIPAA Journal</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — High</span><span class="date">2026-09-18</span></div></div>
 </div>
 </section>
 <section id="sector-transport" class="section"><h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8h13v9H1zM14 11h4l3 3v3h-7z"/><circle cx="6" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></svg></span> Transport <span class="count">1 story</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>Foodservice Distributors Told to Architect for Resilience as Third-Party Cyber Risk Turns Physical</h3><p class="summary">Cybersecurity executives used a panel at the International Foodservice Distributors Association&#x27;s 2026 Solutions Conference in San Antonio — &quot;The CISO Perspective: Navigating Cyber Risk in Foodservice Distribution&quot; — to argue that cyberattacks on distributors should be planned for as operational disruptions affecting warehouses, trucks, customer orders and the physical movement of freight, not as IT incidents. The session covered the links between cybersecurity, transportation, warehouse operations, third-party vendors and business continuity, including the risk that carriers and other partners expose distributors to <strong>cargo theft</strong> as well as ransomware. Moderator <strong>Brett Perry</strong>, head of cybersecurity and network at Dot Foods, and the panel — Frank Smith (The Palmer Family of Companies), James Cusack (Van Eerden Foodservice) and Jeff Shaffer (Ben E. Keith) — pushed a resilience posture over prevention: &quot;We know identities are going to get stolen. We know bad things are going to happen. But if we can alert and contain those types of incidents, we&#x27;re going to be a much more resilient business without any operational impact.&quot; <strong>Verification:</strong> Reported</p><div class="meta"><a class="source" href="https://www.freightwaves.com/news/food-distributors-warn-cyberattacks-can-quickly-become-supply-chain-disruptions" target="_blank" rel="noopener">FreightWaves</a><span class="reliability"><span class="tier-2">●</span> Tier 3/4 — Moderate</span><span class="date">2026-09-18</span></div></div>
@@ -748,15 +755,18 @@ body.exec-view .story-card.expanded{padding-left:50px}
 <button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
 
 <script>
-window.addEventListener('scroll',function(){
+function syncScroll(){
 var h=document.documentElement;
 var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
 document.getElementById('progress').style.width=Math.min(p,100)+'%';
 var bt=document.getElementById('back-top');
 bt.classList.toggle('visible',(h.scrollTop||document.body.scrollTop)>300);
-var sections=document.querySelectorAll('section[id],.exec-summary');
+var sections=document.querySelectorAll('section[id]');
 var links=document.querySelectorAll('#toc a');
-var cur='';
+/* Default the marker to the first section so the rail is never blank: with
+   cur starting empty, no link carried .active until a section crossed the
+   250px line, so the panel showed no position marker on load. */
+var cur=sections.length?sections[0].id:'';
 sections.forEach(function(s){
 var t=s.getBoundingClientRect().top;
 if(t<250) cur=s.id;
@@ -764,7 +774,9 @@ if(t<250) cur=s.id;
 links.forEach(function(l){
 l.classList.toggle('active',l.dataset.section===cur);
 });
-});
+}
+window.addEventListener('scroll',syncScroll,{passive:true});
+syncScroll();
 function setView(m){
 document.body.classList.toggle('exec-view',m==='exec');
 document.getElementById('btn-full').classList.toggle('active',m==='full');

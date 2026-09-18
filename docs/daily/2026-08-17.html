@@ -72,11 +72,18 @@ html[data-theme-mode="light"] .theme-toggle .tt-light{display:inline}
 .wrap{max-width:1100px;margin:auto;padding:0 28px 60px;display:flex;gap:32px;position:relative;z-index:1}
 #toc{position:sticky;top:80px;width:210px;flex-shrink:0;height:fit-content;max-height:calc(100vh - 100px);overflow-y:auto;padding:18px 14px;background:var(--surface);border:1px solid var(--border);border-radius:10px;font-size:12px;transition:background .25s,border .25s}
 #toc h3{color:var(--accent);font-size:10px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px}
-#toc a{display:block;color:var(--text-muted);text-decoration:none;padding:3px 8px;border-radius:6px;margin-bottom:2px;transition:all .2s;border-left:2px solid transparent;font-size:12px}
+#toc a{display:flex;align-items:flex-start;gap:7px;color:var(--text-muted);text-decoration:none;padding:3px 8px;border-radius:6px;margin-bottom:2px;transition:all .2s;border-left:2px solid transparent;font-size:12px}
 #toc a:hover{color:var(--text);background:var(--accent-bg)}
 #toc a.active{color:var(--accent);border-left-color:var(--accent);background:var(--accent-bg)}
-#toc a .sicon{display:inline-flex;width:15px;height:15px;flex-shrink:0;color:currentColor}
+#toc a .sicon{display:inline-flex;width:15px;height:15px;flex-shrink:0;color:currentColor;margin-top:1px}
 #toc a .sicon svg{width:100%;height:100%}
+/* flex-start (not center) so the icon and count badge stay on the FIRST line of
+   a wrapped label — e.g. "Retail & Entertainment & Sport" is 3 lines at the
+   panel's 210px width, and centring left the badge beside the middle line. */
+#toc a .tlabel{flex:1;min-width:0;line-height:1.35}
+#toc a .tcount{flex-shrink:0;font-size:10px;line-height:1.6;font-variant-numeric:tabular-nums;color:var(--text-dim);background:var(--surface2);border:1px solid var(--border);border-radius:99px;padding:0 6px;transition:color .2s,border-color .2s}
+#toc a:hover .tcount{color:var(--text)}
+#toc a.active .tcount{color:var(--accent);border-color:var(--accent)}
 .main{flex:1;min-width:0}
 /* Header / Hero */
 .hero{position:relative;overflow:hidden;padding:44px 36px 30px;text-align:center;border:1px solid var(--border);border-radius:16px;background:linear-gradient(160deg,var(--surface) 0%,var(--surface2) 55%,var(--surface) 100%);margin-bottom:28px}
@@ -465,12 +472,12 @@ body.exec-view .story-card.expanded{padding-left:50px}
 <div class="wrap">
 <nav id="toc" aria-label="Table of contents">
 <h3>Daily Digest</h3>
-<a href="#exec" data-section="exec"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M9 13h6M9 17h4"/></svg></span><span>Executive summary</span></a>
-<a href="#incident-map" data-section="incident-map"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.1-6-10a6 6 0 0 1 12 0c0 4.9-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg></span><span>Incident Map</span></a>
-<a href="#sector-government" data-section="sector-government"><span>Government</span></a>
-<a href="#sector-retail-entertainment-sport" data-section="sector-retail-entertainment-sport"><span>Retail &amp; Entertainment &amp; Sport</span></a>
-<a href="#sector-transport" data-section="sector-transport"><span>Transport</span></a>
-<a href="#analytics" data-section="analytics"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-8M21 20H3"/></svg></span><span>Analytics</span></a>
+<a href="#exec" data-section="exec"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M9 13h6M9 17h4"/></svg></span><span class="tlabel">Executive summary</span></a>
+<a href="#incident-map" data-section="incident-map"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.1-6-10a6 6 0 0 1 12 0c0 4.9-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg></span><span class="tlabel">Incident Map</span></a>
+<a href="#sector-government" data-section="sector-government"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21h16M5 18h14M6 10v8M10 10v8M14 10v8M18 10v8M3 10h18L12 4z"/></svg></span><span class="tlabel">Government</span><span class="tcount">1</span></a>
+<a href="#sector-retail-entertainment-sport" data-section="sector-retail-entertainment-sport"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg></span><span class="tlabel">Retail &amp; Entertainment &amp; Sport</span><span class="tcount">1</span></a>
+<a href="#sector-transport" data-section="sector-transport"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8h13v9H1zM14 11h4l3 3v3h-7z"/><circle cx="6" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></svg></span><span class="tlabel">Transport</span><span class="tcount">1</span></a>
+<a href="#analytics" data-section="analytics"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-8M21 20H3"/></svg></span><span class="tlabel">Analytics</span></a>
 </nav>
 <main id="main" class="main">
 
@@ -673,7 +680,7 @@ body.exec-view .story-card.expanded{padding-left:50px}
 <section id="sector-government" class="section"><h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21h16M5 18h14M6 10v8M10 10v8M14 10v8M18 10v8M3 10h18L12 4z"/></svg></span> Government <span class="count">1 story</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>ACSC: When AI Agents Take Unexpected Actions</h3><p class="summary">The Australian Signals Directorate&#x27;s ACSC published guidance (14 August) explaining how AI agents can take unexpected or unanticipated actions, the risks of goal misalignment, and practical safeguards for safer AI adoption. It extends the ASD/ACSC&#x27;s July-to-August AI-agent security program, including the joint frontier-AI board guidance with the AICD, and reflects the agency&#x27;s positioning of AI-agent autonomy as a first-order cyber-governance issue for Australian organisations. No new ACSC alert or technical advisory was issued this cycle; the guidance is the only genuinely fresh first-party AU publication in the window. <strong>Verification: Verified</strong> (official first-party publication).</p><div class="meta"><a class="source" href="https://www.cyber.gov.au/about-us/view-all-content/news/when-ai-agents-take-unexpected-actions" target="_blank" rel="noopener">ACSC</a><span class="reliability"><span class="tier-2">●</span> Tier 1/4 — Official / First-party</span><span class="date">2026-08-14</span></div></div>
 </div>
 </section>
-<section id="sector-retail-entertainment-sport" class="section"><h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.7 2.6 4 5.6 4 9s-1.3 6.4-4 9c-2.7-2.6-4-5.6-4-9s1.3-6.4 4-9z"/></svg></span> Retail &amp; Entertainment &amp; Sport <span class="count">1 story</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>DecryptAds: New Free Service Reveals Who&#x27;s Tracking You — and Ad Networks in Adversarial Nations</h3><p class="summary">Security researcher Zach Edwards (Infoblox) and two co-founders launched DecryptAds, a free service that scrapes and cross-correlates the ads.txt, app-ads.txt, buyers.json and sellers.json files that websites and apps publish, revealing which adtech firms and data brokers are permitted to serve ads or harvest data. A search on major properties — including espn.com and several top US military-news sites — surfaced registered data brokers collecting geolocation and fingerprint data, alongside ad-network partners flagged as based in China, Russia, the UAE, Cyprus or Panama; the dossier on one (Between Digital) notes its publisher offers are processed through Russia&#x27;s Alfa Bank, which is under US sanctions. Edwards frames the tool for security use cases: tracing malicious ads, identifying adversarial-nation ad networks, and detecting swarms of AI-generated &quot;slop&quot; sites and apps, and notes supply-chain-integrity issues only surface by cross-referencing these files. The piece also ties back to prior Bitsight research on H96 streaming sticks being repurposed by the Fengwo Group as headless proxies clicking ads on AI-slop sites. <strong>Verification: Verified</strong> (vendor/security-researcher investigative reporting with named infrastructure).</p><div class="meta"><a class="source" href="https://krebsonsecurity.com/2026/08/whos-tracking-you-use-this-new-service-to-find-out/" target="_blank" rel="noopener">KrebsOnSecurity</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-14</span></div></div>
+<section id="sector-retail-entertainment-sport" class="section"><h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg></span> Retail &amp; Entertainment &amp; Sport <span class="count">1 story</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>DecryptAds: New Free Service Reveals Who&#x27;s Tracking You — and Ad Networks in Adversarial Nations</h3><p class="summary">Security researcher Zach Edwards (Infoblox) and two co-founders launched DecryptAds, a free service that scrapes and cross-correlates the ads.txt, app-ads.txt, buyers.json and sellers.json files that websites and apps publish, revealing which adtech firms and data brokers are permitted to serve ads or harvest data. A search on major properties — including espn.com and several top US military-news sites — surfaced registered data brokers collecting geolocation and fingerprint data, alongside ad-network partners flagged as based in China, Russia, the UAE, Cyprus or Panama; the dossier on one (Between Digital) notes its publisher offers are processed through Russia&#x27;s Alfa Bank, which is under US sanctions. Edwards frames the tool for security use cases: tracing malicious ads, identifying adversarial-nation ad networks, and detecting swarms of AI-generated &quot;slop&quot; sites and apps, and notes supply-chain-integrity issues only surface by cross-referencing these files. The piece also ties back to prior Bitsight research on H96 streaming sticks being repurposed by the Fengwo Group as headless proxies clicking ads on AI-slop sites. <strong>Verification: Verified</strong> (vendor/security-researcher investigative reporting with named infrastructure).</p><div class="meta"><a class="source" href="https://krebsonsecurity.com/2026/08/whos-tracking-you-use-this-new-service-to-find-out/" target="_blank" rel="noopener">KrebsOnSecurity</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-14</span></div></div>
 </div>
 </section>
 <section id="sector-transport" class="section"><h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8h13v9H1zM14 11h4l3 3v3h-7z"/><circle cx="6" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></svg></span> Transport <span class="count">1 story</span></h2><div class="story-grid"><div class="story-card num-1"><div class="card-accent"></div><div class="story-number">1</div><h3>FBI Seeks Truck Drivers Nationwide Who May Be Victims in 54-Count Tax Fraud Case</h3><p class="summary">Federal prosecutors allege Diane Marie Poe, owner of Genuine Financial Services (Walton County, Georgia), collected payroll, estimated and trust-fund tax money from clients — most of them self-employed truck drivers who relied on word-of-mouth referrals — without remitting the funds to the IRS. The 12 August grand-jury indictment charges 32 bank-fraud and 14 payroll-tax offences, with additional counts for corporate returns, false submissions and government-program theft. The FBI and IRS are now asking victims nationwide to come forward. This is a financial-integrity and trust-fund fraud case within the trucking ecosystem rather than a technical intrusion, highlighting the identity and liability risk independent operators face from concentrated bookkeeping/payroll service providers. <strong>Verification: Verified</strong> (indictment reported by established transport-trade outlet).</p><div class="meta"><a class="source" href="https://www.freightwaves.com/news/fbi-seeks-truck-drivers-nationwide-who-may-be-victims-in-54-count-tax-fraud-case" target="_blank" rel="noopener">FreightWaves</a><span class="reliability"><span class="tier-2">●</span> Tier 3/4 — Moderate (general/trade news media)</span><span class="date">2026-08-16</span></div></div>
@@ -720,15 +727,18 @@ body.exec-view .story-card.expanded{padding-left:50px}
 <button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
 
 <script>
-window.addEventListener('scroll',function(){
+function syncScroll(){
 var h=document.documentElement;
 var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
 document.getElementById('progress').style.width=Math.min(p,100)+'%';
 var bt=document.getElementById('back-top');
 bt.classList.toggle('visible',(h.scrollTop||document.body.scrollTop)>300);
-var sections=document.querySelectorAll('section[id],.exec-summary');
+var sections=document.querySelectorAll('section[id]');
 var links=document.querySelectorAll('#toc a');
-var cur='';
+/* Default the marker to the first section so the rail is never blank: with
+   cur starting empty, no link carried .active until a section crossed the
+   250px line, so the panel showed no position marker on load. */
+var cur=sections.length?sections[0].id:'';
 sections.forEach(function(s){
 var t=s.getBoundingClientRect().top;
 if(t<250) cur=s.id;
@@ -736,7 +746,9 @@ if(t<250) cur=s.id;
 links.forEach(function(l){
 l.classList.toggle('active',l.dataset.section===cur);
 });
-});
+}
+window.addEventListener('scroll',syncScroll,{passive:true});
+syncScroll();
 function setView(m){
 document.body.classList.toggle('exec-view',m==='exec');
 document.getElementById('btn-full').classList.toggle('active',m==='full');
