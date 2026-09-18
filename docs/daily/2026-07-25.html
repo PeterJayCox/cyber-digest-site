@@ -72,6 +72,10 @@ html[data-theme-mode="light"] .theme-toggle .tt-light{display:inline}
 .wrap{max-width:1100px;margin:auto;padding:0 28px 60px;display:flex;gap:32px;position:relative;z-index:1}
 #toc{position:sticky;top:80px;width:210px;flex-shrink:0;height:fit-content;max-height:calc(100vh - 100px);overflow-y:auto;padding:18px 14px;background:var(--surface);border:1px solid var(--border);border-radius:10px;font-size:12px;transition:background .25s,border .25s}
 #toc h3{color:var(--accent);font-size:10px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px}
+/* Rail collapse toggle — mobile only (hidden here, shown in the <=860px query
+   where the rail goes position:static and would otherwise sit between the
+   reader and the digest). */
+#toc-toggle{display:none}
 #toc a{display:flex;align-items:flex-start;gap:7px;color:var(--text-muted);text-decoration:none;padding:3px 8px;border-radius:6px;margin-bottom:2px;transition:all .2s;border-left:2px solid transparent;font-size:12px}
 #toc a:hover{color:var(--text);background:var(--accent-bg)}
 #toc a.active{color:var(--accent);border-left-color:var(--accent);background:var(--accent-bg)}
@@ -406,9 +410,18 @@ body.exec-view .story-card.expanded{padding-left:50px}
 .incident-map .im-story-panel a{color:var(--accent);text-decoration:none;font-weight:600}
 .incident-map .im-story-panel a:hover{text-decoration:underline}
 .incident-map .im-tag{font-size:9.5px;padding:1px 7px;border-radius:99px;margin-left:8px;font-weight:700;border:1px solid}
-@media(max-width:860px){.wrap{flex-direction:column}#toc{position:static;width:100%;max-height:unset;margin-bottom:20px}/* The rail is inline here, so nested story links would push the digest past
-   the first screen (469px of nav > viewport). Sector rows still navigate. */
-#toc a.tsub{display:none}.pie-container{flex-direction:column;align-items:center;gap:16px}.stats-row{gap:8px}.analytics-grid{grid-template-columns:1fr}}
+@media(max-width:860px){.wrap{flex-direction:column}#toc{position:static;width:100%;max-height:unset;margin-bottom:20px}/* The rail is inline here, so it sits between the reader and the digest: a
+   267px block, or 469px with the nested story links. Collapse it to a bar and
+   let the reader open it on demand (setToc() in the script block), instead of
+   hiding parts of it. */
+#toc-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;gap:8px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-family:inherit;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;cursor:pointer}
+#toc-toggle:hover{border-color:var(--accent)}
+#toc-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+#toc .toc-chev{font-size:10px;transition:transform .2s}
+#toc.toc-collapsed .toc-chev{transform:rotate(-90deg)}
+#toc.toc-collapsed #toc-list{display:none}
+#toc.toc-collapsed{padding-bottom:12px}
+#toc.toc-collapsed h3{margin-bottom:8px}.pie-container{flex-direction:column;align-items:center;gap:16px}.stats-row{gap:8px}.analytics-grid{grid-template-columns:1fr}}
 @media(max-width:620px){.navlinks a span.t{display:none}.hero{padding:32px 18px 24px}.story-card{padding-left:50px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important;scroll-behavior:auto!important}}
 @media print{body{background:#fff!important;color:#111!important;font-size:11pt}body::before:before,.orb{display:none}#toc{display:none}.wrap{display:block;max-width:100%;padding:0}.main{width:100%}.exec-summary p,.story-card p.summary,.bar-chart,.au-context-box p,.bundle-box ul li{color:#333!important}.exec-summary,.story-card,.bar-chart,.pie-container{break-inside:avoid}.exec-toggle{display:none!important}.exec-preview{display:none!important}.exec-body{display:block!important}.exec-thread,.exec-note{break-inside:avoid;background:#fff!important;border-color:#ddd!important}[hidden]{display:none!important}@page{margin:2cm 2.5cm;@bottom-right{content:counter(page)" / "counter(pages);font-size:9pt;color:#999}}}
@@ -483,6 +496,8 @@ body.exec-view .story-card.expanded{padding-left:50px}
 <div class="wrap">
 <nav id="toc" aria-label="Table of contents">
 <h3>Daily Digest</h3>
+<button type="button" id="toc-toggle" aria-expanded="true" aria-controls="toc-list"><span>Contents</span><span class="toc-chev" aria-hidden="true">▾</span></button>
+<div id="toc-list">
 <a href="#exec" data-section="exec"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M9 13h6M9 17h4"/></svg></span><span class="tlabel">Executive summary</span></a>
 <a href="#incident-map" data-section="incident-map"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.1-6-10a6 6 0 0 1 12 0c0 4.9-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg></span><span class="tlabel">Incident Map</span></a>
 <a href="#sector-it-technology" data-section="sector-it-technology"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.7 2.6 4 5.6 4 9s-1.3 6.4-4 9c-2.7-2.6-4-5.6-4-9s1.3-6.4 4-9z"/></svg></span><span class="tlabel">IT / Technology</span><span class="tcount">5</span></a>
@@ -506,6 +521,7 @@ body.exec-view .story-card.expanded{padding-left:50px}
 <a class="tsub" href="#story-18" data-story="story-18" title="Congressional stalemates take wind out of US digital policy sails"><span class="tsub-n">2</span><span class="tsub-label">Congressional stalemates take wind out of US digital policy sails</span></a>
 <a class="tsub" href="#story-19" data-story="story-19" title="China&#x27;s regulation on AI companions takes force"><span class="tsub-n">3</span><span class="tsub-label">China&#x27;s regulation on AI companions takes force</span></a>
 <a href="#analytics" data-section="analytics"><span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-8M21 20H3"/></svg></span><span class="tlabel">Analytics</span></a>
+</div>
 </nav>
 <main id="main" class="main">
 
@@ -797,6 +813,40 @@ l.classList.toggle('active',l.dataset.section===cur);
 }
 window.addEventListener('scroll',syncScroll,{passive:true});
 syncScroll();
+/* Mobile rail collapse. Desktop is untouched: every rule lives inside the
+   <=860px media query, so the class is inert above the breakpoint. Without JS
+   the markup stays expanded (aria-expanded="true"), which is the old
+   behaviour, not a broken one. */
+var _tocNav=document.getElementById('toc');
+var _tocBtn=document.getElementById('toc-toggle');
+function tocIsNarrow(){return window.matchMedia('(max-width:860px)').matches;}
+function setToc(open){
+if(!_tocNav||!_tocBtn)return;
+_tocNav.classList.toggle('toc-collapsed',!open);
+_tocBtn.setAttribute('aria-expanded',open?'true':'false');
+}
+if(_tocBtn){
+setToc(!tocIsNarrow());
+_tocBtn.addEventListener('click',function(){setToc(_tocNav.classList.contains('toc-collapsed'));});
+/* Choosing a destination should reveal it, not leave the open rail covering it.
+   The rail sits ABOVE the content, so collapsing it shifts the target up by the
+   rail's height (~412px) — which cancels the browser's own anchor scroll, and
+   would yank the reader if we collapsed after landing. So: close the rail,
+   force the reflow, then navigate. A native fragment change (not
+   scrollIntoView) keeps :target working. Desktop stays on the native path. */
+Array.prototype.forEach.call(_tocNav.querySelectorAll('#toc-list a'),function(a){
+a.addEventListener('click',function(e){
+if(!tocIsNarrow())return;
+var id=(a.getAttribute('href')||'').slice(1);
+var el=id&&document.getElementById(id);
+if(!el)return;
+e.preventDefault();
+setToc(false);
+void _tocNav.offsetHeight;
+if(location.hash==='#'+id){el.scrollIntoView();}else{location.hash='#'+id;}
+});
+});
+}
 function setView(m){
 document.body.classList.toggle('exec-view',m==='exec');
 document.getElementById('btn-full').classList.toggle('active',m==='full');
