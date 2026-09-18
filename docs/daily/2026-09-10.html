@@ -3,6 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+/* Theme: follow the OS appearance unless the visitor pinned one with the toggle. */
+(function(){var d=document.documentElement;
+function sys(){try{return (window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark';}catch(e){return 'dark';}}
+function saved(){try{var s=localStorage.getItem('cd-theme');return (s==='light'||s==='dark')?s:null;}catch(e){return null;}}
+function followSystem(){if(!saved()){d.setAttribute('data-theme',sys());}}
+window.__cdSysTheme=sys;window.__cdFollowSystem=followSystem;
+d.setAttribute('data-theme',saved()||sys());
+try{var mq=window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)');
+if(mq&&mq.addEventListener){mq.addEventListener('change',followSystem);}}catch(e){}
+})();
+</script>
 <title>Cyber Digest — 2026-09-10</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -27,6 +39,11 @@ body{font-family:Inter,-apple-system,sans-serif;background:var(--bg);color:var(-
 .navlinks a.active{color:var(--text);background:var(--surface-hover);font-weight:600}
 .theme-toggle{display:flex;align-items:center;justify-content:center;margin-left:8px;width:34px;height:34px;border-radius:8px;background:var(--surface2);cursor:pointer;border:1px solid var(--border);transition:all .25s;user-select:none;flex-shrink:0;font-size:16px}
 .theme-toggle:hover{background:var(--surface-hover);border-color:var(--border-light)}
+/* Icon driven by data-theme so it is correct on first paint */
+.theme-toggle .tt-sun{display:none}
+[data-theme="light"] .theme-toggle .tt-moon{display:none}
+[data-theme="light"] .theme-toggle .tt-sun{display:inline}
+.theme-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 /* Layout */
 .wrap{max-width:1100px;margin:auto;padding:0 28px 60px;display:flex;gap:32px;position:relative;z-index:1}
 #toc{position:sticky;top:80px;width:210px;flex-shrink:0;height:fit-content;max-height:calc(100vh - 100px);overflow-y:auto;padding:18px 14px;background:var(--surface);border:1px solid var(--border);border-radius:10px;font-size:12px;transition:background .25s,border .25s}
@@ -365,7 +382,7 @@ body.exec-view .story-card.expanded{padding-left:50px}
     <a href="https://cyber.peterjaycox.com/monthly/index.html"><span class="t">Monthly</span></a>
     <a href="https://cyber.peterjaycox.com/wiki/index.html"><span class="t">Wiki</span></a>
   </div>
-  <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light">🌙</div>
+  <div class="theme-toggle" role="button" tabindex="0" aria-label="Toggle dark or light theme" title="Toggle dark/light · Shift-click to follow your system setting" onclick="toggleTheme(event)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTheme(event)}"><span class="tt-moon">🌙</span><span class="tt-sun">☀️</span></div>
 </div></nav>
 
 <a href="#main" class="skip-link">Skip to content</a>
@@ -664,9 +681,10 @@ body.exec-view .story-card.expanded{padding-left:50px}
 
 <script>
 var _t=document.documentElement;
-var _b=document.querySelector(".theme-toggle");
-function toggleTheme(){var n=_t.getAttribute("data-theme")==="dark"?"light":"dark";_t.setAttribute("data-theme",n);if(_b)_b.textContent=n==="dark"?"🌙":"☀️";try{if(n==="dark")localStorage.removeItem("cd-theme");else localStorage.setItem("cd-theme",n)}catch(e){}}
-(function(){try{var s=localStorage.getItem("cd-theme");if(s){_t.setAttribute("data-theme",s);if(_b)_b.textContent="☀️"}}catch(e){}})();
+function toggleTheme(ev){var n=(_t.getAttribute("data-theme")==="dark")?"light":"dark";
+if(ev&&ev.shiftKey){try{localStorage.removeItem("cd-theme");}catch(e){}n=(window.__cdSysTheme?window.__cdSysTheme():"dark");}
+else{try{localStorage.setItem("cd-theme",n);}catch(e){}}
+_t.setAttribute("data-theme",n);}
 
 window.addEventListener('scroll',function(){
 var h=document.documentElement;

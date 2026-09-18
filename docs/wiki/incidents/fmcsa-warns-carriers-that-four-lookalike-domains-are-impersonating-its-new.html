@@ -1,5 +1,16 @@
 <!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+(function(){var d=document.documentElement;
+function sys(){try{return (window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark';}catch(e){return 'dark';}}
+function saved(){try{var s=localStorage.getItem('cd-theme');return (s==='light'||s==='dark')?s:null;}catch(e){return null;}}
+function followSystem(){if(!saved()){d.setAttribute('data-theme',sys());}}
+window.__cdSysTheme=sys;window.__cdFollowSystem=followSystem;
+d.setAttribute('data-theme',saved()||sys());
+try{var mq=window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)');
+if(mq&&mq.addEventListener){mq.addEventListener('change',followSystem);}}catch(e){}
+})();
+</script>
 <title>FMCSA Warns Carriers That Four Lookalike Domains Are Impersonating Its New Motus Registration Portal</title>
 <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png">
 <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
@@ -19,11 +30,11 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../assets/site.css?v=202609180911"></head><body>
+<link rel="stylesheet" href="../../assets/site.css?v=202609181325"></head><body>
 <nav class="topnav"><div class="inner">
         <a class="brand" href="https://cyber.peterjaycox.com/index.html"><span class="brand-logo" aria-hidden="true"></span> Cyber&nbsp;Digest<small>public site</small></a>
         <div class="navlinks"><a href="https://cyber.peterjaycox.com/index.html" class=""><span class="t">🏠 Home</span></a><a href="https://cyber.peterjaycox.com/stories.html" class=""><span class="t">📚 Story DB</span></a><a href="https://cyber.peterjaycox.com/globe.html" class=""><span class="t">🌍 Globe</span></a><a href="https://cyber.peterjaycox.com/daily/" class=""><span class="t">🗓️ Daily</span></a><a href="https://cyber.peterjaycox.com/monthly/index.html" class=""><span class="t">📅 Monthly</span></a><a href="https://cyber.peterjaycox.com/reports/index.html" class=""><span class="t">📑 Reports</span></a><a href="https://cyber.peterjaycox.com/wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a><a href="https://cyber.peterjaycox.com/flashcards.html" class=""><span class="t">🗂️ Flashcards</span></a></div>
-        <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light">🌙</div></div></nav><main class="container">
+        <div class="theme-toggle" role="button" tabindex="0" aria-label="Toggle dark or light theme" title="Toggle dark/light &middot; Shift-click to follow your system setting" onclick="toggleTheme(event)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTheme(event)}"><span class="tt-moon">🌙</span><span class="tt-sun">☀️</span></div></div></nav><main class="container">
             <div class="container">
             <div class="crumb"><a href="../../index.html">Home</a> · <a href="../../wiki/index.html">Wiki</a> · Incidents &amp; Campaigns</div>
             <div class="wiki-body"><div class="frontmatter">type: incident · created: 2026-09-16 · updated: 2026-09-16 · tags: [incident, transport, phishing] · confidence: high · severity: low · affected_sectors: [transport] · au_impact: true</div><p>The US <strong>Federal Motor Carrier Safety Administration</strong> has warned trucking companies that scammers are sending emails impersonating <strong>Motus</strong>, the USDOT registration system the agency launched on 19 May as a replacement for several legacy processes, and directing recipients to <strong>four bogus websites</strong> built to resemble the federal portal. The campaign uses the subject line "Notice of Required Off-Cycle Update- Motus email" and urges recipients to click a "New MOTUS Portal" button that routes them to an external destination. The four fraudulent domains — <strong>dot.motusdatasboard.com, dot.motusdatadesk.com, dot.motuswebdeck.com and dot.motusfunction.com</strong> — all prefix the genuine <code>dot</code> label while ending in a commercial domain rather than the government's <code>.gov</code> namespace; the legitimate service operates only at <strong>motus.dot.gov</strong>. FMCSA notes a second tell in its own alert: official correspondence writes the name as "Motus", not the all-capitalised "MOTUS" used by the fraudulent messages. The agency has published no information on when the campaign began, how many recipients encountered it, victim counts, financial losses or confirmed account takeovers, and has not linked the pages to unauthorised registration changes or cargo theft. The scam follows a predictable pattern of exploiting a system transition: regulators suspended biennial-update enforcement on 10 September to reduce disruption during the Motus rollout, which paused USDOT-number inactivation for missed filings due after 1 June — a grace period that gives a deadline-shaped phishing message unusual plausibility for carriers who know their filings are outstanding. The reason this matters beyond nuisance is what carrier registration records are used for: brokers and shippers verify who controls a trucking company through that federal identity data, so a successful account takeover would weaken the verification chain that underpins freight fraud controls.</p>
@@ -71,12 +82,13 @@
     <a href="https://cyber.peterjaycox.com/licensing.html">Licensing</a>
     <a href="https://cyber.peterjaycox.com/security.html">Security</a>
   </div>
-  Cyber Digest public site · built 2026-09-18 09:11
+  Cyber Digest public site · built 2026-09-18 13:25
 </div>
 <script>
 var _t=document.documentElement;
-var _b=document.querySelector(".theme-toggle");
-function toggleTheme(){var n=_t.getAttribute("data-theme")==="dark"?"light":"dark";_t.setAttribute("data-theme",n);if(_b)_b.textContent=n==="dark"?"🌙":"☀️";try{if(n==="dark")localStorage.removeItem("cd-theme");else localStorage.setItem("cd-theme",n)}catch(e){}}
-(function(){try{var s=localStorage.getItem("cd-theme");if(s){_t.setAttribute("data-theme",s);if(_b)_b.textContent="☀️"}}catch(e){}})()
+function toggleTheme(ev){var n=(_t.getAttribute("data-theme")==="dark")?"light":"dark";
+if(ev&&ev.shiftKey){try{localStorage.removeItem("cd-theme");}catch(e){}n=(window.__cdSysTheme?window.__cdSysTheme():"dark");}
+else{try{localStorage.setItem("cd-theme",n);}catch(e){}}
+_t.setAttribute("data-theme",n);}
 </script>
 </body></html>

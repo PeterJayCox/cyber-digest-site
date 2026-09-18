@@ -262,7 +262,7 @@ def nav_html(active="", root=""):
     return f'''<nav class="topnav"><div class="inner">
         <a class="brand" href="{BASE}/index.html"><span class="brand-logo" aria-hidden="true"></span> Cyber&nbsp;Digest<small>public site</small></a>
         <div class="navlinks">{"".join(ls)}</div>
-        <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light">\U0001f319</div></div></nav>'''
+        {THEME_TOGGLE}</div></nav>'''
 
 SHARE_CSS = "assets/site.css"
 # JSON-LD structured data injected into every page's <head> ({JSONLD} token).
@@ -271,9 +271,41 @@ JSONLD = """<script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebSite","name":"Cyber Digest","alternateName":"Cyber Digest — public site","url":"https://cyber.peterjaycox.com/","description":"Curated, source-rated roundup of global cybersecurity developments with AU/NZ context.","inLanguage":"en-AU","publisher":{"@type":"Organization","name":"Cyber Digest","url":"https://cyber.peterjaycox.com/"},"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://cyber.peterjaycox.com/stories.html?q={search_term_string}"},"query-input":"required name=search_term_string"}}
 </script>"""
 
+# ---- Theme resolution: follow the OS appearance unless the visitor has
+# explicitly picked one with the nav toggle (localStorage key `cd-theme`).
+# Runs in <head> so the correct theme is applied before first paint (no flash).
+# Kept as plain (non-f) strings so their braces are never parsed by head().
+THEME_HEAD = """<script>
+(function(){var d=document.documentElement;
+function sys(){try{return (window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark';}catch(e){return 'dark';}}
+function saved(){try{var s=localStorage.getItem('cd-theme');return (s==='light'||s==='dark')?s:null;}catch(e){return null;}}
+function followSystem(){if(!saved()){d.setAttribute('data-theme',sys());}}
+window.__cdSysTheme=sys;window.__cdFollowSystem=followSystem;
+d.setAttribute('data-theme',saved()||sys());
+try{var mq=window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)');
+if(mq&&mq.addEventListener){mq.addEventListener('change',followSystem);}}catch(e){}
+})();
+</script>"""
+# Toggle: click pins light/dark; Shift-click clears the pin and returns to
+# following the OS setting.
+THEME_JS = """<script>
+var _t=document.documentElement;
+function toggleTheme(ev){var n=(_t.getAttribute("data-theme")==="dark")?"light":"dark";
+if(ev&&ev.shiftKey){try{localStorage.removeItem("cd-theme");}catch(e){}n=(window.__cdSysTheme?window.__cdSysTheme():"dark");}
+else{try{localStorage.setItem("cd-theme",n);}catch(e){}}
+_t.setAttribute("data-theme",n);}
+</script>"""
+THEME_TOGGLE = ('<div class="theme-toggle" role="button" tabindex="0"'
+    ' aria-label="Toggle dark or light theme"'
+    ' title="Toggle dark/light &middot; Shift-click to follow your system setting"'
+    ' onclick="toggleTheme(event)"'
+    " onkeydown=\"if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTheme(event)}\">"
+    '<span class="tt-moon">\U0001f319</span><span class="tt-sun">\u2600\ufe0f</span></div>')
+
 def head(title, active="", root=""):
     return f'''<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{THEME_HEAD}
 <title>{esc(title)}</title>
 <link rel="icon" type="image/png" sizes="32x32" href="{root}assets/img/favicon-32.png">
 <link rel="icon" type="image/x-icon" href="{root}assets/img/favicon.ico">
@@ -295,8 +327,6 @@ def head(title, active="", root=""):
 {nav_html(active, root)}<main class="container">'''
 
 def foot():
-    moon = "\U0001f319"
-    sun = "\u2600\ufe0f"
     return f'''</main>
 <div class="footer">
   <div class="links">
@@ -314,12 +344,7 @@ def foot():
   </div>
   Cyber Digest public site · built {datetime.now().strftime("%Y-%m-%d %H:%M")}
 </div>
-<script>
-var _t=document.documentElement;
-var _b=document.querySelector(".theme-toggle");
-function toggleTheme(){{var n=_t.getAttribute("data-theme")==="dark"?"light":"dark";_t.setAttribute("data-theme",n);if(_b)_b.textContent=n==="dark"?"{moon}":"{sun}";try{{if(n==="dark")localStorage.removeItem("cd-theme");else localStorage.setItem("cd-theme",n)}}catch(e){{}}}}
-(function(){{try{{var s=localStorage.getItem("cd-theme");if(s){{_t.setAttribute("data-theme",s);if(_b)_b.textContent="{sun}"}}}}catch(e){{}}}})()
-</script>
+{THEME_JS}
 </body></html>'''
 
 # ---------------- SQLite -> data ----------------
@@ -1728,13 +1753,14 @@ def build_daily(days):
             body=open(mdpath,encoding="utf-8").read()
             h=md_to_html(body,{},out)
             css_rel=os.path.relpath(os.path.join(DOCS,"assets","site.css"), os.path.dirname(out))
-            open(out,"w",encoding="utf-8").write(f'''<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+            open(out,"w",encoding="utf-8").write(f'''<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="utf-8">
+{THEME_HEAD}
 <title>Cyber Digest — {d}</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="{css_rel}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head><body>{nav_html("", root="../")}<div class="container"><div class="crumb"><a href="../index.html">Home</a> · <a href="index.html">Daily</a></div>
-<div class="wiki-body">{h}</div></div></body></html>''')
+<div class="wiki-body">{h}</div></div>{THEME_JS}</body></html>''')
     # Build enhanced daily index with month groups — current month expanded,
     # previous months nested in collapsible <details> groups so the page stays short.
     dag=daily_agg()
