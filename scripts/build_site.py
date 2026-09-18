@@ -426,36 +426,48 @@ JSONLD = """<script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebSite","name":"Cyber Digest","alternateName":"Cyber Digest — public site","url":"https://cyber.peterjaycox.com/","description":"Curated, source-rated roundup of global cybersecurity developments with AU/NZ context.","inLanguage":"en-AU","publisher":{"@type":"Organization","name":"Cyber Digest","url":"https://cyber.peterjaycox.com/"},"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://cyber.peterjaycox.com/stories.html?q={search_term_string}"},"query-input":"required name=search_term_string"}}
 </script>"""
 
-# ---- Theme resolution: follow the OS appearance unless the visitor has
-# explicitly picked one with the nav toggle (localStorage key `cd-theme`).
-# Runs in <head> so the correct theme is applied before first paint (no flash).
+# ---- Appearance: three states, default = auto (follows the OS appearance).
+# Click cycles auto -> a pin -> the other pin -> auto; Shift-click returns to
+# auto. A pinned choice lives in localStorage under `cd-theme2`; the legacy
+# `cd-theme` key (written by the pre-system-following toggle) is discarded on
+# sight so old pins can't silently override the OS.
+# Runs here, in <head>, so the correct theme is applied before the first paint.
 # Kept as plain (non-f) strings so their braces are never parsed by head().
 THEME_HEAD = """<script>
 (function(){var d=document.documentElement;
 function sys(){try{return (window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark';}catch(e){return 'dark';}}
-function saved(){try{var s=localStorage.getItem('cd-theme');return (s==='light'||s==='dark')?s:null;}catch(e){return null;}}
-function followSystem(){if(!saved()){d.setAttribute('data-theme',sys());}}
-window.__cdSysTheme=sys;window.__cdFollowSystem=followSystem;
-d.setAttribute('data-theme',saved()||sys());
+function saved(){try{var s=localStorage.getItem('cd-theme2');return (s==='light'||s==='dark')?s:null;}catch(e){return null;}}
+function mode(){return saved()||'auto';}
+function save(m){try{if(m==='auto'){localStorage.removeItem('cd-theme2');}else{localStorage.setItem('cd-theme2',m);}}catch(e){}}
+function label(m){var b=document.querySelector('.theme-toggle');if(!b){return;}
+var t={auto:'Appearance: auto \\u2014 following your system ('+sys()+'). Click for the light theme.',
+light:'Appearance: light (pinned). Click for the dark theme.',
+dark:'Appearance: dark (pinned). Click to follow your system again.'}[m];
+if(t){b.setAttribute('title',t);b.setAttribute('aria-label',t);}}
+function apply(){var m=mode();d.setAttribute('data-theme',m==='auto'?sys():m);d.setAttribute('data-theme-mode',m);label(m);}
+function cycle(ev){var m=mode();
+if(ev&&ev.shiftKey){save('auto');}
+else if(m==='auto'){save(sys()==='dark'?'light':'dark');}
+else if(m==='light'){save('dark');}
+else{save('auto');}
+apply();}
+function followSystem(){if(!saved()){apply();}}
+try{localStorage.removeItem('cd-theme');}catch(e){}
+window.__cdSysTheme=sys;
+window.__cdTheme={cycle:cycle,apply:apply,mode:mode,setAuto:function(){save('auto');apply();}};
+apply();
 try{var mq=window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)');
 if(mq&&mq.addEventListener){mq.addEventListener('change',followSystem);}}catch(e){}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',apply);}
 })();
 </script>"""
-# Toggle: click pins light/dark; Shift-click clears the pin and returns to
-# following the OS setting.
-THEME_JS = """<script>
-var _t=document.documentElement;
-function toggleTheme(ev){var n=(_t.getAttribute("data-theme")==="dark")?"light":"dark";
-if(ev&&ev.shiftKey){try{localStorage.removeItem("cd-theme");}catch(e){}n=(window.__cdSysTheme?window.__cdSysTheme():"dark");}
-else{try{localStorage.setItem("cd-theme",n);}catch(e){}}
-_t.setAttribute("data-theme",n);}
-</script>"""
 THEME_TOGGLE = ('<div class="theme-toggle" role="button" tabindex="0"'
-    ' aria-label="Toggle dark or light theme"'
-    ' title="Toggle dark/light &middot; Shift-click to follow your system setting"'
-    ' onclick="toggleTheme(event)"'
-    " onkeydown=\"if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTheme(event)}\">"
-    '<span class="tt-moon">\U0001f319</span><span class="tt-sun">\u2600\ufe0f</span></div>')
+    ' aria-label="Appearance" title="Appearance"'
+    ' onclick="window.__cdTheme.cycle(event)"'
+    " onkeydown=\"if(event.key==='Enter'||event.key===' '){event.preventDefault();window.__cdTheme.cycle(event)}\">"
+    '<span class="tt-auto" aria-hidden="true">\U0001f317</span>'
+    '<span class="tt-light" aria-hidden="true">\u2600\ufe0f</span>'
+    '<span class="tt-dark" aria-hidden="true">\U0001f319</span></div>')
 
 def head(title, active="", root=""):
     return f'''<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8">
@@ -501,7 +513,6 @@ def foot():
   Cyber Digest public site · built {datetime.now().strftime("%Y-%m-%d %H:%M")}
 </div>
 {NAV_JS}
-{THEME_JS}
 </body></html>'''
 
 # ---------------- SQLite -> data ----------------
@@ -1925,7 +1936,7 @@ def build_daily(days):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head><body>{nav_html("", root="../")}<div class="container"><div class="crumb"><a href="../index.html">Home</a> · <a href="index.html">Daily</a></div>
-<div class="wiki-body">{h}</div></div>{THEME_JS}</body></html>''')
+<div class="wiki-body">{h}</div></div></body></html>''')
     # Build enhanced daily index with month groups — current month expanded,
     # previous months nested in collapsible <details> groups so the page stays short.
     dag=daily_agg()
