@@ -268,6 +268,12 @@ NAV_TOOLS_CHILDREN = [
      "CVE × MITRE ATT&CK / D3FEND matrix",
      "🛰️",
      "Interactive explorer — pick a wiki CVE to see the ATT&CK techniques it uses and the D3FEND countermeasures."),
+    # Flashcards folded into Tools (user decision 2026-09-18) — the toolbar had
+    # grown to seven top-level items; the app itself is unchanged at /flashcards.html.
+    ("flashcards.html",
+     "Flashcards",
+     "🗂️",
+     "Flashforge spaced-repetition decks built from the wiki — Cyber Concepts, Entities, Vulnerabilities and Incidents."),
 ]
 _NAV_REPORTS_CACHE = None
 
@@ -300,9 +306,11 @@ NAV_ITEMS = [
      "children": _nav_reports_children,
      "prefixes": ("daily/", "monthly/", "reports/")},
     {"href": "wiki/index.html",     "label": "Wiki",       "icon": "🧠"},
+    # Flashcards is a child of Tools, not a top-level item (user decision
+    # 2026-09-18) — its URL is unchanged; `prefixes` keeps the trigger lit on it.
     {"group": "tools",   "href": "tools/cve-attack-matrix.html", "label": "Tools", "icon": "🧰",
-     "children": lambda: NAV_TOOLS_CHILDREN},
-    {"href": "flashcards.html",     "label": "Flashcards", "icon": "🗂️"},
+     "children": lambda: NAV_TOOLS_CHILDREN,
+     "prefixes": ("tools/", "flashcards.html")},
 ]
 
 # Dropdown behaviour for the desktop presentation (see @web-desinger's a11y
