@@ -98,6 +98,12 @@ a:hover{text-decoration:underline}
 
 /* ===== NAV ===== */
 .topnav{position:sticky;top:0;z-index:100;background:var(--nav-blur);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);transition:background .25s,border .25s;-webkit-transform:translateZ(0);transform:translateZ(0);will-change:transform}
+/* ==NAV-SHARED-CSS-BEGIN==
+   Shared nav block: .navgrp/.navdrop/.navmenu (desktop dropdown groups) and
+   .navmob (mobile <details> menu). Extracted verbatim by build_site.py and
+   injected into pages that ship their own <style> (daily/monthly editions,
+   the CVE matrix), so the nav is styled identically on every page.
+   The two presentations are gated to mutually exclusive breakpoints. */
 .topnav .inner{max-width:1120px;margin:0 auto;padding:0 24px;display:flex;align-items:center;height:60px;gap:8px}
 .brand{font-size:17px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:10px;letter-spacing:-.4px}
 .brand .dot{width:12px;height:12px;border-radius:50%;background:var(--accent);transition:background .25s}
@@ -108,6 +114,45 @@ a:hover{text-decoration:underline}
 .navlinks a{color:var(--text-muted);font-size:14px;font-weight:500;padding:8px 14px;border-radius:6px;transition:all .12s}
 .navlinks a:hover{color:var(--text);background:var(--surface2);text-decoration:none}
 .navlinks a.active{color:var(--text);background:var(--surface-hover);font-weight:600}
+
+/* --- grouped nav entries: desktop click-to-open dropdowns --- */
+.navgrp{position:relative;display:flex}
+.navdrop{display:inline-flex;align-items:center;gap:6px;background:none;border:0;cursor:pointer;font-family:inherit;color:var(--text-muted);font-size:14px;font-weight:500;padding:8px 14px;border-radius:6px;transition:all .12s}
+.navdrop:hover{color:var(--text);background:var(--surface2)}
+.navgrp.active .navdrop,.navgrp.open .navdrop{color:var(--text);background:var(--surface-hover);font-weight:600}
+.navdrop .caret{font-size:10px;line-height:1;transition:transform .15s}
+.navgrp.open .navdrop .caret{transform:rotate(180deg)}
+.navdrop:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.navmenu{position:absolute;top:calc(100% + 8px);left:0;min-width:250px;max-width:340px;margin:0;padding:8px;list-style:none;background:var(--surface);border:1px solid var(--border);border-radius:10px;box-shadow:0 14px 34px rgba(0,0,0,.38);z-index:120}
+.navmenu[hidden]{display:none}
+.navmenu li{margin:0}
+.navmenu a{display:block;padding:7px 10px;border-radius:6px;color:var(--text-muted);font-size:13.5px;font-weight:500;text-decoration:none;white-space:normal}
+.navmenu a:hover,.navmenu a:focus-visible{color:var(--text);background:var(--surface2)}
+.navmenu a.active{color:var(--text);background:var(--surface-hover);font-weight:600}
+.navmenu a .t{display:block}
+.navmenu .menu-note{display:block;padding:6px 10px 2px;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--text-dim);font-weight:600}
+
+/* --- mobile: one native <details> menu (no JS open/close) --- */
+.navmob{display:none;margin-left:auto;position:relative}
+.navmob>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:6px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-size:14px;font-weight:600}
+.navmob>summary::-webkit-details-marker{display:none}
+.navmob>summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.navmob-panel{position:absolute;top:60px;right:0;left:0;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:0 18px 34px rgba(0,0,0,.42);max-height:74vh;overflow:auto;z-index:150}
+.navmob-list,.navmob-list ul{margin:0;padding:8px 12px;list-style:none}
+.navmob-list a{display:block;padding:10px 12px;border-radius:8px;color:var(--text-secondary);font-size:14.5px;font-weight:500;text-decoration:none}
+.navmob-list a:hover{background:var(--surface2);color:var(--text)}
+.navmob-list a.active{color:var(--text);background:var(--surface-hover);font-weight:600}
+.navmob-grp{padding:2px 0}
+.navmob-grp>summary{list-style:none;cursor:pointer;display:flex;align-items:center;padding:10px 12px;border-radius:8px;color:var(--text-secondary);font-size:14.5px;font-weight:600}
+.navmob-grp>summary::-webkit-details-marker{display:none}
+.navmob-grp>summary::after{content:"\\25B8";margin-left:auto;font-size:11px;color:var(--text-dim)}
+.navmob-grp[open]>summary::after{content:"\\25BE"}
+.navmob-grp>summary.active{color:var(--text);background:var(--surface-hover)}
+.navmob-grp ul{margin:0 0 4px 10px;padding-left:8px;border-left:1px solid var(--border)}
+@media(min-width:901px){.navmob{display:none!important}}
+@media(max-width:900px){.navlinks{display:none!important}.navmob{display:block!important}}
+@media(max-width:1280px){.navlinks a,.navdrop{padding:8px 10px;font-size:13.5px}}
+/* ==NAV-SHARED-CSS-END== */
 
 /* Theme toggle */
 .theme-toggle{display:flex;align-items:center;justify-content:center;margin-left:10px;width:36px;height:36px;border-radius:8px;background:var(--surface2);cursor:pointer;border:1px solid var(--border);transition:all .25s;user-select:none;flex-shrink:0;font-size:17px}
@@ -286,7 +331,6 @@ a:hover{text-decoration:underline}
   .stat .lbl{font-size:11px}
   .grid.cards{grid-template-columns:1fr}
   .wiki-body{padding:22px}
-  .navlinks a span.t{display:none}
 }
 </style>
 /* Daily editions on homepage — theme line */
@@ -436,9 +480,4 @@ a:hover{text-decoration:underline}
 .wiki-section.collapsed .ws-toggle{color:var(--accent);background:var(--accent-glow);border-color:var(--accent)}
 .filters a{color:var(--accent);font-size:13px;cursor:pointer;text-decoration:none}
 .filters a:hover{text-decoration:underline}
-/* CVE matrix tool card on the wiki index */
-.wiki-toolbar{margin:18px 0 6px}
-.wiki-tool{display:flex;flex-direction:column;gap:8px;border:1px solid var(--accent);background:linear-gradient(90deg,var(--surface2),var(--surface))}
-.wiki-tool h3{color:var(--accent)}
-.wiki-tool:hover{border-color:var(--accent-glow);transform:translateY(-1px)}
 

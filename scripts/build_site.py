@@ -248,21 +248,176 @@ def slugify(s):
 def esc(s):
     return html.escape(str(s), quote=True)
 
+# ---------------- Shared navigation (single source of truth) ----------------
+# EVERY page's top nav — shared-chrome pages, the standalone daily/monthly
+# editions and the CVE matrix — is rendered from NAV_ITEMS by nav_html().
+# Grouped entries render twice from the SAME data:
+#   * desktop (>=901px): a real <button aria-haspopup="true" aria-expanded>
+#     that click-toggles one panel at a time, with Escape / outside-click /
+#     focusout / link-select close paths (NAV_JS);
+#   * mobile (<=900px): one native <details> menu with a nested <details>
+#     per group — toggle, keyboard and screen-reader behaviour come free
+#     from the browser, no JS involved.
+# The two presentations are CSS-gated to mutually exclusive breakpoints, so
+# a link is never wired into two toggle models at once.
+NAV_TOOLS_CHILDREN = [
+    ("tools/cve-attack-matrix.html",
+     "CVE × MITRE ATT&CK / D3FEND matrix",
+     "🛰️",
+     "Interactive explorer — pick a wiki CVE to see the ATT&CK techniques it uses and the D3FEND countermeasures."),
+]
+_NAV_REPORTS_CACHE = None
+
+def _nav_reports_children():
+    """Reports dropdown entries: the archive index + every published report."""
+    global _NAV_REPORTS_CACHE
+    if _NAV_REPORTS_CACHE is not None:
+        return _NAV_REPORTS_CACHE
+    kids = [("reports/index.html", "All reports", "🗂️", "Every sector incident review and analysis edition.")]
+    try:
+        for r in _reports_load():
+            title = (r.get("report_title") or r.get("_slug") or "").strip()
+            if len(title) > 46:
+                title = title[:45].rstrip(" ,—-–·") + "…"
+            if not title:
+                continue
+            kids.append((f"reports/{r['_slug']}.html", title, "📄", ""))
+    except Exception as e:                       # never let nav break the build
+        print(f"⚠️  nav: report list unavailable ({e})")
+    _NAV_REPORTS_CACHE = kids
+    return kids
+
+NAV_ITEMS = [
+    {"href": "index.html",          "label": "Home",       "icon": "🏠"},
+    {"href": "stories.html",        "label": "Story DB",   "icon": "📚"},
+    {"href": "globe.html",          "label": "Globe",      "icon": "🌍"},
+    {"href": "daily/",              "label": "Daily",      "icon": "🗓️"},
+    {"href": "monthly/index.html",  "label": "Monthly",    "icon": "📅"},
+    {"group": "reports", "href": "reports/index.html", "label": "Reports", "icon": "📑",
+     "children": _nav_reports_children},
+    {"href": "wiki/index.html",     "label": "Wiki",       "icon": "🧠"},
+    {"group": "tools",   "href": "tools/cve-attack-matrix.html", "label": "Tools", "icon": "🧰",
+     "children": lambda: NAV_TOOLS_CHILDREN},
+    {"href": "flashcards.html",     "label": "Flashcards", "icon": "🗂️"},
+]
+
+# Dropdown behaviour for the desktop presentation (see @web-desinger's a11y
+# spec): single-open accordion, Escape returns focus to the trigger, close on
+# outside click / focusout of trigger+panel / link selection. Focus never
+# toggles a panel, so Tab and Shift+Tab pass through without surprises.
+# Kept as a plain (non-f) string so its braces are never parsed. `cd-nav-shared`
+# marks a page as already carrying the shared nav (idempotence guard).
+NAV_JS = """<script id="cd-nav-shared-js">
+(function(){
+  var groups=[].slice.call(document.querySelectorAll('.navgrp'));
+  if(!groups.length) return;
+  function panel(g){return g.querySelector('.navmenu');}
+  function trig(g){return g.querySelector('.navdrop');}
+  function close(g){var p=panel(g); if(!p||p.hidden) return; p.hidden=true;
+    var t=trig(g); if(t) t.setAttribute('aria-expanded','false'); g.classList.remove('open');}
+  function open(g){var p=panel(g); if(!p||!p.hidden) return;
+    groups.forEach(function(o){if(o!==g) close(o);});
+    p.hidden=false; var t=trig(g); if(t) t.setAttribute('aria-expanded','true'); g.classList.add('open');}
+  groups.forEach(function(g){
+    var t=trig(g), p=panel(g); if(!t||!p) return;
+    t.addEventListener('click',function(e){e.preventDefault(); e.stopPropagation();
+      if(p.hidden){open(g);} else {close(g);}});
+    t.addEventListener('keydown',function(e){
+      if(e.key==='ArrowDown'){e.preventDefault(); open(g); var a=p.querySelector('a'); if(a) a.focus();}});
+    p.addEventListener('click',function(e){ if(e.target.closest('a')) close(g); });
+    g.addEventListener('keydown',function(e){
+      if(e.key==='Escape'&&!p.hidden){e.stopPropagation(); close(g); t.focus();}});
+    g.addEventListener('focusout',function(e){ if(!g.contains(e.relatedTarget)) close(g);});
+  });
+  document.addEventListener('click',function(e){
+    groups.forEach(function(g){ if(!g.contains(e.target)) close(g); });});
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape') groups.forEach(close);});
+})();
+</script>"""
+
+
+def _nav_css_block(absolute_assets=False):
+    """The shared nav CSS, extracted from assets/site.css between the
+    NAV-SHARED-CSS markers so it has exactly ONE definition. Pages that ship
+    their own <style> (daily/monthly editions, the CVE matrix) can't resolve
+    site.css's relative `img/…` refs — pass absolute_assets=True to rewrite
+    them against SITE_BASE for those pages."""
+    css = _NAV_CSS_CACHE[0]
+    if css is None:
+        try:
+            src = open(os.path.join(ROOT, "assets", "site.css"), encoding="utf-8").read()
+        except OSError:
+            src = ""
+        m = re.search(r"/\* ==NAV-SHARED-CSS-BEGIN==.*?\*/(.*?)/\* ==NAV-SHARED-CSS-END== \*/", src, re.S)
+        if not m:
+            print("⚠️  nav: NAV-SHARED-CSS markers not found in assets/site.css")
+            css = ""
+        else:
+            css = m.group(1).strip()
+        _NAV_CSS_CACHE[0] = css
+    if absolute_assets:
+        css = css.replace("url('img/", f"url('{SITE_BASE}/assets/img/")
+    return css
+
+
+_NAV_CSS_CACHE = [None]
+
+
+def _nav_link(href, label, icon, active, base):
+    cls = ' class="active"' if href == active else ""
+    return f'<a href="{base}/{href}"{cls}><span class="t">{icon} {esc(label)}</span></a>'
+
+
+def _nav_child_links(kids, active, base):
+    """<li><a>…</a></li> items for one nav group (shared by the desktop panel
+    and the mobile <details> list, so label/order can never drift)."""
+    out = []
+    for href, label, icon, _desc in kids:
+        cls = ' class="active"' if href == active else ""
+        out.append(f'<li><a href="{base}/{href}"{cls}><span class="t">{icon} {esc(label)}</span></a></li>')
+    return "".join(out)
+
+
 def nav_html(active="", root=""):
-    BASE = "https://cyber.peterjaycox.com"
-    items = [("index.html","Home","🏠"),("stories.html","Story DB","📚"),
-             ("globe.html","Globe","🌍"),("daily/","Daily","🗓️"),("monthly/index.html","Monthly","📅"),
-             ("reports/index.html","Reports","📑"),("wiki/index.html","Wiki","🧠"),
-             ("flashcards.html","Flashcards","🗂️")]
-    ls=[]
-    for href,label,ico in items:
-        cls="active" if href==active else ""
-        if active=="daily/" and href=="daily/": cls="active"
-        ls.append(f'<a href="{BASE}/{href}" class="{cls}"><span class="t">{ico} {label}</span></a>')
-    return f'''<nav class="topnav"><div class="inner">
-        <a class="brand" href="{BASE}/index.html"><span class="brand-logo" aria-hidden="true"></span> Cyber&nbsp;Digest<small>public site</small></a>
-        <div class="navlinks">{"".join(ls)}</div>
-        {THEME_TOGGLE}</div></nav>'''
+    """Top nav markup for every page (see NAV_ITEMS)."""
+    base = SITE_BASE
+    desktop, mobile = [], []
+    for it in NAV_ITEMS:
+        if "children" not in it:
+            desktop.append(_nav_link(it["href"], it["label"], it["icon"], active, base))
+            mobile.append(f'<li>{_nav_link(it["href"], it["label"], it["icon"], active, base)}</li>')
+            continue
+        kids = it["children"]()
+        gid = f"cdnav-{it['group']}"
+        gact = active == it["href"] or any(k[0] == active for k in kids)
+        links = _nav_child_links(kids, active, base)
+        desktop.append(
+            f'<div class="navgrp{" active" if gact else ""}">'
+            f'<button type="button" class="navdrop" aria-haspopup="true" aria-expanded="false" aria-controls="{gid}">'
+            f'<span class="t">{it["icon"]} {esc(it["label"])}</span>'
+            f'<span class="caret" aria-hidden="true">▾</span></button>'
+            f'<ul class="navmenu" id="{gid}" hidden>{links}</ul></div>'
+        )
+        mobile.append(
+            f'<li><details class="navmob-grp"><summary class="{"active" if gact else ""}">'
+            f'<span class="t">{it["icon"]} {esc(it["label"])}</span></summary>'
+            f'<ul>{links}</ul></details></li>'
+        )
+    mobile_menu = (
+        '<details class="navmob"><summary aria-label="Open site menu">'
+        '<span aria-hidden="true">☰</span><span class="t">Menu</span></summary>'
+        '<div class="navmob-panel"><ul class="navmob-list">' + "".join(mobile) + "</ul></div></details>"
+    )
+    # No-JS visitors would get an inert desktop dropdown; fall back to the
+    # native <details> menu at every width.
+    noscript = ('<noscript><style>.navgrp{display:none!important}'
+                '.navmob{display:block!important}</style></noscript>')
+    return (f'<nav class="topnav"><div class="inner">'
+            f'<a class="brand" href="{base}/index.html"><span class="brand-logo" aria-hidden="true"></span> Cyber&nbsp;Digest<small>public site</small></a>'
+            f'<div class="navlinks">{"".join(desktop)}</div>'
+            f'{noscript}{mobile_menu}'
+            f'{THEME_TOGGLE}</div></nav>')
 
 SHARE_CSS = "assets/site.css"
 # JSON-LD structured data injected into every page's <head> ({JSONLD} token).
@@ -336,6 +491,7 @@ def foot():
     <a href="https://cyber.peterjaycox.com/monthly/index.html">Monthly</a>
     <a href="https://cyber.peterjaycox.com/reports/index.html">Reports</a>
     <a href="https://cyber.peterjaycox.com/wiki/index.html">Wiki</a>
+    <a href="https://cyber.peterjaycox.com/tools/cve-attack-matrix.html">Tools</a>
     <a href="https://cyber.peterjaycox.com/feed.xml">RSS</a>
     <a href="https://cyber.peterjaycox.com/privacy.html">Privacy</a>
     <a href="https://cyber.peterjaycox.com/corrections.html">Corrections</a>
@@ -344,6 +500,7 @@ def foot():
   </div>
   Cyber Digest public site · built {datetime.now().strftime("%Y-%m-%d %H:%M")}
 </div>
+{NAV_JS}
 {THEME_JS}
 </body></html>'''
 
@@ -887,6 +1044,10 @@ def build_sitemap(days, months, pages, reports):
         ("", _mtime("index.html")),
         ("stories.html", _mtime("stories.html")),
         ("globe.html", _mtime("globe.html")),
+        # Tool pages moved out of /wiki/ (which is vault-derived) into /tools/.
+        # The old /wiki/cve-attack-matrix.html is a noindex redirect stub and is
+        # deliberately absent from every sitemap.
+        ("tools/cve-attack-matrix.html", _mtime("tools/cve-attack-matrix.html")),
         ("methodology.html", _mtime("methodology.html")),
         ("security.html", _mtime("security.html")),
         ("privacy.html", _mtime("privacy.html")),
@@ -915,9 +1076,9 @@ def build_sitemap(days, months, pages, reports):
     ]
 
     # Wiki: lastmod from the source vault markdown for each page.
+    # /wiki/ is vault-derived only — non-vault tool pages live under /tools/.
     wiki_entries = [
         ("wiki/", _mtime("wiki/index.html")),
-        ("wiki/cve-attack-matrix.html", _mtime("wiki/cve-attack-matrix.html")),
     ]
     for ptype, map_ in pages.items():
         for slug, info in map_.items():
@@ -1748,6 +1909,10 @@ def build_daily(days):
         out=os.path.join(DOCS,"daily",f"{d}.html")
         # reuse daily-html.py generator for faithful rendering
         sub=os.system(f'"{sys.executable}" "{NASSP}/daily-html.py" --date {d} --out "{out}" --no-vault >/dev/null 2>&1')
+        if sub==0 and os.path.exists(out):
+            # the daily template ships its own stale nav copy — swap in the
+            # shared nav (same data as every other page, incl. the dropdowns)
+            inject_shared_nav(out, "daily/")
         if sub!=0:
             # fallback with styling
             body=open(mdpath,encoding="utf-8").read()
@@ -1855,6 +2020,9 @@ def build_monthly(months, stories):
         if os.path.exists(htmlgen):
             # Use the rich interactive HTML from monthly-html.py
             shutil.copy2(htmlgen, out)
+            # monthly reuses the daily template, so it carries the same stale
+            # hand-rolled nav — swap in the shared nav (Monthly marked active)
+            inject_shared_nav(out, "monthly/index.html")
         else:
             # Fallback: convert markdown to basic HTML (no interactive features)
             mdpath=os.path.join(monthly_src,f"Cyber-Digest-Monthly-{m}.md")
@@ -2082,13 +2250,6 @@ document.addEventListener('DOMContentLoaded',()=>{
         <input type="text" id="wikiSearch" placeholder="Search wiki…">
         <span style="color:var(--text-dim);font-size:13px">{len(all_items)} pages · <a href="#sec-incidents">🔥 Incidents</a> · <a href="#sec-entities">🦠 Entities</a> · <a href="#sec-concepts">💡 Concepts</a> · <a href="#sec-vulnerabilities">🛡️ Vulns</a> · <a href="#" onclick="return setAllSections(true)">Expand all</a> · <a href="#" onclick="return setAllSections(false)">Collapse all</a></span>
     </div>
-    <div class="wiki-toolbar">
-        <a class="card wiki-card wiki-tool" href="cve-attack-matrix.html" data-search="cve mitre attack matrix d3fend techniques framework">
-            <h3>🛰️ CVE × MITRE ATT&amp;CK / D3FEND Matrix</h3>
-            <p class="ws-pending" style="font-style:normal">Interactive explorer — select any wiki CVE to see the ATT&amp;CK techniques it utilises and the defensive countermeasures D3FEND recommends.</p>
-            <span class="go">Open tool →</span>
-        </a>
-    </div>
     {cards}
     '''+js+foot()
     open(os.path.join(wiki_index,"index.html"),"w",encoding="utf-8").write(html)
@@ -2113,11 +2274,6 @@ document.addEventListener('DOMContentLoaded',()=>{
 .wiki-section.collapsed .ws-toggle{color:var(--accent);background:var(--accent-glow);border-color:var(--accent)}
 .filters a{color:var(--accent);font-size:13px;cursor:pointer;text-decoration:none}
 .filters a:hover{text-decoration:underline}
-/* CVE matrix tool card on the wiki index */
-.wiki-toolbar{margin:18px 0 6px}
-.wiki-tool{display:flex;flex-direction:column;gap:8px;border:1px solid var(--accent);background:linear-gradient(90deg,var(--surface2),var(--surface))}
-.wiki-tool h3{color:var(--accent)}
-.wiki-tool:hover{border-color:var(--accent-glow);transform:translateY(-1px)}
 ''' + "\n"
     css_text=open(css_path,encoding="utf-8").read()
     if ".grid.cards.wiki-grid{" not in css_text:
@@ -2651,23 +2807,85 @@ def build_flashcards():
 
 
 def build_cve_matrix():
-    """Copy the standalone CVE x MITRE ATT&CK/D3FEND matrix into docs/wiki/,
-    injecting the shared site navigation bar into the __SITE_NAV__ placeholder."""
+    """Copy the standalone CVE x MITRE ATT&CK/D3FEND matrix to docs/tools/,
+    injecting the shared site navigation bar into the __SITE_NAV__ placeholder,
+    then write the interim redirect stub at the old /wiki/ path.
+
+    The site is served by GitHub Pages, which cannot emit a server-side 301, so
+    the old URL keeps a noindex + canonical + immediate meta-refresh stub until
+    the domain's nameservers are delegated to Cloudflare and the approved
+    Redirect Rule (/wiki/cve-attack-matrix.html -> /tools/cve-attack-matrix.html,
+    301) can be applied zone-wide."""
     src = os.path.expanduser("~/Desktop/Hermes/att-cve-explorer/wiki-cve-attack-matrix.html")
+    tools_dir = os.path.join(DOCS, "tools")
+    os.makedirs(tools_dir, exist_ok=True)
     if not os.path.exists(src):
-        print("⚠️ CVE matrix source missing; docs/wiki/cve-attack-matrix.html not written")
+        print("⚠️ CVE matrix source missing; docs/tools/cve-attack-matrix.html not written")
         return
     html = open(src, encoding="utf-8").read()
-    nav = nav_html("wiki/index.html", "")            # Wiki marked active, absolute URLs
+    nav = nav_html("tools/cve-attack-matrix.html", "")   # Tools group marked active
     nav = re.sub(r'<div class="theme-toggle"[^>]*>.*?</div>', '', nav, flags=re.S)  # fixed-dark app: drop site theme toggle
     if "__SITE_NAV__" in html:
         html = html.replace("__SITE_NAV__", nav)
     else:
         print("⚠️ __SITE_NAV__ placeholder missing in matrix source; nav not injected")
+    # The matrix ships its own <style> and no site.css, so the shared nav CSS
+    # and dropdown behaviour must travel with it.
+    nav_css = _nav_css_block(absolute_assets=True)
+    html = html.replace("</head>", f'<style id="cd-nav-shared">\n{nav_css}\n</style>\n</head>', 1)
+    html = html.replace("</body>", NAV_JS + "\n</body>", 1)
+    open(os.path.join(tools_dir, "cve-attack-matrix.html"), "w", encoding="utf-8").write(html)
+    print("✅ CVE matrix -> docs/tools/cve-attack-matrix.html (standalone + site nav)")
+    build_cve_matrix_stub()
+
+
+def build_cve_matrix_stub():
+    """Interim redirect for the old /wiki/cve-attack-matrix.html path.
+
+    noindex + canonical to the new URL + an immediate client-side redirect
+    (meta refresh and location.replace, so it works with JS off). Replaced by
+    the Cloudflare 301 once the zone is delegated."""
+    new = f"{SITE_BASE}/tools/cve-attack-matrix.html"
     wiki_dir = os.path.join(DOCS, "wiki")
     os.makedirs(wiki_dir, exist_ok=True)
-    open(os.path.join(wiki_dir, "cve-attack-matrix.html"), "w", encoding="utf-8").write(html)
-    print("✅ CVE matrix -> docs/wiki/cve-attack-matrix.html (standalone + site nav)")
+    stub = f'''<!DOCTYPE html><html lang="en-AU"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moved — CVE × MITRE ATT&amp;CK / D3FEND matrix</title>
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="{new}">
+<meta http-equiv="refresh" content="0; url={new}">
+<script>location.replace("{new}" + location.hash);</script>
+</head><body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#0d1117;color:#e6edf3;padding:40px 20px;line-height:1.5">
+<p>This page has moved to <a href="{new}" style="color:#58a6ff">/tools/cve-attack-matrix.html</a> — redirecting now…</p>
+</body></html>'''
+    open(os.path.join(wiki_dir, "cve-attack-matrix.html"), "w", encoding="utf-8").write(stub)
+    print("✅ CVE matrix redirect stub -> docs/wiki/cve-attack-matrix.html (noindex + canonical + meta-refresh)")
+
+
+_NAV_BLOCK_RE = re.compile(r'<nav class="topnav">.*?</nav>', re.S)
+
+def inject_shared_nav(path, active):
+    """Swap the stale hand-rolled <nav> in a standalone page (daily/monthly
+    editions carry their own copy of the nav CSS + link list) for nav_html(),
+    and give the page the shared nav CSS + dropdown JS.
+
+    Keeps the whole site on ONE nav definition; idempotent via the
+    `cd-nav-shared` marker. Returns True when the page carries the shared nav."""
+    try:
+        html = open(path, encoding="utf-8").read()
+    except OSError:
+        return False
+    if 'id="cd-nav-shared"' in html or 'id="cd-nav-shared-js"' in html:
+        return True
+    html2, n = _NAV_BLOCK_RE.subn(lambda _m: nav_html(active, ""), html, count=1)
+    if n == 0:
+        print(f"⚠️  nav: no topnav block found in {os.path.basename(path)}; nav not injected")
+        return False
+    nav_css = _nav_css_block(absolute_assets=True)
+    html2 = html2.replace("</head>", f'<style id="cd-nav-shared">\n{nav_css}\n</style>\n</head>', 1)
+    html2 = html2.replace("</body>", NAV_JS + "\n</body>", 1)
+    open(path, "w", encoding="utf-8").write(html2)
+    return True
 
 # ---------------- security.txt + responsible disclosure ----------------
 SECURITY_CONTACT = "flagon_plazas0x@icloud.com"
