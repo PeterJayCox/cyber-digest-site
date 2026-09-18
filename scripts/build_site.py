@@ -252,12 +252,15 @@ def esc(s):
 # EVERY page's top nav — shared-chrome pages, the standalone daily/monthly
 # editions and the CVE matrix — is rendered from NAV_ITEMS by nav_html().
 # Grouped entries render twice from the SAME data:
-#   * desktop (>=901px): a real <button aria-haspopup="true" aria-expanded>
-#     that click-toggles one panel at a time, with Escape / outside-click /
-#     focusout / link-select close paths (NAV_JS);
-#   * mobile (<=900px): one native <details> menu with a nested <details>
-#     per group — toggle, keyboard and screen-reader behaviour come free
-#     from the browser, no JS involved.
+#   * desktop (>=1100px, the measured width the 9-item row needs on one line):
+#     a real <button aria-haspopup="true" aria-expanded> that click-toggles one
+#     panel at a time, with Escape / outside-click / focusout / link-select
+#     close paths (NAV_JS);
+#   * mobile (<=1099px): one native <details> menu with a nested <details> per
+#     group — toggle, keyboard and screen-reader behaviour come free from the
+#     browser, no JS involved. Multi-open by choice: `name` grouping on
+#     <details> is not supported in Safari, so no exclusive-collapse is
+#     attempted there (see the QA notes).
 # The two presentations are CSS-gated to mutually exclusive breakpoints, so
 # a link is never wired into two toggle models at once.
 NAV_TOOLS_CHILDREN = [
@@ -440,16 +443,19 @@ function saved(){try{var s=localStorage.getItem('cd-theme2');return (s==='light'
 function mode(){return saved()||'auto';}
 function save(m){try{if(m==='auto'){localStorage.removeItem('cd-theme2');}else{localStorage.setItem('cd-theme2',m);}}catch(e){}}
 function label(m){var b=document.querySelector('.theme-toggle');if(!b){return;}
-var t={auto:'Appearance: auto \\u2014 following your system ('+sys()+'). Click for the light theme.',
-light:'Appearance: light (pinned). Click for the dark theme.',
-dark:'Appearance: dark (pinned). Click to follow your system again.'}[m];
+var t={auto:'Appearance: auto \u2014 follows your system ('+sys()+'). Click to cycle auto \u2192 light \u2192 dark.',
+light:'Appearance: light (pinned). Shift-click to follow your system again.',
+dark:'Appearance: dark (pinned). Shift-click to follow your system again.'}[m];
 if(t){b.setAttribute('title',t);b.setAttribute('aria-label',t);}}
 function apply(){var m=mode();d.setAttribute('data-theme',m==='auto'?sys():m);d.setAttribute('data-theme-mode',m);label(m);}
+/* Cycle visits all three states, always flipping away from what is on screen
+   first: auto -> a pin (the opposite of the current look) -> the other pin ->
+   auto. shiftKey jumps straight back to auto. */
 function cycle(ev){var m=mode();
 if(ev&&ev.shiftKey){save('auto');}
 else if(m==='auto'){save(sys()==='dark'?'light':'dark');}
-else if(m==='light'){save('dark');}
-else{save('auto');}
+else if(m===sys()){save('auto');}
+else{save(m==='light'?'dark':'light');}
 apply();}
 function followSystem(){if(!saved()){apply();}}
 try{localStorage.removeItem('cd-theme');}catch(e){}
@@ -2998,9 +3004,10 @@ def build_security_page():
 
 _PRIVACY_BODY = """<p><b>In short:</b> this site does not use advertising, cross-site tracking or
 analytics cookies, and does not set any persistent personal identifiers on your device
-other than a <code>localStorage</code> flag remembering your light/dark theme
-preference (stored on your own machine, under key <code>cd-theme</code>, and never sent
-to us).</p>
+other than a <code>localStorage</code> flag recording your appearance choice — the site
+follows your operating system's light/dark setting by default and stores nothing for
+that, and only remembers something if you override it (stored on your own machine,
+under key <code>cd-theme2</code>, and never sent to us).</p>
 
 <h2>What we collect</h2>
 <p>This is a static site: there is no login, no comment system, and no server-side
@@ -3012,9 +3019,12 @@ privacy-relevant behaviours are governed by their respective privacy policies.</
 
 <h2>Cookies and local storage</h2>
 <ul>
-  <li><b>Theme preference</b> — <code>cd-theme</code> is written to your browser's
-      <code>localStorage</code> only when you switch to light mode. It stays on your
-      device; we never read it server-side. No cookie.</li>
+  <li><b>Appearance preference</b> — the site follows your operating system's
+      light/dark setting by default and stores nothing for that. If you override it
+      with the appearance button in the navigation bar (auto → light → dark), your
+      choice is written to your browser's <code>localStorage</code> under
+      <code>cd-theme2</code>. It stays on your device; we never read it server-side.
+      No cookie.</li>
   <li><b>No analytics, no trackers, no advertising.</b> There is no web-beacon or
       third-party marketing script on any page. If a privacy-respecting, cookieless
       analytics option (for example, a single maintainer-hosted counter) is ever added,
