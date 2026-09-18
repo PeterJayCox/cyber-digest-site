@@ -252,11 +252,11 @@ def esc(s):
 # EVERY page's top nav — shared-chrome pages, the standalone daily/monthly
 # editions and the CVE matrix — is rendered from NAV_ITEMS by nav_html().
 # Grouped entries render twice from the SAME data:
-#   * desktop (>=1100px, the measured width the 9-item row needs on one line):
+#   * desktop (>=1001px, the measured width the 7-item row needs on one line):
 #     a real <button aria-haspopup="true" aria-expanded> that click-toggles one
 #     panel at a time, with Escape / outside-click / focusout / link-select
 #     close paths (NAV_JS);
-#   * mobile (<=1099px): one native <details> menu with a nested <details> per
+#   * mobile (<=1000px): one native <details> menu with a nested <details> per
 #     group — toggle, keyboard and screen-reader behaviour come free from the
 #     browser, no JS involved. Multi-open by choice: `name` grouping on
 #     <details> is not supported in Safari, so no exclusive-collapse is
@@ -272,11 +272,17 @@ NAV_TOOLS_CHILDREN = [
 _NAV_REPORTS_CACHE = None
 
 def _nav_reports_children():
-    """Reports dropdown entries: the archive index + every published report."""
+    """Reports dropdown entries, in the agreed order: Daily, Monthly, then every
+    published report, with the "All reports" archive index last (user decision
+    2026-09-18) — Daily/Monthly are grouped here; their URLs are unchanged,
+    nothing moves."""
     global _NAV_REPORTS_CACHE
     if _NAV_REPORTS_CACHE is not None:
         return _NAV_REPORTS_CACHE
-    kids = [("reports/index.html", "All reports", "🗂️", "Every sector incident review and analysis edition.")]
+    kids = [
+        ("daily/", "Daily", "🗓️", "Daily digests, newest first, grouped by month."),
+        ("monthly/index.html", "Monthly", "📅", "Monthly editions with sector and threat breakdowns."),
+    ]
     try:
         for r in _reports_load():
             title = (r.get("report_title") or r.get("_slug") or "").strip()
@@ -287,6 +293,9 @@ def _nav_reports_children():
             kids.append((f"reports/{r['_slug']}.html", title, "📄", ""))
     except Exception as e:                       # never let nav break the build
         print(f"⚠️  nav: report list unavailable ({e})")
+    # "All reports" (the archive index) closes the list — user decision 2026-09-18.
+    kids.append(("reports/index.html", "All reports", "🗂️",
+                 "Every sector incident review and analysis edition."))
     _NAV_REPORTS_CACHE = kids
     return kids
 
@@ -294,10 +303,12 @@ NAV_ITEMS = [
     {"href": "index.html",          "label": "Home",       "icon": "🏠"},
     {"href": "stories.html",        "label": "Story DB",   "icon": "📚"},
     {"href": "globe.html",          "label": "Globe",      "icon": "🌍"},
-    {"href": "daily/",              "label": "Daily",      "icon": "🗓️"},
-    {"href": "monthly/index.html",  "label": "Monthly",    "icon": "📅"},
+    # Daily + Monthly live INSIDE this group (order: Daily, Monthly, All reports,
+    # then the reviews). `prefixes` keeps the trigger lit for any page in those
+    # sections, so a daily/monthly/report page still shows its parent active.
     {"group": "reports", "href": "reports/index.html", "label": "Reports", "icon": "📑",
-     "children": _nav_reports_children},
+     "children": _nav_reports_children,
+     "prefixes": ("daily/", "monthly/", "reports/")},
     {"href": "wiki/index.html",     "label": "Wiki",       "icon": "🧠"},
     {"group": "tools",   "href": "tools/cve-attack-matrix.html", "label": "Tools", "icon": "🧰",
      "children": lambda: NAV_TOOLS_CHILDREN},
@@ -393,7 +404,8 @@ def nav_html(active="", root=""):
             continue
         kids = it["children"]()
         gid = f"cdnav-{it['group']}"
-        gact = active == it["href"] or any(k[0] == active for k in kids)
+        gact = (active == it["href"] or any(k[0] == active for k in kids)
+                or any(active.startswith(p) for p in it.get("prefixes", ())))
         links = _nav_child_links(kids, active, base)
         desktop.append(
             f'<div class="navgrp{" active" if gact else ""}">'
@@ -505,8 +517,8 @@ def foot():
   <div class="links">
     <a href="https://cyber.peterjaycox.com/index.html">Home</a>
     <a href="https://cyber.peterjaycox.com/stories.html">Story DB</a>
-    <a href="https://cyber.peterjaycox.com/daily/">Daily</a>
-    <a href="https://cyber.peterjaycox.com/monthly/index.html">Monthly</a>
+    <!-- Daily + Monthly are dropped from the footer to mirror the toolbar, where
+         both now live inside the Reports group (user decision 2026-09-18). -->
     <a href="https://cyber.peterjaycox.com/reports/index.html">Reports</a>
     <a href="https://cyber.peterjaycox.com/wiki/index.html">Wiki</a>
     <a href="https://cyber.peterjaycox.com/tools/cve-attack-matrix.html">Tools</a>
@@ -2881,6 +2893,15 @@ def build_cve_matrix_stub():
 
 _NAV_BLOCK_RE = re.compile(r'<nav class="topnav">.*?</nav>', re.S)
 
+# Daily/Monthly sat in the standalone editions' flat footer link list. They now
+# live inside the toolbar's Reports group (user decision 2026-09-18), so the
+# footer link list mirrors that: drop the two plain-text anchors. The nav
+# dropdown's own Daily/Monthly links render as `<a …><span class="t">…`, so a
+# plain-anchor match can never hit them.
+_FOOTER_DM_RE = re.compile(
+    r'\n\s*<a href="https://cyber\.peterjaycox\.com/'
+    r'(?:daily/|monthly/index\.html)">(?:Daily|Monthly)</a>')
+
 def inject_shared_nav(path, active):
     """Swap the stale hand-rolled <nav> in a standalone page (daily/monthly
     editions carry their own copy of the nav CSS + link list) for nav_html(),
@@ -2892,16 +2913,22 @@ def inject_shared_nav(path, active):
         html = open(path, encoding="utf-8").read()
     except OSError:
         return False
-    if 'id="cd-nav-shared"' in html or 'id="cd-nav-shared-js"' in html:
-        return True
+    # Footer strip is idempotent and runs even on a page that already carries the
+    # shared nav (an edition rebuilt before the Daily/Monthly move still needs it).
+    html, stripped = _FOOTER_DM_RE.subn("", html)
+    injected = not ('id="cd-nav-shared"' in html or 'id="cd-nav-shared-js"' in html)
     html2, n = _NAV_BLOCK_RE.subn(lambda _m: nav_html(active, ""), html, count=1)
-    if n == 0:
+    if injected and n == 0:
         print(f"⚠️  nav: no topnav block found in {os.path.basename(path)}; nav not injected")
+        if stripped:
+            open(path, "w", encoding="utf-8").write(html)
         return False
-    nav_css = _nav_css_block(absolute_assets=True)
-    html2 = html2.replace("</head>", f'<style id="cd-nav-shared">\n{nav_css}\n</style>\n</head>', 1)
-    html2 = html2.replace("</body>", NAV_JS + "\n</body>", 1)
-    open(path, "w", encoding="utf-8").write(html2)
+    if injected:
+        nav_css = _nav_css_block(absolute_assets=True)
+        html2 = html2.replace("</head>", f'<style id="cd-nav-shared">\n{nav_css}\n</style>\n</head>', 1)
+        html2 = html2.replace("</body>", NAV_JS + "\n</body>", 1)
+    if injected or stripped:
+        open(path, "w", encoding="utf-8").write(html2 if injected else html)
     return True
 
 # ---------------- security.txt + responsible disclosure ----------------

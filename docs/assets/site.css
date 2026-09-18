@@ -153,12 +153,14 @@ a:hover{text-decoration:underline}
 .navmob-grp[open]>summary::after{content:"▾"}
 .navmob-grp>summary.active{color:var(--text);background:var(--surface-hover)}
 .navmob-grp ul{margin:0 0 4px 10px;padding-left:8px;border-left:1px solid var(--border)}
-/* Breakpoint: measured, not guessed. The desktop row (9 items incl. the two
-   dropdowns + brand + toggle) needs 1023px of viewport on one line; below that
-   it wraps inside the fixed 60px bar and genuinely overflows from ~960px down.
-   So the details menu owns everything under 1100px. */
-@media(min-width:1100px){.navmob{display:none!important}}
-@media(max-width:1099px){.navlinks{display:none!important}.navmob{display:block!important}}
+/* Breakpoint: measured, not guessed. With Daily/Monthly folded into the Reports
+   group the desktop row (7 items incl. two dropdowns + brand + toggle) measures
+   634px of links + 225px brand + 36px toggle, so it holds ONE line down to
+   ~965px of viewport (single-row at 970px, wraps to two rows at 960px in the
+   fixed 60px bar). The details menu owns everything under 1001px, keeping
+   ~35px of margin. */
+@media(min-width:1001px){.navmob{display:none!important}}
+@media(max-width:1000px){.navlinks{display:none!important}.navmob{display:block!important}}
 @media(max-width:1280px){.navlinks a,.navdrop{padding:8px 10px;font-size:13.5px}}
 /* ==NAV-SHARED-CSS-END== */
 
