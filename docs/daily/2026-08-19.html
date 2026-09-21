@@ -321,6 +321,20 @@ span.source{padding:2px 10px;border:1px solid var(--border);border-radius:999px;
 .story-card .meta .reliability .tier-2{color:var(--amber)}
 .story-card .meta .reliability .tier-3{color:var(--text-muted)}
 .story-card .meta .reliability .tier-4{color:var(--red)}
+/* Verification badge — traffic-light, sits beside the reliability tier in the
+   card's meta row (the sourcing line is metadata, not prose, so it no longer
+   trails the summary paragraph). Green = corroborated, amber = single-source /
+   claim in progress, red = unverified, grey = unrecognised label. */
+.story-card .meta .verification{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:2px 9px;border-radius:999px;border:1px solid transparent;letter-spacing:.02em}
+.story-card .meta .verification .dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex:0 0 auto}
+.story-card .meta .verification.v-verified{color:var(--green);background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.32)}
+.story-card .meta .verification.v-reported{color:var(--amber);background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.32)}
+.story-card .meta .verification.v-unverified{color:var(--red);background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.32)}
+.story-card .meta .verification.v-other{color:var(--text-dim);background:rgba(148,163,184,.12);border-color:rgba(148,163,184,.32)}
+[data-theme="light"] .story-card .meta .verification.v-verified{background:rgba(22,163,74,.12)}
+[data-theme="light"] .story-card .meta .verification.v-reported{background:rgba(217,119,6,.12)}
+[data-theme="light"] .story-card .meta .verification.v-unverified{background:rgba(220,38,38,.12)}
+[data-theme="light"] .story-card .meta .verification.v-other{background:rgba(100,116,139,.12)}
 .story-card .meta .date{color:var(--text-dim);margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px}
 /* Tag badge */
 .tag{display:inline-block;font-size:11px;font-weight:500;padding:3px 10px;border-radius:999px;letter-spacing:.3px}
@@ -719,7 +733,7 @@ body.exec-view .story-card.expanded{padding-left:50px}
 <div class="story-card num-2" id="story-7"><div class="card-accent"></div><div class="story-number">2</div><h3>ANZ Warns of Troubling &#x27;Scam-Coaching&#x27; Trend</h3><p class="summary">Australian bank ANZ warned of a &quot;scam-coaching&quot; trend, in which fraudsters coach victims to lie to their bank to subvert scam-prevention controls — a variant of social-engineering designed to defeat the very protections banks and regulators have deployed. The warning is directly relevant to the OAIC Notifiable Data Breach scheme&#x27;s anti-fraud regime and to the industry&#x27;s escalating fight against authorised-push-payment scams. <strong>Verification: Verified</strong> (Australian bank warning).</p><div class="meta"><a class="source" href="https://www.finextra.com/newsarticle/48261/would-i-lie-to-you-anz-warns-of-troubling-scam-coaching-trend?utm_medium=rssfinextra&amp;utm_source=finextrafeed" target="_blank" rel="noopener">Finextra</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-17</span></div></div>
 </div>
 </section>
-<section id="sector-transport" class="section"><h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8h13v9H1zM14 11h4l3 3v3h-7z"/><circle cx="6" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></svg></span> Transport <span class="count">1 story</span></h2><div class="story-grid"><div class="story-card num-1" id="story-8"><div class="card-accent"></div><div class="story-number">1</div><h3>Six Arrested as UK Police Target Cargo Theft Costing £70m+ a Year</h3><p class="summary">UK police arrested six people in an operation targeting cargo and freight theft — a logistics-side physical-cyber overlap that moves goods loss into the supply-chain risk picture. The arrests underscore the convergence of organised freight crime with digital coordination of supply chains used by Australian and global shippers. <strong>Verification: Verified</strong> (police action-reported).</p><div class="meta"><a class="source" href="https://www.freightwaves.com/news/6-arrested-as-uk-police-target-cargo-theft-costing-88m-a-year" target="_blank" rel="noopener">FreightWaves</a><span class="reliability"><span class="tier-2">●</span> Tier 3/4 — Moderate / General news</span><span class="date">2026-08-18</span></div></div>
+<section id="sector-transport" class="section"><h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8h13v9H1zM14 11h4l3 3v3h-7z"/><circle cx="6" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></svg></span> Transport <span class="count">1 story</span></h2><div class="story-grid"><div class="story-card num-1" id="story-8"><div class="card-accent"></div><div class="story-number">1</div><h3>Six Arrested as UK Police Target Cargo Theft Costing £70m+ a Year</h3><p class="summary">UK police arrested six people in an operation targeting cargo and freight theft — a logistics-side physical-cyber overlap that moves goods loss into the supply-chain risk picture. The arrests underscore the convergence of organised freight crime with digital coordination of supply chains used by Australian and global shippers. <strong>Verification: Verified</strong> (police action-reported).</p><div class="meta"><a class="source" href="https://www.freightwaves.com/news/6-arrested-as-uk-police-target-cargo-theft-costing-88m-a-year" target="_blank" rel="noopener">FreightWaves</a><span class="reliability"><span class="tier-3">●</span> Tier 3/4 — Moderate / General news</span><span class="date">2026-08-18</span></div></div>
 </div>
 </section>
 
