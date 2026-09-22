@@ -1179,8 +1179,10 @@ def daily_agg():
 DAILY_THREAT_COLOUR={
     "Ransomware":"#f43f5e", "Malware":"#f59e0b", "Phishing / BEC":"#8b5cf6",
     "Zero-day / Vuln":"#00b4d8", "Breach / Data Leak":"#10b981",
-    "APT / Nation-State":"#ef4444", "AI Security":"#22d3ee", "Other":"#64748b",
-    "Insider Threat":"#a855f7",
+    "APT / Nation-State":"#ef4444", "AI Security":"#22d3ee",
+    "Regulatory / Policy":"#3b82f6", "OT / ICS":"#14b8a6",
+    "Supply Chain":"#a855f7", "Fraud / Cybercrime":"#fb923c",
+    "Insider Threat":"#c084fc", "Other":"#64748b",
 }
 _DAILY_LEAD_RE=re.compile(r"##\s*📋\s*Executive Summary(.*?)(?=\n###|\n---)",re.S)
 
@@ -1213,14 +1215,16 @@ def daily_card_data(days):
     con=sqlite3.connect(DB); con.row_factory=sqlite3.Row
     rows=con.execute(
         "SELECT digest_date,sector,threat_type,source_name,reliability_tier,"
-        "anz_relevance FROM stories").fetchall()
+        "anz_relevance,score,headline FROM stories ORDER BY score DESC").fetchall()
     con.close()
     agg={}
     for r in rows:
         d=r["digest_date"]
         if not d: continue
-        a=agg.setdefault(d,{"count":0,"sectors":{},"threats":{},"sources":{},"tier1":0,"anz":0})
+        a=agg.setdefault(d,{"count":0,"sectors":{},"threats":{},"sources":{},"tier1":0,"anz":0,"top":""})
         a["count"]+=1
+        if not a["top"] and (r["headline"] or "").strip():
+            a["top"]=(r["headline"] or "").strip()   # rows arrive score-desc, so first wins
         for k,col in (("sectors","sector"),("threats","threat_type"),("sources","source_name")):
             v=r[col]
             if v: a[k][v]=a[k].get(v,0)+1
@@ -1233,6 +1237,56 @@ def daily_card_data(days):
             a[k]=sorted(a[k].items(),key=lambda x:-x[1])
         a["lead"]=edition_lead(d,month)
     return agg
+
+# Filter bar behaviour for the Daily archive. Client-side only: every card is in
+# the HTML (crawlers and JS-off readers see the full archive), and the facets are
+# data-* attributes on the cards, so filtering never refetches anything.
+DAILY_FILTER_JS = """<script>
+(function(){
+  var bar=document.getElementById('daily-filters');
+  if(!bar) return;
+  var q=document.getElementById('dq'), sec=document.getElementById('dsec'),
+      thr=document.getElementById('dthr'), src=document.getElementById('dsrc'),
+      clr=document.getElementById('dclear'), counter=document.getElementById('dcounter');
+  var cards=[].slice.call(document.querySelectorAll('.dcard'));
+  var groups=[].slice.call(document.querySelectorAll('details.month-group'));
+  var initial=groups.map(function(g){ return g.open; });
+  var total=cards.length;
+  function has(v){ return ('|'+v+'|'); }
+  function isActive(){
+    return q.value.trim()!=='' || sec.value!=='' || thr.value!=='' || src.value!=='';
+  }
+  function apply(){
+    var t=q.value.trim().toLowerCase(), s=sec.value, th=thr.value, so=src.value, shown=0;
+    cards.forEach(function(c){
+      var ok=(!t || c.dataset.q.indexOf(t)>-1)
+          && (!s  || has(c.dataset.sector).indexOf(has(s))>-1)
+          && (!th || has(c.dataset.threat).indexOf(has(th))>-1)
+          && (!so || has(c.dataset.source).indexOf(has(so))>-1);
+      c.hidden=!ok;
+      if(ok) shown++;
+    });
+    groups.forEach(function(g){
+      g.hidden=g.querySelectorAll('.dcard:not([hidden])').length===0;
+      if(isActive()) g.open=true;
+    });
+    var act=isActive();
+    clr.hidden=!act;
+    counter.textContent=act? (shown+' of '+total+' editions') : (total+' editions');
+  }
+  [q,sec,thr,src].forEach(function(el){
+    el.addEventListener('input',apply);
+    el.addEventListener('change',apply);
+  });
+  clr.addEventListener('click',function(){
+    q.value=''; sec.value=''; thr.value=''; src.value='';
+    cards.forEach(function(c){ c.hidden=false; });
+    groups.forEach(function(g,i){ g.hidden=false; g.open=initial[i]; });
+    clr.hidden=true; counter.textContent=total+' editions'; q.focus();
+  });
+  apply();
+})();
+</script>"""
 
 # Per-date day-of-week lookup (cache)
 _DOW_NAMES=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
@@ -2019,73 +2073,128 @@ def build_daily(days):
 <div class="wiki-body">{h}</div></div></body></html>''')
     # Build enhanced daily index with month groups — current month expanded,
     # previous months nested in collapsible <details> groups so the page stays short.
-    dag=daily_agg()
-    # months present in the data, newest-first (days is already reverse-sorted),
-    # so a new month (e.g. September) can never fall off a hardcoded list
+    # ---- Daily archive index: signal cards + client-side filters -------------
+    # Redesign 2026-09-22. Old card: date printed three times, a date rail that
+    # floated to the middle of the card, a 4-line truncated top-scoring headline
+    # and an emoji stat run-on. New card: the edition's own lead judgement, a
+    # proportional threat strip, hard numbers in a fixed-height grid, and the
+    # facets (sector/threat/source) wired to a filter bar.
+    data=daily_card_data(days)
     seen=set()
     month_order=[mo for d,mo in days if not (mo in seen or seen.add(mo))]
     current_month = month_order[0] if month_order else (days[0][1] if days else None)
+    latest_date = days[0][0] if days else None
+
+    def _card(d):
+        a=data.get(d) or {}
+        count=a.get("count") or 0
+        threats=a.get("threats") or []
+        sectors=a.get("sectors") or []
+        sources=a.get("sources") or []
+        lead=a.get("lead") or a.get("top") or ""
+        bar="".join(
+            f'<span style="flex:{n};background:{DAILY_THREAT_COLOUR.get(t,"#64748b")}" '
+            f'title="{esc(t)} — {n}"></span>' for t,n in threats)
+        q=" ".join([lead, d] + [k for k,_ in sectors] + [k for k,_ in threats]
+                   + [k for k,_ in sources]).lower()
+        numz=[(count,"stories",""),(len(sectors),"sectors",""),
+              (a.get("tier1") or "\u2013","tier-1",""),
+              (a.get("anz") or "\u2013","AU/NZ","hot" if a.get("anz") else "")]
+        nums="".join(f'<div class="{cls}"><b>{v}</b><span>{lbl}</span></div>'
+                     for v,lbl,cls in numz)
+        secs="".join(f'<span class="dsec">{esc(k)}<b>{n}</b></span>' for k,n in sectors[:3])
+        pill='<span class="dcard-pill">latest</span>' if d==latest_date else ""
+        return (f'<a class="dcard{" is-latest" if d==latest_date else ""}" href="{d}.html"\n'
+                f'      data-q="{esc(q)}" data-sector="{esc("|".join(k for k,_ in sectors))}"\n'
+                f'      data-threat="{esc("|".join(k for k,_ in threats))}"\n'
+                f'      data-source="{esc("|".join(k for k,_ in sources))}">\n'
+                f'  <div class="dcard-bar">{bar}</div>\n'
+                f'  <div class="dcard-head"><div class="dcard-day"><b>{d[8:10]}</b>'
+                f'<span>{_dow(d)}</span></div><h3>{esc(lead)}</h3>{pill}</div>\n'
+                f'  <div class="dcard-foot"><div class="dcard-nums">{nums}</div>'
+                f'<div class="dcard-secs">{secs}</div></div>\n</a>')
+
     cards=""
     for m in month_order:
         mdays=[(d,mo) for d,mo in days if mo==m]
         if not mdays: continue
         n_days=len(mdays)
-        n_stories=sum((dag.get(d) or {}).get("count") or 0 for d,_ in mdays)
-        inner=[]
-        for d,mo in mdays:
-            a=dag.get(d,{})
-            story_count=a.get("count") or 0
-            if story_count:
-                count_label=f'<span class="meta">{story_count} stories</span>'
-            else:
-                count_label='<span class="meta" style="color:var(--text-dim);opacity:.5">pending DB ingest</span>'
-            theme=f'<p class="daily-theme">{_trunc(a.get("top"))}</p>' if a.get("top") else ""
-            statbits=[]
-            if a.get("threats"): statbits.append(f'⚠️ {a["threats"][0][0]}')
-            if a.get("sources"): statbits.append(f'📡 {a["sources"][0][0]}')
-            if a.get("tier1"): statbits.append(f'🟥 {a["tier1"]} tier-1')
-            if a.get("anz"): statbits.append(f'🇦🇺 {a["anz"]} ANZ')
-            statline=f'<div class="daily-stats">{" · ".join(statbits)}</div>' if statbits else ""
-            sector_badges=""
-            if a.get("sectors"):
-                sector_badges='<div style="display:flex;gap:4px;flex-wrap:wrap;margin:5px 0 0">'+"".join(
-                    f'<span class="tag {SECTOR_TAG.get(k,"blue")}" style="font-size:10.5px">{k} {v}</span>' for k,v in a["sectors"])+"</div>"
-            latest=" latest" if d==days[0][0] else ""
-            badge=f'<span class="tag cyan">latest</span>' if d==days[0][0] else f'<span class="tag blue">{_dow(d)}</span>'
-            inner.append(f'''<a class="card daily-card{latest}" href="{d}.html">
-                <div class="daily-date"><span class="daily-num">{d[8:10]}</span><span class="daily-dow">{_dow(d)}</span></div>
-                <div class="daily-info"><h3>{d}</h3>{count_label}{theme}{statline}{sector_badges}</div>
-                {badge}
-                <span class="go">→</span>
-            </a>''')
-        body="".join(inner)
+        n_stories=sum((data.get(d) or {}).get("count") or 0 for d,_ in mdays)
+        body="".join(_card(d) for d,_ in mdays)
+        head_html=f'<span class="bar"></span>{m} 2026'
         if m==current_month:
-            cards+=f'<div class="section"><h2><span class="bar"></span>{m} 2026</h2><div class="grid cards">{body}</div></div>'
+            cards+=(f'<div class="section daily-month"><h2>{head_html}'
+                    f'<em>{n_days} editions · {n_stories} stories</em></h2>'
+                    f'<div class="dgrid">{body}</div></div>')
         else:
             dayword="day" if n_days==1 else "days"
             storyword="story" if n_stories==1 else "stories"
-            cards+=(f'<details class="month-group"><summary><span class="bar"></span>{m} 2026'
-                    f'<span class="month-summary">{n_days} {dayword} · {n_stories} {storyword}</span></summary>'
-                    f'<div class="grid cards">{body}</div></details>')
+            cards+=(f'<details class="month-group"><summary>{head_html}'
+                    f'<span class="month-summary">{n_days} {dayword} · {n_stories} {storyword}</span>'
+                    f'</summary><div class="dgrid">{body}</div></details>')
+
+    # Filter facets, ordered by how often they actually appear in the corpus.
+    fsec={}; fthr={}; fsrc={}
+    for d,_ in days:
+        a=data.get(d) or {}
+        for k,n in a.get("sectors") or []: fsec[k]=fsec.get(k,0)+1
+        for k,n in a.get("threats") or []: fthr[k]=fthr.get(k,0)+1
+        for k,n in a.get("sources") or []: fsrc[k]=fsrc.get(k,0)+1
+    def _opts(counter,all_label):
+        items=sorted(counter.items(),key=lambda x:(-x[1],x[0]))
+        return (f'<option value="">{all_label}</option>'
+                +"".join(f'<option value="{esc(k)}">{esc(k)} ({n})</option>' for k,n in items))
+    filters=f'''<div class="daily-filters" id="daily-filters" role="search">
+  <input id="dq" class="dq" type="search" autocomplete="off" aria-label="Search editions"
+         placeholder="Search editions — lead, sector, threat, source…">
+  <label class="df"><span class="df-l">Sector</span><select id="dsec">{_opts(fsec,"All sectors")}</select></label>
+  <label class="df"><span class="df-l">Threat</span><select id="dthr">{_opts(fthr,"All threat types")}</select></label>
+  <label class="df"><span class="df-l">Source</span><select id="dsrc">{_opts(fsrc,"All sources")}</select></label>
+  <button type="button" id="dclear" class="dclear" hidden>Clear filters</button>
+  <span class="dcounter" id="dcounter" aria-live="polite">{len(days)} editions</span>
+</div>'''
+
     html=head("Daily Editions","daily/", root="../")+f'''<div class="hero hero-band"><div class="kicker">// archive</div><h1>Daily <span class="accent">Digests</span></h1>
     <p class="sub">Every daily sector-by-sector roundup, newest first.</p></div>
-    {cards}'''+foot()
+    {filters}
+    {cards}'''+foot()+DAILY_FILTER_JS
 
     # Add daily card CSS
     css_path=os.path.join(DOCS,"assets","site.css")
     css_extra='''
-/* Daily archive cards */
-.daily-card{display:flex;align-items:center;gap:12px;flex-direction:row;padding:14px 16px;border-left:3px solid transparent}
-.daily-card.latest{border-left-color:var(--accent)}
-.daily-card .daily-date{display:flex;flex-direction:column;align-items:center;min-width:52px}
-.daily-card .daily-num{font-size:28px;font-weight:800;line-height:1;letter-spacing:-.5px}
-.daily-card .daily-dow{font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
-.daily-card .daily-info{flex:1;min-width:0}
-.daily-card .daily-info h3{font-size:15px;font-weight:600;margin:0}
-.daily-card .daily-info .meta{font-size:12px;color:var(--text-dim)}
-.daily-card .go{font-size:16px;color:var(--text-dim);flex-shrink:0;margin-left:auto;padding-left:8px}
-.daily-card:hover .go{color:var(--accent);transform:translateX(3px);transition:transform .15s}
-.daily-card:hover{transform:translateY(-2px);transition:all .15s}
+/* ===== Daily archive — signal cards + filter bar (redesign 2026-09-22) ===== */
+.daily-filters{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin:0 0 22px;padding:12px 14px;background:var(--surface);border:1px solid var(--border);border-radius:11px}
+.daily-filters .dq{flex:1;min-width:220px;font:400 13px Inter,sans-serif;padding:9px 13px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);color:var(--text);transition:border-color .15s}
+.daily-filters .dq:focus,.daily-filters select:focus{outline:none;border-color:var(--accent)}
+.df{display:flex;align-items:center;gap:6px}
+.df-l{font-size:10px;font-weight:600;letter-spacing:.9px;text-transform:uppercase;color:var(--text-dim)}
+.daily-filters select{font:500 12.5px Inter,sans-serif;padding:8px 10px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);color:var(--text-secondary);max-width:186px;cursor:pointer}
+.dclear{font:600 12px Inter,sans-serif;padding:8px 14px;border-radius:8px;background:var(--accent-bg);border:1px solid var(--accent);color:var(--accent);cursor:pointer;transition:background .15s,color .15s}
+.dclear:hover{background:var(--accent);color:#04222b}
+.dcounter{margin-left:auto;font:500 11.5px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--text-dim);white-space:nowrap}
+.daily-month h2 em{margin-left:auto;font-size:12px;font-weight:500;color:var(--text-dim)}
+.dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(308px,1fr));gap:14px}
+.dcard{position:relative;display:flex;flex-direction:column;text-decoration:none;color:inherit;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;height:252px;transition:transform .15s,border-color .15s}
+.dcard:hover{transform:translateY(-3px);border-color:var(--border-light);text-decoration:none}
+.dcard.is-latest{border-color:var(--accent);box-shadow:0 0 20px var(--accent-glow)}
+.dcard-bar{display:flex;gap:2px;height:6px;background:var(--surface2);flex-shrink:0}
+.dcard-bar span{display:block;min-width:3px}
+.dcard-head{display:flex;gap:12px;align-items:flex-start;padding:14px 16px 0}
+.dcard-day{flex-shrink:0;min-width:44px;text-align:center;background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:5px 7px}
+.dcard-day b{display:block;font-size:19px;font-weight:800;line-height:1.1;letter-spacing:-.5px;color:var(--text)}
+.dcard-day span{font-size:9.5px;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim)}
+.dcard-head h3{font-size:14px;font-weight:600;line-height:1.42;margin:0;color:var(--text);display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.dcard-pill{margin-left:auto;flex-shrink:0;font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#04222b;background:var(--accent);padding:3px 8px;border-radius:99px}
+[data-theme="light"] .dcard-pill{color:#fff}
+.dcard-foot{margin-top:auto;padding:12px 16px 14px;border-top:1px solid var(--border)}
+.dcard-nums{display:flex;gap:16px;margin-bottom:9px}
+.dcard-nums b{display:block;font-size:16px;font-weight:800;line-height:1.1;color:var(--text)}
+.dcard-nums span{font-size:9.5px;letter-spacing:.7px;text-transform:uppercase;color:var(--text-dim)}
+.dcard-nums .hot b{color:var(--accent)}
+.dcard-secs{display:flex;gap:5px;flex-wrap:wrap}
+.dsec{font-size:10.5px;color:var(--text-muted);background:var(--surface2);border:1px solid var(--border);padding:1px 7px;border-radius:5px}
+.dsec b{color:var(--text);margin-left:4px}
+.dcard[hidden],.month-group[hidden]{display:none}
 /* Daily archive — collapsible month groups */
 .month-group{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:16px;overflow:hidden}
 .month-group summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;padding:14px 18px;font-size:17px;font-weight:700;color:var(--text);user-select:none}
@@ -2095,9 +2204,19 @@ def build_daily(days):
 .month-group summary:hover{background:var(--surface-hover)}
 .month-group summary .bar{width:3px;height:18px;background:var(--accent);border-radius:2px;flex-shrink:0}
 .month-group .month-summary{margin-left:auto;font-size:12.5px;font-weight:500;color:var(--text-dim);white-space:nowrap}
-.month-group .grid.cards{padding:0 16px 16px}
+.month-group .dgrid{padding:0 16px 16px}
+@media(max-width:680px){.dgrid{grid-template-columns:1fr}.dcard{height:auto;min-height:230px}.dcounter{width:100%;margin-left:0}.df-l{display:none}}
 '''
-    with open(css_path,"a") as f: f.write(css_extra)
+    # The deploy path runs build_site.py WITHOUT --fresh, so appending blindly
+    # stacks another copy of this block into docs/assets/site.css every build.
+    # Strip any previous copy (marked or legacy) and re-append, so an edit here
+    # always reaches the built CSS and duplicates never accumulate.
+    css_text=open(css_path,encoding="utf-8").read()
+    css_text=re.sub(
+        r"\n?/\* ===== Daily archive — signal cards.*?(?=/\* Daily archive — collapsible month groups \*/)",
+        "\n", css_text, flags=re.S)
+    with open(css_path,"w",encoding="utf-8") as f:
+        f.write(css_text.rstrip("\n")+"\n"+css_extra)
     open(os.path.join(DOCS,"daily","index.html"),"w",encoding="utf-8").write(html)
 
 def build_monthly(months, stories):

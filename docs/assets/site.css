@@ -275,22 +275,11 @@ html[data-theme-mode="light"] .theme-toggle .tt-light{display:inline}
 .story .srcline{font-size:12px;color:var(--text-dim)}
 .story .anzi{font-size:11px;font-weight:700}
 
-/* ===== DAILY ARCHIVE CARDS ===== */
-.daily-card{display:flex;align-items:center;gap:12px;flex-direction:row;padding:14px 16px;border-left:3px solid transparent;background:var(--surface);border:1px solid var(--border);border-radius:10px;transition:all .2s}
-.daily-card.latest{border-left-color:var(--accent)}
-.daily-card:hover{border-color:var(--border-light);transform:translateY(-2px)}
-.daily-card .daily-date{display:flex;flex-direction:column;align-items:center;min-width:52px}
-.daily-card .daily-num{font-size:28px;font-weight:800;line-height:1;letter-spacing:-.5px;color:var(--text)}
-.daily-card .daily-dow{font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
-.daily-card .daily-info{flex:1;min-width:0}
-.daily-card .daily-info h3{font-size:15px;font-weight:600;margin:0;color:var(--text)}
-.daily-card .daily-info .meta{font-size:12px;color:var(--text-dim)}
-.daily-card .go{font-size:16px;color:var(--text-dim);flex-shrink:0;margin-left:auto;padding-left:8px;transition:all .15s}
-.daily-card:hover .go{color:var(--accent);transform:translateX(3px)}
-/* Daily archive card — headline/theme line */
-.daily-card .daily-theme{font-size:12.5px;color:var(--text-muted);line-height:1.4;margin:4px 0 0;font-weight:400}
-.daily-card .daily-stats{font-size:11.5px;color:var(--text-dim);margin:4px 0 0;line-height:1.4}
-.daily-card .daily-info .daily-theme{margin-top:6px}
+/* ===== DAILY ARCHIVE CARDS =====
+   Superseded 2026-09-22 by the signal-card design in scripts/build_site.py
+   (build_daily): .dgrid/.dcard/.daily-filters are emitted by the generator,
+   which owns archive-card CSS. The old .daily-card rules were removed here so
+   there is one authority, not two. */
 
 /* Homepage Daily Editions cards — day number block */
 .card .dailynum{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:44px;height:52px;border-radius:10px;background:var(--surface2);border:1px solid var(--border);flex-shrink:0}
@@ -456,18 +445,39 @@ html[data-theme-mode="light"] .theme-toggle .tt-light{display:inline}
   .act-readout{flex:1 1 auto}
 }
 
-/* Daily archive cards */
-.daily-card{display:flex;align-items:center;gap:12px;flex-direction:row;padding:14px 16px;border-left:3px solid transparent}
-.daily-card.latest{border-left-color:var(--accent)}
-.daily-card .daily-date{display:flex;flex-direction:column;align-items:center;min-width:52px}
-.daily-card .daily-num{font-size:28px;font-weight:800;line-height:1;letter-spacing:-.5px}
-.daily-card .daily-dow{font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
-.daily-card .daily-info{flex:1;min-width:0}
-.daily-card .daily-info h3{font-size:15px;font-weight:600;margin:0}
-.daily-card .daily-info .meta{font-size:12px;color:var(--text-dim)}
-.daily-card .go{font-size:16px;color:var(--text-dim);flex-shrink:0;margin-left:auto;padding-left:8px}
-.daily-card:hover .go{color:var(--accent);transform:translateX(3px);transition:transform .15s}
-.daily-card:hover{transform:translateY(-2px);transition:all .15s}
+/* ===== Daily archive — signal cards + filter bar (redesign 2026-09-22) ===== */
+.daily-filters{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin:0 0 22px;padding:12px 14px;background:var(--surface);border:1px solid var(--border);border-radius:11px}
+.daily-filters .dq{flex:1;min-width:220px;font:400 13px Inter,sans-serif;padding:9px 13px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);color:var(--text);transition:border-color .15s}
+.daily-filters .dq:focus,.daily-filters select:focus{outline:none;border-color:var(--accent)}
+.df{display:flex;align-items:center;gap:6px}
+.df-l{font-size:10px;font-weight:600;letter-spacing:.9px;text-transform:uppercase;color:var(--text-dim)}
+.daily-filters select{font:500 12.5px Inter,sans-serif;padding:8px 10px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);color:var(--text-secondary);max-width:186px;cursor:pointer}
+.dclear{font:600 12px Inter,sans-serif;padding:8px 14px;border-radius:8px;background:var(--accent-bg);border:1px solid var(--accent);color:var(--accent);cursor:pointer;transition:background .15s,color .15s}
+.dclear:hover{background:var(--accent);color:#04222b}
+.dcounter{margin-left:auto;font:500 11.5px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--text-dim);white-space:nowrap}
+.daily-month h2 em{margin-left:auto;font-size:12px;font-weight:500;color:var(--text-dim)}
+.dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(308px,1fr));gap:14px}
+.dcard{position:relative;display:flex;flex-direction:column;text-decoration:none;color:inherit;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;height:252px;transition:transform .15s,border-color .15s}
+.dcard:hover{transform:translateY(-3px);border-color:var(--border-light);text-decoration:none}
+.dcard.is-latest{border-color:var(--accent);box-shadow:0 0 20px var(--accent-glow)}
+.dcard-bar{display:flex;gap:2px;height:6px;background:var(--surface2);flex-shrink:0}
+.dcard-bar span{display:block;min-width:3px}
+.dcard-head{display:flex;gap:12px;align-items:flex-start;padding:14px 16px 0}
+.dcard-day{flex-shrink:0;min-width:44px;text-align:center;background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:5px 7px}
+.dcard-day b{display:block;font-size:19px;font-weight:800;line-height:1.1;letter-spacing:-.5px;color:var(--text)}
+.dcard-day span{font-size:9.5px;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim)}
+.dcard-head h3{font-size:14px;font-weight:600;line-height:1.42;margin:0;color:var(--text);display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.dcard-pill{margin-left:auto;flex-shrink:0;font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#04222b;background:var(--accent);padding:3px 8px;border-radius:99px}
+[data-theme="light"] .dcard-pill{color:#fff}
+.dcard-foot{margin-top:auto;padding:12px 16px 14px;border-top:1px solid var(--border)}
+.dcard-nums{display:flex;gap:16px;margin-bottom:9px}
+.dcard-nums b{display:block;font-size:16px;font-weight:800;line-height:1.1;color:var(--text)}
+.dcard-nums span{font-size:9.5px;letter-spacing:.7px;text-transform:uppercase;color:var(--text-dim)}
+.dcard-nums .hot b{color:var(--accent)}
+.dcard-secs{display:flex;gap:5px;flex-wrap:wrap}
+.dsec{font-size:10.5px;color:var(--text-muted);background:var(--surface2);border:1px solid var(--border);padding:1px 7px;border-radius:5px}
+.dsec b{color:var(--text);margin-left:4px}
+.dcard[hidden],.month-group[hidden]{display:none}
 /* Daily archive — collapsible month groups */
 .month-group{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:16px;overflow:hidden}
 .month-group summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;padding:14px 18px;font-size:17px;font-weight:700;color:var(--text);user-select:none}
@@ -477,7 +487,8 @@ html[data-theme-mode="light"] .theme-toggle .tt-light{display:inline}
 .month-group summary:hover{background:var(--surface-hover)}
 .month-group summary .bar{width:3px;height:18px;background:var(--accent);border-radius:2px;flex-shrink:0}
 .month-group .month-summary{margin-left:auto;font-size:12.5px;font-weight:500;color:var(--text-dim);white-space:nowrap}
-.month-group .grid.cards{padding:0 16px 16px}
+.month-group .dgrid{padding:0 16px 16px}
+@media(max-width:680px){.dgrid{grid-template-columns:1fr}.dcard{height:auto;min-height:230px}.dcounter{width:100%;margin-left:0}.df-l{display:none}}
 
 /* Wiki index collapsible sections */
 .wiki-card h3{font-size:15.5px;line-height:1.35}
