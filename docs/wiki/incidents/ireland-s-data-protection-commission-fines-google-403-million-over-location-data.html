@@ -1,0 +1,133 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+(function(){var d=document.documentElement;
+function sys(){try{return (window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark';}catch(e){return 'dark';}}
+function saved(){try{var s=localStorage.getItem('cd-theme2');return (s==='light'||s==='dark')?s:null;}catch(e){return null;}}
+function mode(){return saved()||'auto';}
+function save(m){try{if(m==='auto'){localStorage.removeItem('cd-theme2');}else{localStorage.setItem('cd-theme2',m);}}catch(e){}}
+function label(m){var b=document.querySelector('.theme-toggle');if(!b){return;}
+var t={auto:'Appearance: auto — follows your system ('+sys()+'). Click to cycle auto → light → dark.',
+light:'Appearance: light (pinned). Shift-click to follow your system again.',
+dark:'Appearance: dark (pinned). Shift-click to follow your system again.'}[m];
+if(t){b.setAttribute('title',t);b.setAttribute('aria-label',t);}}
+function apply(){var m=mode();d.setAttribute('data-theme',m==='auto'?sys():m);d.setAttribute('data-theme-mode',m);label(m);}
+/* Cycle visits all three states, always flipping away from what is on screen
+   first: auto -> a pin (the opposite of the current look) -> the other pin ->
+   auto. shiftKey jumps straight back to auto. */
+function cycle(ev){var m=mode();
+if(ev&&ev.shiftKey){save('auto');}
+else if(m==='auto'){save(sys()==='dark'?'light':'dark');}
+else if(m===sys()){save('auto');}
+else{save(m==='light'?'dark':'light');}
+apply();}
+function followSystem(){if(!saved()){apply();}}
+try{localStorage.removeItem('cd-theme');}catch(e){}
+window.__cdSysTheme=sys;
+window.__cdTheme={cycle:cycle,apply:apply,mode:mode,setAuto:function(){save('auto');apply();}};
+apply();
+try{var mq=window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)');
+if(mq&&mq.addEventListener){mq.addEventListener('change',followSystem);}}catch(e){}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',apply);}
+})();
+</script>
+<title>Ireland&#x27;s Data Protection Commission Fines Google €403 Million Over Location Data Processing</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png">
+<link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png">
+<link rel="alternate" type="application/rss+xml" title="Cyber Digest" href="https://cyber.peterjaycox.com/feed.xml">
+<link rel="alternate" type="application/rss+xml" title="Cyber Digest — Monthly Editions" href="https://cyber.peterjaycox.com/feed-monthly.xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ireland&#x27;s Data Protection Commission Fines Google €403 Million Over Location Data Processing">
+<meta property="og:description" content="Curated sector-by-sector roundup of global cybersecurity developments with source-reliability indexing, AU/NZ context, and searchable knowledge base.">
+<meta property="og:url" content="https://cyber.peterjaycox.com/">
+<meta property="og:image" content="https://cyber.peterjaycox.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"Cyber Digest","alternateName":"Cyber Digest — public site","url":"https://cyber.peterjaycox.com/","description":"Curated, source-rated roundup of global cybersecurity developments with AU/NZ context.","inLanguage":"en-AU","publisher":{"@type":"Organization","name":"Cyber Digest","url":"https://cyber.peterjaycox.com/"},"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://cyber.peterjaycox.com/stories.html?q={search_term_string}"},"query-input":"required name=search_term_string"}}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/site.css?v=202609221332"></head><body>
+<nav class="topnav"><div class="inner"><a class="brand" href="https://cyber.peterjaycox.com/index.html"><span class="brand-logo" aria-hidden="true"></span> Cyber&nbsp;Digest<small>public site</small></a><div class="navlinks"><a href="https://cyber.peterjaycox.com/index.html"><span class="t">🏠 Home</span></a><a href="https://cyber.peterjaycox.com/stories.html"><span class="t">📚 Story DB</span></a><a href="https://cyber.peterjaycox.com/globe.html"><span class="t">🌍 Globe</span></a><div class="navgrp"><button type="button" class="navdrop" aria-haspopup="true" aria-expanded="false" aria-controls="cdnav-reports"><span class="t">📑 Reports</span><span class="caret" aria-hidden="true">▾</span></button><ul class="navmenu" id="cdnav-reports" hidden><li><a href="https://cyber.peterjaycox.com/daily/"><span class="t">🗓️ Daily</span></a></li><li><a href="https://cyber.peterjaycox.com/monthly/index.html"><span class="t">📅 Monthly</span></a></li><li><a href="https://cyber.peterjaycox.com/reports/index.html"><span class="t">📄 Sector reviews</span></a></li></ul></div><a href="https://cyber.peterjaycox.com/wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a><div class="navgrp"><button type="button" class="navdrop" aria-haspopup="true" aria-expanded="false" aria-controls="cdnav-tools"><span class="t">🧰 Tools</span><span class="caret" aria-hidden="true">▾</span></button><ul class="navmenu" id="cdnav-tools" hidden><li><a href="https://cyber.peterjaycox.com/tools/cve-attack-matrix.html"><span class="t">🛰️ CVE × MITRE ATT&amp;CK / D3FEND matrix</span></a></li><li><a href="https://cyber.peterjaycox.com/flashcards.html"><span class="t">🗂️ Flashcards</span></a></li></ul></div></div><noscript><style>.navgrp{display:none!important}.navmob{display:block!important}</style></noscript><details class="navmob"><summary aria-label="Open site menu"><span aria-hidden="true">☰</span><span class="t">Menu</span></summary><div class="navmob-panel"><ul class="navmob-list"><li><a href="https://cyber.peterjaycox.com/index.html"><span class="t">🏠 Home</span></a></li><li><a href="https://cyber.peterjaycox.com/stories.html"><span class="t">📚 Story DB</span></a></li><li><a href="https://cyber.peterjaycox.com/globe.html"><span class="t">🌍 Globe</span></a></li><li><details class="navmob-grp"><summary class=""><span class="t">📑 Reports</span></summary><ul><li><a href="https://cyber.peterjaycox.com/daily/"><span class="t">🗓️ Daily</span></a></li><li><a href="https://cyber.peterjaycox.com/monthly/index.html"><span class="t">📅 Monthly</span></a></li><li><a href="https://cyber.peterjaycox.com/reports/index.html"><span class="t">📄 Sector reviews</span></a></li></ul></details></li><li><a href="https://cyber.peterjaycox.com/wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a></li><li><details class="navmob-grp"><summary class=""><span class="t">🧰 Tools</span></summary><ul><li><a href="https://cyber.peterjaycox.com/tools/cve-attack-matrix.html"><span class="t">🛰️ CVE × MITRE ATT&amp;CK / D3FEND matrix</span></a></li><li><a href="https://cyber.peterjaycox.com/flashcards.html"><span class="t">🗂️ Flashcards</span></a></li></ul></details></li></ul></div></details><div class="theme-toggle" role="button" tabindex="0" aria-label="Appearance" title="Appearance" onclick="window.__cdTheme.cycle(event)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.__cdTheme.cycle(event)}"><span class="tt-auto" aria-hidden="true">🌗</span><span class="tt-light" aria-hidden="true">☀️</span><span class="tt-dark" aria-hidden="true">🌙</span></div></div></nav><main class="container">
+            <div class="container">
+            <div class="crumb"><a href="../../index.html">Home</a> · <a href="../../wiki/index.html">Wiki</a> · Incidents &amp; Campaigns</div>
+            <div class="wiki-body"><div class="frontmatter">type: incident · created: 2026-09-22 · updated: 2026-09-22 · tags: [incident, legal-services] · confidence: high · severity: medium · affected_sectors: [legal-services] · au_impact: true</div><p>Ireland's <strong>Data Protection Commission</strong> fined <strong>Google €403 million (about US$462 million)</strong> on 21 September, closing an inquiry opened in <strong>February 2020</strong> into how the company processed location data, and ordered the company to bring its processing into compliance within <strong>six months</strong>. The investigation examined three services and features — <strong>web and app activity, location history and location accuracy</strong> — across the period from <strong>May 2018</strong>, when the GDPR took effect, to February 2020, and considered whether the processing was lawful and fair and whether Google met the regulation's transparency and accountability requirements, including its retention of location data in those features. This is the first time the DPC, which acts as Google's lead supervisory authority because the company's European headquarters are in Dublin, has fined the platform, though the same regulator has levied repeated multi-hundred-million-euro penalties on Meta and TikTok. Deputy Commissioner <strong>Graham Doyle</strong> framed the finding around the sensitivity of the data class: location data can disclose where a person is and "a significant amount of information about an individual, including information that is inherently private". It is not established from the decision whether Google still processes any of the practices examined, and the company did not respond to a request for comment.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sector</strong></td>
+<td>Legal Services</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td>2026-09-22</td>
+</tr>
+<tr>
+<td><strong>Source</strong></td>
+<td>The Record</td>
+</tr>
+<tr>
+<td><strong>Reliability</strong></td>
+<td>Tier 2</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><a href="https://therecord.media/google-europe-location-data-fine">Source article</a></li>
+</ul></div>
+            </div></main>
+<div class="footer">
+  <div class="links">
+    <a href="https://cyber.peterjaycox.com/index.html">Home</a>
+    <a href="https://cyber.peterjaycox.com/stories.html">Story DB</a>
+    <!-- Daily + Monthly are dropped from the footer to mirror the toolbar, where
+         both now live inside the Reports group (user decision 2026-09-18). -->
+    <a href="https://cyber.peterjaycox.com/reports/index.html">Reports</a>
+    <a href="https://cyber.peterjaycox.com/wiki/index.html">Wiki</a>
+    <a href="https://cyber.peterjaycox.com/tools/cve-attack-matrix.html">Tools</a>
+    <a href="https://cyber.peterjaycox.com/feed.xml">RSS</a>
+    <a href="https://cyber.peterjaycox.com/privacy.html">Privacy</a>
+    <a href="https://cyber.peterjaycox.com/corrections.html">Corrections</a>
+    <a href="https://cyber.peterjaycox.com/licensing.html">Licensing</a>
+    <a href="https://cyber.peterjaycox.com/security.html">Security</a>
+  </div>
+  Cyber Digest public site · built 2026-09-22 13:32
+</div>
+<script id="cd-nav-shared-js">
+(function(){
+  var groups=[].slice.call(document.querySelectorAll('.navgrp'));
+  if(!groups.length) return;
+  function panel(g){return g.querySelector('.navmenu');}
+  function trig(g){return g.querySelector('.navdrop');}
+  function close(g){var p=panel(g); if(!p||p.hidden) return; p.hidden=true;
+    var t=trig(g); if(t) t.setAttribute('aria-expanded','false'); g.classList.remove('open');}
+  function open(g){var p=panel(g); if(!p||!p.hidden) return;
+    groups.forEach(function(o){if(o!==g) close(o);});
+    p.hidden=false; var t=trig(g); if(t) t.setAttribute('aria-expanded','true'); g.classList.add('open');}
+  groups.forEach(function(g){
+    var t=trig(g), p=panel(g); if(!t||!p) return;
+    t.addEventListener('click',function(e){e.preventDefault(); e.stopPropagation();
+      if(p.hidden){open(g);} else {close(g);}});
+    t.addEventListener('keydown',function(e){
+      if(e.key==='ArrowDown'){e.preventDefault(); open(g); var a=p.querySelector('a'); if(a) a.focus();}});
+    p.addEventListener('click',function(e){ if(e.target.closest('a')) close(g); });
+    g.addEventListener('keydown',function(e){
+      if(e.key==='Escape'&&!p.hidden){e.stopPropagation(); close(g); t.focus();}});
+    g.addEventListener('focusout',function(e){ if(!g.contains(e.relatedTarget)) close(g);});
+  });
+  document.addEventListener('click',function(e){
+    groups.forEach(function(g){ if(!g.contains(e.target)) close(g); });});
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape') groups.forEach(close);});
+})();
+</script>
+</body></html>
