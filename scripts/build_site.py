@@ -1170,6 +1170,70 @@ def daily_agg():
         a["sources"]=sorted(a["sources"].items(),key=lambda x:-x[1])[:3]
     return agg
 
+# --- Daily archive cards (redesign 2026-09-22) -------------------------------
+# The old archive card showed the date three times over, a vertically-centred
+# date rail, the *top-scoring headline* (the least informative field we hold)
+# and an emoji stat run-on. These helpers feed the signal-card design: lead
+# judgement from the edition itself, the FULL threat/sector/source mixes for
+# the proportional strip and the filter dropdowns.
+DAILY_THREAT_COLOUR={
+    "Ransomware":"#f43f5e", "Malware":"#f59e0b", "Phishing / BEC":"#8b5cf6",
+    "Zero-day / Vuln":"#00b4d8", "Breach / Data Leak":"#10b981",
+    "APT / Nation-State":"#ef4444", "AI Security":"#22d3ee", "Other":"#64748b",
+    "Insider Threat":"#a855f7",
+}
+_DAILY_LEAD_RE=re.compile(r"##\s*📋\s*Executive Summary(.*?)(?=\n###|\n---)",re.S)
+
+def edition_lead(d,month):
+    """First bolded judgement of the edition's Executive Summary, as plain text.
+
+    This is the sentence the edition leads with; cards show it instead of the
+    top-scoring headline so the archive is readable without opening editions."""
+    p=os.path.join(VAULT,"Cyber Digest","Daily",month,f"Cyber-Digest-{d}.md")
+    if not os.path.exists(p): return ""
+    try:
+        txt=open(p,encoding="utf-8").read()
+    except OSError:
+        return ""
+    m=_DAILY_LEAD_RE.search(txt)
+    if not m: return ""
+    b=re.search(r"\*\*(.+?)\*\*",m.group(1),re.S)
+    if not b: return ""
+    s=re.sub(r"\s+"," ",b.group(1)).strip()
+    s=re.sub(r"[`*]","",s)
+    for pre in ("The day's lead is ","The day's lead: "):
+        if s.startswith(pre): s=s[len(pre):]
+    return s[:1].upper()+s[1:]
+
+def daily_card_data(days):
+    """Full per-date mixes + lead judgement for the Daily archive, keyed by date.
+
+    Separate from daily_agg() because that one deliberately caps each mix at
+    three entries for the homepage; the archive needs the whole distribution."""
+    con=sqlite3.connect(DB); con.row_factory=sqlite3.Row
+    rows=con.execute(
+        "SELECT digest_date,sector,threat_type,source_name,reliability_tier,"
+        "anz_relevance FROM stories").fetchall()
+    con.close()
+    agg={}
+    for r in rows:
+        d=r["digest_date"]
+        if not d: continue
+        a=agg.setdefault(d,{"count":0,"sectors":{},"threats":{},"sources":{},"tier1":0,"anz":0})
+        a["count"]+=1
+        for k,col in (("sectors","sector"),("threats","threat_type"),("sources","source_name")):
+            v=r[col]
+            if v: a[k][v]=a[k].get(v,0)+1
+        if r["reliability_tier"]==1: a["tier1"]+=1
+        if (r["anz_relevance"] or 0)>=3: a["anz"]+=1
+    for d,month in days:
+        a=agg.get(d)
+        if a is None: continue
+        for k in ("sectors","threats","sources"):
+            a[k]=sorted(a[k].items(),key=lambda x:-x[1])
+        a["lead"]=edition_lead(d,month)
+    return agg
+
 # Per-date day-of-week lookup (cache)
 _DOW_NAMES=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
 _DOW_CACHE={}
