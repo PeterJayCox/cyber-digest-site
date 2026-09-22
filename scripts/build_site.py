@@ -1185,12 +1185,34 @@ DAILY_THREAT_COLOUR={
     "Insider Threat":"#c084fc", "Other":"#64748b",
 }
 _DAILY_LEAD_RE=re.compile(r"##\s*📋\s*Executive Summary(.*?)(?=\n###|\n---)",re.S)
+_DAILY_FIRST_ENTRY_RE=re.compile(r"^\*\*\d+\.\s*(.+?)\*\*\s*$",re.M)
+_DAILY_LEAD_MAX=240
+
+def _first_sentence(text,limit=_DAILY_LEAD_MAX):
+    """Plain text of the first sentence in a markdown blurb, length-capped.
+
+    Bold/italic runs are stripped rather than used as delimiters: these
+    summaries emphasise individual words mid-sentence ("...patched on 9
+    September is **imminent**"), so the first bold run can be a single word."""
+    s=re.sub(r"\[([^\]]+)\]\([^)]*\)",r"\1",text)      # md links -> their label
+    s=re.sub(r"[`*_>#]", "",s)
+    s=re.sub(r"^\s*[-•]\s*","",s)                      # leading list marker
+    s=re.sub(r"\s+"," ",s).strip()
+    m=re.match(r"(.+?[.!?])(?:\s|$)",s)
+    if m: s=m.group(1)
+    if len(s)>limit:
+        s=s[:limit].rsplit(" ",1)[0].rstrip(" ,;:")+"…"
+    return s
 
 def edition_lead(d,month):
-    """First bolded judgement of the edition's Executive Summary, as plain text.
+    """Lead text for an archive card: the edition's own opening judgement.
 
-    This is the sentence the edition leads with; cards show it instead of the
-    top-scoring headline so the archive is readable without opening editions."""
+    Editions from ~mid-August onward open with a written Executive Summary —
+    use its first sentence. Earlier editions (July / early August) have no
+    summary at all, so fall back to the headline of their OWN first entry.
+    Never fall back to the DB's top-scoring headline: that is ranked by threat
+    score, not editorial order, and on these editions it surfaces fragments
+    ("Imminent", "GTG-20006") that read as garbage on a card."""
     p=os.path.join(VAULT,"Cyber Digest","Daily",month,f"Cyber-Digest-{d}.md")
     if not os.path.exists(p): return ""
     try:
@@ -1198,14 +1220,19 @@ def edition_lead(d,month):
     except OSError:
         return ""
     m=_DAILY_LEAD_RE.search(txt)
-    if not m: return ""
-    b=re.search(r"\*\*(.+?)\*\*",m.group(1),re.S)
-    if not b: return ""
-    s=re.sub(r"\s+"," ",b.group(1)).strip()
-    s=re.sub(r"[`*]","",s)
-    for pre in ("The day's lead is ","The day's lead: "):
-        if s.startswith(pre): s=s[len(pre):]
-    return s[:1].upper()+s[1:]
+    if m:
+        body=m.group(1).strip()
+        para=body.split("\n\n")[0] if body else ""
+        # _first_sentence() strips the markdown first; the house preamble
+        # ("The day's lead is …") is inside a bold run, so strip it afterwards
+        s=_first_sentence(para)
+        s=re.sub(r"^The day'?s (lead is|lead:|headline is)\s*","",s,flags=re.I).strip()
+        if len(s)>=40: return s[:1].upper()+s[1:]
+    m2=_DAILY_FIRST_ENTRY_RE.search(txt)
+    if m2:
+        s=re.sub(r"\s+"," ",re.sub(r"[`*]","",m2.group(1))).strip()
+        if s: return s[:1].upper()+s[1:]
+    return ""
 
 def daily_card_data(days):
     """Full per-date mixes + lead judgement for the Daily archive, keyed by date.
