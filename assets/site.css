@@ -245,6 +245,20 @@ html[data-theme-mode="light"] .theme-toggle .tt-light{display:inline}
 .tag.vuln{background:var(--tag-red-bg);color:var(--tag-red-text)}
 .tag.sep{background:transparent;color:var(--text-dim);padding:0 2px;font-weight:400}
 
+/* ===== CVE SEVERITY PILLS ===== */
+/* Severity-coloured CVE id. Band comes from the cve_severity table in the DB
+   (Cyber Digest/scripts/cve_severity_build.py: vault wiki frontmatter first, then
+   a cached NVD lookup) — never guessed in the renderer. An id with no resolved
+   band gets .cve-unrated, deliberately muted + dashed, so "we don't know" cannot
+   be misread as a low-severity finding. The standalone daily/monthly templates
+   carry their own copy of this block (they do not load site.css). */
+.cvepill{display:inline-block;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.82em;font-weight:600;line-height:1.35;padding:1px 7px;margin:0 1px;border-radius:999px;white-space:nowrap;letter-spacing:.01em;vertical-align:baseline;border:1px solid transparent}
+.cvepill.cve-critical{color:var(--red);background:rgba(239,68,68,.13);border-color:rgba(239,68,68,.35)}
+.cvepill.cve-high{color:var(--vuln);background:rgba(244,63,94,.13);border-color:rgba(244,63,94,.35)}
+.cvepill.cve-medium{color:var(--amber);background:rgba(245,158,11,.14);border-color:rgba(245,158,11,.35)}
+.cvepill.cve-low{color:var(--green);background:rgba(34,197,94,.13);border-color:rgba(34,197,94,.35)}
+.cvepill.cve-unrated{color:var(--text-dim);background:rgba(148,163,184,.10);border-color:currentColor;border-style:dashed}
+
 /* ===== FOOTER ===== */
 .footer{margin-top:56px;padding:24px 0;color:var(--footer-text);font-size:12px;text-align:center;border-top:1px solid var(--border);transition:border .25s,color .25s}
 .footer .links{display:flex;justify-content:center;gap:24px;margin-bottom:8px}
