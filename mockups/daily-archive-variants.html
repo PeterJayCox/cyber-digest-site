@@ -1,0 +1,365 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="utf-8">
+<title>Daily archive — card variants (mockup, real data)</title>
+<style>
+:root{--bg:#0a0e1a;--surface:#111827;--surface2:#1a2332;--surface-hover:#1e293b;--text:#e2e8f0;
+--text-secondary:#b0c0d0;--text-muted:#8a9cb6;--text-dim:#64748b;--border:rgba(255,255,255,.09);
+--accent:#00b4d8;--accent-bg:rgba(0,180,216,.1);--green:#22c55e;--amber:#f59e0b;--red:#ef4444}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:28px 26px 60px}
+h1{font-size:22px;font-weight:800;letter-spacing:-.4px}
+h1 span{color:var(--accent)}
+.note{font-size:12.5px;color:var(--text-dim);margin:6px 0 22px;font-family:'JetBrains Mono',monospace}
+.tabs{display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap}
+.tab{font:600 12.5px Inter;padding:8px 16px;border-radius:99px;border:1px solid var(--border);
+background:var(--surface);color:var(--text-muted);cursor:pointer}
+.tab.on{background:var(--accent-bg);border-color:rgba(0,180,216,.45);color:var(--accent)}
+.vlabel{font-size:13px;color:var(--text-muted);margin:10px 0 14px}
+.vlabel b{color:var(--text)}
+.pane{display:none}.pane.on{display:block}
+.toolbar{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 14px;align-items:center}
+.f{font:600 11.5px Inter;padding:5px 12px;border-radius:99px;border:1px solid var(--border);
+background:var(--surface2);color:var(--text-muted)}
+.f.on{background:var(--accent-bg);color:var(--accent);border-color:rgba(0,180,216,.4)}
+.monthhead{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:700;margin:22px 0 8px}
+.monthhead .bar{width:3px;height:16px;background:var(--accent);border-radius:2px}
+.monthhead em{margin-left:auto;font-style:normal;font-size:12px;color:var(--text-dim);font-weight:500}
+/* ---- A: ledger rows ---- */
+.row{display:grid;grid-template-columns:54px 1fr 132px 18px;gap:14px;align-items:center;
+text-decoration:none;color:inherit;background:var(--surface);border:1px solid var(--border);
+border-left:3px solid transparent;border-radius:9px;padding:11px 14px;margin-bottom:7px;transition:.13s}
+.row:hover{background:var(--surface-hover);transform:translateX(2px)}
+.row.is-latest{border-left-color:var(--accent)}
+.rdate{text-align:center;border-right:1px solid var(--border);padding-right:10px}
+.rdate .d{display:block;font-size:21px;font-weight:800;line-height:1.05;letter-spacing:-.5px}
+.rdate .dw{font-size:9.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-dim)}
+.lead{font-size:13.6px;font-weight:600;line-height:1.42;display:-webkit-box;-webkit-line-clamp:2;
+-webkit-box-orient:vertical;overflow:hidden}
+.is-latest .lead{color:#fff}
+.rmeta{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:5px;font-size:11.5px;color:var(--text-dim)}
+.rmeta .dot{width:3px;height:3px;border-radius:50%;background:var(--text-dim);opacity:.6}
+.c{font-family:'JetBrains Mono',monospace;font-size:10.5px;padding:1px 7px;border-radius:5px;
+background:var(--surface2);border:1px solid var(--border);color:var(--text-muted)}
+.c b{color:var(--text);font-weight:600}
+.c-t1{color:#fca5a5;border-color:rgba(239,68,68,.35)}
+.c-anz{color:#93c5fd;border-color:rgba(59,130,246,.35)}
+.tbar{display:flex;gap:2px;border-radius:3px;overflow:hidden;background:var(--surface2)}
+.tbar span{display:block;border-radius:2px;min-width:3px}
+.rsec .seclabel{display:block;font-size:10.5px;color:var(--text-dim);margin-top:5px;text-align:right}
+.chev{color:var(--text-dim);font-size:17px}
+.row:hover .chev{color:var(--accent)}
+/* ---- B: signal cards ---- */
+.gridB{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}
+.card{position:relative;display:flex;flex-direction:column;text-decoration:none;color:inherit;
+background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;
+height:246px;transition:.15s}
+.card:hover{transform:translateY(-3px);border-color:rgba(0,180,216,.35)}
+.card.is-latest{border-color:rgba(0,180,216,.4)}
+.ctop{display:flex}
+.ctop .tbar{flex:1;border-radius:0;height:6px!important}
+.chead{display:flex;gap:12px;padding:14px 16px 0;align-items:flex-start}
+.cday{text-align:center;min-width:42px;background:var(--surface2);border-radius:8px;padding:4px 6px}
+.cday b{display:block;font-size:19px;font-weight:800;line-height:1.1}
+.cday span{font-size:9.5px;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim)}
+.chead h3{font-size:14.5px;font-weight:600;line-height:1.4;display:-webkit-box;-webkit-line-clamp:4;
+-webkit-box-orient:vertical;overflow:hidden}
+.pill{margin-left:auto;font:700 9.5px Inter;letter-spacing:.8px;text-transform:uppercase;color:#04222b;
+background:var(--accent);padding:2px 8px;border-radius:99px;white-space:nowrap}
+.cbody{margin-top:auto;padding:12px 16px 14px;border-top:1px solid var(--border)}
+.cnums{display:flex;gap:14px;margin-bottom:9px}
+.cnums div{text-align:left}
+.cnums b{font-size:16px;font-weight:800;display:block;line-height:1.1}
+.cnums span{font-size:9.5px;letter-spacing:.7px;text-transform:uppercase;color:var(--text-dim)}
+.cnums .hot b{color:#93c5fd}
+.csecs{display:flex;gap:5px;flex-wrap:wrap}
+.st{font-size:10.5px;color:var(--text-muted);background:var(--surface2);border:1px solid var(--border);
+padding:1px 7px;border-radius:5px}
+.st b{color:var(--text);margin-left:4px}
+/* ---- C: calendar ---- */
+.heroC{display:flex;gap:20px;background:linear-gradient(140deg,var(--surface2),var(--surface));
+border:1px solid rgba(0,180,216,.35);border-radius:14px;padding:20px 22px;margin-bottom:18px;text-decoration:none;color:inherit}
+.heroC .hb{flex:1}
+.heroC .kick{font:600 10.5px 'JetBrains Mono',monospace;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent)}
+.heroC h2{font-size:19px;font-weight:700;line-height:1.4;margin:7px 0 12px}
+.heroC .hstats{display:flex;gap:18px}
+.heroC .hstats b{font-size:20px;font-weight:800;display:block;line-height:1.1}
+.heroC .hstats span{font-size:9.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--text-dim)}
+.heroC .go{align-self:center;font-size:13px;font-weight:700;color:var(--accent);white-space:nowrap}
+.calwrap{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.cal{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+.cal h3{font-size:14px;font-weight:700;display:flex;margin-bottom:10px}
+.cal h3 span{margin-left:auto;font-size:11.5px;font-weight:500;color:var(--text-dim)}
+.dowhead,.cgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.dowhead span{font-size:9.5px;letter-spacing:.8px;color:var(--text-dim);text-align:center;text-transform:uppercase}
+.day,.off,.pad{aspect-ratio:1;border-radius:7px;display:flex;flex-direction:column;align-items:center;
+justify-content:center;gap:1px;text-decoration:none;position:relative}
+.day{background:rgba(0,180,216,calc(var(--i)*.55));border:1px solid rgba(0,180,216,.25);color:var(--text);transition:.12s}
+.day:hover{transform:scale(1.08);border-color:var(--accent);z-index:2}
+.day b{font-size:12px;font-weight:700;line-height:1}
+.day .n{font-size:9.5px;color:rgba(224,240,255,.75)}
+.day .dts{display:flex;gap:2px}
+.day .dts em{width:4px;height:2px;border-radius:1px}
+.day .au{position:absolute;top:3px;right:3px;width:5px;height:5px;border-radius:50%;background:#3b82f6}
+.off{color:var(--text-dim);opacity:.28;font-size:11px;border:1px dashed var(--border)}
+.pad{visibility:hidden}
+.legend{display:flex;gap:22px;flex-wrap:wrap;align-items:center;margin-top:14px;padding:11px 15px;
+background:var(--surface);border:1px solid var(--border);border-radius:10px;font-size:11px;color:var(--text-muted)}
+.legend .lg{display:flex;align-items:center;gap:6px}
+.legend .lg b{color:var(--text-dim);font:600 9.5px Inter;letter-spacing:.9px;text-transform:uppercase;margin-right:2px}
+.legend .sw{width:16px;height:11px;border-radius:3px;display:inline-block}
+.legend .dt{width:7px;height:3px;border-radius:2px;display:inline-block;margin-left:7px}
+.legend .dt:first-of-type{margin-left:0}
+.legend .au2{width:6px;height:6px;border-radius:50%;background:#3b82f6;display:inline-block;margin-right:3px}
+</style></head><body>
+<h1>Daily archive — <span>card variants</span></h1>
+<p class="note">mockup · real data from cyber-digest.db + edition lead judgements · 71 editions, 2026-07-07 → 2026-09-21</p>
+<div class="tabs">
+  <button class="tab on" data-v="A">A · Ledger rows</button>
+  <button class="tab" data-v="B">B · Signal cards</button>
+  <button class="tab" data-v="C">C · Calendar heat</button>
+</div>
+
+<section class="pane on" id="pA">
+  <p class="vlabel"><b>A — Ledger rows.</b> One edition per full-width row: date rail left, lead judgement clamped to two lines,
+  composition bar + signals right. Uniform rhythm, no ragged grid — scans like an intel log.</p>
+  <div class="toolbar">
+    <span class="f on">All editions</span><span class="f">AU/NZ only</span><span class="f">Most stories</span>
+    <span class="f">Threat type ▾</span><span class="f">Sector ▾</span>
+    <span class="f" style="margin-left:auto">Jul · Aug · <b style="color:var(--accent)">Sep</b></span>
+  </div>
+  <div class="monthhead"><span class="bar"></span>September 2026<em>21 editions · 258 stories</em></div>
+  <a class="row is-latest" href="daily/2026-09-21.html">
+  <div class="rdate"><span class="d">21</span><span class="dw">Mon</span></div>
+  <div class="rmain">
+    <p class="lead">A supply-chain campaign that has deliberately stepped around the defences the ecosystem spent the last year building: an npm package masquerading as the legitimate sorted-btree library has accumulated 2 million weekly downloads while hiding its loader inside an ordinary runtime function rather than an install script, so that npm v12&#x27;s lifecycle-script approval gate never fires and a clean install reveals nothing.</p>
+    <div class="rmeta"><span class="c c-n"><b>12</b> stories</span><span class="c">6 sectors</span><span class="c c-t1"><b>3</b> tier-1</span><span class="dot"></span><span class="top">Phishing / BEC</span>
+      <span class="dot"></span><span class="src">BleepingComputer</span></div>
+  </div>
+  <div class="rsec"><div class="tbar" style="height:4px"><span style="flex:3;background:#8b5cf6" title="Phishing / BEC — 3"></span><span style="flex:3;background:#f59e0b" title="Malware — 3"></span><span style="flex:2;background:#22d3ee" title="AI Security — 2"></span><span style="flex:2;background:#f43f5e" title="Ransomware — 2"></span><span style="flex:1;background:#ef4444" title="APT / Nation-State — 1"></span><span style="flex:1;background:#10b981" title="Breach / Data Leak — 1"></span></div><span class="seclabel">AI &amp; Frontier Technology</span></div>
+  <span class="chev">›</span>
+</a>
+<a class="row " href="daily/2026-09-20.html">
+  <div class="rdate"><span class="d">20</span><span class="dw">Sun</span></div>
+  <div class="rmain">
+    <p class="lead">A reminder that the weakest link in an AI product is often the ordinary software underneath it: researchers at the security firm Hacktron used Anthropic&#x27;s Claude Opus 5 to chain a bug in OpenAI&#x27;s public help forum with a weakness in OpenAI&#x27;s single sign-on, and took over the ChatGPT and Codex accounts of several OpenAI employees — reaching an internal code repository with a single pull request in under 72 hours.</p>
+    <div class="rmeta"><span class="c c-n"><b>14</b> stories</span><span class="c">7 sectors</span><span class="c c-t1"><b>3</b> tier-1</span><span class="dot"></span><span class="top">Zero-day / Vuln</span>
+      <span class="dot"></span><span class="src">The Hacker News</span></div>
+  </div>
+  <div class="rsec"><div class="tbar" style="height:4px"><span style="flex:7;background:#00b4d8" title="Zero-day / Vuln — 7"></span><span style="flex:2;background:#f59e0b" title="Malware — 2"></span><span style="flex:2;background:#10b981" title="Breach / Data Leak — 2"></span><span style="flex:2;background:#f43f5e" title="Ransomware — 2"></span><span style="flex:1;background:#64748b" title="OT / ICS — 1"></span></div><span class="seclabel">Global (Macro)</span></div>
+  <span class="chev">›</span>
+</a>
+<a class="row " href="daily/2026-09-19.html">
+  <div class="rdate"><span class="d">19</span><span class="dw">Sat</span></div>
+  <div class="rmain">
+    <p class="lead">A five-nation advisory on a North Korean campaign that has turned the job interview into the intrusion vector: the ACSC joined the FBI, the US Department of Defense, Japan&#x27;s National Police Agency and German authorities on 18 September to name &quot;WaterPlum&quot; — better known as Contagious Interview — and put numbers to it: at least 30,000 devices infected across 100 countries between December 2025 and July 2026, roughly 7,000 cryptocurrency wallets drained or credential-stolen, and more than $10.5 million taken.</p>
+    <div class="rmeta"><span class="c c-n"><b>16</b> stories</span><span class="c">5 sectors</span><span class="c c-t1"><b>1</b> tier-1</span><span class="c c-anz"><b>1</b> AU/NZ</span><span class="dot"></span><span class="top">Zero-day / Vuln</span>
+      <span class="dot"></span><span class="src">The Hacker News</span></div>
+  </div>
+  <div class="rsec"><div class="tbar" style="height:4px"><span style="flex:4;background:#00b4d8" title="Zero-day / Vuln — 4"></span><span style="flex:4;background:#f59e0b" title="Malware — 4"></span><span style="flex:3;background:#10b981" title="Breach / Data Leak — 3"></span><span style="flex:2;background:#ef4444" title="APT / Nation-State — 2"></span><span style="flex:1;background:#64748b" title="Other — 1"></span><span style="flex:1;background:#64748b" title="Supply Chain — 1"></span><span style="flex:1;background:#f43f5e" title="Ransomware — 1"></span></div><span class="seclabel">Government &amp; Policy</span></div>
+  <span class="chev">›</span>
+</a>
+<a class="row " href="daily/2026-09-18.html">
+  <div class="rdate"><span class="d">18</span><span class="dw">Fri</span></div>
+  <div class="rmain">
+    <p class="lead">A supply-chain compromise with unusual reach: attackers stole a long-lived Cloudflare API key from marketing-technology vendor Brevo and used it to inject ClickFix scripts at the CDN edge onto brevo.com and onto Brevo scripts embedded across customer sites, a campaign security firm Sansec estimates touched up to 100,000 websites.</p>
+    <div class="rmeta"><span class="c c-n"><b>17</b> stories</span><span class="c">12 sectors</span><span class="c c-t1"><b>3</b> tier-1</span><span class="c c-anz"><b>2</b> AU/NZ</span><span class="dot"></span><span class="top">Zero-day / Vuln</span>
+      <span class="dot"></span><span class="src">The Hacker News</span></div>
+  </div>
+  <div class="rsec"><div class="tbar" style="height:4px"><span style="flex:6;background:#00b4d8" title="Zero-day / Vuln — 6"></span><span style="flex:6;background:#10b981" title="Breach / Data Leak — 6"></span><span style="flex:3;background:#f59e0b" title="Malware — 3"></span><span style="flex:1;background:#64748b" title="OT / ICS — 1"></span><span style="flex:1;background:#64748b" title="Regulatory / Policy — 1"></span></div><span class="seclabel">Government &amp; Policy</span></div>
+  <span class="chev">›</span>
+</a>
+<a class="row " href="daily/2026-09-17.html">
+  <div class="rdate"><span class="d">17</span><span class="dw">Thu</span></div>
+  <div class="rmain">
+    <p class="lead">A European privacy regulator has become the first to put an AI agent in the incident record, and on the same day a major incident-response firm described an attacker riding a developer&#x27;s own coding assistant into a codebase.</p>
+    <div class="rmeta"><span class="c c-n"><b>14</b> stories</span><span class="c">9 sectors</span><span class="c c-t1"><b>3</b> tier-1</span><span class="dot"></span><span class="top">Ransomware</span>
+      <span class="dot"></span><span class="src">The Record</span></div>
+  </div>
+  <div class="rsec"><div class="tbar" style="height:4px"><span style="flex:5;background:#f43f5e" title="Ransomware — 5"></span><span style="flex:3;background:#f59e0b" title="Malware — 3"></span><span style="flex:3;background:#10b981" title="Breach / Data Leak — 3"></span><span style="flex:1;background:#8b5cf6" title="Phishing / BEC — 1"></span><span style="flex:1;background:#00b4d8" title="Zero-day / Vuln — 1"></span><span style="flex:1;background:#ef4444" title="APT / Nation-State — 1"></span></div><span class="seclabel">Government &amp; Policy</span></div>
+  <span class="chev">›</span>
+</a>
+<a class="row " href="daily/2026-09-16.html">
+  <div class="rdate"><span class="d">16</span><span class="dw">Wed</span></div>
+  <div class="rmain">
+    <p class="lead">The day&#x27;s most consequential publication is a spyware advisory with a physical-security dimension.</p>
+    <div class="rmeta"><span class="c c-n"><b>15</b> stories</span><span class="c">11 sectors</span><span class="c c-t1"><b>3</b> tier-1</span><span class="dot"></span><span class="top">Malware</span>
+      <span class="dot"></span><span class="src">The Record</span></div>
+  </div>
+  <div class="rsec"><div class="tbar" style="height:4px"><span style="flex:5;background:#f59e0b" title="Malware — 5"></span><span style="flex:4;background:#00b4d8" title="Zero-day / Vuln — 4"></span><span style="flex:2;background:#8b5cf6" title="Phishing / BEC — 2"></span><span style="flex:2;background:#10b981" title="Breach / Data Leak — 2"></span><span style="flex:1;background:#22d3ee" title="AI Security — 1"></span><span style="flex:1;background:#f43f5e" title="Ransomware — 1"></span></div><span class="seclabel">Financial Services</span></div>
+  <span class="chev">›</span>
+</a>
+  <div class="monthhead"><span class="bar"></span>August 2026<em>29 editions · 285 stories</em></div>
+  <a class="row is-latest" href="daily/2026-08-31.html">
+  <div class="rdate"><span class="d">31</span><span class="dw">Mon</span></div>
+  <div class="rmain">
+    <p class="lead">FulcrumSec Claims Manchester Airports Hack, Theft of 86 GB of Data</p>
+    <div class="rmeta"><span class="c c-n"><b>6</b> stories</span><span class="c">4 sectors</span><span class="dot"></span><span class="top">Malware</span>
+      <span class="dot"></span><span class="src">BleepingComputer</span></div>
+  </div>
+  <div class="rsec"><div class="tbar" style="height:4px"><span style="flex:3;background:#f59e0b" title="Malware — 3"></span><span style="flex:2;background:#10b981" title="Breach / Data Leak — 2"></span><span style="flex:1;background:#64748b" title="Other — 1"></span></div><span class="seclabel">Global (Macro)</span></div>
+  <span class="chev">›</span>
+</a>
+<a class="row " href="daily/2026-08-30.html">
+  <div class="rdate"><span class="d">30</span><span class="dw">Sun</span></div>
+  <div class="rmain">
+    <p class="lead">McKesson Discloses Breach After ShinyHunters Claims Theft of 284 Million Patient Records</p>
+    <div class="rmeta"><span class="c c-n"><b>12</b> stories</span><span class="c">7 sectors</span><span class="dot"></span><span class="top">Zero-day / Vuln</span>
+      <span class="dot"></span><span class="src">The Hacker News</span></div>
+  </div>
+  <div class="rsec"><div class="tbar" style="height:4px"><span style="flex:4;background:#00b4d8" title="Zero-day / Vuln — 4"></span><span style="flex:2;background:#10b981" title="Breach / Data Leak — 2"></span><span style="flex:1;background:#f59e0b" title="Malware — 1"></span><span style="flex:1;background:#64748b" title="Other — 1"></span><span style="flex:1;background:#ef4444" title="APT / Nation-State — 1"></span><span style="flex:1;background:#8b5cf6" title="Phishing / BEC — 1"></span><span style="flex:1;background:#64748b" title="Regulatory / Policy — 1"></span><span style="flex:1;background:#64748b" title="OT / ICS — 1"></span></div><span class="seclabel">Global (Macro)</span></div>
+  <span class="chev">›</span>
+</a>
+<a class="row " href="daily/2026-08-29.html">
+  <div class="rdate"><span class="d">29</span><span class="dw">Sat</span></div>
+  <div class="rmain">
+    <p class="lead">Suspected Chinese-Speaking Operator Exploits Known Flaws to Steal Nuclear and Naval Data From Philippine Targets</p>
+    <div class="rmeta"><span class="c c-n"><b>9</b> stories</span><span class="c">5 sectors</span><span class="dot"></span><span class="top">Zero-day / Vuln</span>
+      <span class="dot"></span><span class="src">BleepingComputer</span></div>
+  </div>
+  <div class="rsec"><div class="tbar" style="height:4px"><span style="flex:4;background:#00b4d8" title="Zero-day / Vuln — 4"></span><span style="flex:3;background:#10b981" title="Breach / Data Leak — 3"></span><span style="flex:2;background:#f59e0b" title="Malware — 2"></span></div><span class="seclabel">Global (Macro)</span></div>
+  <span class="chev">›</span>
+</a>
+</section>
+
+<section class="pane" id="pB">
+  <p class="vlabel"><b>B — Signal cards.</b> Fixed-height cards; the top strip is the day's threat mix, foot shows hard numbers
+  and the sectors that actually carried the day. Latest edition accented.</p>
+  <div class="gridB"><a class="card is-latest" href="daily/2026-09-21.html">
+  <div class="ctop"><div class="tbar" style="height:6px"><span style="flex:3;background:#8b5cf6" title="Phishing / BEC — 3"></span><span style="flex:3;background:#f59e0b" title="Malware — 3"></span><span style="flex:2;background:#22d3ee" title="AI Security — 2"></span><span style="flex:2;background:#f43f5e" title="Ransomware — 2"></span><span style="flex:1;background:#ef4444" title="APT / Nation-State — 1"></span><span style="flex:1;background:#10b981" title="Breach / Data Leak — 1"></span></div></div>
+  <div class="chead">
+    <div class="cday"><b>21</b><span>Mon</span></div>
+    <h3>A supply-chain campaign that has deliberately stepped around the defences the ecosystem spent the last year building: an npm package masquerading as the legitimate sorted-btree library has accumulated 2 million weekly downloads while hiding its loader inside an ordinary runtime function rather than an install script, so that npm v12&#x27;s lifecycle-script approval gate never fires and a clean install reveals nothing.</h3>
+    <span class="pill">latest</span>
+  </div>
+  <div class="cbody">
+    <div class="cnums">
+      <div><b>12</b><span>stories</span></div>
+      <div><b>6</b><span>sectors</span></div>
+      <div><b>3</b><span>tier-1</span></div>
+      <div class=""><b>–</b><span>AU/NZ</span></div>
+    </div>
+    <div class="csecs"><span class="st">AI<b>3</b></span><span class="st">IT<b>3</b></span><span class="st">Gov<b>2</b></span></div>
+  </div>
+</a>
+<a class="card " href="daily/2026-09-20.html">
+  <div class="ctop"><div class="tbar" style="height:6px"><span style="flex:7;background:#00b4d8" title="Zero-day / Vuln — 7"></span><span style="flex:2;background:#f59e0b" title="Malware — 2"></span><span style="flex:2;background:#10b981" title="Breach / Data Leak — 2"></span><span style="flex:2;background:#f43f5e" title="Ransomware — 2"></span><span style="flex:1;background:#64748b" title="OT / ICS — 1"></span></div></div>
+  <div class="chead">
+    <div class="cday"><b>20</b><span>Sun</span></div>
+    <h3>A reminder that the weakest link in an AI product is often the ordinary software underneath it: researchers at the security firm Hacktron used Anthropic&#x27;s Claude Opus 5 to chain a bug in OpenAI&#x27;s public help forum with a weakness in OpenAI&#x27;s single sign-on, and took over the ChatGPT and Codex accounts of several OpenAI employees — reaching an internal code repository with a single pull request in under 72 hours.</h3>
+    
+  </div>
+  <div class="cbody">
+    <div class="cnums">
+      <div><b>14</b><span>stories</span></div>
+      <div><b>7</b><span>sectors</span></div>
+      <div><b>3</b><span>tier-1</span></div>
+      <div class=""><b>–</b><span>AU/NZ</span></div>
+    </div>
+    <div class="csecs"><span class="st">Macro<b>6</b></span><span class="st">Retail<b>2</b></span><span class="st">AI<b>2</b></span></div>
+  </div>
+</a>
+<a class="card " href="daily/2026-09-19.html">
+  <div class="ctop"><div class="tbar" style="height:6px"><span style="flex:4;background:#00b4d8" title="Zero-day / Vuln — 4"></span><span style="flex:4;background:#f59e0b" title="Malware — 4"></span><span style="flex:3;background:#10b981" title="Breach / Data Leak — 3"></span><span style="flex:2;background:#ef4444" title="APT / Nation-State — 2"></span><span style="flex:1;background:#64748b" title="Other — 1"></span><span style="flex:1;background:#64748b" title="Supply Chain — 1"></span><span style="flex:1;background:#f43f5e" title="Ransomware — 1"></span></div></div>
+  <div class="chead">
+    <div class="cday"><b>19</b><span>Sat</span></div>
+    <h3>A five-nation advisory on a North Korean campaign that has turned the job interview into the intrusion vector: the ACSC joined the FBI, the US Department of Defense, Japan&#x27;s National Police Agency and German authorities on 18 September to name &quot;WaterPlum&quot; — better known as Contagious Interview — and put numbers to it: at least 30,000 devices infected across 100 countries between December 2025 and July 2026, roughly 7,000 cryptocurrency wallets drained or credential-stolen, and more than $10.5 million taken.</h3>
+    
+  </div>
+  <div class="cbody">
+    <div class="cnums">
+      <div><b>16</b><span>stories</span></div>
+      <div><b>5</b><span>sectors</span></div>
+      <div><b>1</b><span>tier-1</span></div>
+      <div class="hot"><b>1</b><span>AU/NZ</span></div>
+    </div>
+    <div class="csecs"><span class="st">Gov<b>10</b></span><span class="st">Defence<b>3</b></span><span class="st">Health<b>1</b></span></div>
+  </div>
+</a>
+<a class="card " href="daily/2026-09-18.html">
+  <div class="ctop"><div class="tbar" style="height:6px"><span style="flex:6;background:#00b4d8" title="Zero-day / Vuln — 6"></span><span style="flex:6;background:#10b981" title="Breach / Data Leak — 6"></span><span style="flex:3;background:#f59e0b" title="Malware — 3"></span><span style="flex:1;background:#64748b" title="OT / ICS — 1"></span><span style="flex:1;background:#64748b" title="Regulatory / Policy — 1"></span></div></div>
+  <div class="chead">
+    <div class="cday"><b>18</b><span>Fri</span></div>
+    <h3>A supply-chain compromise with unusual reach: attackers stole a long-lived Cloudflare API key from marketing-technology vendor Brevo and used it to inject ClickFix scripts at the CDN edge onto brevo.com and onto Brevo scripts embedded across customer sites, a campaign security firm Sansec estimates touched up to 100,000 websites.</h3>
+    
+  </div>
+  <div class="cbody">
+    <div class="cnums">
+      <div><b>17</b><span>stories</span></div>
+      <div><b>12</b><span>sectors</span></div>
+      <div><b>3</b><span>tier-1</span></div>
+      <div class="hot"><b>2</b><span>AU/NZ</span></div>
+    </div>
+    <div class="csecs"><span class="st">Gov<b>3</b></span><span class="st">Defence<b>2</b></span><span class="st">IT<b>2</b></span></div>
+  </div>
+</a>
+<a class="card " href="daily/2026-09-17.html">
+  <div class="ctop"><div class="tbar" style="height:6px"><span style="flex:5;background:#f43f5e" title="Ransomware — 5"></span><span style="flex:3;background:#f59e0b" title="Malware — 3"></span><span style="flex:3;background:#10b981" title="Breach / Data Leak — 3"></span><span style="flex:1;background:#8b5cf6" title="Phishing / BEC — 1"></span><span style="flex:1;background:#00b4d8" title="Zero-day / Vuln — 1"></span><span style="flex:1;background:#ef4444" title="APT / Nation-State — 1"></span></div></div>
+  <div class="chead">
+    <div class="cday"><b>17</b><span>Thu</span></div>
+    <h3>A European privacy regulator has become the first to put an AI agent in the incident record, and on the same day a major incident-response firm described an attacker riding a developer&#x27;s own coding assistant into a codebase.</h3>
+    
+  </div>
+  <div class="cbody">
+    <div class="cnums">
+      <div><b>14</b><span>stories</span></div>
+      <div><b>9</b><span>sectors</span></div>
+      <div><b>3</b><span>tier-1</span></div>
+      <div class=""><b>–</b><span>AU/NZ</span></div>
+    </div>
+    <div class="csecs"><span class="st">Gov<b>2</b></span><span class="st">Crime<b>2</b></span><span class="st">Legal<b>2</b></span></div>
+  </div>
+</a>
+<a class="card " href="daily/2026-09-16.html">
+  <div class="ctop"><div class="tbar" style="height:6px"><span style="flex:5;background:#f59e0b" title="Malware — 5"></span><span style="flex:4;background:#00b4d8" title="Zero-day / Vuln — 4"></span><span style="flex:2;background:#8b5cf6" title="Phishing / BEC — 2"></span><span style="flex:2;background:#10b981" title="Breach / Data Leak — 2"></span><span style="flex:1;background:#22d3ee" title="AI Security — 1"></span><span style="flex:1;background:#f43f5e" title="Ransomware — 1"></span></div></div>
+  <div class="chead">
+    <div class="cday"><b>16</b><span>Wed</span></div>
+    <h3>The day&#x27;s most consequential publication is a spyware advisory with a physical-security dimension.</h3>
+    
+  </div>
+  <div class="cbody">
+    <div class="cnums">
+      <div><b>15</b><span>stories</span></div>
+      <div><b>11</b><span>sectors</span></div>
+      <div><b>3</b><span>tier-1</span></div>
+      <div class=""><b>–</b><span>AU/NZ</span></div>
+    </div>
+    <div class="csecs"><span class="st">Finance<b>2</b></span><span class="st">Gov<b>2</b></span><span class="st">IT<b>2</b></span></div>
+  </div>
+</a></div>
+</section>
+
+<section class="pane" id="pC">
+  <p class="vlabel"><b>C — Calendar heat.</b> Volume as colour (darker = more stories), one dot per threat type, blue corner = AU/NZ coverage.
+  Gives a year of editions at a glance; the latest edition is promoted above it.</p>
+  <a class="heroC" href="daily/2026-09-21.html">
+    <div class="hb">
+      <div class="kick">Latest edition · 2026-09-21 Mon</div>
+      <h2>A supply-chain campaign that has deliberately stepped around the defences the ecosystem spent the last year building: an npm package masquerading as the legitimate sorted-btree library has accumulated 2 million weekly downloads while hiding its loader inside an ordinary runtime function rather than an install script, so that npm v12&#x27;s lifecycle-script approval gate never fires and a clean install reveals nothing.</h2>
+      <div class="hstats">
+        <div><b>12</b><span>stories</span></div>
+        <div><b>6</b><span>sectors</span></div>
+        <div><b>3</b><span>tier-1 sources</span></div>
+        <div><b>–</b><span>AU/NZ</span></div>
+        <div><b>Phishing / BEC</b><span>lead threat</span></div>
+      </div>
+    </div>
+    <span class="go">Open edition →</span>
+  </a>
+  <div class="calwrap"><div class="cal"><h3>September 2026<span>21 editions</span></h3><div class="dowhead"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div><div class="cgrid"><i class="pad"></i><a class="day" href="daily/2026-09-01.html" style="--i:0.54" title="2026-09-01 · 8 stories · ShinyHunters Demands $55.2M From McKesson After 1 TB Data-Theft Claim"><b>1</b><span class="n">8</span><span class="dts"><em style="background:#f59e0b"></em><em style="background:#10b981"></em><em style="background:#f43f5e"></em></span><span class="au" title="3 AU/NZ-related stories"></span></a><a class="day" href="daily/2026-09-02.html" style="--i:0.73" title="2026-09-02 · 12 stories · Iranian Mirage Kitten Targets Aviation and Fintech Developers With NodeRabbit and PollCat"><b>2</b><span class="n">12</span><span class="dts"><em style="background:#f59e0b"></em><em style="background:#f43f5e"></em><em style="background:#00b4d8"></em></span><span class="au" title="1 AU/NZ-related stories"></span></a><a class="day" href="daily/2026-09-03.html" style="--i:0.82" title="2026-09-03 · 14 stories · CISA Adds Seven Vulnerabilities to Known Exploited Catalog"><b>3</b><span class="n">14</span><span class="dts"><em style="background:#00b4d8"></em><em style="background:#f43f5e"></em><em style="background:#f59e0b"></em></span></a><a class="day" href="daily/2026-09-04.html" style="--i:0.64" title="2026-09-04 · 10 stories · HPE Patches Critical ArubaOS-CX Remote Code Execution Flaw"><b>4</b><span class="n">10</span><span class="dts"><em style="background:#00b4d8"></em><em style="background:#f43f5e"></em><em style="background:#10b981"></em></span><span class="au" title="1 AU/NZ-related stories"></span></a><a class="day" href="daily/2026-09-05.html" style="--i:0.77" title="2026-09-05 · 13 stories · Critical Citrix NetScaler Auth Bypass Now Exploited in the Wild Triggers ACSC Critical Advisory"><b>5</b><span class="n">13</span><span class="dts"><em style="background:#10b981"></em><em style="background:#00b4d8"></em><em style="background:#8b5cf6"></em></span><span class="au" title="2 AU/NZ-related stories"></span></a><a class="day" href="daily/2026-09-06.html" style="--i:0.50" title="2026-09-06 · 7 stories · Magento and Adobe Commerce"><b>6</b><span class="n">7</span><span class="dts"><em style="background:#00b4d8"></em><em style="background:#10b981"></em><em style="background:#f59e0b"></em></span><span class="au" title="1 AU/NZ-related stories"></span></a><a class="day" href="daily/2026-09-07.html" style="--i:0.41" title="2026-09-07 · 5 stories · Unauthenticated takedown of internet-exposed MikroTik routers"><b>7</b><span class="n">5</span><span class="dts"><em style="background:#ef4444"></em><em style="background:#00b4d8"></em><em style="background:#8b5cf6"></em></span><span class="au" title="1 AU/NZ-related stories"></span></a><a class="day" href="daily/2026-09-08.html" style="--i:0.54" title="2026-09-08 · 8 stories · Mathspace"><b>8</b><span class="n">8</span><span class="dts"><em style="background:#00b4d8"></em><em style="background:#f59e0b"></em><em style="background:#f43f5e"></em></span><span class="au" title="1 AU/NZ-related stories"></span></a><a class="day" href="daily/2026-09-09.html" style="--i:1.00" title="2026-09-09 · 18 stories · 966 vulnerabilities"><b>9</b><span class="n">18</span><span class="dts"><em style="background:#10b981"></em><em style="background:#00b4d8"></em><em style="background:#f43f5e"></em></span><span class="au" title="1 AU/NZ-related stories"></span></a><a class="day" href="daily/2026-09-10.html" style="--i:0.91" title="2026-09-10 · 16 stories · 4,115,802 individuals"><b>10</b><span class="n">16</span><span class="dts"><em style="background:#00b4d8"></em><em style="background:#f59e0b"></em><em style="background:#f43f5e"></em></span><span class="au" title="5 AU/NZ-related stories"></span></a><a class="day" href="daily/2026-09-11.html" style="--i:0.91" title="2026-09-11 · 16 stories · 153 million US and Canadian driver&#x27;s licence scans"><b>11</b><span class="n">16</span><span class="dts"><em style="background:#10b981"></em><em style="background:#00b4d8"></em><em style="background:#22d3ee"></em></span></a><a class="day" href="daily/2026-09-12.html" style="--i:0.91" title="2026-09-12 · 16 stories · GTG-20006"><b>12</b><span class="n">16</span><span class="dts"><em style="background:#00b4d8"></em><em style="background:#f59e0b"></em><em style="background:#8b5cf6"></em></span><span class="au" title="3 AU/NZ-related stories"></span></a><a class="day" href="daily/2026-09-13.html" style="--i:0.54" title="2026-09-13 · 8 stories · Imminent"><b>13</b><span class="n">8</span><span class="dts"><em style="background:#00b4d8"></em><em style="background:#22d3ee"></em></span></a><a class="day" href="daily/2026-09-14.html" style="--i:0.50" title="2026-09-14 · 7 stories · Revolut has confirmed it handed a package of customer identity documents to a fraudster who asked for them from inside a"><b>14</b><span class="n">7</span><span class="dts"><em style="background:#10b981"></em><em style="background:#00b4d8"></em><em style="background:#64748b"></em></span></a><a class="day" href="daily/2026-09-15.html" style="--i:0.73" title="2026-09-15 · 12 stories · The day&#x27;s headline is a government breach disclosed four months after the intrusion began."><b>15</b><span class="n">12</span><span class="dts"><em style="background:#f59e0b"></em><em style="background:#00b4d8"></em><em style="background:#8b5cf6"></em></span></a><a class="day" href="daily/2026-09-16.html" style="--i:0.86" title="2026-09-16 · 15 stories · The day&#x27;s most consequential publication is a spyware advisory with a physical-security dimension."><b>16</b><span class="n">15</span><span class="dts"><em style="background:#f59e0b"></em><em style="background:#00b4d8"></em><em style="background:#8b5cf6"></em></span></a><a class="day" href="daily/2026-09-17.html" style="--i:0.82" title="2026-09-17 · 14 stories · A European privacy regulator has become the first to put an AI agent in the incident record, and on the same day a major"><b>17</b><span class="n">14</span><span class="dts"><em style="background:#f43f5e"></em><em style="background:#f59e0b"></em><em style="background:#10b981"></em></span></a><a class="day" href="daily/2026-09-18.html" style="--i:0.95" title="2026-09-18 · 17 stories · A supply-chain compromise with unusual reach: attackers stole a long-lived Cloudflare API key from marketing-technology "><b>18</b><span class="n">17</span><span class="dts"><em style="background:#00b4d8"></em><em style="background:#10b981"></em><em style="background:#f59e0b"></em></span><span class="au" title="2 AU/NZ-related stories"></span></a><a class="day" href="daily/2026-09-19.html" style="--i:0.91" title="2026-09-19 · 16 stories · A five-nation advisory on a North Korean campaign that has turned the job interview into the intrusion vector: the ACSC "><b>19</b><span class="n">16</span><span class="dts"><em style="background:#00b4d8"></em><em style="background:#f59e0b"></em><em style="background:#10b981"></em></span><span class="au" title="1 AU/NZ-related stories"></span></a><a class="day" href="daily/2026-09-20.html" style="--i:0.82" title="2026-09-20 · 14 stories · A reminder that the weakest link in an AI product is often the ordinary software underneath it: researchers at the secur"><b>20</b><span class="n">14</span><span class="dts"><em style="background:#00b4d8"></em><em style="background:#f59e0b"></em><em style="background:#10b981"></em></span></a><a class="day" href="daily/2026-09-21.html" style="--i:0.73" title="2026-09-21 · 12 stories · A supply-chain campaign that has deliberately stepped around the defences the ecosystem spent the last year building: an"><b>21</b><span class="n">12</span><span class="dts"><em style="background:#8b5cf6"></em><em style="background:#f59e0b"></em><em style="background:#22d3ee"></em></span></a><i class="off">22</i><i class="off">23</i><i class="off">24</i><i class="off">25</i><i class="off">26</i><i class="off">27</i><i class="off">28</i><i class="off">29</i><i class="off">30</i></div></div>
+<div class="cal"><h3>August 2026<span>29 editions</span></h3><div class="dowhead"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div><div class="cgrid"><i class="pad"></i><i class="pad"></i><i class="pad"></i><i class="pad"></i><i class="pad"></i><a class="day" href="daily/2026-08-01.html" style="--i:0.45" title="2026-08-01 · 6 stories · Fuyao Operation: Cheap Android TV Boxes Pose as Phones and Turn Broadband Into Proxies"><b>1</b><span class="n">6</span><span class="dts"><em style="background:#00b4d8"></em><em style="background:#f59e0b"></em><em style="background:#ef4444"></em></span></a><i class="off">2</i><a class="day" href="daily/2026-08-03.html" style="--i:1.00" title="2026-08-03 · 18 stories · CISA Urges Water and Wastewater Systems Sector to Protect OT Against Activity Targeting PLCs"><b>3</b><span class="n">18</span><span class="dts"><em style="background:#00b4d8"></em><em style="background:#64748b"></em><em style="background:#10b981"></em></span><span class="au" title="4 AU/NZ-related stories"></span></a><a class="day" href="daily/2026-08-04.html" style="--i:1.00" title="2026-08-04 · 18 stories · Health-ISAC Warns of Increasing ShinyHunters Healthcare Data Theft Attacks"><b>4</b><span class="n">18</span><span class="dts"><em style="background:#10b981"></em><em style="background:#64748b"></em><em style="background:#00b4d8"></em></span></a><a class="day" href="daily/2026-08-05.html" style="--i:0.77" title="2026-08-05 · 13 stories · ACSC Publishes New AI Frontier Cyber Threat Guidance for Boards of Directors"><b>5</b><span class="n">13</span><span class="dts"><em style="background:#00b4d8"></em><em style="background:#10b981"></em><em style="background:#64748b"></em></span><span class="au" title="3 AU/NZ-related stories"></span></a><a class="day" href="daily/2026-08-06.html" style="--i:0.73" title="2026-08-06 · 12 stories · CISA Flags TeamCity CVE-2026-63077 RCE Flaw Under Active Exploitation in the Wild"><b>6</b><span class="n">12</span><span class="dts"><em style="background:#10b981"></em><em style="background:#f59e0b"></em><em style="background:#ef4444"></em></span><span class="au" title="3 AU/NZ-related stories"></span></a><i class="off">7</i><a class="day" href="daily/2026-08-08.html" style="--i:0.68" title="2026-08-08 · 11 stories · CISA Adds Progress LoadMaster RCE (CVE-2026-8037) to Known Exploited Vulnerabilities Catalogue"><b>8</b><span class="n">11</span><span class="dts"><em style="background:#00b4d8"></em><em style="background:#64748b"></em><em style="background:#10b981"></em></span><span class="au" title="1 AU/NZ-related stories"></span></a><a class="day" href="daily/2026-08-09.html" style="--i:0.68" title="2026-08-09 · 11 stories · Metabase Zero-Day Exploited in Wild Allows Admin Access Without Authentication (CVSS 10.0)"><b>9</b><span class="n">11</span><span class="dts"><em style="background:#22d3ee"></em><em style="background:#00b4d8"></em><em style="background:#10b981"></em></span></a><a class="day" href="daily/2026-08-10.html" style="--i:0.32" title="2026-08-10 · 3 stories · A Monday digest centred on active vulnerability exploitation, a large consumer-brand breach and a regulatory inflection "><b>10</b><span class="n">3</span><span class="dts"><em style="background:#00b4d8"></em><em style="background:#10b981"></em></span></a><a class="day" href="daily/2026-08-11.html" style="--i:0.54" title="2026-08-11 · 8 stories · A Tuesday digest anchored by active Russia Fork-style ransomware escalation against critical infrastructure, the first d"><b>11</b><span class="n">8</span><span class="dts"><em style="background:#f43f5e"></em><em style="background:#f59e0b"></em><em style="background:#ef4444"></em></span></a><a class="day" href="daily/2026-08-12.html" style="--i:0.73" title="2026-08-12 · 12 stories · A Wednesday digest led by the largest Patch Tuesday in recent memory, a logistics-supply-chain breach rippling across Eu"><b>12</b><span class="n">12</span><span class="dts"><em style="background:#00b4d8"></em><em style="background:#f43f5e"></em><em style="background:#10b981"></em></span></a><a class="day" href="daily/2026-08-13.html" style="--i:0.82" title="2026-08-13 · 14 stories · Thursday&#x27;s digest is led by state-actor exploitation detail behind August&#x27;s Patch Tuesday zero-day, the first "><b>13</b><span class="n">14</span><span class="dts"><em style="background:#00b4d8"></em><em style="background:#10b981"></em><em style="background:#f43f5e"></em></span></a><a class="day" href="daily/2026-08-14.html" style="--i:0.59" title="2026-08-14 · 9 stories · Friday&#x27;s digest is led by an actively exploited SharePoint authentication-bypass, a landmark US reorientation of of"><b>14</b><span class="n">9</span><span class="dts"><em style="background:#00b4d8"></em><em style="background:#10b981"></em><em style="background:#64748b"></em></span></a><a class="day" href="daily/2026-08-15.html" style="--i:0.68" title="2026-08-15 · 11 stories · Saturday&#x27;s digest is led by an actively exploited macOS screen-sharing zero-day, a government-confirmed breach of F"><b>15</b><span class="n">11</span><span class="dts"><em style="background:#10b981"></em><em style="background:#f59e0b"></em><em style="background:#00b4d8"></em></span></a><a class="day" href="daily/2026-08-16.html" style="--i:0.45" title="2026-08-16 · 6 stories · Sunday&#x27;s digest is led by a maximum-severity SAP Commerce Cloud flaw under active exploitation attempts, internatio"><b>16</b><span class="n">6</span><span class="dts"><em style="background:#f43f5e"></em><em style="background:#00b4d8"></em><em style="background:#f59e0b"></em></span></a><a class="day" href="daily/2026-08-17.html" style="--i:0.32" title="2026-08-17 · 3 stories · A quiet Monday opens the new week — most outlets did not publish over the weekend window beyond the coverage already cap"><b>17</b><span class="n">3</span><span class="dts"><em style="background:#22d3ee"></em><em style="background:#64748b"></em><em style="background:#64748b"></em></span></a><a class="day" href="daily/2026-08-18.html" style="--i:0.54" title="2026-08-18 · 8 stories · A busy Tuesday after the quiet Monday — the weekend and Monday publication cycle delivered two major confirmed breaches,"><b>18</b><span class="n">8</span><span class="dts"><em style="background:#10b981"></em><em style="background:#00b4d8"></em><em style="background:#f43f5e"></em></span></a><a class="day" href="daily/2026-08-19.html" style="--i:0.68" title="2026-08-19 · 11 stories · ACSC Issues High-Rated Alert on Active Exploitation of N-able Slopes — Australia Priority"><b>19</b><span class="n">11</span><span class="dts"><em style="background:#00b4d8"></em><em style="background:#10b981"></em><em style="background:#f43f5e"></em></span></a><a class="day" href="daily/2026-08-20.html" style="--i:0.59" title="2026-08-20 · 9 stories · A heavy Thursday led by a 3.7-million-record health-record breach, a rare active-threat advisory against Siemens industr"><b>20</b><span class="n">9</span><span class="dts"><em style="background:#10b981"></em><em style="background:#00b4d8"></em><em style="background:#f59e0b"></em></span></a><a class="day" href="daily/2026-08-21.html" style="--i:0.77" title="2026-08-21 · 13 stories · A Friday led by an actively exploited Zimbra email-server flaw, fresh CISA KEV additions for a third consecutive day, an"><b>21</b><span class="n">13</span><span class="dts"><em style="background:#00b4d8"></em><em style="background:#f59e0b"></em><em style="background:#64748b"></em></span></a><a class="day" href="daily/2026-08-22.html" style="--i:0.82" title="2026-08-22 · 14 stories · A Saturday led by a supply-chain hit on the Rust ecosystem, an APT-grade espionage operation in Central Asia, and an ext"><b>22</b><span class="n">14</span><span class="dts"><em style="background:#10b981"></em><em style="background:#f43f5e"></em><em style="background:#f59e0b"></em></span></a><a class="day" href="daily/2026-08-23.html" style="--i:0.45" title="2026-08-23 · 6 stories · The expanding attack surface of connected vehicles and chargers"><b>23</b><span class="n">6</span><span class="dts"><em style="background:#f59e0b"></em><em style="background:#00b4d8"></em><em style="background:#64748b"></em></span></a><a class="day" href="daily/2026-08-24.html" style="--i:0.45" title="2026-08-24 · 6 stories · Microsoft Defender&#x27;s Own Signed BTR.sys Driver Weaponised for Kernel-Level Attacks"><b>24</b><span class="n">6</span><span class="dts"><em style="background:#f59e0b"></em><em style="background:#00b4d8"></em><em style="background:#10b981"></em></span></a><a class="day" href="daily/2026-08-25.html" style="--i:0.45" title="2026-08-25 · 6 stories · ASD&#x27;s ACSC Alerts on Active Exploitation of TeamCity On-Premises Servers Within Australia"><b>25</b><span class="n">6</span><span class="dts"><em style="background:#00b4d8"></em><em style="background:#10b981"></em><em style="background:#f59e0b"></em></span></a><a class="day" href="daily/2026-08-26.html" style="--i:0.59" title="2026-08-26 · 9 stories · CISA Red Team Report: Water Utility Detected Simulated Attack in Minutes, Government Organisation Missed Domain-Wide Com"><b>26</b><span class="n">9</span><span class="dts"><em style="background:#10b981"></em><em style="background:#8b5cf6"></em><em style="background:#f43f5e"></em></span></a><a class="day" href="daily/2026-08-27.html" style="--i:0.68" title="2026-08-27 · 11 stories · CISA Adds Six Known Exploited Vulnerabilities to the KEV Catalog"><b>27</b><span class="n">11</span><span class="dts"><em style="background:#10b981"></em><em style="background:#00b4d8"></em><em style="background:#f59e0b"></em></span></a><a class="day" href="daily/2026-08-28.html" style="--i:0.64" title="2026-08-28 · 10 stories · CISA Adds Three Known Exploited Vulnerabilities to the KEV Catalog"><b>28</b><span class="n">10</span><span class="dts"><em style="background:#f43f5e"></em><em style="background:#10b981"></em><em style="background:#00b4d8"></em></span></a><a class="day" href="daily/2026-08-29.html" style="--i:0.59" title="2026-08-29 · 9 stories · Suspected Chinese-Speaking Operator Exploits Known Flaws to Steal Nuclear and Naval Data From Philippine Targets"><b>29</b><span class="n">9</span><span class="dts"><em style="background:#00b4d8"></em><em style="background:#10b981"></em><em style="background:#f59e0b"></em></span></a><a class="day" href="daily/2026-08-30.html" style="--i:0.73" title="2026-08-30 · 12 stories · McKesson Discloses Breach After ShinyHunters Claims Theft of 284 Million Patient Records"><b>30</b><span class="n">12</span><span class="dts"><em style="background:#00b4d8"></em><em style="background:#10b981"></em><em style="background:#f59e0b"></em></span></a><a class="day" href="daily/2026-08-31.html" style="--i:0.45" title="2026-08-31 · 6 stories · FulcrumSec Claims Manchester Airports Hack, Theft of 86 GB of Data"><b>31</b><span class="n">6</span><span class="dts"><em style="background:#f59e0b"></em><em style="background:#10b981"></em><em style="background:#64748b"></em></span></a></div></div></div>
+  <div class="legend">
+    <span class="lg"><b>Volume</b>
+      <i class="sw" style="background:rgba(0,180,216,.14)"></i><i class="sw" style="background:rgba(0,180,216,.35)"></i><i class="sw" style="background:rgba(0,180,216,.58)"></i><i class="sw" style="background:rgba(0,180,216,.8)"></i>
+      few → many stories</span>
+    <span class="lg"><b>Threat dots</b>
+      <i class="dt" style="background:#f43f5e"></i>Ransomware<i class="dt" style="background:#f59e0b"></i>Malware<i class="dt" style="background:#8b5cf6"></i>Phishing / BEC<i class="dt" style="background:#00b4d8"></i>Zero-day / Vuln<i class="dt" style="background:#10b981"></i>Breach / Data Leak<i class="dt" style="background:#ef4444"></i>APT / Nation-State</span>
+    <span class="lg"><b>AU</b><i class="au2"></i>AU/NZ coverage</span>
+  </div>
+</section>
+
+<script>
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===t));
+  document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('on',p.id==='p'+t.dataset.v));
+});
+document.querySelectorAll('.toolbar .f').forEach(f=>f.onclick=()=>f.classList.toggle('on'));
+</script></body></html>
