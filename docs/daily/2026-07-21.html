@@ -514,6 +514,18 @@ body.exec-view .story-card.expanded{padding-left:50px}
 .cvepill.cve-medium{color:var(--amber);background:rgba(245,158,11,.14);border-color:rgba(245,158,11,.35)}
 .cvepill.cve-low{color:var(--green);background:rgba(34,197,94,.13);border-color:rgba(34,197,94,.35)}
 .cvepill.cve-unrated{color:var(--text-dim);background:rgba(148,163,184,.10);border-color:currentColor;border-style:dashed}
+/* A pill that links (mapped CVEs deep-link the ATT&CK matrix tool; unmapped ones fall
+   back to the wiki CVE page) must look identical to the non-linking span form — so pin
+   the colour on every anchor state and kill the inherited underline/accent colour. */
+a.cvepill,a.cvepill:visited,a.cvepill:hover,a.cvepill:active{text-decoration:none}
+a.cvepill:hover{border-color:currentColor;box-shadow:0 0 0 3px rgba(148,163,184,.14)}
+a.cvepill:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+a.cvepill.cve-critical,a.cvepill.cve-critical:visited{color:var(--red)}
+a.cvepill.cve-high,a.cvepill.cve-high:visited{color:var(--vuln)}
+a.cvepill.cve-medium,a.cvepill.cve-medium:visited{color:var(--amber)}
+a.cvepill.cve-low,a.cvepill.cve-low:visited{color:var(--green)}
+a.cvepill.cve-unrated,a.cvepill.cve-unrated:visited{color:var(--text-dim)}
+a.cvepill{cursor:pointer}
 /* Secondary citations in a story card's meta row: the vendor-primary research link
    that follows the aggregator's, plus any trailing provenance note. Muted and
    smaller than the primary source pill so the aggregator stays the dominant cite —
