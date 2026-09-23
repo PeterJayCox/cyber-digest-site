@@ -1948,6 +1948,20 @@ def ioc_for(text):
             "tip": m.tooltip(display, count)}
 
 
+def _ioc_details(text):
+    """Pre-rendered defanged indicator block for the Story DB. Rendered here, not
+    in JS, so the markup AND the defanging stay in one place (ioc_family_match).
+    Inserted raw by the client, so it MUST come from the shared renderer, which
+    escapes every value."""
+    m = _ioc_matcher()
+    if not m or not text:
+        return ""
+    try:
+        return m.indicator_details_html(text)
+    except Exception:
+        return ""
+
+
 def build_stories(stories):
     page_data=[{"date":s["digest_date"],"headline":s["headline"],"sector":s["sector"],
         "summary":s["summary"],"source":s["source_name"],"url":s["source_url"],
@@ -1957,7 +1971,8 @@ def build_stories(stories):
         "score":s.get("score") or 0,
         "severity":s.get("severity_band") or "","urgency":s.get("urgency_status") or "",
         "confidence":s.get("confidence_label") or "",
-        "ioc":ioc_for(((s.get("headline") or "")+" "+(s.get("summary") or "")))} for s in stories]
+        "ioc":ioc_for(((s.get("headline") or "")+" "+(s.get("summary") or ""))),
+        "ioc_html":_ioc_details(((s.get("headline") or "")+" "+(s.get("summary") or "")))} for s in stories]
     # write data json for client-side filtering
     os.makedirs(os.path.join(DOCS,"data"),exist_ok=True)
     open(os.path.join(DOCS,"data","stories.json"),"w",encoding="utf-8").write(json.dumps(page_data))
@@ -2066,7 +2081,8 @@ function render(){
      +tiershow+anzdot+sem
      +'</div><h3>'+hlink+'</h3>'
      +'<div class="sum clamp">'+esc(s.summary)+'</div>'
-     +'<div class="srcline">Source: '+src+' · ANZ '+s.anz+'/5</div></div>';
+     +'<div class="srcline">Source: '+src+' · ANZ '+s.anz+'/5</div>'
+     +(s.ioc_html||'')+'</div>';
  });
  document.getElementById('results').innerHTML=html || '<div class="empty">No stories match your filters.</div>';
  document.querySelectorAll('.sum.clamp').forEach(el=>{
@@ -2441,7 +2457,8 @@ def build_wiki(pages):
                 _d,_c,_x=_iochit
                 _lab=_d if not _x else f"{_d} +{_x}"
                 ioc_block=('<div class="iocblock" title="'+esc(_iocm.tooltip(_d,_c))+'">'
-                           +'🎯 IOCs · '+esc(_lab)+'</div>')
+                           +'🎯 IOCs · '+esc(_lab)+'</div>'
+                           +_iocm.indicator_details_html(title+" "+body))
             else:
                 ioc_block=''
             # compute root-relative depth for nav/css links

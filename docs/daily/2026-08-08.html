@@ -415,6 +415,21 @@ span.source{padding:2px 10px;border:1px solid var(--border);border-radius:999px;
 .story-card .meta .iocbadge .dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex:0 0 auto}
 .story-card .meta .iocbadge.ioc-corroborated{color:var(--accent);background:var(--accent-bg);border-color:currentColor;border-style:dashed}
 .story-card .meta .iocbadge.ioc-feedonly{color:var(--text-dim);background:rgba(148,163,184,.12);border-color:rgba(148,163,184,.32)}
+/* Expandable defanged indicator list — ONE structure shared by the daily/monthly
+   cards, the Story DB and the wiki, so one rule styles all three. Values are
+   inert text in <code> (never an <a href>: nothing here may be clicked or
+   fetched). Collapsed by default, so the block costs a reader nothing until
+   they want it. */
+.ioclist{margin-top:12px;border:1px dashed var(--border-light);border-radius:10px;padding:9px 13px}
+.ioclist summary{cursor:pointer;font-size:12px;font-weight:600;color:var(--accent);display:flex;align-items:center;gap:7px}
+.ioclist summary::-webkit-details-marker{display:none}
+.ioclist summary .dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex:0 0 auto}
+.ioclist ul{margin:9px 0 0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.ioclist li{display:flex;flex-wrap:wrap;align-items:baseline;gap:9px}
+.ioclist code{font-family:'JetBrains Mono',monospace;font-size:11.5px;background:var(--surface2);padding:2px 7px;border-radius:4px;word-break:break-all}
+.ioclist .iocmeta{color:var(--text-dim);font-size:11px}
+.ioclist .iocwarn{margin:10px 0 0;font-size:11px;line-height:1.55;color:var(--text-dim)}
+
 [data-theme="light"] .story-card .meta .iocbadge.ioc-feedonly{background:rgba(100,116,139,.12)}
 .story-card .meta .date{color:var(--text-dim);margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px}
 /* Tag badge */
@@ -846,7 +861,7 @@ a.cvepill{cursor:pointer}
 </div>
 </section>
 <section id="sector-transport" class="section"><h2><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8h13v9H1zM14 11h4l3 3v3h-7z"/><circle cx="6" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></svg></span> Transport <span class="count">2 stories</span></h2><div class="story-grid"><div class="story-card num-1" id="story-7"><div class="card-accent"></div><div class="story-number">1</div><h3>Cyberattack on North Carolina Ports &#x27;Contained&#x27; as Coast Guard, State Officials Investigate</h3><p class="summary">North Carolina Ports — handling more than 4 million tons of cargo annually across Wilmington, Morehead City and Charlotte — was &#x27;hacked by an outside actor or group&#x27;, forcing a shift to manual operations on Tuesday. The breach has been &#x27;contained&#x27; and the facilities are in recovery, operating on a normal schedule but still processing manually with expected gate delays. An outside forensics team is investigating; no group has claimed responsibility and it is not yet confirmed as ransomware. Operators are also investigating at other US ports.</p><div class="meta"><a class="source" href="https://therecord.media/cyberattack-north-carolina-ports" target="_blank" rel="noopener">The Record</a><span class="reliability"><span class="tier-2">●</span> Tier 2/4 — Established cyber journalism</span><span class="date">2026-08-06</span></div></div>
-<div class="story-card num-2" id="story-8"><div class="card-accent"></div><div class="story-number">2</div><h3>CISA Issues ICS Advisory on CPDLC over ATN-B1 Vulnerabilities (Five CVEs)</h3><p class="summary">CISA released ICS advisory ICSA-26-219-01 covering five CVEs (<a class="cvepill cve-high" href="https://cyber.peterjaycox.com/tools/cve-attack-matrix.html#c=CVE-2025-71409" title="High — open in the ATT&amp;CK matrix" data-cve="CVE-2025-71409" target="_blank" rel="noopener">CVE-2025-71409</a> through 71413, CVSS 7.1) affecting Controller-Pilot Data Link Communications (CPDLC) over ATN-B1. The system relies on legacy clear-text, unauthenticated radio-frequency links that allow unauthorised message injection, denial-of-service, and forced session resets in the air-traffic-control data link. CISA notes this does not constitute an unsafe aircraft condition but can degrade operational safety margins by increasing workload and delaying safety-critical instruction delivery. Reported by Armasuisse researcher Martin Strohmeier.</p><div class="meta"><a class="source" href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-219-01" target="_blank" rel="noopener">CISA</a><span class="reliability"><span class="tier-1">●</span> Tier 1/4 — Official / first-party</span><span class="date">2026-08-07</span></div></div>
+<div class="story-card num-2" id="story-8"><div class="card-accent"></div><div class="story-number">2</div><h3>CISA Issues ICS Advisory on CPDLC over ATN-B1 Vulnerabilities (Five CVEs)</h3><p class="summary">CISA released ICS advisory ICSA-26-219-01 covering five CVEs (<a class="cvepill cve-high" href="https://cyber.peterjaycox.com/tools/cve-attack-matrix.html#c=CVE-2025-71409" title="High · CVSS 7.1 — open in the ATT&amp;CK matrix" data-cve="CVE-2025-71409" target="_blank" rel="noopener">CVE-2025-71409</a> through 71413, CVSS 7.1) affecting Controller-Pilot Data Link Communications (CPDLC) over ATN-B1. The system relies on legacy clear-text, unauthenticated radio-frequency links that allow unauthorised message injection, denial-of-service, and forced session resets in the air-traffic-control data link. CISA notes this does not constitute an unsafe aircraft condition but can degrade operational safety margins by increasing workload and delaying safety-critical instruction delivery. Reported by Armasuisse researcher Martin Strohmeier.</p><div class="meta"><a class="source" href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-219-01" target="_blank" rel="noopener">CISA</a><span class="reliability"><span class="tier-1">●</span> Tier 1/4 — Official / first-party</span><span class="date">2026-08-07</span></div></div>
 </div>
 </section>
 
