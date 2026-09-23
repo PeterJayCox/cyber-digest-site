@@ -238,6 +238,12 @@ html[data-theme-mode="light"] .theme-toggle .tt-light{display:inline}
 .tag{display:inline-block;font-size:11px;font-weight:500;padding:3px 10px;border-radius:999px;width:fit-content;letter-spacing:.3px}
 .tag.cyan{background:var(--tag-blue-bg);color:var(--tag-blue-text)}
 .tag.blue{background:var(--tag-blue-bg);color:var(--tag-blue-text)}
+/* IoC corroboration tag (Story DB + wiki) — corroboration only, never a verdict.
+   Dashed border keeps it visually distinct from the solid severity/verification
+   tags; the palette follows the existing tag-blue pair rather than inventing a
+   variable. Carries a family NAME and a COUNT, never an indicator value. */
+.tag.ioc{background:var(--tag-blue-bg);color:var(--tag-blue-text);border:1px dashed currentColor}
+.iocblock{display:inline-block;font-size:12px;font-weight:600;padding:3px 12px;border-radius:999px;background:var(--tag-blue-bg);color:var(--tag-blue-text);border:1px dashed currentColor;margin:6px 0}
 .tag.purple{background:var(--tag-purple-bg);color:var(--tag-purple-text)}
 .tag.green{background:var(--tag-green-bg);color:var(--tag-green-text)}
 .tag.amber{background:var(--tag-amber-bg);color:var(--tag-amber-text)}

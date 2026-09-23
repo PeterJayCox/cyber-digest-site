@@ -404,12 +404,17 @@ span.source{padding:2px 10px;border:1px solid var(--border);border-radius:999px;
    never an indicator value. Accent (not a severity colour) on purpose: the
    family being well-attested is not a severity claim about this story, and it
    must not read as a breach or verification verdict. Dashed border marks it as
-   the softer, corroboration-only signal. */
+   the softer, corroboration-only signal.
+
+   No light-theme override is needed for the corroborated variant: `--accent-bg`
+   is already theme-aware (dark rgba(0,180,216,.1) / light #ebf5ff), unlike the
+   verification and breach badges, which hard-code an rgba per theme. Only the
+   feedonly variant needs one. Do not add a redundant `[data-theme="light"]`
+   rule here — it would be a no-op that reads as a fix. */
 .story-card .meta .iocbadge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:2px 9px;border-radius:999px;border:1px solid transparent;letter-spacing:.02em}
 .story-card .meta .iocbadge .dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex:0 0 auto}
 .story-card .meta .iocbadge.ioc-corroborated{color:var(--accent);background:var(--accent-bg);border-color:currentColor;border-style:dashed}
 .story-card .meta .iocbadge.ioc-feedonly{color:var(--text-dim);background:rgba(148,163,184,.12);border-color:rgba(148,163,184,.32)}
-[data-theme="light"] .story-card .meta .iocbadge.ioc-corroborated{background:var(--accent-bg)}
 [data-theme="light"] .story-card .meta .iocbadge.ioc-feedonly{background:rgba(100,116,139,.12)}
 .story-card .meta .date{color:var(--text-dim);margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px}
 /* Tag badge */

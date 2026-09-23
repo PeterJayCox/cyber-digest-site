@@ -1913,6 +1913,41 @@ def build_index(stories):
     open(os.path.join(DOCS,"index.html"),"w",encoding="utf-8").write(html)
     return days, months
 
+# ── IoC family badge (shared rule with the daily generator) ────────────────
+# The MATCHING RULE lives in the Cyber Digest project (`ioc_family_match.py`) so
+# the daily pages, the Story DB and the wiki apply ONE rule — a family-name match
+# is a claim, and two implementations would drift. Degrades to "no badge" when
+# the project or its archive is absent, so a site build never fails on it.
+_IOC_MATCH = None
+
+
+def _ioc_matcher():
+    global _IOC_MATCH
+    if _IOC_MATCH is None:
+        try:
+            sys.path.insert(0, os.path.expanduser("~/Desktop/Hermes/Cyber Digest/scripts"))
+            import ioc_family_match as _m
+            _IOC_MATCH = _m
+        except Exception as err:
+            print(f"\u26a0\ufe0f  ioc_family_match unavailable ({err}); IoC badges skipped")
+            _IOC_MATCH = False
+    return _IOC_MATCH or None
+
+
+def ioc_for(text):
+    """{"label","tip"} for the top family match, or None. NAME and COUNT only —
+    never an indicator value, never a link."""
+    m = _ioc_matcher()
+    if not m or not text:
+        return None
+    hit = m.primary(text)
+    if not hit:
+        return None
+    display, count, extra = hit
+    return {"label": (display if not extra else f"{display} +{extra}"),
+            "tip": m.tooltip(display, count)}
+
+
 def build_stories(stories):
     page_data=[{"date":s["digest_date"],"headline":s["headline"],"sector":s["sector"],
         "summary":s["summary"],"source":s["source_name"],"url":s["source_url"],
@@ -1921,7 +1956,8 @@ def build_stories(stories):
         "geo":s.get("geo_region"),"anz":s.get("anz_relevance") or 0,
         "score":s.get("score") or 0,
         "severity":s.get("severity_band") or "","urgency":s.get("urgency_status") or "",
-        "confidence":s.get("confidence_label") or ""} for s in stories]
+        "confidence":s.get("confidence_label") or "",
+        "ioc":ioc_for(((s.get("headline") or "")+" "+(s.get("summary") or "")))} for s in stories]
     # write data json for client-side filtering
     os.makedirs(os.path.join(DOCS,"data"),exist_ok=True)
     open(os.path.join(DOCS,"data","stories.json"),"w",encoding="utf-8").write(json.dumps(page_data))
@@ -2017,6 +2053,7 @@ function render(){
    const tiershow=s.tier_label?('<span class="tag '+tiercol(s.tier)+'">Tier '+s.tier+' · '+esc(s.tier_label)+'</span>'):'';
    const anzdot=s.anz>=4?'<span class="tag red">AU/NZ</span>':s.anz>=3?'<span class="tag amber">ANZ</span>':'';
    const sem=s.geo?('<span class="meta" style="color:var(--text-dim)">'+esc(s.date)+' · '+esc(s.geo)+'</span>'):('<span class="meta" style="color:var(--text-dim)">'+esc(s.date)+'</span>');
+   const ioctag=(s.ioc&&s.ioc.label)?('<span class="tag ioc" title="'+esc(s.ioc.tip)+'">🎯 IOCs · '+esc(s.ioc.label)+'</span>'):'';
    const src=s.url?('<a href="'+esc(s.url)+'" target="_blank" rel="noopener">'+esc(s.source)+'</a>'):(esc(s.source||''));
    const tcl='tier'+((s.tier==null||s.tier>3)?0:s.tier);
    const hlink=s.url?'<a href="'+esc(s.url)+'" target="_blank" rel="noopener" class="st-link">'+esc(s.headline)+'</a>':esc(s.headline);
@@ -2024,7 +2061,7 @@ function render(){
      +'<span class="tag '+sectag+'">'+esc(s.sector)+'</span>'
      +'<span class="tag '+ttag+'">'+esc(s.threat)+'</span>'
      +'<span class="tag sep">·</span>'
-     +sevtag+urgtag+conftag
+     +sevtag+urgtag+conftag+ioctag
      +'<span class="tag sep">·</span>'
      +tiershow+anzdot+sem
      +'</div><h3>'+hlink+'</h3>'
@@ -2396,6 +2433,17 @@ def build_wiki(pages):
             cl=lambda s: re.sub(r"\[\[+([^\]]+)\]\]+", r"\1", s)
             meta_lines=[cl(x) for x in meta_lines]
             meta_block=f'<div class="frontmatter">{" · ".join(esc(x) for x in meta_lines)}</div>' if meta_lines else ''
+            # IoC corroboration badge — same shared rule as the daily pages and
+            # the Story DB. Name + count only; no indicator value is ever rendered.
+            _iocm=_ioc_matcher()
+            _iochit=_iocm.primary(title+" "+body) if _iocm else None
+            if _iochit:
+                _d,_c,_x=_iochit
+                _lab=_d if not _x else f"{_d} +{_x}"
+                ioc_block=('<div class="iocblock" title="'+esc(_iocm.tooltip(_d,_c))+'">'
+                           +'🎯 IOCs · '+esc(_lab)+'</div>')
+            else:
+                ioc_block=''
             # compute root-relative depth for nav/css links
             rp=os.path.relpath(DOCS, d)
             wiki_root = rp + "/" if not rp.endswith("/") else rp
@@ -2403,7 +2451,7 @@ def build_wiki(pages):
             page=f'''{head(title,'wiki/index.html', root=wiki_root)}
             <div class="container">
             <div class="crumb"><a href="{wiki_root}index.html">Home</a> · <a href="{wiki_root}wiki/index.html">Wiki</a> · {esc(type_names.get(ptype,ptype))}</div>
-            <div class="wiki-body">{meta_block}{content}</div>
+            <div class="wiki-body">{meta_block}{ioc_block}{content}</div>
             </div>{foot()}'''
             open(os.path.join(d,f"{slug}.html"),"w",encoding="utf-8").write(page)
     # build wiki index
