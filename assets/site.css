@@ -479,3 +479,32 @@ background:var(--tag-blue-bg);color:var(--tag-blue-text);border:1px dashed curre
   .act-bar{flex-direction:column;align-items:flex-start}
   .act-readout{flex:1 1 auto}
 }
+
+/* ── Identifier pills, site-wide ──────────────────────────────────────────
+   Extracted behaviour of the daily template's pills so ANY site page can show
+   the same vocabulary (methodology legend, Story DB). Two families, two
+   different questions: a CVE pill colours severity (a measured CVSS band); an
+   actor pill colours attribution confidence (a claim). They must not be
+   mistaken for one another, so the actor pill is not monospace and uses its own
+   hue band, with dashed borders for contested/unattributed. */
+.cvepill{display:inline-block;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.82em;font-weight:600;line-height:1.35;padding:1px 7px;margin:0 1px;border-radius:999px;white-space:nowrap;letter-spacing:.01em;vertical-align:baseline;border:1px solid transparent}
+.cvepill.cve-critical{color:var(--red);background:rgba(239,68,68,.13);border-color:rgba(239,68,68,.35)}
+.cvepill.cve-high{color:var(--vuln);background:rgba(244,63,94,.13);border-color:rgba(244,63,94,.35)}
+.cvepill.cve-medium{color:var(--amber);background:rgba(245,158,11,.14);border-color:rgba(245,158,11,.35)}
+.cvepill.cve-low{color:var(--green);background:rgba(34,197,94,.13);border-color:rgba(34,197,94,.35)}
+.cvepill.cve-unrated{color:var(--text-dim);background:rgba(148,163,184,.10);border-color:currentColor;border-style:dashed}
+a.cvepill,a.cvepill:visited,a.cvepill:hover,a.cvepill:active{text-decoration:none}
+a.cvepill:hover{border-color:currentColor}
+.actorpill{display:inline-block;font-size:.93em;font-weight:600;line-height:1.35;padding:1px 8px;margin:0 1px;border-radius:999px;white-space:nowrap;letter-spacing:.01em;vertical-align:baseline;border:1px solid transparent}
+.actorpill.actor-gov{color:var(--accent);background:var(--accent-bg);border-color:rgba(0,180,216,.35)}
+.actorpill.actor-claim{color:var(--amber);background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.35)}
+.actorpill.actor-hack{color:var(--purple);background:rgba(139,92,246,.12);border-color:rgba(139,92,246,.35)}
+.actorpill.actor-contest,.actorpill.actor-unknown{color:var(--text-dim);background:rgba(148,163,184,.10);border-color:currentColor;border-style:dashed}
+a.actorpill,a.actorpill:visited,a.actorpill:hover,a.actorpill:active{text-decoration:none}
+a.actorpill:hover{border-color:currentColor}
+/* Legend scaffolding, shared by the digest key and this page. */
+.legend-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:22px;margin:18px 0 10px}
+.legend-group h3{font-size:12px;text-transform:uppercase;letter-spacing:.07em;margin:0 0 10px;font-weight:600}
+.legend-group ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+.legend-group li{display:flex;flex-wrap:wrap;align-items:baseline;gap:9px;font-size:12px;line-height:1.5}
+.legend-group li>span:last-child{flex:1 1 150px}

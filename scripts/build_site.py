@@ -2954,14 +2954,15 @@ def build_methodology():
             f'<span class="tag amber">{esc(idx["band"])} · {idx["pct"]:.0f}/100</span></p>'
             f'<p>{idx["current_count"]} stories in this window. {mom_s}</p>'
         )
-    page = head("Threat Rating — Methodology", "stories.html", root="")
+    page = head("Methodology & Reading Guide", "stories.html", root="")
     page += (
         '<div class="crumb"><a href="index.html">← Home</a> · '
         '<a href="stories.html">Story DB</a></div>'
         '<div class="wiki-body">'
-        '<h1>Threat Rating — Methodology</h1>'
+        '<h1>Methodology &amp; Reading Guide</h1>'
         '<p>Cyber Digest public site · how the per-story threat rating and the homepage '
-        'threat index are computed.</p>'
+        'threat index are computed, and how to read the visual vocabulary used across '
+        'every digest.</p>'
         + band_html
         + METHODOLOGY_BODY
         + "</div>"
@@ -3059,6 +3060,69 @@ METHODOLOGY_BODY = """<h2>What this measures (and what it does not)</h2>
     <li><b>2026-08-31</b> — Site audit; methodology page rewritten to use the shared site
         chrome (previously a standalone document).</li>
   </ul>
+
+
+<h2>How to read a digest</h2>
+<p>Every daily and monthly edition uses the same small visual vocabulary. Two of the tokens are
+"pills" — an identifier replaced by a styled, linked chip — and they encode <b>different kinds of
+claim</b>. Confusing them is the single easiest mistake to make on this site, so it is worth stating
+plainly.</p>
+
+<div class="legend-grid">
+  <div class="legend-group">
+    <h3>CVE identifiers</h3>
+    <ul>
+      <li><span class="cvepill cve-critical">CVE-XXXX-NNNN</span><span>Critical · CVSS 9.0+</span></li>
+      <li><span class="cvepill cve-high">CVE-XXXX-NNNN</span><span>High · CVSS 7.0&ndash;8.9</span></li>
+      <li><span class="cvepill cve-medium">CVE-XXXX-NNNN</span><span>Medium · CVSS 4.0&ndash;6.9</span></li>
+      <li><span class="cvepill cve-low">CVE-XXXX-NNNN</span><span>Low · below 4.0</span></li>
+      <li><span class="cvepill cve-unrated">CVE-XXXX-NNNN</span><span>No severity resolved — not the same as low</span></li>
+    </ul>
+  </div>
+  <div class="legend-group">
+    <h3>Threat actors <small>· MITRE ATT&amp;CK</small></h3>
+    <ul>
+      <li><span class="actorpill actor-gov">APT29</span><span>State attribution stated by MITRE ATT&amp;CK</span></li>
+      <li><span class="actorpill actor-claim">ShinyHunters</span><span>Self-declared, or criminal-reporting attribution</span></li>
+      <li><span class="actorpill actor-contest">Transparent Tribe</span><span>Contested — ATT&amp;CK hedges, or two plausible sponsors</span></li>
+      <li><span class="actorpill actor-unknown">ZIRCONIUM</span><span>No attribution in MITRE ATT&amp;CK</span></li>
+    </ul>
+  </div>
+</div>
+
+<h3>CVE pills colour severity — a measurement</h3>
+<p>A CVE identifier is coloured by its <b>CVSS base band</b> from the National Vulnerability Database:
+Critical 9.0 and above, High 7.0–8.9, Medium 4.0–6.9, Low below 4.0. Where a vendor's own label and the
+CVSS band disagree, the CVSS band wins. An identifier whose band cannot be resolved renders
+<b>neutral and dashed</b> rather than guessing — absence reads as absence, not as "low". Clicking one
+opens the CVE in the ATT&amp;CK matrix tool, or its wiki page when the matrix does not hold it.</p>
+
+<h3>Threat-actor pills colour attribution confidence — a claim</h3>
+<p>An actor name is drawn from the <b>MITRE ATT&amp;CK</b> intrusion-set registry (191 groups, 811 names
+and aliases). There is deliberately <b>no severity colour</b> here: unlike a vulnerability there is no
+measured number for how dangerous an actor is, and colouring by sponsor country would make a contested
+political claim on a public page. So the colour describes how well-corroborated the <em>naming</em> is.</p>
+<p>Where ATT&amp;CK states no attribution, the pill says so instead of guessing, and where ATT&amp;CK hedges, or
+two sponsors are equally plausible, it renders contested. A pill links to this wiki's actor page, which
+carries the aliases, the ATT&amp;CK identifier and the mapped techniques. Because the same actor carries
+several vendor names (ATT&amp;CK, Microsoft, Google TAG, CrowdStrike), the pill shows the name <em>as the
+source used it</em> and the page reconciles the aliases.</p>
+
+<h3>Story signals</h3>
+<p><b>Reliability tier</b> (1 = official primary, 4 = leads only) grades the source. <b>Verification</b>
+records whether a story is corroborated: <em>Verified</em> by a second source or the principal,
+<em>Reported</em> when a single outlet carries it or the claim is still in progress, <em>Unverified</em>
+where we could not corroborate it. <b>Breach classification</b> separates a breach the victim or a
+regulator has acknowledged (<em>Confirmed</em>) from one that is indicated but unacknowledged
+(<em>Probable</em>).</p>
+
+<h3>Indicators of compromise</h3>
+<p>Where a story names a malware family for which live abuse.ch indicators exist, the card carries an
+<b>IOCs</b> badge and a collapsed <em>Indicators of compromise</em> block of <b>defanged</b> values
+(<code>hxxp://</code>, <code>evil[.]com</code>). The defanging is deliberate: <b>never click, resolve or
+fetch these values</b>, and note that nothing on this site ever requests one. Indicators are third-party
+claims — they corroborate a report, they never prove one, and their presence does not mean a story's own
+hosts are listed.</p>
 """
 
 def build_globe():
