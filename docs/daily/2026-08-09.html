@@ -363,42 +363,42 @@ html[data-theme-mode="light"] .theme-toggle .tt-light{display:inline}
 .story-card h3{font-size:1.02rem;font-weight:600;color:var(--text);margin-bottom:7px;line-height:1.4}
 .story-card p.summary{color:var(--text-muted);font-size:13px;line-height:1.68;margin-bottom:12px}
 .story-card .meta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:12px}
-.story-card .meta .source{color:var(--accent);text-decoration:none;font-weight:500;padding:2px 10px;border:1px solid var(--border);border-radius:999px;transition:all .15s}
+.story-card .meta .source, .legend-group .source{color:var(--accent);text-decoration:none;font-weight:500;padding:2px 10px;border:1px solid var(--border);border-radius:999px;transition:all .15s}
 span.source{padding:2px 10px;border:1px solid var(--border);border-radius:999px;display:inline-block}
-.story-card .meta .source:hover{border-color:var(--accent);background:var(--accent-bg)}
-.story-card .meta .reliability{display:inline-flex;align-items:center;gap:4px;color:var(--text-dim)}
-.story-card .meta .reliability .tier-1{color:var(--green)}
-.story-card .meta .reliability .tier-2{color:var(--amber)}
-.story-card .meta .reliability .tier-3{color:var(--text-muted)}
-.story-card .meta .reliability .tier-4{color:var(--red)}
+.story-card .meta .source:hover, .legend-group .source:hover{border-color:var(--accent);background:var(--accent-bg)}
+.story-card .meta .reliability, .legend-group .reliability{display:inline-flex;align-items:center;gap:4px;color:var(--text-dim)}
+.story-card .meta .reliability .tier-1, .legend-group .reliability .tier-1{color:var(--green)}
+.story-card .meta .reliability .tier-2, .legend-group .reliability .tier-2{color:var(--amber)}
+.story-card .meta .reliability .tier-3, .legend-group .reliability .tier-3{color:var(--text-muted)}
+.story-card .meta .reliability .tier-4, .legend-group .reliability .tier-4{color:var(--red)}
 /* Verification badge — traffic-light, sits beside the reliability tier in the
    card's meta row (the sourcing line is metadata, not prose, so it no longer
    trails the summary paragraph). Green = corroborated, amber = single-source /
    claim in progress, red = unverified, grey = unrecognised label. */
-.story-card .meta .verification{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:2px 9px;border-radius:999px;border:1px solid transparent;letter-spacing:.02em}
-.story-card .meta .verification .dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex:0 0 auto}
-.story-card .meta .verification.v-verified{color:var(--green);background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.32)}
-.story-card .meta .verification.v-reported{color:var(--amber);background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.32)}
-.story-card .meta .verification.v-unverified{color:var(--red);background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.32)}
-.story-card .meta .verification.v-other{color:var(--text-dim);background:rgba(148,163,184,.12);border-color:rgba(148,163,184,.32)}
-[data-theme="light"] .story-card .meta .verification.v-verified{background:rgba(22,163,74,.12)}
-[data-theme="light"] .story-card .meta .verification.v-reported{background:rgba(217,119,6,.12)}
-[data-theme="light"] .story-card .meta .verification.v-unverified{background:rgba(220,38,38,.12)}
-[data-theme="light"] .story-card .meta .verification.v-other{background:rgba(100,116,139,.12)}
+.story-card .meta .verification, .legend-group .verification{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:2px 9px;border-radius:999px;border:1px solid transparent;letter-spacing:.02em}
+.story-card .meta .verification .dot, .legend-group .verification .dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex:0 0 auto}
+.story-card .meta .verification.v-verified, .legend-group .verification.v-verified{color:var(--green);background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.32)}
+.story-card .meta .verification.v-reported, .legend-group .verification.v-reported{color:var(--amber);background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.32)}
+.story-card .meta .verification.v-unverified, .legend-group .verification.v-unverified{color:var(--red);background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.32)}
+.story-card .meta .verification.v-other, .legend-group .verification.v-other{color:var(--text-dim);background:rgba(148,163,184,.12);border-color:rgba(148,163,184,.32)}
+[data-theme="light"] .story-card .meta .verification.v-verified, [data-theme="light"] .legend-group .verification.v-verified{background:rgba(22,163,74,.12)}
+[data-theme="light"] .story-card .meta .verification.v-reported, [data-theme="light"] .legend-group .verification.v-reported{background:rgba(217,119,6,.12)}
+[data-theme="light"] .story-card .meta .verification.v-unverified, [data-theme="light"] .legend-group .verification.v-unverified{background:rgba(220,38,38,.12)}
+[data-theme="light"] .story-card .meta .verification.v-other, [data-theme="light"] .legend-group .verification.v-other{background:rgba(100,116,139,.12)}
 /* Breach-classification badge — same slot, only on breach/leak stories. Red =
    confirmed breach, amber = probable, grey = unverified claim / recycled dump. */
-.story-card .meta .breach{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:2px 9px;border-radius:999px;border:1px solid transparent;letter-spacing:.02em}
-.story-card .meta .breach .dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex:0 0 auto}
-.story-card .meta .breach.b-confirmed{color:var(--red);background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.32)}
-.story-card .meta .breach.b-probable{color:var(--amber);background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.32)}
+.story-card .meta .breach, .legend-group .breach{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:2px 9px;border-radius:999px;border:1px solid transparent;letter-spacing:.02em}
+.story-card .meta .breach .dot, .legend-group .breach .dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex:0 0 auto}
+.story-card .meta .breach.b-confirmed, .legend-group .breach.b-confirmed{color:var(--red);background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.32)}
+.story-card .meta .breach.b-probable, .legend-group .breach.b-probable{color:var(--amber);background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.32)}
 .story-card .meta .breach.b-unverified,
 .story-card .meta .breach.b-recycled,
-.story-card .meta .breach.b-other{color:var(--text-dim);background:rgba(148,163,184,.12);border-color:rgba(148,163,184,.32)}
-[data-theme="light"] .story-card .meta .breach.b-confirmed{background:rgba(220,38,38,.12)}
-[data-theme="light"] .story-card .meta .breach.b-probable{background:rgba(217,119,6,.12)}
+.story-card .meta .breach.b-other, .legend-group .breach.b-other{color:var(--text-dim);background:rgba(148,163,184,.12);border-color:rgba(148,163,184,.32)}
+[data-theme="light"] .story-card .meta .breach.b-confirmed, [data-theme="light"] .legend-group .breach.b-confirmed{background:rgba(220,38,38,.12)}
+[data-theme="light"] .story-card .meta .breach.b-probable, [data-theme="light"] .legend-group .breach.b-probable{background:rgba(217,119,6,.12)}
 [data-theme="light"] .story-card .meta .breach.b-unverified,
 [data-theme="light"] .story-card .meta .breach.b-recycled,
-[data-theme="light"] .story-card .meta .breach.b-other{background:rgba(100,116,139,.12)}
+[data-theme="light"] .story-card .meta .breach.b-other, [data-theme="light"] .legend-group .breach.b-other{background:rgba(100,116,139,.12)}
 /* IoC corroboration badge — only where the story names a malware family the
    abuse.ch indicator archive holds indicators for. Carries a NAME and a COUNT,
    never an indicator value. Accent (not a severity colour) on purpose: the
@@ -411,10 +411,10 @@ span.source{padding:2px 10px;border:1px solid var(--border);border-radius:999px;
    verification and breach badges, which hard-code an rgba per theme. Only the
    feedonly variant needs one. Do not add a redundant `[data-theme="light"]`
    rule here — it would be a no-op that reads as a fix. */
-.story-card .meta .iocbadge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:2px 9px;border-radius:999px;border:1px solid transparent;letter-spacing:.02em}
-.story-card .meta .iocbadge .dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex:0 0 auto}
-.story-card .meta .iocbadge.ioc-corroborated{color:var(--accent);background:var(--accent-bg);border-color:currentColor;border-style:dashed}
-.story-card .meta .iocbadge.ioc-feedonly{color:var(--text-dim);background:rgba(148,163,184,.12);border-color:rgba(148,163,184,.32)}
+.story-card .meta .iocbadge, .legend-group .iocbadge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:2px 9px;border-radius:999px;border:1px solid transparent;letter-spacing:.02em}
+.story-card .meta .iocbadge .dot, .legend-group .iocbadge .dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex:0 0 auto}
+.story-card .meta .iocbadge.ioc-corroborated, .legend-group .iocbadge.ioc-corroborated{color:var(--accent);background:var(--accent-bg);border-color:currentColor;border-style:dashed}
+.story-card .meta .iocbadge.ioc-feedonly, .legend-group .iocbadge.ioc-feedonly{color:var(--text-dim);background:rgba(148,163,184,.12);border-color:rgba(148,163,184,.32)}
 /* Threat-actor pills — inline in prose, like the CVE pill, but a DELIBERATELY
    different visual family: not monospace, and the colour encodes how
    well-corroborated the NAMING is, not severity. A CVE pill in red means
@@ -447,7 +447,7 @@ a.actorpill:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .ioclist .iocmeta{color:var(--text-dim);font-size:11px}
 .ioclist .iocwarn{margin:10px 0 0;font-size:11px;line-height:1.55;color:var(--text-dim)}
 
-[data-theme="light"] .story-card .meta .iocbadge.ioc-feedonly{background:rgba(100,116,139,.12)}
+[data-theme="light"] .story-card .meta .iocbadge.ioc-feedonly, [data-theme="light"] .legend-group .iocbadge.ioc-feedonly{background:rgba(100,116,139,.12)}
 
 /* Key to the page — the digest now carries enough visual signals (CVE pills,
    actor pills, reliability, verification, breach, IoC badges) that a reader
@@ -464,7 +464,7 @@ a.actorpill:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .legend-note{font-size:11.5px;color:var(--text-dim);line-height:1.6;margin:13px 0 0;font-style:italic}
 .legend-foot{font-size:12px;color:var(--text-dim);margin:22px 0 0}
 .legend-foot a{color:var(--accent);font-weight:600}
-.story-card .meta .date{color:var(--text-dim);margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px}
+.story-card .meta .date, .legend-group .date{color:var(--text-dim);margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px}
 /* Tag badge */
 .tag{display:inline-block;font-size:11px;font-weight:500;padding:3px 10px;border-radius:999px;letter-spacing:.3px}
 .tag.blue{background:var(--accent-bg);color:var(--accent)}
