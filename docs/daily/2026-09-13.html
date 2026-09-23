@@ -399,6 +399,18 @@ span.source{padding:2px 10px;border:1px solid var(--border);border-radius:999px;
 [data-theme="light"] .story-card .meta .breach.b-unverified,
 [data-theme="light"] .story-card .meta .breach.b-recycled,
 [data-theme="light"] .story-card .meta .breach.b-other{background:rgba(100,116,139,.12)}
+/* IoC corroboration badge — only where the story names a malware family the
+   abuse.ch indicator archive holds indicators for. Carries a NAME and a COUNT,
+   never an indicator value. Accent (not a severity colour) on purpose: the
+   family being well-attested is not a severity claim about this story, and it
+   must not read as a breach or verification verdict. Dashed border marks it as
+   the softer, corroboration-only signal. */
+.story-card .meta .iocbadge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:2px 9px;border-radius:999px;border:1px solid transparent;letter-spacing:.02em}
+.story-card .meta .iocbadge .dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex:0 0 auto}
+.story-card .meta .iocbadge.ioc-corroborated{color:var(--accent);background:var(--accent-bg);border-color:currentColor;border-style:dashed}
+.story-card .meta .iocbadge.ioc-feedonly{color:var(--text-dim);background:rgba(148,163,184,.12);border-color:rgba(148,163,184,.32)}
+[data-theme="light"] .story-card .meta .iocbadge.ioc-corroborated{background:var(--accent-bg)}
+[data-theme="light"] .story-card .meta .iocbadge.ioc-feedonly{background:rgba(100,116,139,.12)}
 .story-card .meta .date{color:var(--text-dim);margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px}
 /* Tag badge */
 .tag{display:inline-block;font-size:11px;font-weight:500;padding:3px 10px;border-radius:999px;letter-spacing:.3px}
