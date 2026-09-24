@@ -509,44 +509,6 @@ a.actorpill:hover{border-color:currentColor}
 .legend-group li{display:flex;flex-wrap:wrap;align-items:baseline;gap:9px;font-size:12px;line-height:1.5}
 .legend-group li>span:last-child{flex:1 1 150px}
 
-/* ===== Daily archive — signal cards + filter bar (redesign 2026-09-22) ===== */
-.daily-filters{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin:0 0 22px;padding:12px 14px;background:var(--surface);border:1px solid var(--border);border-radius:11px}
-.daily-filters .dq{flex:1;min-width:220px;font:400 13px Inter,sans-serif;padding:9px 13px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);color:var(--text);transition:border-color .15s}
-.daily-filters .dq:focus,.daily-filters select:focus{outline:none;border-color:var(--accent)}
-.df{display:flex;align-items:center;gap:6px}
-.df-l{font-size:10px;font-weight:600;letter-spacing:.9px;text-transform:uppercase;color:var(--text-dim)}
-.daily-filters select{font:500 12.5px Inter,sans-serif;padding:8px 10px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);color:var(--text-secondary);max-width:186px;cursor:pointer}
-.dclear{font:600 12px Inter,sans-serif;padding:8px 14px;border-radius:8px;background:var(--accent-bg);border:1px solid var(--accent);color:var(--accent);cursor:pointer;transition:background .15s,color .15s}
-.dclear:hover{background:var(--accent);color:#04222b}
-.dcounter{margin-left:auto;font:500 11.5px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--text-dim);white-space:nowrap}
-.daily-month h2 em{margin-left:auto;font-size:12px;font-weight:500;color:var(--text-dim)}
-.dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(308px,1fr));gap:14px}
-.dcard{position:relative;display:flex;flex-direction:column;text-decoration:none;color:inherit;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;min-height:252px;transition:transform .15s,border-color .15s}
-.dcard:hover{transform:translateY(-3px);border-color:var(--border-light);text-decoration:none}
-.dcard.is-latest{border-color:var(--accent);box-shadow:0 0 20px var(--accent-glow)}
-.dcard-bar{display:flex;gap:2px;height:6px;background:var(--surface2);flex-shrink:0}
-.dcard-bar span{display:block;min-width:3px}
-.dcard-head{display:flex;gap:12px;align-items:flex-start;padding:14px 16px 0}
-.dcard-day{flex-shrink:0;min-width:44px;text-align:center;background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:5px 7px}
-.dcard-day b{display:block;font-size:19px;font-weight:800;line-height:1.1;letter-spacing:-.5px;color:var(--text)}
-.dcard-day span{font-size:9.5px;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim)}
-.dcard-head h3{font-size:14px;font-weight:600;line-height:1.42;margin:0;color:var(--text);display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
-.dcard-pill{margin-left:auto;flex-shrink:0;font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#04222b;background:var(--accent);padding:3px 8px;border-radius:99px}
-[data-theme="light"] .dcard-pill{color:#fff}
-.dcard-foot{margin-top:auto;padding:12px 16px 14px;border-top:1px solid var(--border)}
-.dcard-nums{display:flex;gap:16px;margin-bottom:9px}
-.dcard-nums b{display:block;font-size:16px;font-weight:800;line-height:1.1;color:var(--text)}
-.dcard-nums span{font-size:9.5px;letter-spacing:.7px;text-transform:uppercase;color:var(--text-dim)}
-.dcard-nums .hot b{color:var(--accent)}
-.dcard-secs{display:flex;gap:5px;flex-wrap:wrap}
-/* A2 signals row — indicator chip + actor pills, the digest's own vocabulary */
-.dcard-sig{display:flex;flex-wrap:wrap;gap:5px;align-items:center;padding:9px 16px 0}
-.dcard-sig .iocbadge{font-size:10.5px;line-height:1.5}
-.dcard-sig .actorpill{font-size:10.5px;line-height:1.5;padding:1px 6px}
-.dcard-sig .iocbadge .dot{display:inline-block;width:5px;height:5px;border-radius:99px;background:currentColor}
-.dsec{font-size:10.5px;color:var(--text-muted);background:var(--surface2);border:1px solid var(--border);padding:1px 7px;border-radius:5px}
-.dsec b{color:var(--text);margin-left:4px}
-.dcard[hidden],.month-group[hidden]{display:none}
 /* Daily archive — collapsible month groups */
 .month-group{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:16px;overflow:hidden}
 .month-group summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;padding:14px 18px;font-size:17px;font-weight:700;color:var(--text);user-select:none}
@@ -577,3 +539,60 @@ a.actorpill:hover{border-color:currentColor}
 .filters a{color:var(--accent);font-size:13px;cursor:pointer;text-decoration:none}
 .filters a:hover{text-decoration:underline}
 
+/* ===== Daily archive — signal cards + filter bar (redesign 2026-09-22) ===== */
+.daily-filters{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin:0 0 22px;padding:12px 14px;background:var(--surface);border:1px solid var(--border);border-radius:11px}
+.daily-filters .dq{flex:1;min-width:220px;font:400 13px Inter,sans-serif;padding:9px 13px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);color:var(--text);transition:border-color .15s}
+.daily-filters .dq:focus,.daily-filters select:focus{outline:none;border-color:var(--accent)}
+.df{display:flex;align-items:center;gap:6px}
+.df-l{font-size:10px;font-weight:600;letter-spacing:.9px;text-transform:uppercase;color:var(--text-dim)}
+.daily-filters select{font:500 12.5px Inter,sans-serif;padding:8px 10px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);color:var(--text-secondary);max-width:186px;cursor:pointer}
+.dclear{font:600 12px Inter,sans-serif;padding:8px 14px;border-radius:8px;background:var(--accent-bg);border:1px solid var(--accent);color:var(--accent);cursor:pointer;transition:background .15s,color .15s}
+.dclear:hover{background:var(--accent);color:#04222b}
+.dcounter{margin-left:auto;font:500 11.5px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--text-dim);white-space:nowrap}
+.daily-month h2 em{margin-left:auto;font-size:12px;font-weight:500;color:var(--text-dim)}
+.dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(308px,1fr));gap:14px}
+.dcard{position:relative;display:flex;flex-direction:column;text-decoration:none;color:inherit;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;min-height:252px;transition:transform .15s,border-color .15s}
+.dcard:hover{transform:translateY(-3px);border-color:var(--border-light);text-decoration:none}
+.dcard.is-latest{border-color:var(--accent);box-shadow:0 0 20px var(--accent-glow)}
+.dcard-bar{display:flex;gap:2px;height:6px;background:var(--surface2);flex-shrink:0}
+.dcard-bar span{display:block;min-width:3px}
+.dcard-head{display:flex;gap:12px;align-items:flex-start;padding:14px 16px 0}
+.dcard-day{flex-shrink:0;min-width:44px;text-align:center;background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:5px 7px}
+.dcard-day b{display:block;font-size:19px;font-weight:800;line-height:1.1;letter-spacing:-.5px;color:var(--text)}
+.dcard-day span{font-size:9.5px;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim)}
+.dcard-head h3{font-size:14px;font-weight:600;line-height:1.42;margin:0;color:var(--text);display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.dcard-pill{margin-left:auto;flex-shrink:0;font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#04222b;background:var(--accent);padding:3px 8px;border-radius:99px}
+[data-theme="light"] .dcard-pill{color:#fff}
+.dcard-foot{margin-top:auto;padding:12px 16px 14px;border-top:1px solid var(--border)}
+.dcard-nums{display:flex;gap:16px;margin-bottom:9px}
+.dcard-nums b{display:block;font-size:16px;font-weight:800;line-height:1.1;color:var(--text)}
+.dcard-nums span{font-size:9.5px;letter-spacing:.7px;text-transform:uppercase;color:var(--text-dim)}
+.dcard-nums .hot b{color:var(--accent)}
+.dcard-secs{display:flex;gap:5px;flex-wrap:wrap}
+/* The archive is styled by site.css, NOT by the daily template's inline CSS, so any
+   badge class used on a card must be defined HERE as well. .iocbadge lived only in the
+   template, so the chip rendered as unstyled text on the archive (the same trap the
+   legend swatches hit: a class is not styled just because it is styled elsewhere). */
+.iocbadge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:2px 9px;border-radius:999px;border:1px solid transparent;letter-spacing:.02em}
+.iocbadge .dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex:0 0 auto}
+.iocbadge.ioc-corroborated{color:var(--accent);background:var(--accent-bg);border-color:currentColor;border-style:dashed}
+.iocbadge.ioc-feedonly{color:var(--text-dim);background:rgba(148,163,184,.12);border-color:rgba(148,163,184,.32)}
+/* A2 signals row — indicator chip + actor pills, the digest's own vocabulary */
+.dcard-sig{display:flex;flex-wrap:wrap;gap:5px;align-items:center;padding:9px 16px 0}
+.dcard-sig .iocbadge{font-size:10.5px;line-height:1.5}
+.dcard-sig .actorpill{font-size:10.5px;line-height:1.5;padding:1px 6px}
+.dcard-sig .iocbadge .dot{display:inline-block;width:5px;height:5px;border-radius:99px;background:currentColor}
+.dsec{font-size:10.5px;color:var(--text-muted);background:var(--surface2);border:1px solid var(--border);padding:1px 7px;border-radius:5px}
+.dsec b{color:var(--text);margin-left:4px}
+.dcard[hidden],.month-group[hidden]{display:none}
+/* Daily archive — collapsible month groups */
+.month-group{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:16px;overflow:hidden}
+.month-group summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;padding:14px 18px;font-size:17px;font-weight:700;color:var(--text);user-select:none}
+.month-group summary::-webkit-details-marker{display:none}
+.month-group summary::before{content:'▸';color:var(--accent);font-size:13px;flex-shrink:0;transition:transform .15s}
+.month-group[open] summary::before{transform:rotate(90deg)}
+.month-group summary:hover{background:var(--surface-hover)}
+.month-group summary .bar{width:3px;height:18px;background:var(--accent);border-radius:2px;flex-shrink:0}
+.month-group .month-summary{margin-left:auto;font-size:12.5px;font-weight:500;color:var(--text-dim);white-space:nowrap}
+.month-group .dgrid{padding:0 16px 16px}
+@media(max-width:680px){.dgrid{grid-template-columns:1fr}.dcard{height:auto;min-height:230px}.dcounter{width:100%;margin-left:0}.df-l{display:none}}

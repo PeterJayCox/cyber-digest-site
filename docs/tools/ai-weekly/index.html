@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Draft release under a client-side gate: never indexed, never in a sitemap,
+     and disallowed in robots.txt. The page body ships as ciphertext. -->
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="referrer" content="no-referrer">
+<title>AI Weekly — drafts &middot; draft</title>
+<style>
+:root{--bg:#0a0e1a;--surface:#111827;--surface2:#1a2332;--text:#e2e8f0;--muted:#8a9cb6;
+--border:rgba(255,255,255,.08);--accent:#00b4d8;--amber:#f59e0b}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.6}
+.draft-flag{max-width:1100px;margin:18px auto 0;padding:10px 16px;border:1px solid rgba(245,158,11,.4);
+background:rgba(245,158,11,.1);color:#fbbf24;border-radius:10px;font-size:12.5px;font-weight:600;letter-spacing:.02em}
+#aiw-lock{max-width:440px;margin:12vh auto 0;padding:28px 30px;background:var(--surface);
+border:1px solid var(--border);border-radius:14px}
+#aiw-lock h1{font-size:17px;margin:0 0 4px;letter-spacing:-.2px}
+#aiw-lock p{color:var(--muted);font-size:13px;margin:0 0 18px}
+#aiw-pass{width:100%;padding:11px 13px;border-radius:9px;border:1px solid var(--border);
+background:var(--surface2);color:var(--text);font-size:14px;font-family:inherit}
+#aiw-form button{margin-top:12px;width:100%;padding:11px;border-radius:9px;border:1px solid rgba(0,180,216,.4);
+background:rgba(0,180,216,.12);color:var(--accent);font-weight:600;font-size:14px;font-family:inherit;cursor:pointer}
+#aiw-form button:hover{background:rgba(0,180,216,.2)}
+#aiw-err{display:none;margin-top:10px;font-size:12.5px;color:#f87171}
+.aiw-note{margin-top:16px;font-size:11.5px;color:#64748b;border-top:1px solid var(--border);padding-top:12px}
+#aiw-out[hidden]{display:none}
+</style>
+<style id="cd-nav-shared">
+.topnav .inner{max-width:1120px;margin:0 auto;padding:0 24px;display:flex;align-items:center;height:60px;gap:8px}
+.brand{font-size:17px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:10px;letter-spacing:-.4px}
+.brand .dot{width:12px;height:12px;border-radius:50%;background:var(--accent);transition:background .25s}
+.brand small{font-size:11px;color:var(--text-dim);font-weight:400;letter-spacing:1.2px;text-transform:uppercase}
+.brand .brand-logo{display:inline-block;height:22px;width:22px;flex-shrink:0;border-radius:4px;background:url('https://cyber.peterjaycox.com/assets/img/logo-mark-icon.png') center/cover no-repeat}
+[data-theme="light"] .brand .brand-logo{background-image:url('https://cyber.peterjaycox.com/assets/img/logo-mark-icon-light.png')}
+.navlinks{display:flex;gap:2px;margin-left:auto;align-items:center}
+.navlinks a{color:var(--text-muted);font-size:14px;font-weight:500;padding:8px 14px;border-radius:6px;transition:all .12s}
+.navlinks a:hover{color:var(--text);background:var(--surface2);text-decoration:none}
+.navlinks a.active{color:var(--text);background:var(--surface-hover);font-weight:600}
+
+/* --- grouped nav entries: desktop click-to-open dropdowns --- */
+.navgrp{position:relative;display:flex}
+.navdrop{display:inline-flex;align-items:center;gap:6px;background:none;border:0;cursor:pointer;font-family:inherit;color:var(--text-muted);font-size:14px;font-weight:500;padding:8px 14px;border-radius:6px;transition:all .12s}
+.navdrop:hover{color:var(--text);background:var(--surface2)}
+.navgrp.active .navdrop,.navgrp.open .navdrop{color:var(--text);background:var(--surface-hover);font-weight:600}
+.navdrop .caret{font-size:10px;line-height:1;transition:transform .15s}
+.navgrp.open .navdrop .caret{transform:rotate(180deg)}
+.navdrop:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.navmenu{position:absolute;top:calc(100% + 8px);left:0;min-width:250px;max-width:340px;margin:0;padding:8px;list-style:none;background:var(--surface);border:1px solid var(--border);border-radius:10px;box-shadow:0 14px 34px rgba(0,0,0,.38);z-index:120}
+.navmenu[hidden]{display:none}
+.navmenu li{margin:0}
+.navmenu a{display:block;padding:7px 10px;border-radius:6px;color:var(--text-muted);font-size:13.5px;font-weight:500;text-decoration:none;white-space:normal}
+.navmenu a:hover,.navmenu a:focus-visible{color:var(--text);background:var(--surface2)}
+.navmenu a.active{color:var(--text);background:var(--surface-hover);font-weight:600}
+.navmenu a .t{display:block}
+.navmenu .menu-note{display:block;padding:6px 10px 2px;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--text-dim);font-weight:600}
+
+/* --- mobile: one native <details> menu (no JS open/close) --- */
+/* NB: .navmob must NOT be position:relative — the panel is absolutely
+   positioned against .topnav (sticky = positioned) so left/right:0 span the
+   whole bar. Anchoring it to the small Menu button made the panel button-width
+   and clipped its rows. */
+.navmob{display:none;margin-left:auto}
+.navmob>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:6px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-size:14px;font-weight:600}
+.navmob>summary::-webkit-details-marker{display:none}
+.navmob>summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.navmob-panel{position:absolute;top:60px;right:0;left:0;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:0 18px 34px rgba(0,0,0,.42);max-height:74vh;overflow:auto;z-index:150}
+.navmob-list,.navmob-list ul{margin:0;padding:8px 12px;list-style:none}
+.navmob-list a{display:block;padding:10px 12px;border-radius:8px;color:var(--text-secondary);font-size:14.5px;font-weight:500;text-decoration:none}
+.navmob-list a:hover{background:var(--surface2);color:var(--text)}
+.navmob-list a.active{color:var(--text);background:var(--surface-hover);font-weight:600}
+.navmob-grp{padding:2px 0}
+.navmob-grp>summary{list-style:none;cursor:pointer;display:flex;align-items:center;padding:10px 12px;border-radius:8px;color:var(--text-secondary);font-size:14.5px;font-weight:600}
+.navmob-grp>summary::-webkit-details-marker{display:none}
+.navmob-grp>summary::after{content:"▸";margin-left:auto;font-size:11px;color:var(--text-dim)}
+.navmob-grp[open]>summary::after{content:"▾"}
+.navmob-grp>summary.active{color:var(--text);background:var(--surface-hover)}
+.navmob-grp ul{margin:0 0 4px 10px;padding-left:8px;border-left:1px solid var(--border)}
+/* Breakpoint: measured, not guessed. With Daily/Monthly folded into the Reports
+   group AND Flashcards folded into Tools, the desktop row is six items and
+   measures 521px of links + 225px brand + 36px toggle, so it holds ONE line down
+   to ~845px of viewport (single-row at 860px, wraps to two rows at 840px in the
+   fixed 60px bar). The details menu owns everything under 901px, keeping ~40px
+   of margin. Re-measure with a headless-Chrome iframe harness before changing
+   either number. */
+@media(min-width:901px){.navmob{display:none!important}}
+@media(max-width:900px){.navlinks{display:none!important}.navmob{display:block!important}}
+@media(max-width:1280px){.navlinks a,.navdrop{padding:8px 10px;font-size:13.5px}}
+</style>
+</head>
+<body>
+<nav class="topnav"><div class="inner"><a class="brand" href="https://cyber.peterjaycox.com/index.html"><span class="brand-logo" aria-hidden="true"></span> Cyber&nbsp;Digest<small>public site</small></a><div class="navlinks"><a href="https://cyber.peterjaycox.com/index.html"><span class="t">🏠 Home</span></a><a href="https://cyber.peterjaycox.com/stories.html"><span class="t">📚 Story DB</span></a><a href="https://cyber.peterjaycox.com/globe.html"><span class="t">🌍 Globe</span></a><div class="navgrp"><button type="button" class="navdrop" aria-haspopup="true" aria-expanded="false" aria-controls="cdnav-reports"><span class="t">📑 Reports</span><span class="caret" aria-hidden="true">▾</span></button><ul class="navmenu" id="cdnav-reports" hidden><li><a href="https://cyber.peterjaycox.com/daily/"><span class="t">🗓️ Daily</span></a></li><li><a href="https://cyber.peterjaycox.com/monthly/index.html"><span class="t">📅 Monthly</span></a></li><li><a href="https://cyber.peterjaycox.com/reports/index.html"><span class="t">📄 Sector reviews</span></a></li></ul></div><a href="https://cyber.peterjaycox.com/wiki/index.html"><span class="t">🧠 Wiki</span></a><div class="navgrp active"><button type="button" class="navdrop" aria-haspopup="true" aria-expanded="false" aria-controls="cdnav-tools"><span class="t">🧰 Tools</span><span class="caret" aria-hidden="true">▾</span></button><ul class="navmenu" id="cdnav-tools" hidden><li><a href="https://cyber.peterjaycox.com/tools/cve-attack-matrix.html"><span class="t">🛰️ CVE × MITRE ATT&amp;CK / D3FEND matrix</span></a></li><li><a href="https://cyber.peterjaycox.com/flashcards.html"><span class="t">🗂️ Flashcards</span></a></li><li><a href="https://cyber.peterjaycox.com/tools/ai-weekly/index.html" class="active"><span class="t">🧪 AI Weekly (drafts)</span></a></li></ul></div></div><noscript><style>.navgrp{display:none!important}.navmob{display:block!important}</style></noscript><details class="navmob"><summary aria-label="Open site menu"><span aria-hidden="true">☰</span><span class="t">Menu</span></summary><div class="navmob-panel"><ul class="navmob-list"><li><a href="https://cyber.peterjaycox.com/index.html"><span class="t">🏠 Home</span></a></li><li><a href="https://cyber.peterjaycox.com/stories.html"><span class="t">📚 Story DB</span></a></li><li><a href="https://cyber.peterjaycox.com/globe.html"><span class="t">🌍 Globe</span></a></li><li><details class="navmob-grp"><summary class=""><span class="t">📑 Reports</span></summary><ul><li><a href="https://cyber.peterjaycox.com/daily/"><span class="t">🗓️ Daily</span></a></li><li><a href="https://cyber.peterjaycox.com/monthly/index.html"><span class="t">📅 Monthly</span></a></li><li><a href="https://cyber.peterjaycox.com/reports/index.html"><span class="t">📄 Sector reviews</span></a></li></ul></details></li><li><a href="https://cyber.peterjaycox.com/wiki/index.html"><span class="t">🧠 Wiki</span></a></li><li><details class="navmob-grp"><summary class="active"><span class="t">🧰 Tools</span></summary><ul><li><a href="https://cyber.peterjaycox.com/tools/cve-attack-matrix.html"><span class="t">🛰️ CVE × MITRE ATT&amp;CK / D3FEND matrix</span></a></li><li><a href="https://cyber.peterjaycox.com/flashcards.html"><span class="t">🗂️ Flashcards</span></a></li><li><a href="https://cyber.peterjaycox.com/tools/ai-weekly/index.html" class="active"><span class="t">🧪 AI Weekly (drafts)</span></a></li></ul></details></li></ul></div></details><div class="theme-toggle" role="button" tabindex="0" aria-label="Appearance" title="Appearance" onclick="window.__cdTheme.cycle(event)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.__cdTheme.cycle(event)}"><span class="tt-auto" aria-hidden="true">🌗</span><span class="tt-light" aria-hidden="true">☀️</span><span class="tt-dark" aria-hidden="true">🌙</span></div></div></nav>
+
+<div class="draft-flag">DRAFT RELEASE &mdash; not for distribution. Unreleased working drafts of the weekly AI briefing. Content is encrypted; do not circulate beyond the review group.</div>
+
+<section id="aiw-lock">
+  <h1>AI Weekly &mdash; draft releases</h1>
+  <p>Enter the draft password to read this release.</p>
+  <form id="aiw-form" autocomplete="off">
+    <input type="password" id="aiw-pass" placeholder="Password" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Draft password">
+    <button type="submit">Unlock draft</button>
+    <div id="aiw-err" role="alert"></div>
+  </form>
+  <div class="aiw-note">Draft material, unverified, and not a published product. If you are looking for the Cyber Digest, it is on the <a href="https://cyber.peterjaycox.com/index.html" style="color:var(--accent)">home page</a>.</div>
+</section>
+
+<main id="aiw-out" hidden></main>
+
+<script type="application/json" id="aiw-payload">{"v":1,"unconfigured":true}</script>
+<!-- Same-origin, self-hosted asset (not a third-party CDN), so Subresource Integrity does
+     not apply: the file ships from this repo and is integrity-checked by the deploy gates. -->
+<script src="/assets/js/ai-weekly-gate.js" defer></script>
+</body>
+</html>

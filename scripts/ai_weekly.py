@@ -58,7 +58,7 @@ def _b64(raw: bytes) -> str:
     return base64.b64encode(raw).decode("ascii")
 
 
-def encrypt(html: str, pw: str) -> str:
+def encrypt(html: str, pw: str, title: str) -> str:
     """Encrypt one edition fragment into the JSON payload the gate decrypts."""
     salt, iv = os.urandom(16), os.urandom(12)
     key = PBKDF2HMAC(algorithm=hashes.SHA256(), length=KEYLEN, salt=salt,
@@ -66,6 +66,7 @@ def encrypt(html: str, pw: str) -> str:
     ct = AESGCM(key).encrypt(iv, html.encode("utf-8"), None)
     return json.dumps({
         "v": 1,
+        "title": title,
         "kdf": {"name": "PBKDF2", "hash": "SHA-256", "iterations": ITERATIONS, "salt": _b64(salt)},
         "alg": "AES-GCM",
         "iv": _b64(iv),
@@ -129,7 +130,7 @@ def publish(docs: str, nav_html_fn, nav_css_block) -> None:
         except OSError as exc:
             print(f"⚠️ AI Weekly edition {stem} unreadable ({exc}); skipped")
             continue
-        payload = _unconfigured_payload() if locked else encrypt(fragment, pw)
+        payload = _unconfigured_payload() if locked else encrypt(fragment, pw, f"AI Weekly {stem}")
         page = _page(shell, nav_html_fn(f"{OUT_SUBDIR}/{stem}.html", ""), payload,
                      f"AI Weekly {stem}", f"AI Weekly &mdash; {stem}")
         with open(os.path.join(out_dir, f"{stem}.html"), "w", encoding="utf-8") as fh:
@@ -165,7 +166,7 @@ background:#111827;border:1px solid rgba(255,255,255,.08);border-radius:10px;fon
     if locked:
         idx_payload, idx_title = _unconfigured_payload(), "AI Weekly — drafts"
     else:
-        idx_payload, idx_title = encrypt(idx_fragment, pw), "AI Weekly — drafts"
+        idx_payload, idx_title = encrypt(idx_fragment, pw, "AI Weekly — drafts"), "AI Weekly — drafts"
 
     index_html = _page(shell, nav_html_fn(f"{OUT_SUBDIR}/index.html", ""), idx_payload,
                        "AI Weekly — drafts", "AI Weekly &mdash; draft releases")

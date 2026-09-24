@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /tools/ai-weekly/
 
 Sitemap: https://cyber.peterjaycox.com/sitemap.xml
 Sitemap: https://cyber.peterjaycox.com/sitemap-pages.xml

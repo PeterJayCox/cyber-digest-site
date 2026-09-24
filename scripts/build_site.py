@@ -1361,12 +1361,12 @@ DAILY_FILTER_JS = """<script>
     clr.hidden=!act;
     counter.textContent=act? (shown+' of '+total+' editions') : (total+' editions');
   }
-  [q,sec,thr,src].forEach(function(el){
+  [q,sec,thr,src,sig].forEach(function(el){
     el.addEventListener('input',apply);
     el.addEventListener('change',apply);
   });
   clr.addEventListener('click',function(){
-    q.value=''; sec.value=''; thr.value=''; src.value='';
+    q.value=''; sec.value=''; thr.value=''; src.value=''; sig.value='';
     cards.forEach(function(c){ c.hidden=false; });
     groups.forEach(function(g,i){ g.hidden=false; g.open=initial[i]; });
     clr.hidden=true; counter.textContent=total+' editions'; q.focus();
@@ -2370,6 +2370,14 @@ def build_daily(days):
 .dcard-nums span{font-size:9.5px;letter-spacing:.7px;text-transform:uppercase;color:var(--text-dim)}
 .dcard-nums .hot b{color:var(--accent)}
 .dcard-secs{display:flex;gap:5px;flex-wrap:wrap}
+/* The archive is styled by site.css, NOT by the daily template's inline CSS, so any
+   badge class used on a card must be defined HERE as well. .iocbadge lived only in the
+   template, so the chip rendered as unstyled text on the archive (the same trap the
+   legend swatches hit: a class is not styled just because it is styled elsewhere). */
+.iocbadge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:2px 9px;border-radius:999px;border:1px solid transparent;letter-spacing:.02em}
+.iocbadge .dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex:0 0 auto}
+.iocbadge.ioc-corroborated{color:var(--accent);background:var(--accent-bg);border-color:currentColor;border-style:dashed}
+.iocbadge.ioc-feedonly{color:var(--text-dim);background:rgba(148,163,184,.12);border-color:rgba(148,163,184,.32)}
 /* A2 signals row — indicator chip + actor pills, the digest's own vocabulary */
 .dcard-sig{display:flex;flex-wrap:wrap;gap:5px;align-items:center;padding:9px 16px 0}
 .dcard-sig .iocbadge{font-size:10.5px;line-height:1.5}
