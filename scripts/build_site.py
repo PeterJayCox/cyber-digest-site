@@ -3267,12 +3267,50 @@ def build_globe():
 
 def build_flashcards():
     """Copy the standalone (password-gated) Flashforge app to docs/flashcards.html,
-    injecting the shared site navigation bar into the __SITE_NAV__ placeholder."""
+    injecting the shared site navigation bar into the __SITE_NAV__ placeholder.
+
+    The seed data (starter glossary + wiki bundle) never ships in the page: it is read from
+    seed/*.json, encrypted with the site gate passphrase via ai_weekly.encrypt(), and written
+    into #fc-payload for /assets/js/flashcards-gate.js to decrypt in the browser. Same
+    mechanism as the drafts pages — one passphrase (kept outside the repo), one crypto
+    implementation, one place to reason about.
+
+    With no passphrase the page still ships, locked with no payload, so an unconfigured gate
+    cannot leak a deck. Missing seed data aborts the page rather than shipping an app with no
+    decks — a silent empty bundle is the failure worth failing loudly on.
+    """
     src = os.path.join(ROOT, "templates", "flashcards.html")
     if not os.path.exists(src):
         print("⚠️ templates/flashcards.html missing; flashcards page not written")
         return
     html = open(src, encoding="utf-8").read()
+
+    if "__FC_PAYLOAD__" not in html:
+        print("❌ flashcards template carries no __FC_PAYLOAD__ placeholder — the deck data "
+              "would be missing from the page; not writing it")
+        return
+
+    data = {}
+    for key, name in (("starter", "flashcards-starter.json"),
+                      ("bundle", "flashcards-bundle.json")):
+        try:
+            with open(os.path.join(ROOT, "seed", name), encoding="utf-8") as fh:
+                data[key] = json.load(fh)
+        except (OSError, json.JSONDecodeError) as exc:
+            print(f"❌ seed data {name} unreadable ({exc}) — not writing the flashcards page "
+                  f"rather than ship it with no decks")
+            return
+    decks = len(data["bundle"].get("decks", [])) if isinstance(data.get("bundle"), dict) else 0
+
+    import ai_weekly
+    pw = ai_weekly.passphrase()
+    if pw:
+        payload = ai_weekly.encrypt(json.dumps(data, ensure_ascii=False, separators=(",", ":")),
+                                   pw, "Flashforge")
+    else:
+        payload = json.dumps({"v": 1, "unconfigured": True}, separators=(",", ":"))
+    html = html.replace("__FC_PAYLOAD__", payload)
+
     nav = nav_html("flashcards.html", "")            # Flashcards marked active, absolute URLs
     nav = re.sub(r'<div class="theme-toggle"[^>]*>.*?</div>', '', nav, flags=re.S)  # fixed-dark app: drop site theme toggle
     if "__SITE_NAV__" in html:
@@ -3280,7 +3318,12 @@ def build_flashcards():
     else:
         html = html.replace('<div class="wrap">', nav + '\n<div class="wrap">', 1)
     open(os.path.join(DOCS, "flashcards.html"), "w", encoding="utf-8").write(html)
-    print("✅ Flashcards page -> docs/flashcards.html (password-gated standalone + site nav)")
+    if pw:
+        print(f"✅ Flashcards page -> docs/flashcards.html "
+              f"(gated, {len(data['starter'])} starter entries + {decks} wiki decks encrypted)")
+    else:
+        print("⚠️ Flashcards page -> docs/flashcards.html (gate NOT CONFIGURED — no deck "
+              "payload shipped; set it with scripts/set-ai-weekly-password.py)")
 
 
 def build_cve_matrix():
