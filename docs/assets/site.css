@@ -521,7 +521,7 @@ a.actorpill:hover{border-color:currentColor}
 .dcounter{margin-left:auto;font:500 11.5px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--text-dim);white-space:nowrap}
 .daily-month h2 em{margin-left:auto;font-size:12px;font-weight:500;color:var(--text-dim)}
 .dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(308px,1fr));gap:14px}
-.dcard{position:relative;display:flex;flex-direction:column;text-decoration:none;color:inherit;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;height:252px;transition:transform .15s,border-color .15s}
+.dcard{position:relative;display:flex;flex-direction:column;text-decoration:none;color:inherit;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;min-height:252px;transition:transform .15s,border-color .15s}
 .dcard:hover{transform:translateY(-3px);border-color:var(--border-light);text-decoration:none}
 .dcard.is-latest{border-color:var(--accent);box-shadow:0 0 20px var(--accent-glow)}
 .dcard-bar{display:flex;gap:2px;height:6px;background:var(--surface2);flex-shrink:0}
@@ -539,6 +539,11 @@ a.actorpill:hover{border-color:currentColor}
 .dcard-nums span{font-size:9.5px;letter-spacing:.7px;text-transform:uppercase;color:var(--text-dim)}
 .dcard-nums .hot b{color:var(--accent)}
 .dcard-secs{display:flex;gap:5px;flex-wrap:wrap}
+/* A2 signals row — indicator chip + actor pills, the digest's own vocabulary */
+.dcard-sig{display:flex;flex-wrap:wrap;gap:5px;align-items:center;padding:9px 16px 0}
+.dcard-sig .iocbadge{font-size:10.5px;line-height:1.5}
+.dcard-sig .actorpill{font-size:10.5px;line-height:1.5;padding:1px 6px}
+.dcard-sig .iocbadge .dot{display:inline-block;width:5px;height:5px;border-radius:99px;background:currentColor}
 .dsec{font-size:10.5px;color:var(--text-muted);background:var(--surface2);border:1px solid var(--border);padding:1px 7px;border-radius:5px}
 .dsec b{color:var(--text);margin-left:4px}
 .dcard[hidden],.month-group[hidden]{display:none}

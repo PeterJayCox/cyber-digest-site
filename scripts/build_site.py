@@ -274,6 +274,10 @@ NAV_TOOLS_CHILDREN = [
      "Flashcards",
      "🗂️",
      "Flashforge spaced-repetition decks built from the wiki — Cyber Concepts, Entities, Vulnerabilities and Incidents."),
+    ("tools/ai-weekly/index.html",
+     "AI Weekly (drafts)",
+     "🧪",
+     "Unreleased weekly AI briefings for board review — draft releases, password-gated, not indexed."),
 ]
 _NAV_REPORTS_CACHE = None
 
@@ -1135,7 +1139,9 @@ def build_sitemap(days, months, pages, reports):
     open(os.path.join(DOCS, "sitemap.xml"), "w", encoding="utf-8").write("\n".join(idx) + "\n")
 
     # robots.txt: advertise the index plus each per-section sitemap.
-    robots = ["User-agent: *", "Allow: /", "",
+    # Draft releases (/tools/ai-weekly/) are noindexed, absent from every sitemap, and
+    # disallowed here — they are working drafts, not a published series.
+    robots = ["User-agent: *", "Allow: /", "Disallow: /tools/ai-weekly/", "",
               f"Sitemap: {SITE_BASE}/sitemap.xml"]
     for label in SITEMAP_SECTIONS:
         robots.append(f"Sitemap: {SITE_BASE}/sitemap-{label}.xml")
@@ -1234,6 +1240,53 @@ def edition_lead(d,month):
         if s: return s[:1].upper()+s[1:]
     return ""
 
+def page_signals(path):
+    """Signals exactly as the PAGE renders them, or None.
+
+    The archive card links to its own edition, so it must never claim an indicator
+    badge or an actor that the page does not actually show. Re-deriving the match
+    from the DB disagreed with the page on a handful of older editions (the DB
+    summary and the vault summary are not the same text), so we read what the page
+    produced instead. Also avoids re-running the matchers over the whole corpus
+    (~4 minutes).
+
+    Story cards only. Actor pills also appear in the Executive Summary and other
+    prose blocks; those are an edition-level mention, not a per-story signal, and
+    counting them would inflate every card.
+
+    Returns None when the page is missing or has no story cards, so the caller can
+    leave the edition without a signals row rather than assert a wrong one.
+    """
+    if not os.path.exists(path):
+        return None
+    try:
+        t=open(path,encoding="utf-8",errors="replace").read()
+    except OSError:
+        return None
+    t=re.sub(r"<style[^>]*>.*?</style>","",t,flags=re.S)
+    t=re.sub(r"<script[^>]*>.*?</script>","",t,flags=re.S)
+    cut=t.find('id="legend"')            # the key carries one swatch of EVERY family
+    if cut>0:
+        t=t[:cut]
+    cards=re.findall(r'<div class="story-card.*?(?=<div class="story-card|</section>)',t,re.S)
+    if not cards:
+        return None
+    ioc_stories=0; fams={}; actors={}
+    for c in cards:
+        if re.search(r'<span class="iocbadge',c):
+            ioc_stories+=1
+            for fam in re.findall(r'title="\d+ ([^"]+?) corroborating',c):
+                fam=fam.strip()
+                fams[fam]=fams.get(fam,0)+1
+        # pills are anchors on the page (<a class="actorpill actor-x" ...>Name</a>)
+        for frag in c.split('class="actorpill actor-')[1:]:
+            band="actor-"+frag.split('"')[0]
+            nm=frag.split(">",1)[1].split("<")[0].strip()
+            if nm:
+                actors.setdefault(nm,band)
+    return {"ioc_stories":ioc_stories,"ioc_families":fams,"actors":actors}
+
+
 def daily_card_data(days):
     """Full per-date mixes + lead judgement for the Daily archive, keyed by date.
 
@@ -1248,7 +1301,8 @@ def daily_card_data(days):
     for r in rows:
         d=r["digest_date"]
         if not d: continue
-        a=agg.setdefault(d,{"count":0,"sectors":{},"threats":{},"sources":{},"tier1":0,"anz":0,"top":""})
+        a=agg.setdefault(d,{"count":0,"sectors":{},"threats":{},"sources":{},"tier1":0,"anz":0,
+                            "top":"","ioc_stories":0,"ioc_families":{},"actors":{}})
         a["count"]+=1
         if not a["top"] and (r["headline"] or "").strip():
             a["top"]=(r["headline"] or "").strip()   # rows arrive score-desc, so first wins
@@ -1274,22 +1328,28 @@ DAILY_FILTER_JS = """<script>
   if(!bar) return;
   var q=document.getElementById('dq'), sec=document.getElementById('dsec'),
       thr=document.getElementById('dthr'), src=document.getElementById('dsrc'),
-      clr=document.getElementById('dclear'), counter=document.getElementById('dcounter');
+      clr=document.getElementById('dclear'), counter=document.getElementById('dcounter'),
+      sig=document.getElementById('dsig');
   var cards=[].slice.call(document.querySelectorAll('.dcard'));
   var groups=[].slice.call(document.querySelectorAll('details.month-group'));
   var initial=groups.map(function(g){ return g.open; });
   var total=cards.length;
   function has(v){ return ('|'+v+'|'); }
   function isActive(){
-    return q.value.trim()!=='' || sec.value!=='' || thr.value!=='' || src.value!=='';
+    return q.value.trim()!=='' || sec.value!=='' || thr.value!=='' || src.value!==''
+        || sig.value!=='';
   }
   function apply(){
-    var t=q.value.trim().toLowerCase(), s=sec.value, th=thr.value, so=src.value, shown=0;
+    var t=q.value.trim().toLowerCase(), s=sec.value, th=thr.value, so=src.value,
+        sg=sig.value, shown=0;
     cards.forEach(function(c){
       var ok=(!t || c.dataset.q.indexOf(t)>-1)
           && (!s  || has(c.dataset.sector).indexOf(has(s))>-1)
           && (!th || has(c.dataset.threat).indexOf(has(th))>-1)
-          && (!so || has(c.dataset.source).indexOf(has(so))>-1);
+          && (!so || has(c.dataset.source).indexOf(has(so))>-1)
+          && (!sg || (sg==='ioc'   && c.dataset.ioc==='1')
+                  || (sg==='actor' && c.dataset.actor==='1')
+                  || (sg==='both'  && c.dataset.ioc==='1' && c.dataset.actor==='1'));
       c.hidden=!ok;
       if(ok) shown++;
     });
@@ -2160,6 +2220,12 @@ def build_daily(days):
     # proportional threat strip, hard numbers in a fixed-height grid, and the
     # facets (sector/threat/source) wired to a filter bar.
     data=daily_card_data(days)
+    # Signals come from the freshly rendered pages (they are written just above),
+    # never from a re-derivation, so a card cannot contradict its own edition.
+    for _d,_mo in days:
+        _sig=page_signals(os.path.join(DOCS,"daily",f"{_d}.html"))
+        if _sig and _d in data:
+            data[_d].update(_sig)
     seen=set()
     month_order=[mo for d,mo in days if not (mo in seen or seen.add(mo))]
     current_month = month_order[0] if month_order else (days[0][1] if days else None)
@@ -2184,13 +2250,44 @@ def build_daily(days):
                      for v,lbl,cls in numz)
         secs="".join(f'<span class="dsec">{esc(k)}<b>{n}</b></span>' for k,n in sectors[:3])
         pill='<span class="dcard-pill">latest</span>' if d==latest_date else ""
+        # ---- A2 signals row -------------------------------------------------
+        # Pills are SPANS, never links: the whole card is an <a>, and a nested
+        # anchor is invalid HTML. Omitting the row entirely when an edition has
+        # neither signal keeps absence silent (the cve-unrated convention).
+        iocn=a.get("ioc_stories") or 0
+        acts=a.get("actors") or {}
+        bits=[]
+        if iocn:
+            fams=sorted((a.get("ioc_families") or {}).items(),key=lambda x:(-x[1],x[0]))
+            named=", ".join(k for k,_ in fams[:2])
+            more=(" +%d" % (len(fams)-2)) if len(fams)>2 else ""
+            bits.append(
+                f'<span class="iocbadge ioc-corroborated" title="{iocn} stor'
+                f'{"y" if iocn==1 else "ies"} in this edition carry live abuse.ch '
+                f'corroborating indicators for {esc(named)}{esc(more)}. Corroboration '
+                f'only \u2014 it does not confirm the claim.">{iocn} IOC'
+                f'{"" if iocn==1 else "s"} \u00b7 {esc(named)}{esc(more)}</span>')
+        if acts:
+            order={"actor-gov":0,"actor-claim":1,"actor-contest":2,"actor-unknown":3}
+            names=sorted(acts.items(),key=lambda x:(order.get(x[1],9),x[0]))
+            cap=1 if iocn else 2        # the chip already occupies the row
+            for nm,band in names[:cap]:
+                bits.append(f'<span class="actorpill {band}" title="{esc(nm)}">'
+                            f'{esc(nm)}</span>')
+            if len(names)>cap:
+                rest=", ".join(n for n,_ in names[cap:])
+                bits.append(f'<span class="actorpill actor-more" title="{esc(rest)}">'
+                            f'+{len(names)-cap}</span>')
+        sig=(f'  <div class="dcard-sig">{"".join(bits)}</div>\n') if bits else ""
         return (f'<a class="dcard{" is-latest" if d==latest_date else ""}" href="{d}.html"\n'
                 f'      data-q="{esc(q)}" data-sector="{esc("|".join(k for k,_ in sectors))}"\n'
                 f'      data-threat="{esc("|".join(k for k,_ in threats))}"\n'
-                f'      data-source="{esc("|".join(k for k,_ in sources))}">\n'
+                f'      data-source="{esc("|".join(k for k,_ in sources))}"\n'
+                f'      data-ioc="{1 if iocn else 0}" data-actor="{1 if acts else 0}">\n'
                 f'  <div class="dcard-bar">{bar}</div>\n'
                 f'  <div class="dcard-head"><div class="dcard-day"><b>{d[8:10]}</b>'
                 f'<span>{_dow(d)}</span></div><h3>{esc(lead)}</h3>{pill}</div>\n'
+                f'{sig}'
                 f'  <div class="dcard-foot"><div class="dcard-nums">{nums}</div>'
                 f'<div class="dcard-secs">{secs}</div></div>\n</a>')
 
@@ -2230,6 +2327,7 @@ def build_daily(days):
   <label class="df"><span class="df-l">Sector</span><select id="dsec">{_opts(fsec,"All sectors")}</select></label>
   <label class="df"><span class="df-l">Threat</span><select id="dthr">{_opts(fthr,"All threat types")}</select></label>
   <label class="df"><span class="df-l">Source</span><select id="dsrc">{_opts(fsrc,"All sources")}</select></label>
+  <label class="df"><span class="df-l">Signals</span><select id="dsig" aria-label="Filter by signal"><option value="">All editions</option><option value="ioc">Indicators on file</option><option value="actor">Named actors</option><option value="both">Both</option></select></label>
   <button type="button" id="dclear" class="dclear" hidden>Clear filters</button>
   <span class="dcounter" id="dcounter" aria-live="polite">{len(days)} editions</span>
 </div>'''
@@ -2254,7 +2352,7 @@ def build_daily(days):
 .dcounter{margin-left:auto;font:500 11.5px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--text-dim);white-space:nowrap}
 .daily-month h2 em{margin-left:auto;font-size:12px;font-weight:500;color:var(--text-dim)}
 .dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(308px,1fr));gap:14px}
-.dcard{position:relative;display:flex;flex-direction:column;text-decoration:none;color:inherit;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;height:252px;transition:transform .15s,border-color .15s}
+.dcard{position:relative;display:flex;flex-direction:column;text-decoration:none;color:inherit;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;min-height:252px;transition:transform .15s,border-color .15s}
 .dcard:hover{transform:translateY(-3px);border-color:var(--border-light);text-decoration:none}
 .dcard.is-latest{border-color:var(--accent);box-shadow:0 0 20px var(--accent-glow)}
 .dcard-bar{display:flex;gap:2px;height:6px;background:var(--surface2);flex-shrink:0}
@@ -2272,6 +2370,11 @@ def build_daily(days):
 .dcard-nums span{font-size:9.5px;letter-spacing:.7px;text-transform:uppercase;color:var(--text-dim)}
 .dcard-nums .hot b{color:var(--accent)}
 .dcard-secs{display:flex;gap:5px;flex-wrap:wrap}
+/* A2 signals row — indicator chip + actor pills, the digest's own vocabulary */
+.dcard-sig{display:flex;flex-wrap:wrap;gap:5px;align-items:center;padding:9px 16px 0}
+.dcard-sig .iocbadge{font-size:10.5px;line-height:1.5}
+.dcard-sig .actorpill{font-size:10.5px;line-height:1.5;padding:1px 6px}
+.dcard-sig .iocbadge .dot{display:inline-block;width:5px;height:5px;border-radius:99px;background:currentColor}
 .dsec{font-size:10.5px;color:var(--text-muted);background:var(--surface2);border:1px solid var(--border);padding:1px 7px;border-radius:5px}
 .dsec b{color:var(--text);margin-left:4px}
 .dcard[hidden],.month-group[hidden]{display:none}
@@ -3205,6 +3308,18 @@ def build_cve_matrix():
     build_cve_matrix_stub()
 
 
+def build_ai_weekly():
+    """Emit the password-gated draft releases under docs/tools/ai-weekly/.
+
+    The gate, encryption and index assembly live in scripts/ai_weekly.py; this is only
+    the wiring, so the draft pages survive a `--fresh` build (which wipes docs/). The
+    edition fragments themselves are content owned by the Cyber Digest project
+    (~/Desktop/Hermes/Cyber Digest/Weekly-AI/), not by this repo.
+    """
+    import ai_weekly
+    ai_weekly.publish(DOCS, nav_html, _nav_css_block)
+
+
 def build_cve_matrix_stub():
     """Interim redirect for the old /wiki/cve-attack-matrix.html path.
 
@@ -3580,6 +3695,7 @@ def main():
     build_globe()
     build_flashcards()
     build_cve_matrix()
+    build_ai_weekly()
     build_404()
     build_securitytxt()
     build_security_page()
