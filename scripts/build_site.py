@@ -275,9 +275,9 @@ NAV_TOOLS_CHILDREN = [
      "🗂️",
      "Flashforge spaced-repetition decks built from the wiki — Cyber Concepts, Entities, Vulnerabilities and Incidents."),
     ("tools/ai-weekly/index.html",
-     "AI Weekly (drafts)",
+     "Drafts",
      "🧪",
-     "Unreleased weekly AI briefings for board review — draft releases, password-gated, not indexed."),
+     "Unreleased weekly briefings for board review — draft releases, password-gated, not indexed."),
 ]
 _NAV_REPORTS_CACHE = None
 
