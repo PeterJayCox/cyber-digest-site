@@ -1,0 +1,542 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+(function(){var d=document.documentElement;
+function sys(){try{return (window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark';}catch(e){return 'dark';}}
+function saved(){try{var s=localStorage.getItem('cd-theme2');return (s==='light'||s==='dark')?s:null;}catch(e){return null;}}
+function mode(){return saved()||'auto';}
+function save(m){try{if(m==='auto'){localStorage.removeItem('cd-theme2');}else{localStorage.setItem('cd-theme2',m);}}catch(e){}}
+function label(m){var b=document.querySelector('.theme-toggle');if(!b){return;}
+var t={auto:'Appearance: auto — follows your system ('+sys()+'). Click to cycle auto → light → dark.',
+light:'Appearance: light (pinned). Shift-click to follow your system again.',
+dark:'Appearance: dark (pinned). Shift-click to follow your system again.'}[m];
+if(t){b.setAttribute('title',t);b.setAttribute('aria-label',t);}}
+function apply(){var m=mode();d.setAttribute('data-theme',m==='auto'?sys():m);d.setAttribute('data-theme-mode',m);label(m);}
+/* Cycle visits all three states, always flipping away from what is on screen
+   first: auto -> a pin (the opposite of the current look) -> the other pin ->
+   auto. shiftKey jumps straight back to auto. */
+function cycle(ev){var m=mode();
+if(ev&&ev.shiftKey){save('auto');}
+else if(m==='auto'){save(sys()==='dark'?'light':'dark');}
+else if(m===sys()){save('auto');}
+else{save(m==='light'?'dark':'light');}
+apply();}
+function followSystem(){if(!saved()){apply();}}
+try{localStorage.removeItem('cd-theme');}catch(e){}
+window.__cdSysTheme=sys;
+window.__cdTheme={cycle:cycle,apply:apply,mode:mode,setAuto:function(){save('auto');apply();}};
+apply();
+try{var mq=window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)');
+if(mq&&mq.addEventListener){mq.addEventListener('change',followSystem);}}catch(e){}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',apply);}
+})();
+</script>
+<title>ClickFix</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png">
+<link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png">
+<link rel="alternate" type="application/rss+xml" title="Cyber Digest" href="https://cyber.peterjaycox.com/feed.xml">
+<link rel="alternate" type="application/rss+xml" title="Cyber Digest — Monthly Editions" href="https://cyber.peterjaycox.com/feed-monthly.xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ClickFix">
+<meta property="og:description" content="Curated sector-by-sector roundup of global cybersecurity developments with source-reliability indexing, AU/NZ context, and searchable knowledge base.">
+<meta property="og:url" content="https://cyber.peterjaycox.com/">
+<meta property="og:image" content="https://cyber.peterjaycox.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"Cyber Digest","alternateName":"Cyber Digest — public site","url":"https://cyber.peterjaycox.com/","description":"Curated, source-rated roundup of global cybersecurity developments with AU/NZ context.","inLanguage":"en-AU","publisher":{"@type":"Organization","name":"Cyber Digest","url":"https://cyber.peterjaycox.com/"},"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://cyber.peterjaycox.com/stories.html?q={search_term_string}"},"query-input":"required name=search_term_string"}}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/site.css?v=202609250955"></head><body>
+<nav class="topnav"><div class="inner"><a class="brand" href="https://cyber.peterjaycox.com/index.html"><span class="brand-logo" aria-hidden="true"></span> Cyber&nbsp;Digest<small>public site</small></a><div class="navlinks"><a href="https://cyber.peterjaycox.com/index.html"><span class="t">🏠 Home</span></a><a href="https://cyber.peterjaycox.com/stories.html"><span class="t">📚 Story DB</span></a><a href="https://cyber.peterjaycox.com/globe.html"><span class="t">🌍 Globe</span></a><div class="navgrp"><button type="button" class="navdrop" aria-haspopup="true" aria-expanded="false" aria-controls="cdnav-reports"><span class="t">📑 Reports</span><span class="caret" aria-hidden="true">▾</span></button><ul class="navmenu" id="cdnav-reports" hidden><li><a href="https://cyber.peterjaycox.com/daily/"><span class="t">🗓️ Daily</span></a></li><li><a href="https://cyber.peterjaycox.com/monthly/index.html"><span class="t">📅 Monthly</span></a></li><li><a href="https://cyber.peterjaycox.com/reports/index.html"><span class="t">📄 Sector reviews</span></a></li></ul></div><a href="https://cyber.peterjaycox.com/wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a><div class="navgrp"><button type="button" class="navdrop" aria-haspopup="true" aria-expanded="false" aria-controls="cdnav-tools"><span class="t">🧰 Tools</span><span class="caret" aria-hidden="true">▾</span></button><ul class="navmenu" id="cdnav-tools" hidden><li><a href="https://cyber.peterjaycox.com/tools/cve-attack-matrix.html"><span class="t">🛰️ CVE × MITRE ATT&amp;CK / D3FEND matrix</span></a></li><li><a href="https://cyber.peterjaycox.com/flashcards.html"><span class="t">🗂️ Flashcards</span></a></li><li><a href="https://cyber.peterjaycox.com/tools/drafts/index.html"><span class="t">🧪 Drafts</span></a></li></ul></div></div><noscript><style>.navgrp{display:none!important}.navmob{display:block!important}</style></noscript><details class="navmob"><summary aria-label="Open site menu"><span aria-hidden="true">☰</span><span class="t">Menu</span></summary><div class="navmob-panel"><ul class="navmob-list"><li><a href="https://cyber.peterjaycox.com/index.html"><span class="t">🏠 Home</span></a></li><li><a href="https://cyber.peterjaycox.com/stories.html"><span class="t">📚 Story DB</span></a></li><li><a href="https://cyber.peterjaycox.com/globe.html"><span class="t">🌍 Globe</span></a></li><li><details class="navmob-grp"><summary class=""><span class="t">📑 Reports</span></summary><ul><li><a href="https://cyber.peterjaycox.com/daily/"><span class="t">🗓️ Daily</span></a></li><li><a href="https://cyber.peterjaycox.com/monthly/index.html"><span class="t">📅 Monthly</span></a></li><li><a href="https://cyber.peterjaycox.com/reports/index.html"><span class="t">📄 Sector reviews</span></a></li></ul></details></li><li><a href="https://cyber.peterjaycox.com/wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a></li><li><details class="navmob-grp"><summary class=""><span class="t">🧰 Tools</span></summary><ul><li><a href="https://cyber.peterjaycox.com/tools/cve-attack-matrix.html"><span class="t">🛰️ CVE × MITRE ATT&amp;CK / D3FEND matrix</span></a></li><li><a href="https://cyber.peterjaycox.com/flashcards.html"><span class="t">🗂️ Flashcards</span></a></li><li><a href="https://cyber.peterjaycox.com/tools/drafts/index.html"><span class="t">🧪 Drafts</span></a></li></ul></details></li></ul></div></details><div class="theme-toggle" role="button" tabindex="0" aria-label="Appearance" title="Appearance" onclick="window.__cdTheme.cycle(event)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.__cdTheme.cycle(event)}"><span class="tt-auto" aria-hidden="true">🌗</span><span class="tt-light" aria-hidden="true">☀️</span><span class="tt-dark" aria-hidden="true">🌙</span></div></div></nav><main class="container">
+            <div class="container">
+            <div class="crumb"><a href="../../index.html">Home</a> · <a href="../../wiki/index.html">Wiki</a> · Concepts &amp; Frameworks</div>
+            <div class="wiki-body"><div class="frontmatter">type: concept · created: 2026-09-25 · updated: 2026-09-25 · tags: [technique, phishing, social-engineering, malware] · confidence: high · affected_sectors: [technology, government, finance, healthcare, retail] · au_impact: true</div><div class="iocblock" title="1,880 ClearFake corroborating indicators on file in the abuse.ch corpus. Corroboration only — it does not confirm this story&#x27;s hosts are listed. Values are not published.">🎯 IOCs · ClearFake +5</div><details class="ioclist"><summary><span class="dot"></span> Indicators of compromise · ClearFake +1 — 8 shown</summary><ul><li><code>l4czf8jy[.]bahiscom2023[.]online</code><span class="iocmeta">domain · ThreatFox · first seen 2026-09-24</span></li><li><code>j01nn5zm[.]istanbul303[.]com</code><span class="iocmeta">domain · ThreatFox · first seen 2026-09-24</span></li><li><code>l63gj1o5[.]bahisbiz[.]com</code><span class="iocmeta">domain · ThreatFox · first seen 2026-09-24</span></li><li><code>bahisbiz[.]com</code><span class="iocmeta">domain · ThreatFox · first seen 2026-09-24</span></li><li><code>hxxps://vpanel[.]v-panel[.]asia/</code><span class="iocmeta">domain · ThreatFox · first seen 2026-09-24</span></li><li><code>vpanel[.]v-panel[.]asia</code><span class="iocmeta">domain · ThreatFox · first seen 2026-09-24</span></li><li><code>hxxps://gt[.]234-e[.]com</code><span class="iocmeta">domain · ThreatFox · first seen 2026-09-24</span></li><li><code>hxxps://getin[.]v-panel[.]asia/</code><span class="iocmeta">domain · ThreatFox · first seen 2026-09-24</span></li></ul><p class="iocwarn">Defanged third-party indicators (abuse.ch). The defanging is deliberate: <strong>never click, resolve or fetch these values</strong>. An indicator corroborates a report — it never proves one, and its presence here does not mean this story's hosts are listed.</p></details><h1>ClickFix</h1>
+<p><strong>ClickFix</strong> is a social-engineering execution technique in which a web page, advertisement or document presents the visitor with a problem it claims is theirs to solve — a human-verification check that will not complete, a browser that cannot render the page, a document that will not open, a Mac that is "low on storage" — and then offers the remedy as a command the user copies and pastes into a system interface they already trust: the Windows Run dialog, PowerShell, Windows Terminal, the macOS Terminal, or the browser's address bar. The victim executes the attacker's code themselves, as an authenticated interactive user, inside a native signed binary that is present on every system, which is precisely the profile of legitimate administrative work. There is no vulnerability for a scanner to find, no attachment for a mail gateway to detonate and no downloaded file for browser reputation scoring to evaluate, so the technique sidesteps the controls most organisations rely on rather than defeating them.</p>
+<p>MITRE gave the behaviour its own ATT&amp;CK sub-technique — <strong>T1204.004 (User Execution: Malicious Copy and Paste)</strong> — on 18 March 2025, covering Windows, macOS and Linux, and named ClickFix in the technique description itself. By the second half of 2026 it is no longer a curiosity on the edge of the threat landscape: Microsoft attributed <strong>47%</strong> of the initial-access cases its Defender Experts team handled in 2025 to ClickFix, ahead of conventional phishing, and CTM360's September 2026 census traced roughly <strong>17,000</strong> infected URLs serving fake Cloudflare verification pages. The operational conclusion CTM360 draws — that blocking lure domains is close to worthless as a control — is the one that should change defensive posture.</p>
+<h2>At a glance</h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ATT&amp;CK</strong></td>
+<td>T1204.004 — User Execution: Malicious Copy and Paste (Enterprise; Windows, macOS, Linux). Created 18 March 2025; listed group/software procedures include Contagious Interview (G1052), Kimsuky (G0094), Havoc (S1229) and Kali365 (S9044)</td>
+</tr>
+<tr>
+<td><strong>Also known as</strong></td>
+<td>ClickFix, ClickFix-style, "fake CAPTCHA", TerminalFix, PasteSwitch, FileFix, CrashFix</td>
+</tr>
+<tr>
+<td><strong>First observed</strong></td>
+<td>Late 2023 as a novelty; industrialised and productised through 2025–2026</td>
+</tr>
+<tr>
+<td><strong>Delivery channels</strong></td>
+<td>Compromised legitimate websites, malvertising and hijacked social accounts, supply-chain script injection, phishing emails and attachments, hijacked captive portals and DNS resolution, developer documentation and AI tool descriptors</td>
+</tr>
+<tr>
+<td><strong>Execution surface</strong></td>
+<td>Windows Run dialog, PowerShell, Windows Terminal, mshta, rundll32, macOS Terminal, Linux shell, browser address bar and userscript managers</td>
+</tr>
+<tr>
+<td><strong>Payloads observed</strong></td>
+<td>Information stealers (LummaC2, Vidar, StealC, RedLine, ACR Stealer, Amatera, MacSync, AMOS), remote-access trojans and reverse tunnels, cryptocurrency clippers and wallet drainers, initial access for ransomware crews</td>
+</tr>
+<tr>
+<td><strong>Operator classes</strong></td>
+<td>Cybercrime and malware-as-a-service, access brokers, and state-sponsored groups (Sandworm/UAC-0145, DPRK's Contagious Interview, Kimsuky)</td>
+</tr>
+<tr>
+<td><strong>Structural property</strong></td>
+<td>Built for takedown resistance — lure hosts and command-and-control addresses resolved on-chain (EtherHiding) and through ordinary social platforms, with per-victim payload gating</td>
+</tr>
+</tbody>
+</table>
+<h2>How the technique works</h2>
+<h3>1 — A pretext the user believes is theirs to solve</h3>
+<p>The lure imitates a routine interruption rather than a threat: a Cloudflare "Performing security verification" check, a browser-render or document-open failure, a software-update prompt, or a macOS disk-space "maintenance" page styled as an Apple support article. CTM360's taxonomy records distinct Windows and macOS template families, and the pretext set is deliberately mundane so that it matches something the visitor may genuinely be experiencing.</p>
+<h3>2 — Clipboard injection instead of a download</h3>
+<p>JavaScript on the page writes the "fix" — actually a command — directly to the clipboard and instructs the visitor to paste it. Nothing is downloaded at the point of contact, so there is no file path, no download event and no installer for the user or their tooling to notice.</p>
+<h3>3 — The user executes it</h3>
+<p>Instructions direct the visitor to the platform's own command surface: Windows Run dialog (the canonical form), PowerShell or Windows Terminal (the TerminalFix variant), macOS Terminal, or the browser's address bar. The pasted command is usually obfuscated — Base64 is the common case — so its intent is not visible on screen. Observed shapes include <code>curl | zsh</code> on macOS and <code>iwr | iex</code> (Invoke-WebRequest piped to Invoke-Expression) on Windows.</p>
+<h3>4 — Staging, execution and payload</h3>
+<p>The command fetches a second-stage script from attacker infrastructure — frequently fronted by a legitimate cloud service — which then retrieves the final payload. In the dropper CTM360 recovered from a live compromised host, a machine fingerprint (machine GUID, volume serial number, computer name, BIOS manufacturer, system model, GPU and username) is Base64-encoded into the download path, so the command-and-control server sees the victim's identity <em>before</em> it serves anything and can return a payload chosen per machine, or nothing at all.</p>
+<h3>5 — Server-side targeting and analysis resistance</h3>
+<p>The lure page reports the visitor's operating system and version back to the operator, which replies with a configuration naming which platforms to attack and which landing page each receives. In CTM360's sample, Windows was enabled while the <strong>macOS and Linux branches were built, functional and held in reserve</strong>, mobile was suppressed entirely and a cookie suppressed the overlay for repeat visitors for 90 days. A traffic distribution system polls the operator roughly every 1.5 seconds and can silently mark a session "verified" without ever showing the malicious instruction, so researchers, sandboxes and crawlers receive a clean page while intended targets receive the lure.</p>
+<h2>Variants and naming</h2>
+<table>
+<thead>
+<tr>
+<th>Variant</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ClickFix (canonical)</strong></td>
+<td>Fake CAPTCHA or error page copies PowerShell to the clipboard for pasting into the Windows Run dialog</td>
+</tr>
+<tr>
+<td><strong>TerminalFix</strong></td>
+<td>Microsoft-disclosed variant (August 2026) directing victims to Windows Terminal or PowerShell rather than the Run dialog, "increasing the likelihood that complex, multi-line scripts execute successfully"</td>
+</tr>
+<tr>
+<td><strong>FileFix</strong></td>
+<td>File-explorer and "your document could not be opened" pretexts, using the File Explorer address bar as the paste target</td>
+</tr>
+<tr>
+<td><strong>CrashFix</strong></td>
+<td>Browser-crash pretext; part of the CTM360 variant family</td>
+</tr>
+<tr>
+<td><strong>PasteSwitch</strong></td>
+<td>Hudson Rock and ADAMnetworks' name for the September 2026 malvertising operation run from a hijacked verified Reddit account, with separate macOS and Windows payload branches</td>
+</tr>
+<tr>
+<td><strong>ClearFake / WebDAV chain</strong></td>
+<td>Fake Google CAPTCHA whose command abuses WebDAV to fetch the Amatera stealer, alongside an EtherHiding JavaScript chain</td>
+</tr>
+<tr>
+<td><strong>Address-bar ClickFix</strong></td>
+<td>JavaScript pasted into the Chrome address bar or installed via a userscript manager, with command and control served from public Google APIs and a Google Sheets document</td>
+</tr>
+<tr>
+<td><strong>Device-code paste (Kali365)</strong></td>
+<td>Clipboard abuse applied to authentication rather than execution — a legitimate device code is presented for the victim to paste and complete, which MITRE lists under T1204.004's procedure examples</td>
+</tr>
+<tr>
+<td><strong>On-chain hosted ClickFix</strong></td>
+<td>The injected script on a compromised site contains no attacker domain at all; the visitor's browser makes a free read-only call to a smart contract which returns the current lure hostname, so the operator changes one on-chain value and every infected site follows within seconds</td>
+</tr>
+</tbody>
+</table>
+<h2>MITRE ATT&amp;CK mapping</h2>
+<table>
+<thead>
+<tr>
+<th>Tactic</th>
+<th>Technique</th>
+<th>Role in the chain</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Initial Access</td>
+<td>T1189 Drive-by Compromise</td>
+<td>A compromised or repurposed legitimate site serves the lure overlay</td>
+</tr>
+<tr>
+<td>Initial Access</td>
+<td>T1566 Phishing</td>
+<td>An email, attachment or advertisement presents the fake error and the "solution"</td>
+</tr>
+<tr>
+<td>Execution</td>
+<td><strong>T1204.004 User Execution: Malicious Copy and Paste</strong></td>
+<td>The defining behaviour — the user pastes and runs the command</td>
+</tr>
+<tr>
+<td>Execution</td>
+<td>T1059.001 PowerShell</td>
+<td>Windows payload execution via the Run dialog, Terminal or a script block</td>
+</tr>
+<tr>
+<td>Execution</td>
+<td>T1059.004 Unix Shell</td>
+<td>macOS and Linux payload execution, typically <code>curl</code> piped to a shell</td>
+</tr>
+<tr>
+<td>Defence Evasion</td>
+<td>T1218.011 System Binary Proxy Execution: Rundll32</td>
+<td>WebDAV-based fetches in the ClearFake chain</td>
+</tr>
+<tr>
+<td>Defence Evasion</td>
+<td>T1218.005 System Binary Proxy Execution: Mshta</td>
+<td>HTA and polyglot payload launch on Windows</td>
+</tr>
+<tr>
+<td>Defence Evasion</td>
+<td>T1027 Obfuscated Files or Information</td>
+<td>Base64 and string-assembly obfuscation of the pasted command</td>
+</tr>
+<tr>
+<td>Defence Evasion</td>
+<td>T1562.001 Impair Defenses: Disable or Modify Tools</td>
+<td>Antimalware Scan Interface bypassing observed in Windows stealer chains</td>
+</tr>
+<tr>
+<td>Command and Control</td>
+<td>T1102 Web Service</td>
+<td>Telegram channel descriptions, Steam profiles, Google Sheets and public APIs used to resolve or serve the next stage</td>
+</tr>
+<tr>
+<td>Command and Control</td>
+<td>T1105 Ingress Tool Transfer</td>
+<td>Second-stage retrieval over HTTP from attacker or cloud-hosted infrastructure</td>
+</tr>
+<tr>
+<td>Resource Development</td>
+<td>T1608 Stage Capabilities</td>
+<td>Productised lure kits and on-chain infrastructure maintained for a paying user base</td>
+</tr>
+</tbody>
+</table>
+<h2>Scale and tempo</h2>
+<table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Value</th>
+<th>Origin</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Share of enterprise initial access, 2025</td>
+<td><strong>47%</strong> of initial-access cases handled by Microsoft's Defender Experts team attributed to ClickFix, ahead of conventional phishing</td>
+<td>Microsoft, cited by CTM360 (September 2026)</td>
+</tr>
+<tr>
+<td>Growth into the first half of 2025</td>
+<td><strong>+517%</strong> (ESET measurement)</td>
+<td>ESET, cited by CTM360</td>
+</tr>
+<tr>
+<td>Growth from H2 2025 to H1 2026</td>
+<td><strong>+108%</strong></td>
+<td>ESET, cited by CTM360</td>
+</tr>
+<tr>
+<td>Lure infrastructure census</td>
+<td>~<strong>17,000</strong> URLs serving fake Cloudflare verification pages, around <strong>3,000</strong> still actively serving at the time of writing</td>
+<td>CTM360, September 2026</td>
+</tr>
+<tr>
+<td>Compromised-site campaign</td>
+<td><strong>5,400+</strong> small-business sites (mostly WordPress and PrestaShop) delivering on-chain payloads; ~400 sites per day contacting the BSC Testnet RPC endpoint in August 2026, peaking at <strong>536</strong></td>
+<td>Netskope, 5 September 2026</td>
+</tr>
+<tr>
+<td>Supply-chain reach</td>
+<td>Up to <strong>100,000</strong> customer sites via CDN-edge script injection (Brevo, 14 September 2026, 16:07–20:30 UTC)</td>
+<td>Sansec and Brevo</td>
+</tr>
+<tr>
+<td>Developer-tooling exposure</td>
+<td>A documentation placeholder domain referenced in <strong>1,700+</strong> repositories serving the lure</td>
+<td>Manifold Security / BleepingComputer, 23 September 2026</td>
+</tr>
+</tbody>
+</table>
+<h2>Notable incidents</h2>
+<p>ClickFix is now a recurring delivery layer rather than a one-off campaign, so the wiki's coverage sits across many incident pages. The entries below are the ones that moved the technique forward.</p>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Development</th>
+<th>What it demonstrated</th>
+<th>Page</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Late 2023</td>
+<td>ClickFix emerges as a novelty lure technique</td>
+<td>The precursor form: a fake verification page issuing a manual fix</td>
+<td>—</td>
+</tr>
+<tr>
+<td>2025-03-18</td>
+<td>MITRE creates <strong>T1204.004</strong></td>
+<td>The behaviour is recognised as a technique in its own right across Windows, macOS and Linux</td>
+<td><a href="https://attack.mitre.org/techniques/T1204/004/">ATT&amp;CK</a></td>
+</tr>
+<tr>
+<td>2026-07-08</td>
+<td><strong>SCMBANKER</strong> (REF6045) lures target Mexican banks, fintechs and crypto exchanges</td>
+<td>A fake CAPTCHA installs a banking toolkit delivering screen lock, browser redirection and remote access</td>
+<td><a href="../entities/scmbanker.html">Scmbanker</a></td>
+</tr>
+<tr>
+<td>2026-07-19</td>
+<td><strong>UAC-0145 (Sandworm)</strong> uses ClickFix CAPTCHAs against Ukrainian devices</td>
+<td>State-sponsored adoption — the technique leaves the cybercrime lane</td>
+<td>—</td>
+</tr>
+<tr>
+<td>2026-07-24</td>
+<td><strong>Golden Chickens</strong> MaaS ecosystem resurfaces with four new families</td>
+<td>Commercial malware-as-a-service distribution through ClickFix lures</td>
+<td><a href="../incidents/golden-chickens-resurfaces-with-four-new-malware-families.html">Golden Chickens Resurfaces With Four New Malware Families</a></td>
+</tr>
+<tr>
+<td>2026-07-30</td>
+<td>DPRK-linked <strong>Contagious Interview</strong> macOS malvertising</td>
+<td>Fake-update lures with blockchain-hosted C2 delivering crypto stealers</td>
+<td><a href="../incidents/dprk-linked-macos-malvertising-uses-fake-updates-to-deliver-crypto-stealing-malw.html">Dprk Linked Macos Malvertising Uses Fake Updates To Deliver Crypto Stealing Malw</a></td>
+</tr>
+<tr>
+<td>2026-08-01</td>
+<td><strong>CaptiveCrunch</strong> hijacks hotel Wi-Fi captive portals</td>
+<td>Forged DNS redirects connectivity checks to fake OS and browser updates, delivering the CornFlake RAT</td>
+<td><a href="../incidents/hijacked-hotel-wi-fi-pushes-fake-updates-to-deliver-cornflake-surveillance-malwa.html">Hijacked Hotel Wi Fi Pushes Fake Updates To Deliver Cornflake Surveillance Malwa</a></td>
+</tr>
+<tr>
+<td>2026-08-19</td>
+<td>Microsoft ties <strong>30+ rotating domains</strong> to the MacSync stealer</td>
+<td>Interactive Terminal execution consistent with ClickFix social engineering, with confirmed exfiltration</td>
+<td><a href="../incidents/microsoft-ties-30-rotating-domains-to-macsync-stealer-infrastructure.html">Microsoft Ties 30 Rotating Domains To Macsync Stealer Infrastructure</a></td>
+</tr>
+<tr>
+<td>2026-08-30</td>
+<td><strong>TerminalFix</strong> disclosed by Microsoft</td>
+<td>The variant repurposes fake Cloudflare CAPTCHAs into Windows Terminal or PowerShell to make multi-line scripts land</td>
+<td><a href="../incidents/terminalfix-uses-fake-cloudflare-captchas-to-deploy-reverse-tunnel-backdoor.html">Terminalfix Uses Fake Cloudflare Captchas To Deploy Reverse Tunnel Backdoor</a></td>
+</tr>
+<tr>
+<td>2026-09-05</td>
+<td><strong>5,400+ compromised sites</strong> serve on-chain payloads</td>
+<td>EtherHiding (BSC Testnet) makes the delivery layer takedown-resistant; later swapped for a WebRTC stager</td>
+<td><a href="../incidents/over-5-400-hacked-sites-serve-clickfix-payloads-stored-on-the-blockchain.html">Over 5 400 Hacked Sites Serve Clickfix Payloads Stored On The Blockchain</a></td>
+</tr>
+<tr>
+<td>2026-09-08</td>
+<td><strong>ClearFake</strong> WebDAV chain; ClickFix moves into the browser</td>
+<td>Two parallel chains — WebDAV-fetched Amatera and address-bar JavaScript with command and control in Google APIs</td>
+<td>—</td>
+</tr>
+<tr>
+<td>2026-09-11</td>
+<td>ClickFix described as <strong>mainstream</strong></td>
+<td>Independent observation that forums carry a continuous stream of ClickFix infections and legitimate sites are hacked at volume to serve the lure</td>
+<td>—</td>
+</tr>
+<tr>
+<td>2026-09-14</td>
+<td><strong>PasteSwitch</strong> operation from a hijacked verified Reddit account</td>
+<td>108 malicious advertisements in ~48 hours, a mature macOS branch using Base64 <code>curl</code> piped to a shell, and on-chain clipper dead drops</td>
+<td><a href="../incidents/hbo-max-reddit-account-hijacked-for-108-pasteswitch-clickfix-advertisements.html">Hbo Max Reddit Account Hijacked For 108 Pasteswitch Clickfix Advertisements</a></td>
+</tr>
+<tr>
+<td>2026-09-17</td>
+<td><strong>Brevo</strong> supply-chain attack</td>
+<td>A stolen Cloudflare API key let attackers inject the lure at the CDN edge across up to 100,000 customer sites, bypassing origin-side integrity checks</td>
+<td><a href="../incidents/brevo-supply-chain-attack-injected-clickfix-scripts-on-up-to-100-000-customer-si.html">Brevo Supply Chain Attack Injected Clickfix Scripts On Up To 100 000 Customer Si</a></td>
+</tr>
+<tr>
+<td>2026-09-23</td>
+<td>The <strong>third-party.com</strong> placeholder domain serves ClickFix</td>
+<td>The lure now sits inside developer documentation, repositories and AI tool descriptors that automated agents read and follow</td>
+<td><a href="../incidents/a-documentation-placeholder-domain-referenced-in-1-700-repositories-is-now-servi.html">A Documentation Placeholder Domain Referenced In 1 700 Repositories Is Now Servi</a></td>
+</tr>
+<tr>
+<td>2026-09-24</td>
+<td><strong>CTM360 census</strong> of ~17,000 URLs</td>
+<td>ClickFix confirmed as the leading enterprise initial-access technique, with per-victim payload gating and on-chain resolution</td>
+<td><a href="../incidents/clickfix-is-now-the-leading-enterprise-initial-access-technique-and-17-000-urls-.html">Clickfix Is Now The Leading Enterprise Initial Access Technique And 17 000 Urls </a></td>
+</tr>
+</tbody>
+</table>
+<h2>Why the technique works</h2>
+<p>Three properties explain the persistence, and none of them is a technical flaw a vendor can patch.</p>
+<p><strong>It targets the trust boundary that remains after everything else is hardened.</strong> No exploit is used, so vulnerability management is not engaged; no attachment is delivered, so mail gateway detonation and sandboxing are not engaged; no file is written at the point of contact, so download reputation and executable allowlisting are not engaged. The command arrives as text on the clipboard and is executed by a signed, present-on-every-system binary at the direction of an authenticated user — the same activity profile as legitimate administrative work, which is why signature-based and behaviour-based detection both struggle.</p>
+<p><strong>The economics favour it.</strong> Compromising a small website is cheap, and CTM360's census found operators holding macOS and Linux branches in reserve behind a server-side flag — so the return comes from conversion rate rather than engineering effort. That combination is why the technique survives takedowns: the static indicators defenders block are the ones the operator can change fastest. CTM360 observed a single smart contract returning three different lure hosts in one day of analysis while not one compromised site was modified.</p>
+<p><strong>It is a configuration problem, not a Windows problem.</strong> The received wisdom that ClickFix is a Windows issue describes the current operator settings rather than the capability: CTM360's sample had macOS and Linux branches built and functional, mobile suppressed and repeat visitors suppressed for 90 days, all changeable with one flag. Treating it as a Windows-only risk understates the exposure of macOS fleets, which the PasteSwitch operation had already demonstrated in production.</p>
+<h2>Detection</h2>
+<ul>
+<li><strong>Process lineage from the user's own interface.</strong> Alert on interactive interpreters (<code>powershell.exe</code>, <code>pwsh.exe</code>, <code>cmd.exe</code>, <code>wscript.exe</code>, <code>mshta.exe</code>, <code>rundll32.exe</code>) descending from <code>explorer.exe</code> or a browser process rather than from a service, login script or management tool.</li>
+<li><strong>Command-line content.</strong> Base64 or long concatenated string payloads in PowerShell script blocks; <code>Invoke-WebRequest</code> or <code>curl</code> piped to an interpreter; WebDAV UNC paths passed to rundll32.</li>
+<li><strong>Script telemetry.</strong> PowerShell script block logging, module logging and the Antimalware Scan Interface are the highest-value Windows sources, and they are exactly what Windows chains in this family attempt to disable — so an AMSI or logging configuration change on an endpoint is itself a detection.</li>
+<li><strong>macOS.</strong> Shell command history and process accounting for <code>curl</code> piped to a shell, and for interpreters spawned by Terminal or from the browser's downloading context; MacSync activity appeared as ordinary interactive Terminal sessions.</li>
+<li><strong>Network.</strong> Egress to smart-contract RPC endpoint pools, non-web UDP WebRTC traffic, and staged retrievals fronted by public cloud services, Google Sheets or public APIs. Note that C2 resolution through Telegram channel descriptions and Steam profiles means the network artefact may be a legitimate service name in TLS SNI.</li>
+<li><strong>What not to rely on.</strong> Clipboard writes from page JavaScript are not observable at the endpoint, and lure domains rotate faster than blocklists can be published.</li>
+</ul>
+<h2>Defensive countermeasures (ATT&amp;CK → D3FEND)</h2>
+<table>
+<thead>
+<tr>
+<th>ATT&amp;CK technique</th>
+<th>D3FEND countermeasure</th>
+<th>Application</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T1204.004</td>
+<td>D3-UBA User Behavior Analysis</td>
+<td>Baseline normal interactive-shell use per role and alert on deviation rather than on the interpreter itself</td>
+</tr>
+<tr>
+<td>T1204.004</td>
+<td>D3-USICA User Session Init Config Analysis</td>
+<td>Maintain and compare an allowlist of commands legitimately issued at session start</td>
+</tr>
+<tr>
+<td>T1059.001</td>
+<td>D3-SEA Script Execution Analysis</td>
+<td>Script block and module logging, AMSI and PowerShell constrained language mode</td>
+</tr>
+<tr>
+<td>T1059.001 / T1059.004</td>
+<td>D3-EAL Executable Allowlisting</td>
+<td>Restrict which interpreters non-administrative users may launch at all</td>
+</tr>
+<tr>
+<td>T1218.005 / T1218.011</td>
+<td>D3-PSEP Process Segment Execution Prevention</td>
+<td>Prevent mshta and rundll32 executing from temporary, user-writable or remote paths</td>
+</tr>
+<tr>
+<td>T1218.005</td>
+<td>D3-PLA Process Lineage Analysis</td>
+<td>Treat a script host spawned by a browser as hostile until proven otherwise</td>
+</tr>
+<tr>
+<td>T1027</td>
+<td>D3-FCOA File Content Analysis, D3-FCR File Content Rules</td>
+<td>Decode and inspect Base64 command strings in endpoint and proxy telemetry</td>
+</tr>
+<tr>
+<td>T1562.001</td>
+<td>D3-ACH Application Configuration Hardening</td>
+<td>Enable tamper protection and enforce AMSI and logging policy so they cannot be turned off silently</td>
+</tr>
+<tr>
+<td>T1102 / T1105</td>
+<td>D3-NTA Network Traffic Analysis, D3-NTF Network Traffic Filtering</td>
+<td>Deny unapproved egress and inspect for second-stage retrieval from cloud-hosted staging</td>
+</tr>
+<tr>
+<td>T1189</td>
+<td>D3-WSAM Web Session Access Mediation, D3-CF Content Filtering</td>
+<td>Reduce the exposure of staff to malvertising and compromised-site lures</td>
+</tr>
+<tr>
+<td>All techniques</td>
+<td>D3-PH Platform Hardening</td>
+<td>Remove Run-dialog and unrestricted interpreter access for non-administrative users</td>
+</tr>
+<tr>
+<td>All techniques</td>
+<td>D3-EI Execution Isolation</td>
+<td>Isolate browsing from the endpoint's privileged execution context where the platform supports it</td>
+</tr>
+<tr>
+<td>All techniques</td>
+<td>D3-DNSTA DNS Traffic Analysis, D3-HDDL Hierarchical Domain Denylisting</td>
+<td>Useful telemetry, but rotation and on-chain resolution mean these are supporting controls only</td>
+</tr>
+</tbody>
+</table>
+<h2>Australian and New Zealand relevance</h2>
+<p>ClickFix is not an Australia-specific threat, but its delivery channels reach Australian and New Zealand organisations directly. The Brevo supply-chain injection ran through a marketing platform whose forms, chat widgets and SDK loaders are embedded across small-business and SMB websites, which is the same population of self-managed WordPress and PrestaShop hosting that the Netskope campaign compromised at scale — a hosting profile common across both countries. The lures themselves are training-resistant by design, because they ask the user to do something that feels like troubleshooting rather than something that looks like a security decision, and the single rule that carries most of the value for staff does not decay when the artwork changes: <strong>no legitimate website, verification check, error message or software update will ever ask you to copy something and paste it into the Run box, PowerShell, Terminal or a File Explorer address bar.</strong></p>
+<p>Two structural points belong in Australian planning. First, the September 2026 abuse of the <code>third-party.com</code> documentation placeholder domain places the lure inside developer documentation, repositories and AI tool descriptors — material that automated agents now read and follow, which is a supply-chain exposure for engineering teams rather than an end-user one. Second, the technique's economics mean the population most exposed is the one with the least defensive depth: small hosting providers and self-managed web estates, which are also the least likely to have an incident-response capability when the lure converts.</p>
+<h2>Related pages</h2>
+<ul>
+<li><a href="../incidents/over-5-400-hacked-sites-serve-clickfix-payloads-stored-on-the-blockchain.html">Over 5 400 Hacked Sites Serve Clickfix Payloads Stored On The Blockchain</a> — on-chain delivery at scale</li>
+<li><a href="../incidents/brevo-supply-chain-attack-injected-clickfix-scripts-on-up-to-100-000-customer-si.html">Brevo Supply Chain Attack Injected Clickfix Scripts On Up To 100 000 Customer Si</a> — the largest single reach recorded in the wiki</li>
+<li><a href="../incidents/terminalfix-uses-fake-cloudflare-captchas-to-deploy-reverse-tunnel-backdoor.html">Terminalfix Uses Fake Cloudflare Captchas To Deploy Reverse Tunnel Backdoor</a> — the Terminal-targeting variant</li>
+<li><a href="../incidents/clickfix-is-now-the-leading-enterprise-initial-access-technique-and-17-000-urls-.html">Clickfix Is Now The Leading Enterprise Initial Access Technique And 17 000 Urls </a> — the CTM360 census</li>
+<li><a href="../incidents/hbo-max-reddit-account-hijacked-for-108-pasteswitch-clickfix-advertisements.html">Hbo Max Reddit Account Hijacked For 108 Pasteswitch Clickfix Advertisements</a> — proven macOS branch in the wild</li>
+<li><a href="../entities/scmbanker.html">Scmbanker</a> — criminal toolkit distributed by ClickFix lure</li>
+<li><a href="../incidents/microsoft-ties-30-rotating-domains-to-macsync-stealer-infrastructure.html">Microsoft Ties 30 Rotating Domains To Macsync Stealer Infrastructure</a> — macOS stealer staging</li>
+<li><a href="mitre-attack.html">Mitre Attack</a> — the framework in which T1204.004 sits</li>
+<li><a href="d3fend.html">D3Fend</a> — the countermeasure framework used above</li>
+</ul></div>
+            </div></main>
+<div class="footer">
+  <div class="links">
+    <a href="https://cyber.peterjaycox.com/index.html">Home</a>
+    <a href="https://cyber.peterjaycox.com/stories.html">Story DB</a>
+    <!-- Daily + Monthly are dropped from the footer to mirror the toolbar, where
+         both now live inside the Reports group (user decision 2026-09-18). -->
+    <a href="https://cyber.peterjaycox.com/reports/index.html">Reports</a>
+    <a href="https://cyber.peterjaycox.com/wiki/index.html">Wiki</a>
+    <a href="https://cyber.peterjaycox.com/tools/cve-attack-matrix.html">Tools</a>
+    <a href="https://cyber.peterjaycox.com/feed.xml">RSS</a>
+    <a href="https://cyber.peterjaycox.com/privacy.html">Privacy</a>
+    <a href="https://cyber.peterjaycox.com/corrections.html">Corrections</a>
+    <a href="https://cyber.peterjaycox.com/licensing.html">Licensing</a>
+    <a href="https://cyber.peterjaycox.com/security.html">Security</a>
+  </div>
+  Cyber Digest public site · built 2026-09-25 09:55
+</div>
+<script id="cd-nav-shared-js">
+(function(){
+  var groups=[].slice.call(document.querySelectorAll('.navgrp'));
+  if(!groups.length) return;
+  function panel(g){return g.querySelector('.navmenu');}
+  function trig(g){return g.querySelector('.navdrop');}
+  function close(g){var p=panel(g); if(!p||p.hidden) return; p.hidden=true;
+    var t=trig(g); if(t) t.setAttribute('aria-expanded','false'); g.classList.remove('open');}
+  function open(g){var p=panel(g); if(!p||!p.hidden) return;
+    groups.forEach(function(o){if(o!==g) close(o);});
+    p.hidden=false; var t=trig(g); if(t) t.setAttribute('aria-expanded','true'); g.classList.add('open');}
+  groups.forEach(function(g){
+    var t=trig(g), p=panel(g); if(!t||!p) return;
+    t.addEventListener('click',function(e){e.preventDefault(); e.stopPropagation();
+      if(p.hidden){open(g);} else {close(g);}});
+    t.addEventListener('keydown',function(e){
+      if(e.key==='ArrowDown'){e.preventDefault(); open(g); var a=p.querySelector('a'); if(a) a.focus();}});
+    p.addEventListener('click',function(e){ if(e.target.closest('a')) close(g); });
+    g.addEventListener('keydown',function(e){
+      if(e.key==='Escape'&&!p.hidden){e.stopPropagation(); close(g); t.focus();}});
+    g.addEventListener('focusout',function(e){ if(!g.contains(e.relatedTarget)) close(g);});
+  });
+  document.addEventListener('click',function(e){
+    groups.forEach(function(g){ if(!g.contains(e.target)) close(g); });});
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape') groups.forEach(close);});
+})();
+</script>
+</body></html>
