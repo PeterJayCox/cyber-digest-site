@@ -3,7 +3,7 @@
 
 Takes edition fragments written by the weekly run
 (`~/Desktop/Hermes/Cyber Digest/Weekly-AI/<YYYY-MM-DD>.html`), encrypts each with the
-draft passphrase, and emits gated pages plus a drafts index under `docs/tools/ai-weekly/`.
+draft passphrase, and emits gated pages plus a drafts index under `docs/tools/drafts/`.
 
 Why encryption rather than the obfuscated gate used for Flashcards: this page is served
 from a PUBLIC GitHub Pages repo. A base64 gate leaves the draft body readable in the
@@ -35,7 +35,7 @@ ROOT = os.path.dirname(HERE)
 SECRET = os.path.expanduser("~/.hermes/secrets/ai-weekly-gate.txt")
 SRC_DIR = os.path.expanduser("~/Desktop/Hermes/Cyber Digest/Weekly-AI")
 SHELL = os.path.join(ROOT, "templates", "ai-weekly-shell.html")
-OUT_SUBDIR = os.path.join("tools", "ai-weekly")
+OUT_SUBDIR = os.path.join("tools", "drafts")
 ITERATIONS = 200_000
 KEYLEN = 32
 
@@ -102,7 +102,7 @@ def _read(path):
 
 
 def publish(docs: str, nav_html_fn, nav_css_block) -> None:
-    """Emit docs/tools/ai-weekly/{index.html,<date>.html}.
+    """Emit docs/tools/drafts/{index.html,<date>.html}.
 
     Called from build_site.py so a `--fresh` build (which wipes docs/) regenerates the
     draft pages rather than losing them.

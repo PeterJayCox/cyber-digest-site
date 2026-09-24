@@ -274,7 +274,7 @@ NAV_TOOLS_CHILDREN = [
      "Flashcards",
      "🗂️",
      "Flashforge spaced-repetition decks built from the wiki — Cyber Concepts, Entities, Vulnerabilities and Incidents."),
-    ("tools/ai-weekly/index.html",
+    ("tools/drafts/index.html",
      "Drafts",
      "🧪",
      "Unreleased weekly briefings for board review — draft releases, password-gated, not indexed."),
@@ -1139,9 +1139,9 @@ def build_sitemap(days, months, pages, reports):
     open(os.path.join(DOCS, "sitemap.xml"), "w", encoding="utf-8").write("\n".join(idx) + "\n")
 
     # robots.txt: advertise the index plus each per-section sitemap.
-    # Draft releases (/tools/ai-weekly/) are noindexed, absent from every sitemap, and
+    # Draft releases (/tools/drafts/) are noindexed, absent from every sitemap, and
     # disallowed here — they are working drafts, not a published series.
-    robots = ["User-agent: *", "Allow: /", "Disallow: /tools/ai-weekly/", "",
+    robots = ["User-agent: *", "Allow: /", "Disallow: /tools/drafts/", "",
               f"Sitemap: {SITE_BASE}/sitemap.xml"]
     for label in SITEMAP_SECTIONS:
         robots.append(f"Sitemap: {SITE_BASE}/sitemap-{label}.xml")
@@ -3317,7 +3317,7 @@ def build_cve_matrix():
 
 
 def build_ai_weekly():
-    """Emit the password-gated draft releases under docs/tools/ai-weekly/.
+    """Emit the password-gated draft releases under docs/tools/drafts/.
 
     The gate, encryption and index assembly live in scripts/ai_weekly.py; this is only
     the wiring, so the draft pages survive a `--fresh` build (which wipes docs/). The
