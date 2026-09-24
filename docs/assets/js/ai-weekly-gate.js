@@ -1,4 +1,4 @@
-/* AI Weekly — draft-release gate.
+/* Draft releases — build-time gate.
  *
  * Payload is PBKDF2(SHA-256) -> AES-GCM encrypted at build time, so the draft body is
  * unreadable without the passphrase *even from view-source*. That matters because this
@@ -66,7 +66,7 @@
         }
         out.hidden = false;
         if (lock) { lock.hidden = true; }
-        document.title = (payload.title || 'AI Weekly') + ' · draft';
+        document.title = (payload.title || 'Drafts') + ' · draft';
       })
       .catch(function () { say('Incorrect password.'); });
   }

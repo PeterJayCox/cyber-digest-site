@@ -130,9 +130,9 @@ def publish(docs: str, nav_html_fn, nav_css_block) -> None:
         except OSError as exc:
             print(f"⚠️ AI Weekly edition {stem} unreadable ({exc}); skipped")
             continue
-        payload = _unconfigured_payload() if locked else encrypt(fragment, pw, f"AI Weekly {stem}")
+        payload = _unconfigured_payload() if locked else encrypt(fragment, pw, f"Drafts {stem}")
         page = _page(shell, nav_html_fn(f"{OUT_SUBDIR}/{stem}.html", ""), payload,
-                     f"AI Weekly {stem}", f"AI Weekly &mdash; {stem}")
+                     f"Drafts {stem}", f"Drafts &mdash; {stem}")
         with open(os.path.join(out_dir, f"{stem}.html"), "w", encoding="utf-8") as fh:
             fh.write(page)
 
@@ -140,7 +140,7 @@ def publish(docs: str, nav_html_fn, nav_css_block) -> None:
     # unlocked — it is the way in for someone who has the password.
     rows = "\n".join(
         f'<li><a href="{stem}.html">{stem}</a>'
-        f'<span class="idx-note">weekly AI briefing &mdash; draft</span></li>'
+        f'<span class="idx-note">weekly briefing &mdash; draft</span></li>'
         for stem, _ in items
     ) or '<li class="idx-empty">No drafts yet.</li>'
 
@@ -156,7 +156,7 @@ background:#111827;border:1px solid rgba(255,255,255,.08);border-radius:10px;fon
 #aiw-index .idx-note,#aiw-index .idx-empty{{color:#64748b;font-size:12px}}
 </style>
 <div id="aiw-index">
-<h1>AI Weekly &mdash; draft releases</h1>
+<h1>Draft releases</h1>
 <p>Unreleased drafts, newest first. Each release is encrypted and unreadable without the draft password.</p>
 <ul>
 {rows}
@@ -164,12 +164,12 @@ background:#111827;border:1px solid rgba(255,255,255,.08);border-radius:10px;fon
 </div>"""
 
     if locked:
-        idx_payload, idx_title = _unconfigured_payload(), "AI Weekly — drafts"
+        idx_payload, idx_title = _unconfigured_payload(), "Drafts"
     else:
-        idx_payload, idx_title = encrypt(idx_fragment, pw, "AI Weekly — drafts"), "AI Weekly — drafts"
+        idx_payload, idx_title = encrypt(idx_fragment, pw, "Drafts"), "Drafts"
 
     index_html = _page(shell, nav_html_fn(f"{OUT_SUBDIR}/index.html", ""), idx_payload,
-                       "AI Weekly — drafts", "AI Weekly &mdash; draft releases")
+                       "Drafts", "Draft releases")
     with open(os.path.join(out_dir, "index.html"), "w", encoding="utf-8") as fh:
         fh.write(index_html)
 
