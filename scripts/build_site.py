@@ -2265,7 +2265,7 @@ def build_daily(days):
                 f'<span class="iocbadge ioc-corroborated" title="{iocn} stor'
                 f'{"y" if iocn==1 else "ies"} in this edition carry live abuse.ch '
                 f'corroborating indicators for {esc(named)}{esc(more)}. Corroboration '
-                f'only \u2014 it does not confirm the claim.">{iocn} IOC'
+                f'only \u2014 it does not confirm the claim."><span class="dot"></span>{iocn} IOC'
                 f'{"" if iocn==1 else "s"} \u00b7 {esc(named)}{esc(more)}</span>')
         if acts:
             order={"actor-gov":0,"actor-claim":1,"actor-contest":2,"actor-unknown":3}

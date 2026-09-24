@@ -20,6 +20,7 @@ the table.
 | Task | Agent | Paths owned | Branch | Status |
 |---|---|---|---|---|
 | Sector-review scoring model v2 (impact scores split from source tier, event-level dedup, actor roll-up, watch-list, methodology block) | Hermes | `scripts/build_site.py` (shared), `Cyber Digest/scripts/{impact_model,incident_flags,sector-review-sync}.py`, vault `Cyber/Cyber Digest/Reports/*` | main | **Shipped 2026-09-11** — `build_reports()` renders Executive Summary → Cross-Sector Themes → Actors & Campaigns → Watch-list → sectors → Methodology. New JSON fields are optional, so July/August report pages are unaffected. Edit `incident_flags.py` (not the JSON) to re-score. |
+| AI Weekly draft releases — Thursday 15:00 job, gated at `/tools/ai-weekly/` | Hermes | `scripts/ai_weekly.py` (new), `templates/ai-weekly-shell.html` (new), `assets/js/ai-weekly-gate.js` (new), `scripts/set-ai-weekly-password.py` (new), **`scripts/build_site.py` (shared)** — nav child, `robots.txt` Disallow, `build_ai_weekly()` wiring; content in the separate `Cyber Digest/Weekly-AI/` project | main | **Built 2026-09-24.** ⚠️ This touched the shared `build_site.py`; Codex should review the four-line wiring. Draft payloads are AES-GCM encrypted with a passphrase stored outside the repo (`~/.hermes/secrets/ai-weekly-gate.txt`); with no passphrase the pages ship locked with **no payload**, so a draft cannot leak while unconfigured. |
 
 ## Scoring model (read before editing report pages)
 
