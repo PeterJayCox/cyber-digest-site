@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://cyber.peterjaycox.com/wiki/</loc><lastmod>2026-09-24</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/</loc><lastmod>2026-09-25</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/concepts/ai-uplift.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/concepts/bit2watt.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/concepts/car.html</loc><lastmod>2026-08-30</lastmod></url>
@@ -184,7 +184,7 @@
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/boston-scientific-restores-shipping-a-week-after-cyberattack.html</loc><lastmod>2026-09-09</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/bragjack-turns-a-single-malicious-extension-into-control-of-five-browsers-built-.html</loc><lastmod>2026-09-19</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/brazetsu-malware-turns-compromised-windows-hosts-into-criminal-marketplace-inven.html</loc><lastmod>2026-09-03</lastmod></url>
-  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/brevo-supply-chain-attack-injected-clickfix-scripts-on-up-to-100-000-customer-si.html</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/brevo-supply-chain-attack-injected-clickfix-scripts-on-up-to-100-000-customer-si.html</loc><lastmod>2026-09-25</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/britain-s-next-war-won-t-be-an-away-game-q-a-with-former-head-of-defence-intelli.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/broadcom-patches-two-vm-escape-flaws-in-vmware-workstation-and-fusion.html</loc><lastmod>2026-09-05</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/brown-health-medical-group-ma-data-breach-affects-312-000-individuals.html</loc><lastmod>2026-08-30</lastmod></url>
@@ -545,7 +545,7 @@
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/orkes-conductor-cve-2026-58138-is-under-active-exploitation-unauthenticated-rce-.html</loc><lastmod>2026-09-19</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/osf-healthcare-system-pays-552-250-to-settle-ocr-hipaa-investigation.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/over-4-400-rockwell-plcs-exposed-online-22-found-in-water-attack-cities.html</loc><lastmod>2026-08-30</lastmod></url>
-  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/over-5-400-hacked-sites-serve-clickfix-payloads-stored-on-the-blockchain.html</loc><lastmod>2026-09-05</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/over-5-400-hacked-sites-serve-clickfix-payloads-stored-on-the-blockchain.html</loc><lastmod>2026-09-25</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/over-8-300-gitea-servers-remain-vulnerable-to-code-execution-attacks-as-flaw-lan.html</loc><lastmod>2026-08-29</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/palomar-health-and-summit-medical-group-settle-data-breach-class-actions.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/papercut-warns-of-ng-mf-flaw-actively-exploited-in-zero-day-attacks.html</loc><lastmod>2026-09-18</lastmod></url>
@@ -625,7 +625,7 @@
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/task-stomp-backdoor-harvests-documents-wi-fi-credentials-and-clipboard-through-t.html</loc><lastmod>2026-09-22</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/telegram-phishing-campaign-targets-exiled-belarusian-activists-russians-and-kaza.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/tennessee-pathology-group-170k-breach.html</loc><lastmod>2026-08-17</lastmod></url>
-  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/terminalfix-uses-fake-cloudflare-captchas-to-deploy-reverse-tunnel-backdoor.html</loc><lastmod>2026-08-30</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/terminalfix-uses-fake-cloudflare-captchas-to-deploy-reverse-tunnel-backdoor.html</loc><lastmod>2026-09-25</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/texas-hearing-institute-ransomware-attack-affects-30-000-patients.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/the-fbi-logs-nearly-61-000-officer-impersonation-complaints-and-more-than-us-1-6.html</loc><lastmod>2026-09-20</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/the-graphalgo-campaign-ports-to-go-and-terraform-using-two-fake-module-ecosystem.html</loc><lastmod>2026-09-22</lastmod></url>
