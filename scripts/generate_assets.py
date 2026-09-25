@@ -427,7 +427,7 @@ def generate_monthly_covers():
                     write_to=os.path.join(IMG_DIR, "monthly-2026-08.png"),
                     output_width=1200, output_height=400)
 
-    # September 2026 Cover (PARTIAL — re-closed 21 September) - AI-Orchestrated Attacks
+    # September 2026 Cover (PARTIAL — re-closed 25 September) - AI-Orchestrated Attacks
     september_svg = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400">
   <defs>
     <linearGradient id="sep-bg" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -468,7 +468,7 @@ def generate_monthly_covers():
   <!-- Typography -->
   <g transform="translate(80, 120)">
     <rect x="0" y="0" width="250" height="28" rx="14" fill="rgba(244, 63, 94, 0.12)" stroke="rgba(244, 63, 94, 0.35)" stroke-width="1"/>
-    <text x="14" y="18" font-family="-apple-system, sans-serif" font-weight="700" font-size="12" fill="#fb7185" letter-spacing="1">PARTIAL MONTH · 1–21 SEPTEMBER</text>
+    <text x="14" y="18" font-family="-apple-system, sans-serif" font-weight="700" font-size="12" fill="#fb7185" letter-spacing="1">PARTIAL MONTH · 1–25 SEPTEMBER</text>
 
     <text x="0" y="80" font-family="-apple-system, sans-serif" font-weight="800" font-size="42" fill="#e2e8f0">CYBER DIGEST · <tspan fill="#00b4d8">SEPTEMBER 2026</tspan></text>
     <text x="0" y="120" font-family="-apple-system, sans-serif" font-weight="400" font-size="20" fill="#b0c0d0">AI Agents, Exploited Edge and the Developer Toolchain</text>
