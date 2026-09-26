@@ -3344,7 +3344,11 @@ def build_cve_matrix():
         return
     html = open(src, encoding="utf-8").read()
     nav = nav_html("tools/cve-attack-matrix.html", "")   # Tools group marked active
-    nav = re.sub(r'<div class="theme-toggle"[^>]*>.*?</div>', '', nav, flags=re.S)  # fixed-dark app: drop site theme toggle
+    # The matrix is theme-aware (it ships a light + dark palette and its own
+    # .theme-toggle rules), so unlike the fixed-dark apps it KEEPS the shared
+    # appearance toggle — and needs the shared pre-paint theme script, or the
+    # toggle would render but do nothing and the page would always open dark.
+    html = html.replace("<head>", "<head>\n" + THEME_HEAD, 1)
     if "__SITE_NAV__" in html:
         html = html.replace("__SITE_NAV__", nav)
     else:
