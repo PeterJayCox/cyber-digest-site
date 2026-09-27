@@ -4,7 +4,7 @@ Cyber workspace (daily/monthly digests, story SQLite DB, wiki pages).
 
 Output: <repo>/docs/  (GitHub Pages publishes from the /docs folder of main)
 """
-import argparse, base64, calendar, email.utils, html, json, math, os, re, shutil, sqlite3, sys, time
+import argparse, base64, calendar, email.utils, hashlib, html, json, math, os, re, shutil, sqlite3, sys, time
 from datetime import datetime, date, timedelta, timezone
 
 VAULT = "/Users/petercox/Library/Mobile Documents/iCloud~md~obsidian/Documents/Peter's Vault/Cyber"
@@ -437,6 +437,27 @@ def nav_html(active="", root=""):
             f'{THEME_TOGGLE}</div></nav>')
 
 SHARE_CSS = "assets/site.css"
+
+def _css_version():
+    """Stable cache-buster for the shared stylesheet: a content hash.
+
+    This used to be `datetime.now()` to the minute, so every page carried a fresh
+    `?v=` on every build. The result was ~975 files changed per deploy with zero
+    content difference, which made each release diff unreviewable. A content hash
+    changes only when site.css actually changes.
+    """
+    try:
+        with open(os.path.join(ROOT, SHARE_CSS), "rb") as fh:
+            return hashlib.sha1(fh.read()).hexdigest()[:10]
+    except OSError:
+        return "0"
+
+CSS_VER = _css_version()
+
+# Newest date represented in the corpus; set by main() right after load_db().
+# The footer reports this instead of a per-build wall clock, for the same
+# no-churn reason as CSS_VER.
+CONTENT_CURRENT = ""
 # JSON-LD structured data injected into every page's <head> ({JSONLD} token).
 # Kept as a plain string so its braces are never parsed by head()'s f-string.
 JSONLD = """<script type="application/ld+json">
@@ -510,7 +531,7 @@ def head(title, active="", root=""):
 {JSONLD}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{root}{SHARE_CSS}?v={datetime.now().strftime('%Y%m%d%H%M')}"></head><body>
+<link rel="stylesheet" href="{root}{SHARE_CSS}?v={CSS_VER}"></head><body>
 {nav_html(active, root)}<main class="container">'''
 
 def foot():
@@ -529,8 +550,9 @@ def foot():
     <a href="https://cyber.peterjaycox.com/corrections.html">Corrections</a>
     <a href="https://cyber.peterjaycox.com/licensing.html">Licensing</a>
     <a href="https://cyber.peterjaycox.com/security.html">Security</a>
+    <a href="https://cyber.peterjaycox.com/about.html">About</a>
   </div>
-  Cyber Digest public site · built {datetime.now().strftime("%Y-%m-%d %H:%M")}
+  Cyber Digest public site · content current to {CONTENT_CURRENT}
 </div>
 {NAV_JS}
 </body></html>'''
@@ -921,7 +943,10 @@ def build_feed(stories, days):
             by_day.setdefault(d, []).append(s)
     day_dates = sorted(by_day.keys(), reverse=True)[:40]  # newest 40 day-editions
     items = []
-    today = email.utils.formatdate(time.time(), usegmt=True)
+    # lastBuildDate = the newest edition in the feed, not the wall clock. RSS
+    # defines it as when the content last changed, and a per-build timestamp
+    # rewrote feed.xml on every deploy (noise in every release diff).
+    newest_rfc = _rfc822(day_dates[0]) if day_dates else email.utils.formatdate(time.time(), usegmt=True)
     for d in day_dates:
         ds = by_day[d]
         top = ""
@@ -957,7 +982,7 @@ def build_feed(stories, days):
         "  <description>A curated, sector-by-sector roundup of global cybersecurity developments with source-reliability indexing and Australian &amp; New Zealand context.</description>\n"
         "  <language>en-au</language>\n"
         f"  <atom:link href=\"{SITE_BASE}/feed.xml\" rel=\"self\" type=\"application/rss+xml\"/>\n"
-        f"  <lastBuildDate>{today}</lastBuildDate>\n"
+        f"  <lastBuildDate>{newest_rfc}</lastBuildDate>\n"
         + "\n".join(items) +
         "\n</channel>\n</rss>\n")
     open(os.path.join(DOCS, "feed.xml"), "w", encoding="utf-8").write(feed)
@@ -972,7 +997,9 @@ def build_feed_monthly(months):
     the month's last calendar day UTC via the same _rfc822 helper.
     """
     items = []
-    today = email.utils.formatdate(time.time(), usegmt=True)
+    # Same rule as feed.xml: derive lastBuildDate from content (the newest monthly
+    # edition), never from the build clock.
+    newest_pub = None
     for m in sorted(months, reverse=True):
         d = {}
         try:
@@ -988,6 +1015,8 @@ def build_feed_monthly(months):
             pub = f"{y}-{mm}-{last:02d}"
         except Exception:
             pub = f"{m}-01"
+        if newest_pub is None:
+            newest_pub = pub
         # friendly title e.g. "August 2026"
         _MONTHS = ["January","February","March","April","May","June","July",
                    "August","September","October","November","December"]
@@ -1022,7 +1051,7 @@ def build_feed_monthly(months):
         "developments with sector, threat and AU/NZ breakdowns.</description>\n"
         "  <language>en-au</language>\n"
         f"  <atom:link href=\"{SITE_BASE}/feed-monthly.xml\" rel=\"self\" type=\"application/rss+xml\"/>\n"
-        f"  <lastBuildDate>{today}</lastBuildDate>\n"
+        f"  <lastBuildDate>{_rfc822(newest_pub) if newest_pub else email.utils.formatdate(time.time(), usegmt=True)}</lastBuildDate>\n"
         + "\n".join(items) +
         "\n</channel>\n</rss>\n")
     open(os.path.join(DOCS, "feed-monthly.xml"), "w", encoding="utf-8").write(feed)
@@ -1080,6 +1109,7 @@ def build_sitemap(days, months, pages, reports):
         # deliberately absent from every sitemap.
         ("tools/cve-attack-matrix.html", _mtime("tools/cve-attack-matrix.html")),
         ("methodology.html", _mtime("methodology.html")),
+        ("about.html", _mtime("about.html")),
         ("security.html", _mtime("security.html")),
         ("privacy.html", _mtime("privacy.html")),
         ("corrections.html", _mtime("corrections.html")),
@@ -2186,19 +2216,63 @@ render();
     html = html_top + js + foot()
     open(os.path.join(DOCS,"stories.html"),"w",encoding="utf-8").write(html)
 
+_DAILY_RENDER = None
+
+
+def _daily_render(date, out):
+    """Render one daily edition in-process via daily-html.py's render().
+
+    This used to be an `os.system` per edition: 77 fresh interpreters, each
+    re-reading the CVE-severity table, loading the actor registry and parsing
+    the 67 KB template — ~30 s of a 43 s build, and its single largest cost.
+    daily-html.py's render() is safe to reuse across dates (its module caches
+    are date-independent; the one date-keyed lookup queries fresh), so import
+    it once and loop.
+
+    Returns False on failure so build_daily keeps its per-edition fallback.
+    """
+    global _DAILY_RENDER
+    if _DAILY_RENDER is None:
+        try:
+            import importlib.util
+            spec = importlib.util.spec_from_file_location(
+                "daily_html_render", os.path.join(NASSP, "daily-html.py"))
+            mod = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(mod)
+            _DAILY_RENDER = mod.render
+        except Exception as e:
+            print(f"[daily] in-process renderer unavailable ({e}); using subprocess")
+            _DAILY_RENDER = False
+    if _DAILY_RENDER is False:
+        # Fallback only if the in-process import fails. Argument list, not a
+        # shell string: these paths are internal (NASSP/DOCS), but there is no
+        # reason to route them through a shell.
+        import subprocess
+        return subprocess.run(
+            [sys.executable, os.path.join(NASSP, "daily-html.py"),
+             "--date", date, "--out", out, "--no-vault"],
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode == 0
+    try:
+        return bool(_DAILY_RENDER(date, out=out, no_vault=True, quiet=True))
+    except Exception as e:
+        print(f"[daily] render failed for {date}: {e}")
+        return False
+
+
 def build_daily(days):
     os.makedirs(os.path.join(DOCS,"daily"),exist_ok=True)
     daily_src=os.path.join(VAULT,"Cyber Digest","Daily")
     for d,month in days:
         mdpath=os.path.join(daily_src,month,f"Cyber-Digest-{d}.md")
         out=os.path.join(DOCS,"daily",f"{d}.html")
-        # reuse daily-html.py generator for faithful rendering
-        sub=os.system(f'"{sys.executable}" "{NASSP}/daily-html.py" --date {d} --out "{out}" --no-vault >/dev/null 2>&1')
-        if sub==0 and os.path.exists(out):
+        # reuse daily-html.py generator for faithful rendering — in-process, so
+        # the per-edition registry/template/CVE-map setup is paid once per build
+        ok=_daily_render(d, out)
+        if ok and os.path.exists(out):
             # the daily template ships its own stale nav copy — swap in the
             # shared nav (same data as every other page, incl. the dropdowns)
             inject_shared_nav(out, "daily/")
-        if sub!=0:
+        if not ok:
             # fallback with styling
             body=open(mdpath,encoding="utf-8").read()
             h=md_to_html(body,{},out)
@@ -3125,7 +3199,7 @@ METHODOLOGY_BODY = """<h2>What this measures (and what it does not)</h2>
     <li>Kill-chain phase as severity — Lockheed Martin, <a href="https://www.lockheedmartin.com/en-us/capabilities/cyber/cyber-kill-chain.html" target="_blank" rel="noopener">Cyber Kill Chain</a>; TTP vocabulary — <a href="https://attack.mitre.org/" target="_blank" rel="noopener">MITRE ATT&amp;CK</a></li>
   </ul>
 
-  <h2>How the site is produced (pipeline disclosure)</h2>
+  <h2 id="pipeline">How the site is produced (pipeline disclosure)</h2>
   <p>This is a <b>largely automated, single-maintainer operation</b>. The daily digests are
   assembled from publicly-reported sources, then rated and indexed by a Python pipeline
   backed by a SQLite database. The monthly editions and wiki are likewise generated from
@@ -3553,6 +3627,57 @@ def build_security_page():
 # are high-level; specific figures (cookie/source counts) belong on the pages they
 # describe and are sourced from the build where possible.
 
+_ABOUT_BODY = """<h2>What this is</h2>
+<p>Cyber Digest is an independent publication covering publicly reported cybersecurity
+developments. It publishes a daily sector-by-sector roundup, aggregated monthly editions,
+a searchable story database and a reference wiki of incidents, vulnerabilities, actors
+and concepts. It is written for practitioners and analysts who need a fast,
+source-attributed read on what changed, and why it matters.</p>
+
+<h2>How it is produced</h2>
+<p>Everything on the site is generated from one corpus: the published digest archive and
+the story database behind it. Collection is largely automated, drafting and fact-checking
+support are AI-assisted, and output is reviewed before publication. The full disclosure —
+what is automated, what is AI-assisted, and what the ratings mean — is in the
+<a href="methodology.html#pipeline">methodology &amp; reading guide</a>.</p>
+<p>Nothing here is hand-entered. The homepage threat index, the sector counts, the
+reporting-activity charts and every per-story rating are computed from the database at
+build time, from the same data the Story DB and the digests publish.</p>
+
+<h2>How sources are treated</h2>
+<p>Every item carries a deep link to the specific article it came from — never a homepage
+or a syndication redirect — and each source is graded by reliability tier. Confidence is
+the gate: a single-source, unattributed claim is labelled <code>Unverified</code> and can
+never be rated <i>Critical</i> severity or <i>Observed</i> urgency. Reported-but-not-verified
+material is labelled as such rather than smoothed into the narrative.</p>
+
+<h2>What this site does not do</h2>
+<ul>
+  <li>It does not predict attacks. Ratings describe the severity and urgency of
+      <b>already reported</b> activity, and are an ordinal heuristic — not a probability,
+      and not a measure of real-world danger.</li>
+  <li>It does not give security, legal or investment advice.</li>
+  <li>It runs no advertising and no cross-site tracking, and collects no visitor data —
+      see the <a href="privacy.html">privacy policy</a>.</li>
+  <li>It does not publish an unattributed claim as fact to fill a gap in a quiet news cycle.</li>
+</ul>
+
+<h2>Corrections</h2>
+<p>Factual errors are fixed and disclosed rather than silently overwritten, with the
+original claim recorded alongside the correction — see
+<a href="corrections.html">corrections &amp; retractions</a>. If a headline, date, figure or
+attribution here is wrong, it will be corrected against the source.</p>
+
+<h2>Rights and reuse</h2>
+<p>The site's own analysis, ratings and build code are original; the news being summarised
+belongs to the outlets that reported it, and every item links back so attribution and
+traffic stay with the source. See <a href="licensing.html">licensing &amp; terms</a>.</p>
+
+<h2>Reporting a security issue</h2>
+<p>Vulnerability reports about this site itself go to the address published in
+<a href="security.txt">security.txt</a> (RFC 9116) — not through the corrections channel.</p>
+"""
+
 _PRIVACY_BODY = """<p><b>In short:</b> this site does not use advertising, cross-site tracking or
 analytics cookies, and does not set any persistent personal identifiers on your device
 other than a <code>localStorage</code> flag recording your appearance choice — the site
@@ -3677,6 +3802,8 @@ applicable takedown provisions, while preserving the site's record-keeping duty.
 def build_static_pages(months, reports):
     """docs/privacy.html, docs/corrections.html, docs/licensing.html — shared chrome."""
     specs = [
+        ("About", "about.html", "// about", "About <span class=\"accent\">Cyber Digest</span>",
+         "What this site is, how it is produced, and how sources are treated.", _ABOUT_BODY, "index.html"),
         ("Privacy Policy", "privacy.html", "// privacy", "Privacy <span class=\"accent\">Policy</span>",
          "What this site does and does not collect from you.", _PRIVACY_BODY, "index.html"),
         ("Corrections & Retractions", "corrections.html", "// corrections", "Corrections <span class=\"accent\">& Retractions</span>",
@@ -3736,6 +3863,11 @@ def main():
         shutil.copy(nj_src, os.path.join(DOCS,".nojekyll"))
 
     stories=load_db()
+    # Footer freshness label ("content current to …"): derived from the corpus, not
+    # the build clock, so a no-op rebuild produces byte-identical pages.
+    global CONTENT_CURRENT
+    CONTENT_CURRENT = (max((s.get("digest_date") or "" for s in stories), default="")
+                       or datetime.now().strftime("%Y-%m-%d"))
     pages,linkmap=scan_wiki()
     FLAT_LINKMAP=linkmap
     reports=_reports_load()

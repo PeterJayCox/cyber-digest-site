@@ -21,6 +21,7 @@ current browser.
 import base64
 import glob
 import json
+import hashlib
 import os
 import re
 from datetime import date, datetime
@@ -58,9 +59,32 @@ def _b64(raw: bytes) -> str:
     return base64.b64encode(raw).decode("ascii")
 
 
+def _nonce_material(pw: str, html: str) -> bytes:
+    """Deterministic salt + IV derived from the passphrase and the plaintext.
+
+    These payloads are re-encrypted on every build. With `os.urandom()` salt/IV
+    that made the three gated pages (flashcards.html, tools/drafts/*) differ on
+    every build even when nothing changed, so each deploy committed them as churn
+    and the release diff stopped being reviewable. Deriving both from
+    SHA-256(passphrase | plaintext) makes the build reproducible: identical input
+    produces identical ciphertext.
+
+    Uniqueness — the property AES-GCM actually depends on — still holds: a
+    different passphrase or a different plaintext yields a different salt (64
+    bits) and IV (96 bits), so no two distinct messages are ever encrypted under
+    the same key+nonce pair. Both values are published inside the payload anyway,
+    so deriving them reveals nothing the payload does not already carry; the
+    passphrase itself is never written out or logged.
+    """
+    return hashlib.sha256(
+        b"cd-gate-v1|" + pw.encode("utf-8") + b"|" + html.encode("utf-8")
+    ).digest()
+
+
 def encrypt(html: str, pw: str, title: str) -> str:
     """Encrypt one edition fragment into the JSON payload the gate decrypts."""
-    salt, iv = os.urandom(16), os.urandom(12)
+    material = _nonce_material(pw, html)
+    salt, iv = material[:16], material[16:28]
     key = PBKDF2HMAC(algorithm=hashes.SHA256(), length=KEYLEN, salt=salt,
                      iterations=ITERATIONS).derive(pw.encode("utf-8"))
     ct = AESGCM(key).encrypt(iv, html.encode("utf-8"), None)
