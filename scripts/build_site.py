@@ -454,6 +454,45 @@ def _css_version():
 
 CSS_VER = _css_version()
 
+# Page-specific CSS blocks, keyed by name. Generators register a block here and
+# write_site_css() emits them once, in a fixed order, on top of the source
+# stylesheet. See write_site_css() for why this is not done in place.
+GEN_CSS = {}
+
+
+def write_site_css(order=("daily", "wiki")):
+    """Write docs/assets/site.css = source stylesheet + registered blocks.
+
+    main() copies assets/ -> docs/assets/ at the start of every build, so the
+    built stylesheet must be assembled AFTER that copy and from a known base.
+    Two generators used to edit docs/assets/site.css in place instead, which made
+    the output a function of the previous build's file rather than of the source:
+    the daily block's strip-and-append matched only when BOTH of its markers were
+    present (the lookahead marker sits *inside* the block being re-appended), and
+    the wiki block was appended only when a marker was already present in the
+    file. Depending on history that duplicated blocks or dropped them — e.g.
+    `.month-group` rules present in the working tree but absent from the built,
+    published stylesheet. One write, one order, no history.
+    """
+    src = os.path.join(ROOT, SHARE_CSS)
+    try:
+        with open(src, encoding="utf-8") as fh:
+            text = fh.read()
+    except OSError as e:
+        print(f"[css] WARN cannot read {src}: {e}")
+        return
+    applied = []
+    for name in order:
+        block = GEN_CSS.get(name)
+        if block:
+            text = text.rstrip("\n") + "\n" + block.strip("\n") + "\n"
+            applied.append(name)
+    out = os.path.join(DOCS, SHARE_CSS)
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    with open(out, "w", encoding="utf-8") as fh:
+        fh.write(text)
+    print(f"[css] site.css = source + {' + '.join(applied) if applied else 'no blocks'}")
+
 # Newest date represented in the corpus; set by main() right after load_db().
 # The footer reports this instead of a per-build wall clock, for the same
 # no-churn reason as CSS_VER.
@@ -2412,7 +2451,6 @@ def build_daily(days):
     {cards}'''+foot()+DAILY_FILTER_JS
 
     # Add daily card CSS
-    css_path=os.path.join(DOCS,"assets","site.css")
     css_extra='''
 /* ===== Daily archive — signal cards + filter bar (redesign 2026-09-22) ===== */
 .daily-filters{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin:0 0 22px;padding:12px 14px;background:var(--surface);border:1px solid var(--border);border-radius:11px}
@@ -2472,16 +2510,11 @@ def build_daily(days):
 .month-group .dgrid{padding:0 16px 16px}
 @media(max-width:680px){.dgrid{grid-template-columns:1fr}.dcard{height:auto;min-height:230px}.dcounter{width:100%;margin-left:0}.df-l{display:none}}
 '''
-    # The deploy path runs build_site.py WITHOUT --fresh, so appending blindly
-    # stacks another copy of this block into docs/assets/site.css every build.
-    # Strip any previous copy (marked or legacy) and re-append, so an edit here
-    # always reaches the built CSS and duplicates never accumulate.
-    css_text=open(css_path,encoding="utf-8").read()
-    css_text=re.sub(
-        r"\n?/\* ===== Daily archive — signal cards.*?(?=/\* Daily archive — collapsible month groups \*/)",
-        "\n", css_text, flags=re.S)
-    with open(css_path,"w",encoding="utf-8") as f:
-        f.write(css_text.rstrip("\n")+"\n"+css_extra)
+    # Register the block; write_site_css() emits it once, from the source copy.
+    # The previous strip-and-append edit of docs/assets/site.css made the built
+    # stylesheet depend on what the last build had left behind (see
+    # write_site_css), which is how `.month-group` rules went missing live.
+    GEN_CSS["daily"] = css_extra
     open(os.path.join(DOCS,"daily","index.html"),"w",encoding="utf-8").write(html)
 
 def build_monthly(months, stories):
@@ -2741,8 +2774,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     '''+js+foot()
     open(os.path.join(wiki_index,"index.html"),"w",encoding="utf-8").write(html)
 
-    # Add CSS for collapsible sections to site.css (deduped — appended once)
-    css_path=os.path.join(DOCS,"assets","site.css")
+    # Register the collapsible-section CSS for write_site_css() (see its docstring).
     css_extra='''
 /* Wiki index collapsible sections */
 .wiki-card h3{font-size:15.5px;line-height:1.35}
@@ -2762,9 +2794,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 .filters a{color:var(--accent);font-size:13px;cursor:pointer;text-decoration:none}
 .filters a:hover{text-decoration:underline}
 ''' + "\n"
-    css_text=open(css_path,encoding="utf-8").read()
-    if ".grid.cards.wiki-grid{" not in css_text:
-        with open(css_path,"a") as f: f.write(css_extra)
+    GEN_CSS["wiki"] = css_extra
 
 FLAT_LINKMAP={}
 def exec_summary_html(r):
@@ -3890,6 +3920,9 @@ def main():
     build_feed(stories, days)
     build_feed_monthly(months)
     build_sitemap(days, months, pages, reports)
+    # Assemble docs/assets/site.css last: source stylesheet + the blocks the
+    # generators registered (daily archive, wiki index). See write_site_css().
+    write_site_css()
     print(f"✅ Site built -> {DOCS}")
     print(f"   {len(stories)} stories, {len(days)} daily, {len(months)} monthly, {sum(len(v) for v in pages.values())} wiki pages")
 
