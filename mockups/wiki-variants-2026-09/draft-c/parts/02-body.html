@@ -1,0 +1,107 @@
+<div class="topnav"><div class="in">
+  <a class="brand" href="#/"><span class="dot"></span>Cyber Digest <small>Public site</small></a>
+  <nav class="nav">
+    <a href="https://cyber.peterjaycox.com/index.html">Home</a>
+    <a href="https://cyber.peterjaycox.com/stories.html">Story DB</a>
+    <a href="https://cyber.peterjaycox.com/globe.html">Globe</a>
+    <a href="https://cyber.peterjaycox.com/reports/index.html">Reports</a>
+    <a class="on" href="#/">Wiki</a>
+    <a href="https://cyber.peterjaycox.com/tools/index.html">Tools</a>
+  </nav>
+</div></div>
+
+<div class="wrap">
+
+  <!-- ================= LANDING ================= -->
+  <div id="view-home">
+    <header class="hero">
+      <div class="kick" id="heroKick">// the file</div>
+      <h1>Search the <span>network</span>, not the list</h1>
+      <p class="lede" id="heroLede"></p>
+
+      <div class="searchwrap">
+        <div class="cmd">
+          <div class="field">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00b4d8" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+            <input id="q" placeholder="Search 963 pages — names, tags, sectors, CVE IDs…" autocomplete="off" spellcheck="false">
+            <span class="hint">/ to focus · ↑↓ · ⏎</span>
+          </div>
+          <div class="results" id="results"></div>
+        </div>
+      </div>
+
+      <div class="note" id="heroNote"></div>
+      <div class="statsrow" id="statsrow"></div>
+    </header>
+
+    <section class="sect">
+      <h2><span class="bar"></span>The map<span class="tag" id="mapTag"></span></h2>
+      <p class="sub">Node size is page count; edge thickness is the number of real cross-links between families — measured from the wikilinks in the vault, not inferred. Click a family to browse it, or a satellite to open the most-cited page.</p>
+      <div class="mapgrid">
+        <div>
+          <div class="mapshell">
+            <svg viewBox="0 0 800 460" id="graph" role="img" aria-label="Wiki family and cross-link map"></svg>
+            <div class="mapnote" id="mapnote"></div>
+          </div>
+        </div>
+        <aside style="display:grid;gap:16px">
+          <div class="panel"><h4><span id="famTitle">Family</span><span id="famCount"></span></h4>
+            <div id="famList"></div>
+          </div>
+          <div class="panel"><h4>Subjects<span id="tagCount"></span></h4>
+            <div class="tagcloud" id="tagcloud"></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="sect">
+      <h2><span class="bar"></span>Most cited in the file</h2>
+      <p class="sub">Pages other entries link to most often. These are the wiki's real junctions — if you fix or extend one page, this is where the traffic comes from.</p>
+      <div class="mapgrid">
+        <div class="panel" id="hubs"></div>
+        <div class="panel"><h4>Running threads</h4><div class="thread" id="threads"></div></div>
+      </div>
+    </section>
+
+    <section class="sect">
+      <h2><span class="bar"></span>Loose ends<span class="tag" id="orphanTag"></span></h2>
+      <p class="sub">Pages with no wikilink in or out. They are readable and indexed, but nothing in the corpus points at them and they point at nothing — the file's standing data-quality gap, and the shortest list of work if the wiki is to behave like a network.</p>
+      <div class="panel" id="orphans"></div>
+    </section>
+
+    <section class="sect">
+      <h2><span class="bar"></span>How this draft reads the corpus</h2>
+      <p class="sub" id="method"></p>
+    </section>
+  </div>
+
+  <!-- ================= RESULTS ================= -->
+  <div id="view-list" hidden>
+    <div class="vhead">
+      <div class="kick" id="listKick">// browsing</div>
+      <h1 id="listTitle"></h1>
+      <p id="listSub"></p>
+    </div>
+    <div class="tools">
+      <select id="sort">
+        <option value="rel">Sort: best match</option>
+        <option value="date">Sort: newest first</option>
+        <option value="cited">Sort: most cited</option>
+        <option value="title">Sort: A–Z</option>
+      </select>
+      <span class="n" id="listCount"></span>
+      <span class="sp"></span>
+      <span class="n" id="listFacets"></span>
+    </div>
+    <div class="rows" id="listRows"></div>
+    <button class="more" id="more" hidden></button>
+  </div>
+
+  <!-- ================= ARTICLE ================= -->
+  <div id="view-page" hidden></div>
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="mk">Draft · Constellation</div>
+<script src="data/wiki.js"></script>

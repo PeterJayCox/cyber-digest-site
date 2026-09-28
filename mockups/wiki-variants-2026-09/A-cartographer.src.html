@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en-AU"><head><meta charset="utf-8">
+<title>Variant A — Cartographer · Cyber Wiki mockup</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0e1a;--surface:#111827;--surface2:#1a2332;--hover:#1e293b;
+  --text:#e2e8f0;--sec:#b0c0d0;--muted:#8a9cb6;--dim:#64748b;
+  --border:rgba(255,255,255,.06);--border2:rgba(255,255,255,.11);
+  --accent:#00b4d8;--glow:rgba(0,180,216,.08);--accentbg:rgba(0,180,216,.12);
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --crit:#f43f5e;--high:#fb923c;--med:#facc15;--low:#4ade80;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;font-size:15px}
+a{color:var(--accent);text-decoration:none}
+.mk{position:fixed;right:14px;bottom:14px;z-index:99;font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dim);background:var(--surface);border:1px solid var(--border2);padding:7px 11px;border-radius:999px}
+/* chrome */
+.topnav{position:sticky;top:0;z-index:50;background:rgba(10,14,26,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.topnav .in{max-width:1420px;margin:0 auto;padding:12px 26px;display:flex;align-items:center;gap:10px}
+.brand{font-size:17px;font-weight:700;letter-spacing:-.4px;display:flex;align-items:center;gap:10px;color:var(--text)}
+.brand .dot{width:12px;height:12px;border-radius:50%;background:var(--accent)}
+.brand small{font:400 11px/1 Inter;color:var(--dim);letter-spacing:1.2px;text-transform:uppercase;margin-left:4px}
+.nav{margin-left:auto;display:flex;gap:2px}
+.nav a{color:var(--muted);font-size:14px;font-weight:500;padding:8px 13px;border-radius:6px}
+.nav a:hover{color:var(--text);background:var(--surface2)}
+.nav a.on{color:var(--text);background:var(--hover);font-weight:600}
+.wrap{max-width:1420px;margin:0 auto;padding:0 26px 90px}
+/* masthead */
+.mast{padding:30px 0 18px;border-bottom:1px solid var(--border)}
+.mast h1{font-size:34px;font-weight:700;letter-spacing:-.8px}
+.mast h1 span{color:var(--accent)}
+.mast .kicker{font:500 11px/1 var(--mono);letter-spacing:1px;color:var(--accent);text-transform:uppercase}
+.mast p{color:var(--muted);font-size:14px;margin-top:7px}
+.stats{display:flex;gap:26px;margin-top:16px;flex-wrap:wrap}
+.stat{font-size:13px;color:var(--dim)}
+.stat b{display:block;font-size:22px;font-weight:700;color:var(--text);letter-spacing:-.5px}
+/* toolbar */
+.toolbar{position:sticky;top:57px;z-index:40;background:rgba(10,14,26,.94);backdrop-filter:blur(10px);display:flex;gap:10px;align-items:center;padding:13px 0;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.q{flex:1;min-width:260px;position:relative}
+.q input{width:100%;background:var(--surface);border:1px solid var(--border2);border-radius:8px;color:var(--text);font:inherit;font-size:14px;padding:10px 13px 10px 36px;outline:none}
+.q input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--glow)}
+.q svg{position:absolute;left:11px;top:11px;opacity:.55}
+select,.tgl{background:var(--surface);border:1px solid var(--border2);color:var(--sec);font:inherit;font-size:13px;padding:9px 12px;border-radius:8px;cursor:pointer;outline:none}
+.count{font:500 12px/1 var(--mono);color:var(--dim);padding:0 4px;white-space:nowrap}
+.count b{color:var(--accent);font-size:13px}
+/* layout */
+.grid{display:grid;grid-template-columns:252px minmax(0,1fr);gap:28px;align-items:start;margin-top:22px}
+/* facets */
+.facets{position:sticky;top:122px;border:1px solid var(--border);border-radius:12px;background:var(--surface);overflow:hidden}
+.fx{border-bottom:1px solid var(--border);padding:13px 15px}
+.fx:last-child{border-bottom:0}
+.fx h4{font:600 10.5px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--dim);margin-bottom:9px;display:flex;justify-content:space-between}
+.fx h4 button{background:none;border:0;color:var(--accent);font:inherit;font-size:10px;cursor:pointer;letter-spacing:.08em}
+.fx label{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--sec);padding:4px 0;cursor:pointer}
+.fx label:hover{color:var(--text)}
+.fx input[type=checkbox]{appearance:none;width:15px;height:15px;border:1px solid var(--border2);border-radius:4px;background:var(--surface2);flex-shrink:0;position:relative}
+.fx input[type=checkbox]:checked{background:var(--accent);border-color:var(--accent)}
+.fx input[type=checkbox]:checked::after{content:"";position:absolute;left:4px;top:1px;width:5px;height:9px;border:2px solid #06131a;border-top:0;border-left:0;transform:rotate(42deg)}
+.fx .n{margin-left:auto;font:500 11px/1 var(--mono);color:var(--dim)}
+.sevdot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+/* rows */
+.rows{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--surface)}
+.rhead,.row{display:grid;grid-template-columns:82px 108px minmax(0,1fr) 96px 92px;gap:14px;align-items:center;padding:12px 16px}
+.rhead{font:600 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--dim);background:var(--surface2);border-bottom:1px solid var(--border)}
+.rhead span{cursor:pointer}
+.rhead span:hover{color:var(--accent)}
+.row{border-bottom:1px solid var(--border);cursor:pointer;transition:background .12s}
+.row:last-child{border-bottom:0}
+.row:hover{background:var(--hover)}
+.row .d{font:500 11.5px/1.3 var(--mono);color:var(--dim)}
+.row h3{font-size:14.5px;font-weight:550;line-height:1.35;color:var(--text);letter-spacing:-.1px}
+.row .tg{display:flex;gap:5px;flex-wrap:wrap;margin-top:5px}
+.chip{font:500 10px/1 var(--mono);color:var(--muted);background:var(--surface2);border:1px solid var(--border);padding:3px 7px;border-radius:5px;letter-spacing:.02em;cursor:pointer}
+.chip:hover{color:var(--accent);border-color:var(--accent)}
+.kind{display:inline-flex;align-items:center;gap:6px;font:500 11px/1 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.kind i{width:6px;height:6px;border-radius:2px;background:var(--dim);display:inline-block}
+.k-incident i{background:#f97316}.k-cve i{background:#a78bfa}.k-entity i{background:#22d3ee}.k-concept i{background:#34d399}
+.pill{font:600 10.5px/1 var(--mono);padding:4px 9px;border-radius:999px;text-transform:capitalize;border:1px solid var(--border2);color:var(--muted);justify-self:start;white-space:nowrap}
+.p-critical{color:#fecdd3;background:rgba(244,63,94,.14);border-color:rgba(244,63,94,.4)}
+.p-high{color:#fed7aa;background:rgba(251,146,60,.13);border-color:rgba(251,146,60,.38)}
+.p-medium{color:#fef08a;background:rgba(250,204,21,.12);border-color:rgba(250,204,21,.34)}
+.p-low{color:#bbf7d0;background:rgba(74,222,128,.12);border-color:rgba(74,222,128,.32)}
+.conf{font:500 11px/1 var(--mono);color:var(--dim)}
+.au{font:600 9.5px/1 var(--mono);color:#7dd3fc;background:rgba(0,180,216,.12);border:1px solid rgba(0,180,216,.35);padding:3px 5px;border-radius:4px;letter-spacing:.06em}
+.rows.dense .row{padding:8px 16px}
+.rows.dense .row .tg{display:none}
+.rows.dense .row h3{font-size:13.5px}
+.empty{padding:40px;text-align:center;color:var(--dim);font-size:14px}
+/* detail */
+.detail{display:none;grid-template-columns:minmax(0,1fr) 300px;gap:30px;align-items:start;margin-top:22px}
+.detail.on{display:grid}
+.index.off{display:none}
+.crumb{font:500 12px/1 var(--mono);color:var(--dim);margin-bottom:14px}
+.crumb button{background:none;border:0;color:var(--accent);font:inherit;cursor:pointer;padding:0}
+.article{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:30px 34px}
+.article h1{font-size:29px;line-height:1.25;letter-spacing:-.7px;font-weight:700}
+.chiprow{display:flex;gap:7px;flex-wrap:wrap;margin:14px 0 20px}
+.article p{color:var(--sec);font-size:15.5px;line-height:1.75;margin-bottom:14px}
+.article .lede{color:var(--text);font-size:16.5px;line-height:1.7}
+.article h2{font-size:19px;margin:24px 0 10px;padding-top:18px;border-top:1px solid var(--border);letter-spacing:-.3px}
+.srclist{list-style:none;display:grid;gap:7px}
+.srclist li{font-size:13.5px;color:var(--muted);padding-left:16px;position:relative}
+.srclist li::before{content:"↗";position:absolute;left:0;color:var(--dim)}
+.rail{position:sticky;top:122px;display:grid;gap:14px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 17px}
+.card h4{font:600 10.5px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--dim);margin-bottom:11px}
+.attrs{display:grid;gap:9px}
+.attr{display:flex;justify-content:space-between;gap:12px;font-size:13px;border-bottom:1px dashed var(--border);padding-bottom:8px}
+.attr:last-child{border:0;padding-bottom:0}
+.attr span:first-child{color:var(--dim);font-size:12px}
+.attr span:last-child{color:var(--text);text-align:right;font-family:var(--mono);font-size:11.5px}
+.rel{display:grid;gap:9px}
+.rel a{font-size:13.5px;line-height:1.4;color:var(--sec);display:block;padding-left:14px;position:relative}
+.rel a::before{content:"→";position:absolute;left:0;color:var(--accent)}
+.rel a:hover{color:var(--accent)}
+.rel small{display:block;font:500 10px/1.4 var(--mono);color:var(--dim)}
+</style></head>
+<body>
+<div class="topnav"><div class="in">
+  <div class="brand"><span class="dot"></span>Cyber Digest <small>Public site</small></div>
+  <nav class="nav"><a href="#">Home</a><a href="#">Story DB</a><a href="#">Globe</a><a href="#">Reports</a><a class="on" href="#">Wiki</a><a href="#">Tools</a></nav>
+</div></div>
+
+<div class="wrap">
+  <header class="mast">
+    <div class="kicker">// knowledge base</div>
+    <h1>Cyber <span>Wiki</span></h1>
+    <p id="mastSub"></p>
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <div class="index" id="index">
+    <div class="toolbar">
+      <div class="q">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8a9cb6" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input id="q" placeholder="Search titles, summaries and tags…" autocomplete="off">
+      </div>
+      <select id="sort">
+        <option value="date">Sort: newest first</option>
+        <option value="title">Sort: A–Z</option>
+        <option value="links">Sort: most cross-linked</option>
+        <option value="sev">Sort: severity</option>
+      </select>
+      <button class="tgl" id="density">Density: comfortable</button>
+      <span class="count" id="count"></span>
+    </div>
+    <p style="font:500 10.5px/1.6 var(--mono);color:var(--dim);margin-top:9px;letter-spacing:.04em">MOCKUP · the newest 45 of <span id="samplenote"></span> pages are loaded into this page; every count, facet and label below is read from the live wiki build.</p>
+    <div class="grid">
+      <aside class="facets" id="facets"></aside>
+      <section>
+        <div class="rows" id="rows"></div>
+      </section>
+    </div>
+  </div>
+
+  <section class="detail" id="detail"></section>
+</div>
+<div class="mk">Mockup A · Cartographer</div>
+<script>/*__WIKI_DATA__*/</script>
+<script>
+const D = window.WIKI;
+const KIND = {incident:{n:'Incident',c:'k-incident'},cve:{n:'CVE',c:'k-cve'},entity:{n:'Entity',c:'k-entity'},concept:{n:'Concept',c:'k-concept'}};
+const SEVORD = {critical:0,high:1,medium:2,low:3,'not-rated':4,'':5};
+const state = {kind:new Set(),sector:new Set(),sev:new Set(),month:new Set(),au:false,q:'',sort:'date',dense:false};
+
+const fmt = d => d ? d.slice(8,10)+'/'+d.slice(5,7) : '—';   // DD/MM — AU order, not US
+const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function matches(p){
+  if(state.kind.size && !state.kind.has(p.k)) return false;
+  if(state.sev.size && !state.sev.has(p.severity)) return false;
+  if(state.month.size && !state.month.has(p.created.slice(0,7))) return false;
+  if(state.sector.size && !p.sectors.some(s=>state.sector.has(s))) return false;
+  if(state.au && !p.au) return false;
+  if(state.q){
+    const hay=(p.title+' '+p.summary+' '+p.tags.join(' ')+' '+p.sectors.join(' ')).toLowerCase();
+    if(!state.q.split(/\s+/).every(t=>hay.includes(t))) return false;
+  }
+  return true;
+}
+function sortFn(list){
+  const s = state.sort;
+  return list.sort((a,b)=>
+    s==='title' ? a.title.localeCompare(b.title) :
+    s==='links' ? b.nlinks-a.nlinks :
+    s==='sev'   ? (SEVORD[a.severity]??9)-(SEVORD[b.severity]??9) :
+                  b.created.localeCompare(a.created));
+}
+function rebuildFacets(){
+  const kinds=Object.entries(D.counts).sort((a,b)=>b[1]-a[1]);
+  const box = (title,rows)=>
+    `<div class="fx"><h4>${title}${rows.length>4?'<button data-clear="'+title+'">clear</button>':''}</h4>${rows.join('')}</div>`;
+  const cb = (group,val,label,n,extra='') => {
+    // NOTE: 'au' is a boolean flag, not a Set — check it separately (this bit me:
+    // state[group].has is not a function on the AU facet).
+    const on = group === 'au' ? state.au : state[group].has(val);
+    return `<label><input type="checkbox" data-g="${group}" value="${esc(val)}" ${on?'checked':''}>${extra}${esc(label)}<span class="n">${n}</span></label>`;
+  };
+  const sevs = ['critical','high','medium','low'];
+  const parts = [
+    box('Type', kinds.map(([k,n])=>cb('kind',k,KIND[k].n,n,`<i class="kind ${KIND[k].c}"><i></i></i>`))),
+    box('Severity', sevs.map(s=>cb('sev',s,s.charAt(0).toUpperCase()+s.slice(1),D.severity[s]||0,
+      `<i class="sevdot" style="background:var(--${s==='critical'?'crit':s==='high'?'high':s==='medium'?'med':'low'})"></i>`))),
+    box('Sector', D.sectors.slice(0,8).map(([s,n])=>cb('sector',s,s,n))),
+    box('Window', D.months.map(([m,n])=>cb('month',m,new Date(m+'-02').toLocaleString('en-AU',{month:'long',year:'numeric'}),n))),
+  ];
+  parts.push(`<div class="fx"><h4>Australian impact</h4>${cb('au','1','AU-relevant only',D.au)}</div>`);
+  document.getElementById('facets').innerHTML = parts.join('');
+}
+function render(){
+  const list = sortFn(D.items.filter(matches));
+  document.getElementById('count').innerHTML = `<b>${list.length}</b> of ${D.total} pages`;
+  const rows = list.slice(0,list.length).map(p=>`
+    <div class="row" data-slug="${esc(p.slug)}" data-kind="${p.k}">
+      <div class="d">${fmt(p.created)}${p.updated!==p.created?'<br>↻ '+fmt(p.updated):''}</div>
+      <div class="kind ${KIND[p.k].c}"><i></i>${KIND[p.k].n}</div>
+      <div><h3>${esc(p.title)}</h3><div class="tg">${p.tags.slice(0,4).map(t=>`<span class="chip">${esc(t)}</span>`).join('')}${p.au?'<span class="au">AU</span>':''}</div></div>
+      <div class="pill p-${p.severity||'low'}">${esc(p.severity||'—')}</div>
+      <div class="conf">${esc(p.confidence||'—')}</div>
+    </div>`).join('');
+  document.getElementById('rows').innerHTML =
+    `<div class="rhead"><span data-sort="date">Date</span><span data-sort="kind">Type</span><span data-sort="title">Entry</span><span data-sort="sev">Severity</span><span data-sort="conf">Confidence</span></div>`
+    + (rows || `<div class="empty">No pages match those filters. <a href="#" id="resetInline">Reset</a></div>`);
+}
+function openPage(slug){
+  const p = D.items.find(x=>x.slug===slug); if(!p) return;
+  const related = D.items.filter(x=>x!==p && (x.k!==p.k) && (x.tags.some(t=>p.tags.includes(t)) || x.title.split(' ')[0]===p.title.split(' ')[0])).slice(0,4);
+  document.getElementById('index').classList.add('off');
+  const d = document.getElementById('detail');
+  d.classList.add('on');
+  d.innerHTML = `
+    <div>
+      <div class="crumb"><button id="back">← All 963 pages</button> · ${KIND[p.k].n} · ${fmt(p.created)}</div>
+      <article class="article">
+        <h1>${esc(p.title)}</h1>
+        <div class="chiprow">
+          ${p.tags.map(t=>`<span class="chip">${esc(t)}</span>`).join('')}
+          ${p.au?'<span class="au">AU IMPACT</span>':''}
+          <span class="pill p-${p.severity||'low'}">${esc(p.severity||'unrated')}</span>
+        </div>
+        <p class="lede">${esc(p.summary)}</p>
+        ${p.sections.length?`<h2>${esc(p.sections[0])}</h2>`:''}
+        <p style="color:var(--dim);font-size:14px;font-style:italic">— page body continues (rendered from the vault markdown) —</p>
+        ${p.sections.slice(1).map(s=>`<h2>${esc(s)}</h2>`).join('')}
+        <h2>Sources</h2>
+        <ul class="srclist">${(p.links.length?p.links:['Source link']).map(l=>`<li>${esc(l)}</li>`).join('')}</ul>
+      </article>
+    </div>
+    <aside class="rail">
+      <div class="card"><h4>Attributes</h4><div class="attrs">
+        <div class="attr"><span>Type</span><span>${KIND[p.k].n}</span></div>
+        <div class="attr"><span>Created</span><span>${p.created||'—'}</span></div>
+        <div class="attr"><span>Updated</span><span>${p.updated||'—'}</span></div>
+        <div class="attr"><span>Confidence</span><span>${p.confidence||'—'}</span></div>
+        <div class="attr"><span>Severity</span><span>${p.severity||'—'}</span></div>
+        <div class="attr"><span>AU impact</span><span>${p.au?'yes':'no'}</span></div>
+        <div class="attr"><span>Sectors</span><span>${p.sectors.join(', ')||'—'}</span></div>
+        <div class="attr"><span>Outbound links</span><span>${p.nlinks}</span></div>
+      </div></div>
+      <div class="card"><h4>Related pages</h4><div class="rel">
+        ${related.map(r=>`<a href="#" data-slug="${esc(r.slug)}">${esc(r.title)}<small>${KIND[r.k].n} · ${fmt(r.created)}</small></a>`).join('')||'<span style="color:var(--dim);font-size:13px">No shared tags</span>'}
+      </div></div>
+      <div class="card"><h4>Same subject</h4><div class="rel">
+        ${D.threads.slice(0,3).map(t=>`<a href="#">${esc(t.name)}<small>${t.total} pages reference this</small></a>`).join('')}
+      </div></div>
+    </aside>`;
+  window.scrollTo({top:0,behavior:'instant'});
+  document.getElementById('back').onclick = closePage;
+  d.querySelectorAll('.rel a[data-slug]').forEach(a=>a.onclick=e=>{e.preventDefault();openPage(a.dataset.slug)});
+}
+function closePage(){
+  document.getElementById('detail').classList.remove('on');
+  document.getElementById('index').classList.remove('off');
+}
+document.addEventListener('change',e=>{
+  const t=e.target.closest('input[data-g]'); if(!t) return;
+  const g=t.dataset.g;
+  if(g==='au'){state.au=t.checked}
+  else if(t.checked) state[g].add(t.value); else state[g].delete(t.value);
+  render();
+});
+document.addEventListener('click',e=>{
+  const cl=e.target.closest('[data-clear]');
+  if(cl){const g=cl.dataset.clear==='Type'?'kind':cl.dataset.clear==='Severity'?'sev':cl.dataset.clear==='Sector'?'sector':'month';state[g].clear();rebuildFacets();render();return}
+  const sh=e.target.closest('[data-sort]'); if(sh){state.sort=sh.dataset.sort==='kind'?'date':sh.dataset.sort;render();return}
+  if(e.target.id==='resetInline'){e.preventDefault();reset();return}
+  const row=e.target.closest('.row'); if(row){openPage(row.dataset.slug);return}
+  const chip=e.target.closest('.chip'); if(chip){state.q=chip.textContent.trim();document.getElementById('q').value=state.q;render();}
+});
+function reset(){state.kind.clear();state.sev.clear();state.sector.clear();state.month.clear();state.au=false;state.q='';document.getElementById('q').value='';rebuildFacets();render()}
+document.getElementById('q').addEventListener('input',e=>{state.q=e.target.value.toLowerCase();render()});
+document.getElementById('sort').addEventListener('change',e=>{state.sort=e.target.value;render()});
+document.getElementById('density').addEventListener('click',e=>{
+  state.dense=!state.dense;
+  document.getElementById('rows').classList.toggle('dense',state.dense);
+  e.target.textContent='Density: '+(state.dense?'compact':'comfortable');
+});
+document.getElementById('mastSub').textContent =
+  `${D.total} entries across four families — ${D.counts.incident} incidents and campaigns, ${D.counts.cve} vulnerabilities, ${D.counts.entity} entities and threat actors, ${D.counts.concept} concepts. Coverage runs ${D.months[0][0]} to ${D.months[D.months.length-1][0]}.`;
+document.getElementById('stats').innerHTML = [
+  ['Pages',D.total],['Incidents',D.counts.incident],['CVEs',D.counts.cve],['Entities',D.counts.entity],
+  ['Concepts',D.counts.concept],['AU impact',D.au],['Critical',D.severity.critical||0]
+].map(([l,n])=>`<div class="stat"><b>${n}</b>${l}</div>`).join('');
+document.getElementById('samplenote').textContent = D.total;
+rebuildFacets(); render();
+</script>
+</body></html>

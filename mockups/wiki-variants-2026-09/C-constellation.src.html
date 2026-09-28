@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en-AU"><head><meta charset="utf-8">
+<title>Variant C — Constellation · Cyber Wiki mockup</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0e1a;--surface:#111827;--surface2:#1a2332;--hover:#1e293b;
+  --text:#e2e8f0;--sec:#b0c0d0;--muted:#8a9cb6;--dim:#64748b;
+  --border:rgba(255,255,255,.06);--border2:rgba(255,255,255,.11);
+  --accent:#00b4d8;--glow:rgba(0,180,216,.09);
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;font-size:15px}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:
+  radial-gradient(760px 420px at 22% 8%,rgba(0,180,216,.09),transparent 70%),
+  radial-gradient(620px 460px at 82% 30%,rgba(167,139,250,.07),transparent 72%)}
+a{color:var(--accent);text-decoration:none}
+.mk{position:fixed;right:14px;bottom:14px;z-index:99;font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dim);background:var(--surface);border:1px solid var(--border2);padding:7px 11px;border-radius:999px}
+.topnav{position:sticky;top:0;z-index:50;background:rgba(10,14,26,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.topnav .in{max-width:1400px;margin:0 auto;padding:12px 26px;display:flex;align-items:center;gap:10px}
+.brand{font-size:17px;font-weight:700;letter-spacing:-.4px;display:flex;align-items:center;gap:10px}
+.brand .dot{width:12px;height:12px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent)}
+.brand small{font:400 11px/1 Inter;color:var(--dim);letter-spacing:1.2px;text-transform:uppercase}
+.nav{margin-left:auto;display:flex;gap:2px}
+.nav a{color:var(--muted);font-size:14px;font-weight:500;padding:8px 13px;border-radius:6px}
+.nav a:hover{color:var(--text);background:var(--surface2)}
+.nav a.on{color:var(--text);background:var(--hover);font-weight:600}
+.wrap{max-width:1400px;margin:0 auto;padding:0 26px 90px;position:relative}
+/* hero = the search */
+.hero{text-align:center;padding:64px 0 34px}
+.hero .kick{font:500 11px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+.hero h1{font-size:40px;font-weight:700;letter-spacing:-1.2px;margin:14px 0 10px}
+.hero h1 span{color:var(--accent)}
+.hero p{color:var(--muted);font-size:14.5px;max-width:620px;margin:0 auto}
+.cmd{position:relative;max-width:720px;margin:26px auto 0;z-index:30}
+.cmd .field{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--border2);border-radius:14px;padding:15px 18px;box-shadow:0 18px 40px rgba(0,0,0,.42)}
+.cmd .field:focus-within{border-color:var(--accent);box-shadow:0 0 0 4px var(--glow),0 18px 40px rgba(0,0,0,.42)}
+.cmd input{flex:1;background:none;border:0;outline:none;color:var(--text);font:inherit;font-size:16px}
+.cmd .hint{font:500 10.5px/1 var(--mono);color:var(--dim);border:1px solid var(--border2);border-radius:5px;padding:4px 7px}
+.results{display:none;position:absolute;top:calc(100% + 10px);left:0;right:0;background:var(--surface);border:1px solid var(--border2);border-radius:14px;box-shadow:0 26px 60px rgba(0,0,0,.55);overflow:hidden;text-align:left}
+.results.on{display:block}
+.rhead{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding:12px 18px 9px;border-bottom:1px solid var(--border)}
+.r{padding:11px 18px;border-bottom:1px solid var(--border);cursor:pointer;display:flex;gap:12px;align-items:baseline}
+.r:last-child{border-bottom:0}
+.r:hover,.r.sel{background:var(--hover)}
+.r .t{font-size:14.5px;font-weight:550;color:var(--text);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.r .t small{display:block;font-size:12.5px;color:var(--muted);font-weight:400;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.r .k{font:600 9.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:4px 7px;border-radius:5px;flex-shrink:0}
+.k-incident{color:#fed7aa;background:rgba(249,115,22,.14)}
+.k-cve{color:#ddd6fe;background:rgba(167,139,250,.14)}
+.k-entity{color:#a5f3fc;background:rgba(34,211,238,.14)}
+.k-concept{color:#bbf7d0;background:rgba(52,211,153,.14)}
+.r .d{font:500 11px/1 var(--mono);color:var(--dim);flex-shrink:0}
+.statsrow{display:flex;justify-content:center;gap:34px;margin-top:26px;flex-wrap:wrap}
+.stat{font:500 11px/1.7 var(--mono);color:var(--dim);text-transform:uppercase;letter-spacing:.09em}
+.stat b{display:block;font:600 20px/1.2 Inter;color:var(--text);letter-spacing:-.4px}
+/* cluster map */
+.sect{margin-top:52px}
+.sect > h2{font-size:19px;font-weight:650;letter-spacing:-.3px;display:flex;align-items:center;gap:11px;margin-bottom:6px}
+.sect > h2 .bar{width:22px;height:2px;background:var(--accent);display:inline-block}
+.sect > p{color:var(--muted);font-size:13.5px;margin-bottom:18px}
+.mapgrid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px;align-items:start}
+.map{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:8px;position:relative;overflow:hidden}
+.map svg{display:block;width:100%;height:auto}
+.map .lgd{position:absolute;left:16px;bottom:14px;font:500 10.5px/1.7 var(--mono);color:var(--dim)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font:500 11px/1 var(--mono);color:var(--dim)}
+.legend i{width:8px;height:8px;border-radius:2px;display:inline-block;margin-right:6px}
+aside .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:16px}
+aside .card h4{font:600 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:6px}
+aside .card .sub{font-size:12.5px;color:var(--dim);margin-bottom:12px}
+.hit{display:flex;gap:10px;align-items:baseline;padding:9px 0;border-bottom:1px solid var(--border);font-size:14px}
+.hit:last-child{border-bottom:0}
+.hit a{color:var(--text)}
+.hit a:hover{color:var(--accent)}
+.hit .d{margin-left:auto;font:500 10.5px/1 var(--mono);color:var(--dim)}
+.thread{display:grid;gap:12px}
+.th{border:1px solid var(--border);border-radius:12px;padding:13px 15px;cursor:pointer;transition:border-color .15s,background .15s}
+.th:hover,.th.on{border-color:rgba(0,180,216,.5);background:rgba(0,180,216,.05)}
+.th h5{font-size:15.5px;font-weight:600;letter-spacing:-.2px;margin-bottom:5px}
+.th .mix{display:flex;gap:7px;flex-wrap:wrap;align-items:center;font:500 10.5px/1 var(--mono);color:var(--dim)}
+.th .mix em{font-style:normal;padding:3px 7px;border-radius:5px;background:var(--surface2);border:1px solid var(--border)}
+.th .line{height:5px;background:var(--surface2);border-radius:999px;margin-top:10px;overflow:hidden}
+.th .line span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),rgba(0,180,216,.25))}
+/* article */
+.view{display:none}
+.view.on{display:block}
+.crumb{font:500 12px/1 var(--mono);color:var(--dim);margin:26px 0 16px}
+.crumb button{background:none;border:0;color:var(--accent);font:inherit;cursor:pointer;padding:0}
+.agrid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:30px;align-items:start}
+.article{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:32px 36px}
+.article h1{font-size:31px;line-height:1.22;letter-spacing:-.8px;font-weight:700}
+.article .meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:14px 0 20px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.article .meta .d{font:500 11.5px/1 var(--mono);color:var(--dim)}
+.chip{font:500 10.5px/1 var(--mono);color:var(--muted);background:var(--surface2);border:1px solid var(--border);padding:4px 8px;border-radius:5px;cursor:pointer}
+.chip:hover{color:var(--accent);border-color:var(--accent)}
+.article p{color:var(--sec);font-size:15.5px;line-height:1.75;margin-bottom:14px}
+.article h2{font-size:18px;margin:26px 0 10px;padding-top:16px;border-top:1px solid var(--border)}
+.srclist{list-style:none;display:grid;gap:7px}
+.srclist li{font-size:13.5px;color:var(--muted)}
+.srclist li::before{content:"↗ ";color:var(--dim)}
+.rail{position:sticky;top:22px;display:grid;gap:14px}
+.gnode{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);font-size:13.5px}
+.gnode:last-child{border-bottom:0}
+.gnode a{color:var(--sec)}
+.gnode a:hover{color:var(--accent)}
+.gnode .dotnode{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+</style></head>
+<body>
+<div class="topnav"><div class="in">
+  <div class="brand"><span class="dot"></span>Cyber Digest <small>Public site</small></div>
+  <nav class="nav"><a href="#">Home</a><a href="#">Story DB</a><a href="#">Globe</a><a href="#">Reports</a><a class="on" href="#">Wiki</a><a href="#">Tools</a></nav>
+</div></div>
+
+<div class="wrap">
+  <div class="view on" id="home">
+    <header class="hero">
+      <div class="kick">// 963 interlinked pages</div>
+      <h1>Search the <span>network</span>, not the list</h1>
+      <p>Every incident, vulnerability, entity and concept in the wiki is a node — and each one is wired to the others. Start typing, or click a cluster.</p>
+      <div class="cmd">
+        <div class="field">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00b4d8" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          <input id="q" placeholder="Search 963 pages — names, tags, sectors, CVE IDs…" autocomplete="off">
+          <span class="hint">↑↓ to move · ⏎ to open</span>
+        </div>
+        <div class="results" id="results"></div>
+        <p style="font:500 10.5px/1.6 var(--mono);color:var(--dim);margin-top:12px;letter-spacing:.04em">MOCKUP · newest 45 of <span id="samplenote"></span> pages loaded here; all counts, tags and clusters are read from the live wiki build</p>
+      </div>
+      <div class="statsrow" id="statsrow"></div>
+    </header>
+
+    <section class="sect">
+      <h2><span class="bar"></span>The map</h2>
+      <p>Node size is page count, position is family. Click a family to see everything filed under it; hover a tag to follow that thread.</p>
+      <div class="mapgrid">
+        <div>
+          <div class="map">
+            <svg viewBox="0 0 760 430" id="graph" role="img" aria-label="Wiki cluster map"></svg>
+            <div class="lgd">thick edge = more shared entries</div>
+          </div>
+          <div class="legend">
+            <span><i style="background:#f97316"></i>Incidents 660</span>
+            <span><i style="background:#a78bfa"></i>Vulnerabilities 226</span>
+            <span><i style="background:#22d3ee"></i>Entities 55</span>
+            <span><i style="background:#34d399"></i>Concepts 22</span>
+          </div>
+        </div>
+        <aside>
+          <div class="card"><h4 id="clusterTitle">Cluster: incidents</h4>
+            <div class="sub" id="clusterSub">Newest 6 in this family.</div>
+            <div id="clusterList"></div>
+          </div>
+          <div class="card"><h4>Subjects</h4><div class="sub">Most-used tags in the file.</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap" id="tagcloud"></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="sect">
+      <h2><span class="bar"></span>Running threads</h2>
+      <p>Entities and concepts that recur across the corpus — the wiki's spine. Click one to pull every entry that names it.</p>
+      <div class="thread" id="threads"></div>
+    </section>
+  </div>
+
+  <div class="view" id="page"></div>
+</div>
+<div class="mk">Mockup C · Constellation</div>
+<script>/*__WIKI_DATA__*/</script>
+<script>
+const D=window.WIKI;
+const KIND={incident:'Incident',cve:'CVE',entity:'Entity',concept:'Concept'};
+const COL={incident:'#f97316',cve:'#a78bfa',entity:'#22d3ee',concept:'#34d399'};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let sel=-1, hits=[];
+
+/* ---- command bar ---- */
+function search(q){
+  q=q.trim().toLowerCase();
+  if(!q){hits=D.items.slice(0,6)}
+  else{
+    hits=D.items.map(p=>{
+      const t=p.title.toLowerCase(), s=p.summary.toLowerCase(), tg=p.tags.join(' ').toLowerCase();
+      let score=0;
+      if(t.startsWith(q))score+=6; else if(t.includes(q))score+=4;
+      if(tg.includes(q))score+=3; if(s.includes(q))score+=2;
+      if(p.sectors.join(' ').toLowerCase().includes(q))score+=1;
+      return {p,score};
+    }).filter(x=>x.score>0).sort((a,b)=>b.score-a.score||b.p.created.localeCompare(a.p.created)).map(x=>x.p).slice(0,7);
+  }
+  sel=-1; drawResults(q);
+}
+function drawResults(q){
+  const box=document.getElementById('results');
+  box.classList.add('on');
+  box.innerHTML=`<div class="rhead">${q?hits.length+' match in the 45 most recent pages loaded here — the live page searches all '+D.total:'Recently filed'}</div>`+
+   (hits.map((p,i)=>`<div class="r ${i===sel?'sel':''}" data-slug="${esc(p.slug)}">
+      <span class="k k-${p.k}">${KIND[p.k]}</span>
+      <span class="t">${esc(p.title)}<small>${esc(p.summary.slice(0,110))}…</small></span>
+      <span class="d">${p.created.slice(5)}</span></div>`).join('')
+    || `<div class="rhead">No page matches — try a tag such as <b>kev</b> or <b>ransomware</b>.</div>`);
+}
+document.getElementById('q').addEventListener('input',e=>search(e.target.value));
+document.getElementById('q').addEventListener('focus',e=>{if(!e.target.value)search('')});
+document.getElementById('q').addEventListener('keydown',e=>{
+  if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();sel=Math.max(0,Math.min(hits.length-1,sel+(e.key==='ArrowDown'?1:-1)));drawResults(e.target.value)}
+  if(e.key==='Enter'&&hits[sel>=0?sel:0])openPage(hits[sel>=0?sel:0].slug);
+  if(e.key==='Escape')document.getElementById('results').classList.remove('on');
+});
+document.addEventListener('click',e=>{
+  const r=e.target.closest('.r[data-slug]'); if(r){openPage(r.dataset.slug);return}
+  if(!e.target.closest('.cmd'))document.getElementById('results').classList.remove('on');
+  const node=e.target.closest('[data-cluster]'); if(node){showCluster(node.dataset.cluster);return}
+  const tag=e.target.closest('[data-tag]'); if(tag){document.getElementById('q').value=tag.dataset.tag;search(tag.dataset.tag);window.scrollTo({top:0,behavior:'instant'});return}
+  const th=e.target.closest('.th'); if(th){document.getElementById('q').value=th.dataset.name;search(th.dataset.name);window.scrollTo({top:0,behavior:'instant'});return}
+  const link=e.target.closest('.hit a[data-slug],.gnode a[data-slug]'); if(link){e.preventDefault();openPage(link.dataset.slug);return}
+  if(e.target.id==='back'){document.getElementById('page').classList.remove('on');document.getElementById('home').classList.add('on')}
+});
+
+/* ---- cluster map (positions derived from real counts) ---- */
+function drawGraph(){
+  const g=document.getElementById('graph');
+  const fams=[
+    {k:'incident',label:'Incidents',n:D.counts.incident,x:250,y:150,r:74},
+    {k:'cve',label:'Vulnerabilities',n:D.counts.cve,x:540,y:150,r:48},
+    {k:'entity',label:'Entities',n:D.counts.entity,x:320,y:330,r:32},
+    {k:'concept',label:'Concepts',n:D.counts.concept,x:540,y:330,r:22},
+  ];
+  const tags=(D.tags||[]).slice(0,8);
+  // Fan each family's tags outwards so pills never sit on top of a node.
+  const fan={incident:-150,cve:-30,entity:150,concept:30};
+  const placed={incident:0,cve:0,entity:0,concept:0};
+  let s=`<g stroke="rgba(0,180,216,.28)" fill="none">
+    <path d="M250 150 L540 150" stroke-width="3"/><path d="M250 150 L320 330" stroke-width="2.4"/>
+    <path d="M540 150 L320 330" stroke-width="1.5"/><path d="M540 150 L540 330" stroke-width="1.2"/>
+    <path d="M250 150 L540 330" stroke-width="1"/><path d="M320 330 L540 330" stroke-width="1"/></g>`;
+  fams.forEach(f=>{
+    s+=`<g data-cluster="${f.k}" style="cursor:pointer">
+      <circle cx="${f.x}" cy="${f.y}" r="${f.r+16}" fill="rgba(0,180,216,.05)"/>
+      <circle cx="${f.x}" cy="${f.y}" r="${f.r}" fill="${COL[f.k]}" fill-opacity=".14" stroke="${COL[f.k]}" stroke-width="1.6"/>
+      <text x="${f.x}" y="${f.y-4}" text-anchor="middle" font-family="Inter" font-weight="700" font-size="${f.k==='incident'?26:19}" fill="#e2e8f0">${f.n}</text>
+      <text x="${f.x}" y="${f.y+17}" text-anchor="middle" font-family="JetBrains Mono" font-size="10.5" letter-spacing="1" fill="${COL[f.k]}">${f.label.toUpperCase()}</text></g>`;
+  });
+  tags.forEach(t=>{
+    // assign each tag to the family with fewest tags so far, fanned outward
+    const f=fams.reduce((a,b)=>placed[a.k]<=placed[b.k]?a:b);
+    const n=placed[f.k]++;
+    const ang=((fan[f.k]+(n-(n>0?1:0))*46))*Math.PI/180;
+    const rad=f.r+42+(n)*30;
+    const x=Math.round(Math.max(66,Math.min(694,f.x+rad*Math.cos(ang))));
+    const y=Math.round(Math.max(20,Math.min(410,f.y+rad*Math.sin(ang))));
+    const w=t[0].length*6.2+(String(t[1]).length*6.2)+26;
+    s+=`<g data-tag="${esc(t[0])}" style="cursor:pointer">
+      <rect x="${x-w/2}" y="${y-11}" width="${w}" height="22" rx="11" fill="rgba(17,24,39,.94)" stroke="rgba(255,255,255,.16)"/>
+      <text x="${x}" y="${y+3.5}" text-anchor="middle" font-family="JetBrains Mono" font-size="10.5" fill="#b0c0d0">${esc(t[0])} ${t[1]}</text></g>`;
+  });
+  g.innerHTML=s;
+}
+function showCluster(k){
+  const list=D.items.filter(p=>p.k===k).slice(0,6);
+  document.getElementById('clusterTitle').textContent='Cluster: '+KIND[k].toLowerCase()+'s · '+D.counts[k];
+  document.getElementById('clusterSub').textContent='Newest '+list.length+' in this family — the map shows all '+D.counts[k]+'.';
+  document.getElementById('clusterList').innerHTML=list.map(p=>`<div class="hit"><a href="#" data-slug="${esc(p.slug)}">${esc(p.title.slice(0,58))}${p.title.length>58?'…':''}</a><span class="d">${p.created.slice(5)}</span></div>`).join('');
+}
+/* ---- threads / stats / clouds ---- */
+function drawThreads(){
+  document.getElementById('threads').innerHTML=D.threads.slice(0,6).map(t=>`
+    <div class="th" data-name="${esc(t.name)}">
+      <h5>${esc(t.name)}</h5>
+      <div class="mix">${Object.entries(t.by).map(([k,n])=>`<em style="color:${COL[k]}">${n} × ${KIND[k]}</em>`).join('')}<span style="margin-left:auto">hub: ${KIND[t.hub]}</span></div>
+      <div class="line"><span style="width:${Math.min(100,Math.round(t.total/D.threads[0].total*100))}%"></span></div>
+    </div>`).join('');
+}
+function openPage(slug){
+  const p=D.items.find(x=>x.slug===slug); if(!p) return;
+  const neigh=D.items.filter(x=>x!==p&&x.tags.some(t=>p.tags.includes(t))).slice(0,5);
+  document.getElementById('results').classList.remove('on');
+  document.getElementById('home').classList.remove('on');
+  const v=document.getElementById('page'); v.classList.add('on');
+  v.innerHTML=`
+    <div class="crumb"><button id="back">← Map</button> · ${KIND[p.k]} · filed ${p.created}</div>
+    <div class="agrid">
+      <article class="article">
+        <h1>${esc(p.title)}</h1>
+        <div class="meta">
+          <span class="d">${p.created}${p.updated!==p.created?' → revised '+p.updated:''}</span>
+          ${p.tags.slice(0,6).map(t=>`<span class="chip" data-tag="${esc(t)}">#${esc(t)}</span>`).join('')}
+          ${p.au?'<span class="chip" style="color:#a5f3fc;border-color:rgba(0,180,216,.4)">AU impact</span>':''}
+        </div>
+        <p>${esc(p.summary)}</p>
+        ${p.sections.length?`<h2>${esc(p.sections[0])}</h2>`:''}
+        <p style="color:var(--dim);font-size:14px;font-style:italic">— body continues; on the live site this is where the vault markdown renders —</p>
+        ${p.sections.slice(1).map(s=>`<h2>${esc(s)}</h2>`).join('')}
+        <h2>Sources</h2>
+        <ul class="srclist">${(p.links.length?p.links:['Source link']).map(l=>`<li>${esc(l)}</li>`).join('')}</ul>
+      </article>
+      <aside class="rail">
+        <div class="card"><h4>In the graph</h4>
+          <div class="sub">${neigh.length} page${neigh.length===1?'':'s'} share a subject with this one.</div>
+          ${neigh.map(n=>`<div class="gnode"><span class="dotnode" style="background:${COL[n.k]}"></span><a href="#" data-slug="${esc(n.slug)}">${esc(n.title.slice(0,46))}${n.title.length>46?'…':''}</a></div>`).join('')||'<div class="sub">No shared subjects recorded.</div>'}
+        </div>
+        <div class="card"><h4>Attributes</h4>
+          <div class="sub" style="line-height:2.1">
+            Confidence <b style="color:var(--text);float:right">${esc(p.confidence||'—')}</b><br>
+            Severity <b style="color:var(--text);float:right">${esc(p.severity||'—')}</b><br>
+            Sectors <b style="color:var(--text);float:right">${esc(p.sectors.join(', ')||'—')}</b><br>
+            Outbound links <b style="color:var(--text);float:right">${p.nlinks}</b>
+          </div>
+        </div>
+      </aside>
+    </div>`;
+  window.scrollTo({top:0,behavior:'instant'});
+}
+document.getElementById('statsrow').innerHTML=[
+  ['Pages',D.total],['Incidents',D.counts.incident],['Vulnerabilities',D.counts.cve],
+  ['Entities',D.counts.entity],['Concepts',D.counts.concept],['AU impact',D.au]
+].map(([l,n])=>`<div class="stat"><b>${n}</b>${l}</div>`).join('');
+document.getElementById('tagcloud').innerHTML=(D.tags||[]).slice(0,16)
+  .map(([t,n])=>`<span class="chip" data-tag="${esc(t)}">${esc(t)} · ${n}</span>`).join('');
+document.getElementById('samplenote').textContent=D.total;
+drawGraph();drawThreads();showCluster('incident');
+</script>
+</body></html>
