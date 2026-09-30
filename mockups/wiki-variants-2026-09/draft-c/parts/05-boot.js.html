@@ -1,0 +1,69 @@
+<script>
+/* ============================================================
+   Constellation — boot: search wiring, shortcuts, routing.
+   ============================================================ */
+
+/* the hero search box. bindSearch() owns rendering the dropdown. */
+const heroInput = el('q'), heroBox = el('results');
+const hero = bindSearch(heroInput, heroBox);
+
+/* clicking outside the results closes them without clearing the query */
+document.addEventListener('click', e => {
+  if (!e.target.closest('.cmd')) closeResults();
+});
+
+/* "/" focuses the search from anywhere; Escape clears it */
+document.addEventListener('keydown', e => {
+  const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName);
+  if (e.key === '/' && !typing){ e.preventDefault(); heroInput.focus(); heroInput.select(); }
+  if (e.key === 'Escape' && document.activeElement === heroInput){
+    heroInput.value = ''; hero.render(); closeResults(); heroInput.blur();
+  }
+});
+
+/* keep the query visible when the user is deep-linked into a results view */
+function syncQuery(raw){ if (heroInput.value !== raw) heroInput.value = raw; }
+
+/* ---------------- list & article wiring ----------------
+   drawList()/showPage() render markup; these are the listeners that make it
+   interactive. Kept here (last script) so the render functions stay pure. */
+document.addEventListener('click', e => {
+  const more = e.target.closest('#more');
+  if (more){ listState.shown += PAGE; drawList(); return; }
+
+  const chip = e.target.closest('#listRows .chip[data-tag]');
+  if (chip){ go('#/t/' + encodeURIComponent(chip.dataset.tag)); return; }
+
+  const row = e.target.closest('#listRows .row');
+  if (row){ go('#/p/' + row.dataset.slug); return; }
+
+  if (e.target.id === 'back'){
+    if (history.length > 1) history.back(); else go('#/');
+  }
+});
+
+const sortSel = el('sort');
+if (sortSel){
+  sortSel.addEventListener('change', () => {
+    listState.sort = sortSel.value;
+    listState.shown = PAGE;
+    drawList();
+  });
+}
+
+/* ---------------- boot ---------------- */
+window.addEventListener('hashchange', route);
+window.addEventListener('DOMContentLoaded', () => {
+  // data sanity: if the bundle is missing, say so plainly rather than drawing an empty shell
+  if (!window.WIKI_FULL || !window.WIKI_FULL.items){
+    document.querySelector('.wrap').innerHTML =
+      '<div class="empty">The wiki data bundle (data/wiki.js) did not load. Re-run '
+      + 'extract_full.py, then rebuild this page.</div>';
+    return;
+  }
+  renderHome();
+  route();
+});
+/* DOMContentLoaded may already have fired if this script runs last — cover both */
+if (document.readyState !== 'loading'){ renderHome(); route(); }
+</script>

@@ -4,7 +4,7 @@ Cyber workspace (daily/monthly digests, story SQLite DB, wiki pages).
 
 Output: <repo>/docs/  (GitHub Pages publishes from the /docs folder of main)
 """
-import argparse, base64, calendar, email.utils, hashlib, html, json, math, os, re, shutil, sqlite3, sys, time
+import argparse, base64, calendar, email.utils, glob, hashlib, html, json, math, os, re, shutil, sqlite3, sys, time
 from datetime import datetime, date, timedelta, timezone
 
 VAULT = "/Users/petercox/Library/Mobile Documents/iCloud~md~obsidian/Documents/Peter's Vault/Cyber"
@@ -2646,6 +2646,241 @@ def cleanup_stale_wiki(pages):
         print(f"🧹 Removed {stale} stale wiki page(s)")
     return stale
 
+
+def build_wiki_meta(pages):
+    """Emit docs/wiki/wiki-meta.js — the browse index for the wiki entry page.
+
+    Metadata only. Each entry's prose is fetched from its own static page on
+    demand, so the corpus is never duplicated into the bundle (the first cut
+    bundled every body and was 3.03 MB; this is ~1.2 MB and the page opens
+    without waiting for prose nobody has asked for).
+
+    The link graph is read back from the pages this build just wrote, so it is
+    the real resolved wikilink set — not a tag-based approximation.
+    """
+    wiki_dir = os.path.join(DOCS, "wiki")
+    KINDS = {"incidents": "incident", "vulnerabilities": "cve",
+             "entities": "entity", "concepts": "concept"}
+    ENT = {"&amp;": "&", "&#x27;": "'", "&quot;": '"', "&lt;": "<",
+           "&gt;": ">", "&#39;": "'", "&nbsp;": " "}
+
+    def unesc(s):
+        for a, b in ENT.items():
+            s = s.replace(a, b)
+        return s
+
+    def plain(h):
+        return re.sub(r"\s+", " ", unesc(re.sub("<[^>]+>", " ", h))).strip()
+
+    def wiki_body(raw):
+        """Contents of the wiki-body div and nothing after it.
+
+        A greedy `(.*)` fallback here once swallowed the rest of every document,
+        dragging the site footer and its inline <script> into all 999 bodies
+        (4.2 of 5.4 MB, and the article view executed the theme-toggle code).
+        Locate the div and walk the nesting depth instead.
+        """
+        m = re.search(r'<div class="wiki-body">', raw)
+        if not m:
+            return ""
+        start = m.end()
+        depth = 1
+        for tag in re.finditer(r"</?div\b[^>]*>", raw[start:]):
+            depth += -1 if tag.group(0).startswith("</") else 1
+            if depth == 0:
+                body = raw[start:start + tag.start()]
+                break
+        else:
+            return ""
+        body = re.sub(r"<script\b.*?</script>", "", body, flags=re.S | re.I)
+        body = re.sub(r"<style\b.*?</style>", "", body, flags=re.S | re.I)
+        return body.strip()
+
+    def parse_fm(meta):
+        d = {}
+        for part in meta.split("·"):
+            if ":" in part:
+                k, v = part.split(":", 1)
+                k, v = k.strip(), v.strip()
+                if k in ("tags", "affected_sectors"):
+                    v = [x.strip() for x in v.strip("[]").split(",") if x.strip()]
+                d[k] = v
+        return d
+
+    meta = {}
+    for path in glob.glob(os.path.join(wiki_dir, "*", "*.html")):
+        if os.path.basename(path) == "index.html":
+            continue
+        raw = open(path, encoding="utf-8").read()
+        sub = os.path.basename(os.path.dirname(path))
+        slug = os.path.basename(path)[:-5]
+        t = re.search(r"<title>(.*?)</title>", raw, re.S)
+        title = re.sub(r"^\W+", "", unesc(t.group(1))).strip() if t else ""
+        m = re.search(r'<div class="frontmatter">(.*?)</div>', raw, re.S)
+        fm = parse_fm(plain(m.group(1))) if m else {}
+        body = wiki_body(raw)
+        body = re.sub(r'<div class="frontmatter">.*?</div>', "", body, flags=re.S).strip()
+        body = re.sub(r'<div class="iocblock".*?</div>', "", body, flags=re.S).strip()
+        paras = [plain(p) for p in re.findall(r"<p[^>]*>(.*?)</p>", body, re.S)]
+        summary = next((p for p in paras if len(p) > 60), paras[0] if paras else "")
+        out, sources = [], []
+        for href, label in re.findall(r'<a\s+href="([^"]+)"[^>]*>(.*?)</a>', body, re.S):
+            href = href.strip()
+            lab = plain(label)
+            if href.startswith(("http://", "https://")):
+                if "cyber.peterjaycox.com" not in href:
+                    sources.append({"url": href, "label": lab})
+            elif href.endswith(".html") and not href.startswith(("#", "mailto")):
+                target = os.path.basename(href)[:-5]
+                if target != slug:
+                    out.append(target)
+        meta[slug] = {
+            "k": KINDS.get(sub, "?"), "slug": slug, "title": title,
+            "created": fm.get("created", ""), "updated": fm.get("updated", ""),
+            "confidence": (fm.get("confidence") or "").replace("·", "").strip(),
+            "severity": (fm.get("severity") or "").replace("·", "").strip(),
+            "au": fm.get("au_impact") == "true",
+            "tags": fm.get("tags") or [], "sectors": fm.get("affected_sectors") or [],
+            "summary": summary,
+            "sections": [plain(h) for h in re.findall(r"<h2[^>]*>(.*?)</h2>", body, re.S)],
+            "tables": body.count("<table"), "words": len(plain(body).split()),
+            "url": f"{sub}/{slug}.html",
+            "out": sorted(set(out)), "sources": sources,
+        }
+
+    inb = {}
+    for slug, p in meta.items():
+        for t in p["out"]:
+            if t in meta:
+                inb.setdefault(t, set()).add(slug)
+    for slug, p in meta.items():
+        p["in"] = sorted(inb.get(slug, ()))
+
+    counts, sev, sectors, tags, months = {}, {}, {}, {}, {}
+    for p in meta.values():
+        counts[p["k"]] = counts.get(p["k"], 0) + 1
+        if p["severity"]:
+            sev[p["severity"]] = sev.get(p["severity"], 0) + 1
+        for s in p["sectors"]:
+            sectors[s] = sectors.get(s, 0) + 1
+        for t in p["tags"]:
+            if t not in ("incident", "cve", "entity", "concept"):
+                tags[t] = tags.get(t, 0) + 1
+        months[p["created"][:7]] = months.get(p["created"][:7], 0) + 1
+    fam_edges = {}
+    for p in meta.values():
+        for t in p["out"]:
+            q = meta.get(t)
+            if q:
+                k = f"{p['k']}>{q['k']}"
+                fam_edges[k] = fam_edges.get(k, 0) + 1
+
+    orphans = sorted([p for p in meta.values() if not p["in"] and not p["out"]],
+                     key=lambda p: p["created"], reverse=True)
+    hubs = sorted(meta.values(), key=lambda p: (-len(p["in"]), -len(p["out"])))[:14]
+    threads = sorted([p for p in meta.values() if p["k"] in ("entity", "concept")],
+                     key=lambda p: (-(len(p["in"]) + len(p["out"])), p["title"]))[:18]
+    items = sorted(meta.values(), key=lambda p: (p["created"] or "", p["title"]), reverse=True)
+
+    data = {
+        "generated": date.today().isoformat(),
+        "total": len(meta),
+        "counts": counts, "severity": sev,
+        "sectors": sorted(sectors.items(), key=lambda x: -x[1])[:16],
+        "tags": sorted(tags.items(), key=lambda x: -x[1])[:30],
+        "months": sorted(months.items()),
+        "au": sum(1 for p in meta.values() if p["au"]),
+        "updated_max": max((p["updated"] or "") for p in meta.values()),
+        "linked": sum(1 for p in meta.values() if p["in"] or p["out"]),
+        "orphan_count": len(orphans),
+        "edge_count": sum(len(p["out"]) for p in meta.values()),
+        "fam_edges": dict(sorted(fam_edges.items(), key=lambda x: -x[1])),
+        "hubs": [{"slug": p["slug"], "title": p["title"], "k": p["k"],
+                  "in": len(p["in"]), "out": len(p["out"])} for p in hubs],
+        "threads": [{"slug": p["slug"], "title": p["title"], "k": p["k"],
+                     "in": len(p["in"]), "out": len(p["out"]),
+                     "span": p["created"][:10] + "→" + (p["updated"] or p["created"])[:10]}
+                    for p in threads],
+        "orphans": [{"slug": p["slug"], "title": p["title"], "k": p["k"],
+                     "created": p["created"]} for p in orphans[:40]],
+        "items": items,
+    }
+    dest = os.path.join(wiki_dir, "wiki-meta.js")
+    with open(dest, "w", encoding="utf-8") as f:
+        f.write("window.WIKI_FULL=" + json.dumps(data, separators=(",", ":")) + ";\n")
+    print(f"🗺  wiki browse index: {len(meta)} pages · {data['edge_count']} internal links · "
+          f"{data['linked']} linked · {len(orphans)} orphans · {os.path.getsize(dest)/1024/1024:.2f} MB")
+    return data
+
+
+def build_wiki_constellation_index(pages):
+    """Write docs/wiki/index.html — the Constellation browse and search surface.
+
+    Overlay, not replacement: the individual /wiki/<family>/<slug>.html pages
+    stay the canonical, indexed URLs, and this page is the way in. A <noscript>
+    block lists every entry as a plain link so the surface degrades to a usable
+    index for crawlers and for anyone without JavaScript.
+    """
+    tdir = os.path.join(ROOT, "templates")
+    paths = {ext: os.path.join(tdir, f"wiki-constellation.{ext}") for ext in ("css", "js", "html")}
+    missing = [p for p in paths.values() if not os.path.exists(p)]
+    if missing:
+        for p in missing:
+            print(f"⚠️  {os.path.relpath(p, ROOT)} missing; wiki browse index not written")
+        return
+    with open(paths["css"], encoding="utf-8") as f:
+        css = f.read()
+    with open(paths["html"], encoding="utf-8") as f:
+        markup = f.read()
+    with open(paths["js"], encoding="utf-8") as f:
+        js = f.read()
+
+    # every entry as a real link, for no-JS readers and for crawlers
+    type_names = {"incidents": "Incidents & campaigns", "vulnerabilities": "Vulnerabilities & CVEs",
+                  "entities": "Entities & threat actors", "concepts": "Concepts & frameworks"}
+    rows = []
+    for ptype in ("incidents", "entities", "concepts", "vulnerabilities"):
+        if ptype not in pages:
+            continue
+        rows.append(f"<h3>{esc(type_names[ptype])} ({len(pages[ptype])})</h3><ul>")
+        for slug, info in sorted(pages[ptype].items()):
+            t = re.sub(r"\[\[+([^\]]+)\]\]+", r"\1", str(info["fm"].get("title") or slug))
+            rows.append(f'<li><a href="{ptype}/{slug}.html">{esc(t)}</a></li>')
+        rows.append("</ul>")
+    total = sum(len(pages[t]) for t in pages)
+    noscript = ('<noscript><section class="wx-noscript">'
+                f"<h2>All {total} entries</h2>"
+                "<p>This browse view needs JavaScript. Every entry is still a normal page:</p>"
+                + "".join(rows) + "</section></noscript>")
+    markup = markup.replace('<div class="toast" id="toast"></div>',
+                            '<div class="toast" id="toast"></div>\n' + noscript, 1)
+
+    # the browse page is the only place the hash routes exist, so it is the one
+    # canonical URL for all of them
+    h = head("Cyber Wiki — browse and search", "wiki/index.html", root="../")
+    h = h.replace("</head>", f'<link rel="canonical" href="{SITE_BASE}/wiki/">\n</head>', 1)
+    html = (h + markup
+            + f'\n<script src="wiki-meta.js"></script>\n<script>\n{js}</script>\n'
+            + foot())
+
+    # Registered for write_site_css(), which emits it into the shared stylesheet.
+    GEN_CSS["wiki"] = css + """
+/* Non-JS fallback list on the wiki browse page (see build_wiki_constellation_index) */
+.wx-noscript{margin:34px 0}
+.wx-noscript h2{font-size:20px;margin-bottom:8px}
+.wx-noscript h3{font-size:14px;margin:18px 0 6px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em}
+.wx-noscript ul{list-style:none;columns:3;column-gap:26px}
+.wx-noscript li{font-size:13px;line-height:1.7;break-inside:avoid}
+@media (max-width:900px){.wx-noscript ul{columns:1}}
+"""
+    dest = os.path.join(DOCS, "wiki", "index.html")
+    with open(dest, "w", encoding="utf-8") as f:
+        f.write(html)
+    print(f"🗺  wiki browse page: {os.path.getsize(dest)/1024:.0f} KB (+ "
+          f"{os.path.getsize(os.path.join(DOCS, 'wiki', 'wiki-meta.js'))/1024:.0f} KB bundle, "
+          f"{total} no-JS links)")
+
+
 def build_wiki(pages):
     wiki_index=os.path.join(DOCS,"wiki")
     os.makedirs(wiki_index,exist_ok=True)
@@ -2689,112 +2924,10 @@ def build_wiki(pages):
             <div class="wiki-body">{meta_block}{ioc_block}{content}</div>
             </div>{foot()}'''
             open(os.path.join(d,f"{slug}.html"),"w",encoding="utf-8").write(page)
-    # build wiki index
-    def strip_wl(s): return re.sub(r"\[\[+([^\]]+)\]\]+\s*\.md", r"\1", re.sub(r"\[\[+([^\]]+)\]\]+", r"\1", str(s)))
-    all_items=[]  # (title, summary, href, ptype)
-    cards=""
-    for ptype in type_order:
-        if ptype not in pages: continue
-        section_items=sorted(pages[ptype].items())
-        count=len(section_items)
-        collapsed=""  # all sections open by default
-        icon=type_icons.get(ptype,"")
-        cards+=f'''<div class="wiki-section{esc(collapsed)}">
-        <h2 class="ws-head" id="sec-{ptype}" onclick="toggleSection(this)">
-            <span class="ws-toggle">▼</span>
-            <span class="bar"></span>{icon} {esc(type_names.get(ptype,ptype))}
-            <span class="ws-count">{count}</span>
-        </h2>
-        <div class="ws-body">
-        <div class="grid cards wiki-grid">
-'''
-        for slug,info in section_items:
-            fm=info["fm"]; title=strip_wl(fm.get("title") or slug.replace("-"," ").title())
-            summary=strip_wl(summap.get(slug) or fm.get("summary") or "")
-            href=f"{ptype}/{slug}.html"
-            summ_p = f'<p>{esc(summary[:160])}</p>' if summary else '<p class="ws-pending">No summary yet</p>'
-            cards+=f'<a class="card wiki-card" href="{href}" data-search="{esc(title.lower())} {esc(summary.lower()[:100])}"><h3>{esc(title)}</h3>{summ_p}<span class="go">Open →</span></a>\n'
-            all_items.append((title,summary,href,ptype))
-        cards+="</div></div></div>\n"
-    js='''<script>
-function toggleSection(heading){
-    const body=heading.nextElementSibling;
-    const sec=heading.closest('.wiki-section');
-    const tog=heading.querySelector('.ws-toggle');
-    if(sec.classList.contains('collapsed')){
-        body.style.display='';
-        sec.classList.remove('collapsed');
-        if(tog) tog.textContent='▼';
-    } else {
-        body.style.display='none';
-        sec.classList.add('collapsed');
-        if(tog) tog.textContent='▶';
-    }
-}
-function setAllSections(open){
-    document.querySelectorAll('.wiki-section').forEach(s=>{
-        const body=s.querySelector('.ws-body');
-        const tog=s.querySelector('.ws-toggle');
-        if(open){
-            body.style.display='';
-            s.classList.remove('collapsed');
-            if(tog) tog.textContent='▼';
-        } else {
-            body.style.display='none';
-            s.classList.add('collapsed');
-            if(tog) tog.textContent='▶';
-        }
-    });
-    return false;
-}
-function filterWiki(){
-    const q=document.getElementById('wikiSearch').value.toLowerCase();
-    document.querySelectorAll('.wiki-card').forEach(c=>{
-        const d=c.getAttribute('data-search')||'';
-        c.style.display=d.includes(q)?'':'none';
-    });
-    // show sections that have visible cards
-    document.querySelectorAll('.wiki-section').forEach(sec=>{
-        const body=sec.querySelector('.ws-body');
-        const visible=body?Array.from(body.querySelectorAll('.wiki-card')).some(c=>c.style.display!=='none'):true;
-        sec.style.display=visible?'':'none';
-    });
-}
-document.addEventListener('DOMContentLoaded',()=>{
-    document.getElementById('wikiSearch').addEventListener('input',filterWiki);
-});
-</script>'''
-    html=head("Cyber Wiki","wiki/index.html", root="../")+f'''<div class="hero hero-band"><div class="kicker">// knowledge base</div><h1>Cyber <span class="accent">Wiki</span></h1>
-    <p class="sub">Entities, threat actors, incidents, vulnerabilities and concepts — cross-linked from every digest. Everything is open — click a heading to collapse, or jump to a section.</p></div>
-    <div class="filters">
-        <input type="text" id="wikiSearch" placeholder="Search wiki…">
-        <span style="color:var(--text-dim);font-size:13px">{len(all_items)} pages · <a href="#sec-incidents">🔥 Incidents</a> · <a href="#sec-entities">🦠 Entities</a> · <a href="#sec-concepts">💡 Concepts</a> · <a href="#sec-vulnerabilities">🛡️ Vulns</a> · <a href="#" onclick="return setAllSections(true)">Expand all</a> · <a href="#" onclick="return setAllSections(false)">Collapse all</a></span>
-    </div>
-    {cards}
-    '''+js+foot()
-    open(os.path.join(wiki_index,"index.html"),"w",encoding="utf-8").write(html)
-
-    # Register the collapsible-section CSS for write_site_css() (see its docstring).
-    css_extra='''
-/* Wiki index collapsible sections */
-.wiki-card h3{font-size:15.5px;line-height:1.35}
-.wiki-card p{font-size:13px;color:var(--text-muted);flex:1;line-height:1.5}
-.wiki-card .go{margin-top:auto}
-.wiki-card .ws-pending{font-style:italic;color:var(--text-dim);font-size:12.5px}
-.grid.cards.wiki-grid{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
-.wiki-card{min-height:150px}
-.ws-head{cursor:pointer;display:flex;align-items:center;gap:8px;user-select:none;padding:14px 0 10px;margin:0;font-size:20px;border-top:1px solid var(--border);color:var(--text)}
-.ws-head:hover{color:var(--accent)}
-.ws-head:hover .ws-toggle{background:var(--accent-glow);color:var(--accent);border-color:var(--accent)}
-.ws-toggle{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:6px;background:var(--surface2);border:1px solid var(--border);font-size:11px;color:var(--text-muted);flex-shrink:0;transition:all .15s}
-.ws-count{font-size:13px;color:var(--text-dim);font-weight:400;margin-left:auto;padding:2px 10px;border-radius:999px;background:var(--surface2)}
-.ws-body{overflow:hidden;transition:max-height .25s}
-.wiki-section.collapsed .ws-body{display:none}
-.wiki-section.collapsed .ws-toggle{color:var(--accent);background:var(--accent-glow);border-color:var(--accent)}
-.filters a{color:var(--accent);font-size:13px;cursor:pointer;text-decoration:none}
-.filters a:hover{text-decoration:underline}
-''' + "\n"
-    GEN_CSS["wiki"] = css_extra
+    # The browse surface (Constellation) replaces the old card index. It is an
+    # overlay on the same pages: every /wiki/<family>/<slug>.html keeps its URL.
+    build_wiki_meta(pages)
+    build_wiki_constellation_index(pages)
 
 FLAT_LINKMAP={}
 def exec_summary_html(r):

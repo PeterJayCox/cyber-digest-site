@@ -32,6 +32,32 @@ def plain(html):
     return re.sub(r"\s+", " ", unesc(re.sub("<[^>]+>", " ", html))).strip()
 
 
+def wiki_body(raw):
+    """Return the contents of the wiki-body div, and nothing after it.
+
+    The previous implementation fell back to a greedy `(.*)` when the strict
+    pattern missed, which swallowed the rest of the document — every page's
+    body then carried the site footer and its inline <script> blocks (4.2 of
+    5.4 MB, and the article view executed the theme-toggle code). Locate the
+    div and walk the nesting depth instead.
+    """
+    m = re.search(r'<div class="wiki-body">', raw)
+    if not m:
+        return ""
+    start = m.end()
+    depth = 1
+    for tag in re.finditer(r"</?div\b[^>]*>", raw[start:]):
+        depth += -1 if tag.group(0).startswith("</") else 1
+        if depth == 0:
+            body = raw[start:start + tag.start()]
+            break
+    else:
+        return ""
+    body = re.sub(r"<script\b.*?</script>", "", body, flags=re.S | re.I)
+    body = re.sub(r"<style\b.*?</style>", "", body, flags=re.S | re.I)
+    return body.strip()
+
+
 def parse_fm(meta):
     d = {}
     for part in meta.split("·"):
@@ -57,10 +83,8 @@ for path in glob.glob(os.path.join(DOCS, "wiki", "*", "*.html")):
     fm = parse_fm(plain(m.group(1))) if m else {}
 
     # body = the wiki-body div, i.e. everything the reader actually sees
-    b = re.search(r'<div class="wiki-body">(.*?)\n\s*</div>\s*</div>\s*<footer',
-                  raw, re.S) or re.search(r'<div class="wiki-body">(.*)', raw, re.S)
-    body = b.group(1).strip() if b else ""
-    body = re.sub(r"<div class=\"frontmatter\">.*?</div>", "", body, flags=re.S).strip()
+    body = wiki_body(raw)
+    body = re.sub(r'<div class="frontmatter">.*?</div>', "", body, flags=re.S).strip()
     body = re.sub(r"<div class=\"iocblock\".*?</div>", "", body, flags=re.S).strip()
     # strip the chrome the article view supplies itself
     body = re.sub(r'^\s*<p[^>]*>\s*(no summary yet)\s*</p>', "", body, flags=re.I)
@@ -95,7 +119,11 @@ for path in glob.glob(os.path.join(DOCS, "wiki", "*", "*.html")):
         "sections": sections,
         "tables": body.count("<table"),
         "words": len(plain(body).split()),
-        "body": body,
+        # NOTE: the body is deliberately NOT bundled. The entry page ships metadata
+        # only; the article view fetches the page's own static HTML on demand and
+        # lifts the wiki-body div out of it. That keeps the static pages the single
+        # source of truth and stops the first paint waiting on ~1.8 MB of prose.
+        "url": f"{os.path.basename(os.path.dirname(path))}/{slug}.html",
         "out": sorted(set(out)),
         "sources": sources,
     }
@@ -159,7 +187,7 @@ data = {
                  "created": p["created"]} for p in orphans[:40]],
     "items": items,
 }
-dest = os.path.join(OUT, "wiki.js")
+dest = os.path.join(OUT, "wiki-meta.js")
 with open(dest, "w", encoding="utf-8") as f:
     f.write("window.WIKI_FULL=" + json.dumps(data, separators=(",", ":")) + ";\n")
 

@@ -1,0 +1,907 @@
+<!doctype html>
+<html lang="en-AU"><head><meta charset="utf-8">
+<title>Cyber Wiki — Constellation (draft) · Cyber Digest</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0e1a;--surface:#111827;--surface2:#1a2332;--hover:#1e293b;
+  --text:#e2e8f0;--sec:#b0c0d0;--muted:#8a9cb6;--dim:#64748b;
+  --border:rgba(255,255,255,.06);--border2:rgba(255,255,255,.11);
+  --accent:#00b4d8;--glow:rgba(0,180,216,.09);
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --incident:#f97316;--cve:#a78bfa;--entity:#22d3ee;--concept:#34d399;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;font-size:15px;overflow-y:scroll}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background:
+  radial-gradient(820px 460px at 20% 4%,rgba(0,180,216,.10),transparent 70%),
+  radial-gradient(680px 500px at 84% 26%,rgba(167,139,250,.07),transparent 72%)}
+a{color:var(--accent);text-decoration:none}
+.wrap{max-width:1400px;margin:0 auto;padding:0 26px 100px;position:relative;z-index:1}
+.mono{font-family:var(--mono)}
+/* ---------- chrome ---------- */
+.topnav{position:sticky;top:0;z-index:60;background:rgba(10,14,26,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.topnav .in{max-width:1400px;margin:0 auto;padding:11px 26px;display:flex;align-items:center;gap:10px}
+.brand{font-size:17px;font-weight:700;letter-spacing:-.4px;display:flex;align-items:center;gap:10px}
+.brand .dot{width:12px;height:12px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent)}
+.brand small{font:400 11px/1 Inter;color:var(--dim);letter-spacing:1.2px;text-transform:uppercase}
+.nav{margin-left:auto;display:flex;gap:2px}
+.nav a{color:var(--muted);font-size:14px;font-weight:500;padding:8px 13px;border-radius:6px}
+.nav a:hover{color:var(--text);background:var(--surface2)}
+.nav a.on{color:var(--text);background:var(--hover);font-weight:600}
+/* ---------- search ---------- */
+.searchwrap{position:sticky;top:55px;z-index:55;padding:14px 0;background:rgba(10,14,26,.93);backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:border-color .2s}
+.searchwrap.stuck{border-bottom-color:var(--border)}
+.hero .searchwrap{position:static;background:none;backdrop-filter:none}
+.cmd{position:relative;max-width:760px;margin:0 auto}
+.hero .cmd{margin-top:26px}
+.field{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--border2);border-radius:14px;padding:14px 18px;box-shadow:0 16px 38px rgba(0,0,0,.4)}
+.field:focus-within{border-color:var(--accent);box-shadow:0 0 0 4px var(--glow),0 16px 38px rgba(0,0,0,.4)}
+.field input{flex:1;background:none;border:0;outline:none;color:var(--text);font:inherit;font-size:15.5px;min-width:0}
+.field .hint{font:500 10.5px/1 var(--mono);color:var(--dim);border:1px solid var(--border2);border-radius:5px;padding:4px 7px;white-space:nowrap}
+.field .clr{background:none;border:0;color:var(--dim);cursor:pointer;font-size:16px;line-height:1;padding:2px 4px}
+.field .clr:hover{color:var(--text)}
+.results{display:none;position:absolute;top:calc(100% + 10px);left:0;right:0;background:var(--surface);border:1px solid var(--border2);border-radius:14px;box-shadow:0 30px 66px rgba(0,0,0,.6);overflow:hidden;max-height:66vh;overflow-y:auto}
+.results.on{display:block}
+.rhead{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding:12px 18px 9px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;gap:10px}
+.rhead b{color:var(--accent)}
+.r{padding:11px 18px;border-bottom:1px solid var(--border);cursor:pointer;display:flex;gap:12px;align-items:baseline}
+.r:last-child{border-bottom:0}
+.r:hover,.r.sel{background:var(--hover)}
+.r .t{font-size:14.5px;font-weight:550;color:var(--text);flex:1;min-width:0}
+.r .t small{display:block;font-size:12.5px;color:var(--muted);font-weight:400;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.r .k{font:600 9.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:4px 7px;border-radius:5px;flex-shrink:0}
+.k-incident{color:#fed7aa;background:rgba(249,115,22,.14)}
+.k-cve{color:#ddd6fe;background:rgba(167,139,250,.14)}
+.k-entity{color:#a5f3fc;background:rgba(34,211,238,.14)}
+.k-concept{color:#bbf7d0;background:rgba(52,211,153,.14)}
+.r .d{font:500 11px/1 var(--mono);color:var(--dim);flex-shrink:0;white-space:nowrap}
+.sugg{display:flex;gap:7px;flex-wrap:wrap;padding:12px 18px}
+.sugg span{font:500 11px/1 var(--mono);color:var(--muted);background:var(--surface2);border:1px solid var(--border);padding:5px 9px;border-radius:6px;cursor:pointer}
+.sugg span:hover{color:var(--accent);border-color:var(--accent)}
+/* ---------- landing ---------- */
+.hero{text-align:center;padding:52px 0 10px}
+.hero .kick{font:500 11px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+.hero h1{font-size:42px;font-weight:700;letter-spacing:-1.3px;margin:14px 0 10px}
+.hero h1 span{color:var(--accent)}
+.hero p.lede{color:var(--muted);font-size:14.5px;max-width:660px;margin:0 auto}
+.note{font:500 10.5px/1.7 var(--mono);color:var(--dim);margin-top:12px;letter-spacing:.03em}
+.note b{color:var(--muted);font-weight:500}
+.statsrow{display:flex;justify-content:center;gap:30px;margin:30px 0 0;flex-wrap:wrap}
+.stat{font:500 10.5px/1.7 var(--mono);color:var(--dim);text-transform:uppercase;letter-spacing:.09em;text-align:left}
+.stat b{display:block;font:600 20px/1.25 Inter;color:var(--text);letter-spacing:-.4px}
+.stat.warn b{color:#fdba74}
+.sect{margin-top:54px}
+.sect > h2{font-size:19px;font-weight:650;letter-spacing:-.3px;display:flex;align-items:center;gap:11px;margin-bottom:6px}
+.sect > h2 .bar{width:22px;height:2px;background:var(--accent);display:inline-block}
+.sect > h2 .tag{margin-left:auto;font:500 10.5px/1 var(--mono);color:var(--dim);text-transform:none;letter-spacing:0}
+.sect > p.sub{color:var(--muted);font-size:13.5px;margin-bottom:18px;max-width:900px}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px}
+.panel h4{font:600 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:12px;display:flex;justify-content:space-between;gap:10px}
+.panel h4 a{color:var(--accent);font-size:10px}
+/* map */
+.mapgrid{display:grid;grid-template-columns:minmax(0,1fr) 350px;gap:22px;align-items:start}
+.mapshell{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:6px;position:relative;overflow:hidden}
+.mapshell svg{display:block;width:100%;height:auto}
+.mapnote{font:500 10.5px/1.7 var(--mono);color:var(--dim);padding:10px 12px 6px}
+.mapnote b{color:var(--muted);font-weight:500}
+/* cards */
+.hit{display:flex;gap:10px;align-items:baseline;padding:9px 0;border-bottom:1px solid var(--border);font-size:14px}
+.hit:last-child{border-bottom:0}
+.hit a{color:var(--text)}
+.hit a:hover{color:var(--accent)}
+.hit .m{margin-left:auto;font:500 10.5px/1 var(--mono);color:var(--dim);white-space:nowrap}
+.hit .lk{font:500 10px/1 var(--mono);color:var(--accent);background:rgba(0,180,216,.1);border:1px solid rgba(0,180,216,.28);padding:3px 5px;border-radius:4px}
+.thread{display:grid;gap:11px}
+.th{border:1px solid var(--border);border-radius:12px;padding:12px 14px;cursor:pointer;transition:border-color .15s,background .15s}
+.th:hover,.th.on{border-color:rgba(0,180,216,.5);background:rgba(0,180,216,.05)}
+.th h5{font-size:15px;font-weight:600;letter-spacing:-.2px;margin-bottom:5px}
+.th .mix{display:flex;gap:7px;flex-wrap:wrap;align-items:center;font:500 10.5px/1 var(--mono);color:var(--dim)}
+.th .mix em{font-style:normal;padding:3px 7px;border-radius:5px;background:var(--surface2);border:1px solid var(--border)}
+.th .line{height:5px;background:var(--surface2);border-radius:999px;margin-top:9px;overflow:hidden}
+.th .line span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),rgba(0,180,216,.22))}
+.th .why{font-size:12.5px;color:var(--muted);margin-top:7px}
+.tagcloud{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font:500 10.5px/1 var(--mono);color:var(--muted);background:var(--surface2);border:1px solid var(--border);padding:4px 8px;border-radius:5px;cursor:pointer}
+.chip:hover{color:var(--accent);border-color:var(--accent)}
+.chip.on{color:#a5e9f7;border-color:var(--accent);background:rgba(0,180,216,.12)}
+/* ---------- results view ---------- */
+.vhead{padding:30px 0 0}
+.vhead .kick{font:500 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.vhead h1{font-size:30px;font-weight:700;letter-spacing:-.8px;margin:10px 0 8px}
+.vhead p{color:var(--muted);font-size:13.5px}
+.tools{display:flex;gap:10px;align-items:center;padding:18px 0 12px;flex-wrap:wrap;border-bottom:1px solid var(--border)}
+select{background:var(--surface);border:1px solid var(--border2);color:var(--sec);font:inherit;font-size:13px;padding:8px 11px;border-radius:8px;outline:none}
+.tools .n{font:500 11.5px/1 var(--mono);color:var(--dim)}
+.tools .sp{margin-left:auto}
+.rows{border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--surface);margin-top:16px}
+.row{padding:15px 18px;border-bottom:1px solid var(--border);cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:16px}
+.row:last-child{border-bottom:0}
+.row:hover{background:var(--hover)}
+.row h3{font-size:15.5px;font-weight:600;line-height:1.35;letter-spacing:-.2px}
+.row p{color:var(--muted);font-size:13px;line-height:1.55;margin-top:5px;max-width:80ch}
+.row .tg{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;align-items:center}
+.row .rt{text-align:right;font:500 10.5px/1.8 var(--mono);color:var(--dim)}
+.row .rt .sev{display:inline-block;padding:3px 7px;border-radius:999px;text-transform:capitalize;border:1px solid var(--border2);margin-bottom:5px}
+.p-critical{color:#fecdd3;background:rgba(244,63,94,.14);border-color:rgba(244,63,94,.4)}
+.p-high{color:#fed7aa;background:rgba(251,146,60,.13);border-color:rgba(251,146,60,.38)}
+.p-medium{color:#fef08a;background:rgba(250,204,21,.12);border-color:rgba(250,204,21,.34)}
+.p-low{color:#bbf7d0;background:rgba(74,222,128,.12);border-color:rgba(74,222,128,.32)}
+.more{margin:18px auto 0;display:block;background:var(--surface);border:1px solid var(--border2);color:var(--sec);font:inherit;font-size:13.5px;padding:11px 22px;border-radius:10px;cursor:pointer}
+.more:hover{border-color:var(--accent);color:var(--text)}
+.empty{padding:46px 20px;text-align:center;color:var(--dim);font-size:14px}
+/* ---------- article ---------- */
+.crumb{font:500 12px/1.6 var(--mono);color:var(--dim);margin:24px 0 14px}
+.crumb button{background:none;border:0;color:var(--accent);font:inherit;cursor:pointer;padding:0}
+.agrid{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:28px;align-items:start}
+.article{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:34px 38px}
+.article h1{font-size:32px;line-height:1.2;letter-spacing:-.9px;font-weight:700}
+.article .meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:15px 0 22px;padding-bottom:17px;border-bottom:1px solid var(--border)}
+.article .meta .d{font:500 11.5px/1 var(--mono);color:var(--dim)}
+.article .body{color:var(--sec);font-size:15.5px;line-height:1.78}
+.article .body p{margin:0 0 15px}
+.article .body h2{font:650 19px/1.35 Inter;color:var(--text);letter-spacing:-.3px;margin:28px 0 12px;padding-top:18px;border-top:1px solid var(--border)}
+.article .body h3{font-size:16px;color:var(--text);margin:20px 0 9px}
+.article .body ul,.article .body ol{margin:0 0 15px 22px}
+.article .body li{margin-bottom:6px}
+.article .body table{width:100%;border-collapse:collapse;margin:14px 0 18px;font-size:13.5px}
+.article .body th,.article .body td{border:1px solid var(--border2);padding:8px 11px;text-align:left;vertical-align:top}
+.article .body th{background:var(--surface2);color:var(--text);font-weight:600}
+.article .body blockquote{border-left:2px solid var(--accent);padding:2px 0 2px 16px;margin:16px 0;color:var(--muted);font-style:italic}
+.article .body code{background:var(--surface2);padding:2px 6px;border-radius:5px;font:13px var(--mono)}
+.article .body pre{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;overflow-x:auto;margin:0 0 16px}
+.article .body img{max-width:100%;border-radius:8px}
+.article .body strong{color:var(--text)}
+.rail{position:sticky;top:132px;display:grid;gap:14px}
+.rail .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 17px}
+.rail .card h4{font:600 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:10px;display:flex;justify-content:space-between}
+.rail .card h4 span{color:var(--accent)}
+.gnode{display:flex;gap:10px;align-items:baseline;padding:8px 0;border-bottom:1px solid var(--border);font-size:13.5px}
+.gnode:last-child{border-bottom:0}
+.gnode .dotnode{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.gnode a{color:var(--sec);line-height:1.45}
+.gnode a:hover{color:var(--accent)}
+.gnode small{display:block;font:500 10px/1.4 var(--mono);color:var(--dim)}
+.attrs{display:grid;gap:8px}
+.attr{display:flex;justify-content:space-between;gap:12px;font-size:13px;border-bottom:1px dashed var(--border);padding-bottom:7px}
+.attr:last-child{border:0;padding-bottom:0}
+.attr span:first-child{color:var(--dim);font-size:12px}
+.attr span:last-child{color:var(--text);text-align:right;font:500 11.5px var(--mono)}
+.srclist{list-style:none;display:grid;gap:7px}
+.srclist li{font-size:13.5px;color:var(--muted);line-height:1.5}
+.srclist li::before{content:"↗ ";color:var(--dim)}
+.srclist a{color:var(--sec)}
+.srclist a:hover{color:var(--accent)}
+.nextprev{display:flex;justify-content:space-between;gap:18px;margin-top:26px;padding-top:18px;border-top:1px solid var(--border)}
+.nextprev a{max-width:46%;font-size:14px;color:var(--sec)}
+.nextprev small{display:block;font:500 10px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:5px}
+.nextprev a:hover{color:var(--accent)}
+/* toast for copy/link actions */
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--surface);border:1px solid var(--border2);color:var(--text);font-size:13px;padding:10px 16px;border-radius:10px;opacity:0;transition:all .2s;z-index:80;pointer-events:none}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.mk{position:fixed;right:14px;bottom:14px;z-index:70;font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dim);background:var(--surface);border:1px solid var(--border2);padding:7px 11px;border-radius:999px}
+@media (max-width:1080px){.mapgrid,.agrid{grid-template-columns:minmax(0,1fr)}.rail{position:static}}
+</style></head>
+<body>
+
+<div class="topnav"><div class="in">
+  <a class="brand" href="#/"><span class="dot"></span>Cyber Digest <small>Public site</small></a>
+  <nav class="nav">
+    <a href="https://cyber.peterjaycox.com/index.html">Home</a>
+    <a href="https://cyber.peterjaycox.com/stories.html">Story DB</a>
+    <a href="https://cyber.peterjaycox.com/globe.html">Globe</a>
+    <a href="https://cyber.peterjaycox.com/reports/index.html">Reports</a>
+    <a class="on" href="#/">Wiki</a>
+    <a href="https://cyber.peterjaycox.com/tools/index.html">Tools</a>
+  </nav>
+</div></div>
+
+<div class="wrap">
+
+  <!-- ================= LANDING ================= -->
+  <div id="view-home">
+    <header class="hero">
+      <div class="kick" id="heroKick">// the file</div>
+      <h1>Search the <span>network</span>, not the list</h1>
+      <p class="lede" id="heroLede"></p>
+
+      <div class="searchwrap">
+        <div class="cmd">
+          <div class="field">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00b4d8" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+            <input id="q" placeholder="Search 963 pages — names, tags, sectors, CVE IDs…" autocomplete="off" spellcheck="false">
+            <span class="hint">/ to focus · ↑↓ · ⏎</span>
+          </div>
+          <div class="results" id="results"></div>
+        </div>
+      </div>
+
+      <div class="note" id="heroNote"></div>
+      <div class="statsrow" id="statsrow"></div>
+    </header>
+
+    <section class="sect">
+      <h2><span class="bar"></span>The map<span class="tag" id="mapTag"></span></h2>
+      <p class="sub">Four families and the cross-links between them, read straight from the built pages — not inferred from tags. Click a family to browse it, or a satellite to open the page other entries cite most.</p>
+      <div class="mapgrid">
+        <div>
+          <div class="mapshell">
+            <svg viewBox="0 0 800 460" id="graph" role="img" aria-label="Wiki family and cross-link map"></svg>
+            <div class="mapnote" id="mapnote"></div>
+          </div>
+        </div>
+        <aside style="display:grid;gap:16px">
+          <div class="panel"><h4><span id="famTitle">Family</span><span id="famCount"></span></h4>
+            <div id="famList"></div>
+          </div>
+          <div class="panel"><h4>Subjects<span id="tagCount"></span></h4>
+            <div class="tagcloud" id="tagcloud"></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="sect">
+      <h2><span class="bar"></span>Most cited in the file</h2>
+      <p class="sub">Pages other entries link to most often. These are the wiki's real junctions — if you fix or extend one page, this is where the traffic comes from.</p>
+      <div class="mapgrid">
+        <div class="panel" id="hubs"></div>
+        <div class="panel"><h4>Running threads</h4><div class="thread" id="threads"></div></div>
+      </div>
+    </section>
+
+    <section class="sect">
+      <h2><span class="bar"></span>Loose ends<span class="tag" id="orphanTag"></span></h2>
+      <p class="sub">Pages with no wikilink in or out. They are readable and indexed, but nothing in the corpus points at them and they point at nothing — the file's standing data-quality gap, and the shortest list of work if the wiki is to behave like a network.</p>
+      <div class="panel" id="orphans"></div>
+    </section>
+
+    <section class="sect">
+      <h2><span class="bar"></span>How this draft reads the corpus</h2>
+      <p class="sub" id="method"></p>
+    </section>
+  </div>
+
+  <!-- ================= RESULTS ================= -->
+  <div id="view-list" hidden>
+    <div class="vhead">
+      <div class="kick" id="listKick">// browsing</div>
+      <h1 id="listTitle"></h1>
+      <p id="listSub"></p>
+    </div>
+    <div class="tools">
+      <select id="sort">
+        <option value="rel">Sort: best match</option>
+        <option value="date">Sort: newest first</option>
+        <option value="cited">Sort: most cited</option>
+        <option value="title">Sort: A–Z</option>
+      </select>
+      <span class="n" id="listCount"></span>
+      <span class="sp"></span>
+      <span class="n" id="listFacets"></span>
+    </div>
+    <div class="rows" id="listRows"></div>
+    <button class="more" id="more" hidden></button>
+  </div>
+
+  <!-- ================= ARTICLE ================= -->
+  <div id="view-page" hidden></div>
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="mk">Draft · Constellation</div>
+<script src="data/wiki-meta.js"></script>
+
+<script>
+/* ============================================================
+   Constellation — draft. Reads the live wiki build (963 pages).
+   Routing is hash-based so back/forward and deep links work.
+
+   SECURITY NOTE (re the innerHTML warnings below): every dynamic value is
+   passed through esc() before it reaches innerHTML, and all of it originates
+   in this machine's own built wiki pages (data/wiki.js, emitted by
+   extract_full.py from the site build) — not from user input or third-party
+   fetches. Page body HTML is rendered as-is by design: it is the site's own
+   generated markup. Do not feed this bundle from an untrusted source.
+   ============================================================ */
+const D = window.WIKI_FULL;
+const KIND = {incident:'Incident', cve:'Vulnerability', entity:'Entity', concept:'Concept'};
+const KINDPL = {incident:'Incidents & campaigns', cve:'Vulnerabilities & CVEs', entity:'Entities & threat actors', concept:'Concepts & frameworks'};
+const COL = {incident:'#f97316', cve:'#a78bfa', entity:'#22d3ee', concept:'#34d399'};
+const PAGE = 25;
+
+const bySlug = new Map(D.items.map(p => [p.slug, p]));
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const dmy = d => d ? d.slice(8,10)+'/'+d.slice(5,7)+'/'+d.slice(0,4) : '—';
+const short = d => d ? d.slice(8,10)+'/'+d.slice(5,7) : '—';
+const el = id => document.getElementById(id);
+let listState = {items:[], shown:PAGE, sort:'rel', title:'', kick:'', sub:''};
+
+/* ---------------- query language ----------------
+   free text (AND, all tokens must hit) plus type:, tag:, sector:, au: filters */
+function parseQuery(raw){
+  const f = {terms:[], type:[], tag:[], sector:[], au:false, raw:raw.trim()};
+  raw.trim().toLowerCase().split(/\s+/).filter(Boolean).forEach(tok => {
+    let m;
+    if ((m = tok.match(/^type:(incident|cve|entity|concept)s?$/))) f.type.push(m[1].replace(/s$/,''));
+    else if ((m = tok.match(/^tag:(.+)$/))) f.tag.push(m[1]);
+    else if ((m = tok.match(/^sector:(.+)$/))) f.sector.push(m[1]);
+    else if (tok === 'au' || tok === 'au:true') f.au = true;
+    else f.terms.push(tok);
+  });
+  return f;
+}
+function score(p, q){
+  if (q.type.length && !q.type.includes(p.k)) return -1;
+  if (q.au && !p.au) return -1;
+  if (q.tag.length && !q.tag.every(t => p.tags.some(x => x.startsWith(t)))) return -1;
+  if (q.sector.length && !q.sector.every(s => p.sectors.some(x => x.startsWith(s)))) return -1;
+  const title = p.title.toLowerCase(), sum = p.summary.toLowerCase();
+  const tags = p.tags.join(' ').toLowerCase(), secs = p.sectors.join(' ').toLowerCase();
+  let s = 0;
+  for (const t of q.terms){
+    let hit = 0;
+    if (title.startsWith(t)) hit += 9; else if (title.includes(t)) hit += 6;
+    if (tags.includes(t)) hit += 4;
+    if (secs.includes(t)) hit += 3;
+    if (sum.includes(t)) hit += 2;
+    if (!hit) return -1;
+    s += hit;
+  }
+  // CIDR-free relevance tiebreak: cited pages and richer pages rank up
+  return s + Math.min(p.in.length, 6) * 0.5 + (q.terms.length ? 0 : 0);
+}
+function search(raw){
+  const q = parseQuery(raw);
+  const empty = !q.terms.length && !q.type.length && !q.tag.length && !q.sector.length && !q.au;
+  if (empty) return {q, hits:[]};
+  const hits = [];
+  for (const p of D.items){ const s = score(p, q); if (s >= 0) hits.push({p, s}); }
+  hits.sort((a, b) => b.s - a.s || b.p.created.localeCompare(a.p.created));
+  return {q, hits};
+}
+function sortList(list, how){
+  const L = list.slice();
+  if (how === 'date')  L.sort((a,b) => (b.created||'').localeCompare(a.created||''));
+  if (how === 'title') L.sort((a,b) => a.title.localeCompare(b.title));
+  if (how === 'cited') L.sort((a,b) => b.in.length - a.in.length || b.out.length - a.out.length);
+  return L;
+}
+
+/* ---------------- routing ---------------- */
+function go(hash){ location.hash = hash; }
+function route(){
+  const h = decodeURIComponent(location.hash || '#/');
+  const m = h.match(/^#\/p\/(.+)$/);
+  const c = h.match(/^#\/c\/(\w+)$/);
+  const t = h.match(/^#\/t\/(.+)$/);
+  const q = h.match(/^#\/q\/(.*)$/);
+  closeResults();
+  if (m)            { showPage(m[1]); return; }
+  if (c)            { showList({kind:c[1]}); return; }
+  if (t)            { showList({tag:t[1]}); return; }
+  if (q)            { showList({raw:q[1]}); return; }
+  showHome();
+}
+function view(name){
+  for (const v of ['home','list','page']) el('view-'+v).hidden = (v !== name);
+  window.scrollTo({top:0, behavior:'instant'});
+}
+
+/* ---------------- home ---------------- */
+function showHome(){
+  view('home');
+  el('sort').value = listState.sort;
+}
+
+/* ---------------- list ---------------- */
+function showList({kind, tag, raw, sector}){
+  let items, title, kick, sub;
+  if (kind){
+    items = D.items.filter(p => p.k === kind);
+    title = KINDPL[kind] || kind; kick = '// family'; sub = `${D.counts[kind]} pages filed under this family.`;
+  } else if (tag){
+    items = D.items.filter(p => p.tags.some(x => x === tag));
+    title = `Tagged “${tag}”`; kick = '// subject'; sub = `${items.length} pages carry this tag.`;
+  } else if (sector){
+    items = D.items.filter(p => p.sectors.some(x => x === sector));
+    title = `Sector: ${sector}`; kick = '// sector'; sub = `${items.length} pages record this sector as affected.`;
+  } else {
+    const r = search(raw || '');
+    items = r.hits.map(x => x.p); title = raw ? `“${raw}”` : 'All pages';
+    kick = '// search';
+    sub = r.hits.length ? `${r.hits.length} of ${D.total} pages match ${describeQuery(r.q)}.`
+                        : 'No page matches that. Try a tag like kev, a family like type:cve, or sector:health.';
+  }
+  if (raw !== undefined) syncQuery(raw || '');
+  const sorted = sortList(items, listState.sort);
+  listState = {items:sorted, shown:PAGE, sort:listState.sort, title, kick, sub};
+  el('listKick').textContent = kick;
+  el('listTitle').textContent = title;
+  el('listSub').textContent = sub;
+  drawList();
+  view('list');
+}
+function describeQuery(q){
+  const bits = [];
+  if (q.terms.length) bits.push(q.terms.join(' + '));
+  if (q.type.length) bits.push('type: ' + q.type.join(', '));
+  if (q.tag.length) bits.push('tag: ' + q.tag.join(', '));
+  if (q.sector.length) bits.push('sector: ' + q.sector.join(', '));
+  if (q.au) bits.push('Australian impact');
+  return bits.join(' · ') || 'anything';
+}
+function drawList(){
+  const s = listState, slice = s.items.slice(0, s.shown);
+  el('listCount').textContent = `${Math.min(s.shown, s.items.length)} of ${s.items.length} shown`;
+  el('listFacets').textContent = `${D.total} pages in the file · ${D.edge_count} internal links`;
+  el('listRows').innerHTML = slice.map(p => `
+    <div class="row" data-slug="${esc(p.slug)}">
+      <div>
+        <h3>${esc(p.title)}</h3>
+        <p>${esc(p.summary.slice(0, 210))}${p.summary.length > 210 ? '…' : ''}</p>
+        <div class="tg">
+          <span class="k k-${p.k}">${KIND[p.k]}</span>
+          ${p.tags.slice(0,4).map(t => `<span class="chip" data-tag="${esc(t)}">${esc(t)}</span>`).join('')}
+          ${p.au ? '<span class="chip" style="color:#a5f3fc;border-color:rgba(0,180,216,.4)">AU</span>' : ''}
+        </div>
+      </div>
+      <div class="rt">
+        ${p.severity ? `<span class="sev p-${esc(p.severity)}">${esc(p.severity)}</span><br>` : ''}
+        ${dmy(p.created)}<br>
+        ${p.in.length} in · ${p.out.length} out
+      </div>
+    </div>`).join('') || `<div class="empty">Nothing here.</div>`;
+  const more = el('more');
+  more.hidden = s.shown >= s.items.length;
+  more.textContent = `Show ${Math.min(PAGE, s.items.length - s.shown)} more of ${s.items.length}`;
+}
+
+/* ---------------- article ---------------- */
+function linkList(slugs, limit){
+  if (!slugs.length) return '<div class="gnode" style="color:var(--dim)">None recorded.</div>';
+  return slugs.slice(0, limit).map(s => {
+    const p = bySlug.get(s);
+    if (!p) return '';
+    return `<div class="gnode"><span class="dotnode" style="background:${COL[p.k]}"></span>
+      <span><a href="#/p/${esc(p.slug)}" data-slug="${esc(p.slug)}">${esc(p.title.length > 54 ? p.title.slice(0,54)+'…' : p.title)}</a>
+      <small>${KIND[p.k]} · ${short(p.created)}</small></span></div>`;
+  }).join('') || '<div class="gnode" style="color:var(--dim)">None recorded.</div>';
+}
+function showPage(slug){
+  const p = bySlug.get(slug);
+  if (!p){ el('view-page').innerHTML = `<div class="vhead"><h1>Page not found</h1><p>No wiki page with slug <code>${esc(slug)}</code>.</p></div>`; view('page'); return; }
+  const idx = D.items.findIndex(x => x.slug === slug);
+  const newer = D.items[idx-1], older = D.items[idx+1];
+  const sib = D.items.filter(x => x.k === p.k && x.tags.some(t => p.tags.includes(t))).slice(0, 5);
+  el('view-page').innerHTML = `
+    <div class="crumb"><button id="back">← Back</button> · <a href="#/c/${p.k}">${KINDPL[p.k]}</a> · filed ${dmy(p.created)}</div>
+    <div class="agrid">
+      <article class="article">
+        <h1>${esc(p.title)}</h1>
+        <div class="meta">
+          <span class="d">${dmy(p.created)}${p.updated !== p.created ? ' → revised ' + dmy(p.updated) : ''}</span>
+          ${p.tags.slice(0,6).map(t => `<a class="chip" href="#/t/${encodeURIComponent(t)}">#${esc(t)}</a>`).join('')}
+          ${p.au ? '<span class="chip" style="color:#a5f3fc;border-color:rgba(0,180,216,.4)">Australian impact</span>' : ''}
+          ${p.severity ? `<span class="chip p-${esc(p.severity)}">${esc(p.severity)}</span>` : ''}
+        </div>
+        <div class="body" id="body"><p style="color:var(--dim)">Loading the full entry…</p></div>
+        <div id="srcblock"></div>
+        <div class="nextprev">
+          ${older ? `<a href="#/p/${esc(older.slug)}" data-slug="${esc(older.slug)}"><small>Earlier</small>${esc(older.title.slice(0,70))}…</a>` : '<span></span>'}
+          ${newer ? `<a href="#/p/${esc(newer.slug)}" data-slug="${esc(newer.slug)}" style="text-align:right"><small>Later</small>${esc(newer.title.slice(0,70))}…</a>` : '<span></span>'}
+        </div>
+      </article>
+      <aside class="rail">
+        <div class="card"><h4>Attributes</h4><div class="attrs">
+          <div class="attr"><span>Family</span><span>${KIND[p.k]}</span></div>
+          <div class="attr"><span>Created</span><span>${p.created || '—'}</span></div>
+          <div class="attr"><span>Updated</span><span>${p.updated || '—'}</span></div>
+          <div class="attr"><span>Confidence</span><span>${esc(p.confidence || '—')}</span></div>
+          <div class="attr"><span>Severity</span><span>${esc(p.severity || '—')}</span></div>
+          <div class="attr"><span>AU impact</span><span>${p.au ? 'yes' : 'no'}</span></div>
+          <div class="attr"><span>Sectors</span><span>${esc(p.sectors.join(', ') || '—')}</span></div>
+          <div class="attr"><span>Words</span><span>${p.words}</span></div>
+        </div></div>
+        <div class="card"><h4>Links to <span>${p.out.length}</span></h4>${linkList(p.out, 8)}</div>
+        <div class="card"><h4>Cited by <span>${p.in.length}</span></h4>${linkList(p.in, 10)}</div>
+        ${sib.length ? `<div class="card"><h4>Shares a subject</h4>${linkList(sib.map(x => x.slug), 5)}</div>` : ''}
+      </aside>
+    </div>`;
+  rewriteLinks(el('body'));
+  loadBody(p);
+  document.title = p.title + ' · Cyber Wiki';
+  view('page');
+}
+
+/* config: where the static wiki pages live, relative to the entry page.
+   The draft sits at mockups/…/draft-c/, so it points back at the site build;
+   in production the entry page IS /wiki/index.html and this becomes ''. */
+const WIKI_BASE = '../../../docs/wiki/';
+
+/* the article body is fetched, not bundled: pull the static page and lift its
+   wiki-body div out. Falls back to a link when fetch is unavailable (file://). */
+async function loadBody(p){
+  const box = el('body'), src = el('srcblock');
+  let html = null;
+  try {
+    const res = await fetch(WIKI_BASE + p.url, { cache: 'force-cache' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const doc = new DOMParser().parseFromString(await res.text(), 'text/html');
+    const wb = doc.querySelector('.wiki-body');
+    if (!wb) throw new Error('no wiki-body in page');
+    wb.querySelectorAll('script,style').forEach(n => n.remove());
+    const fm = wb.querySelector('.frontmatter'); if (fm) fm.remove();
+    html = wb.innerHTML;
+  } catch (err){
+    box.innerHTML = `<div class="empty" style="text-align:left;padding:22px 0">`
+      + `<p>The full entry is not bundled with this draft.</p>`
+      + `<p>Open it at <a href="${esc(WIKI_BASE + p.url)}">${esc(p.url)}</a>.</p>`
+      + `<p style="color:var(--dim);font-size:13px">(${esc(err.message)})</p></div>`;
+    return;
+  }
+  box.innerHTML = html;
+  rewriteLinks(box);
+  const ext = [...box.querySelectorAll('a[href^="http"]')]
+    .map(a => ({ url: a.getAttribute('href'), label: a.textContent.trim() }))
+    .filter((s, i, arr) => arr.findIndex(x => x.url === s.url) === i);
+  if (ext.length){
+    src.innerHTML = `<h2 style="font:650 19px/1.35 Inter;margin:28px 0 12px;padding-top:18px;border-top:1px solid var(--border)">Sources</h2>`
+      + `<ul class="srclist">${ext.map(s => `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label || s.url)}</a></li>`).join('')}</ul>`;
+  }
+}
+
+/* rewrite wiki-internal hrefs to in-app hash routes so the graph is traversable */
+function rewriteLinks(root){
+  root.querySelectorAll('a[href]').forEach(a => {
+    const href = a.getAttribute('href');
+    if (!href) return;
+    if (/^https?:/.test(href)){
+      if (href.includes('cyber.peterjaycox.com/wiki/')){
+        const target = href.split('/').pop().replace(/\.html$/, '');
+        if (bySlug.has(target)){ a.setAttribute('href', '#/p/' + target); a.dataset.slug = target; }
+      }
+      return;
+    }
+    if (href.startsWith('#')) return;
+    if (/\.html$/.test(href)){
+      const target = href.split('/').pop().replace(/\.html$/, '');
+      if (bySlug.has(target)){
+        a.setAttribute('href', '#/p/' + target);
+        a.dataset.slug = target;
+        return;
+      }
+    }
+    a.setAttribute('href', WIKI_BASE + href.replace(/^(\.\.\/)+/, ''));
+  });
+}
+
+/* ---------------- search box (two instances: hero + sticky bar) ---------------- */
+function resultsHTML(raw, focusIdx){
+  const {q, hits} = search(raw);
+  if (!raw.trim()) {
+    return `<div class="rhead"><span>Try a query</span><span>${D.total} pages loaded</span></div>
+      <div class="sugg">${['type:cve','type:entity','tag:kev','tag:ransomware','sector:health','au','zero-day','ClickFix'].map(s => `<span data-query="${esc(s)}">${esc(s)}</span>`).join('')}</div>
+      <div class="rhead"><span>Recently filed</span><span>newest first</span></div>` +
+      D.items.slice(0, 5).map((p, i) => rowHTML(p, i === focusIdx)).join('');
+  }
+  return `<div class="rhead"><span>${hits.length ? hits.length + ' match' + (hits.length===1?'':'es') : 'No match'}</span><span>${esc(describeQuery(q))}</span></div>` +
+    (hits.slice(0, 8).map((x, i) => rowHTML(x.p, i === focusIdx)).join('')
+     || `<div class="sugg">${['type:cve','tag:kev','sector:health','au'].map(s => `<span data-query="${esc(s)}">${esc(s)}</span>`).join('')}</div>`);
+}
+function rowHTML(p, sel){
+  return `<div class="r ${sel ? 'sel' : ''}" data-slug="${esc(p.slug)}">
+      <span class="k k-${p.k}">${KIND[p.k]}</span>
+      <span class="t">${esc(p.title)}<small>${esc(p.summary.slice(0, 118))}…</small></span>
+      <span class="d">${short(p.created)}${p.in.length ? ' · ' + p.in.length + ' in' : ''}</span>
+    </div>`;
+}
+let focusIdx = -1, currentHits = [];
+function bindSearch(input, box){
+  const open = () => { box.classList.add('on'); render(); };
+  function render(){
+    box.innerHTML = resultsHTML(input.value, focusIdx);
+    currentHits = search(input.value).hits.slice(0, 8).map(x => x.p);
+    if (!input.value.trim()) currentHits = D.items.slice(0, 5);
+  }
+  input.addEventListener('input', () => { focusIdx = -1; open(); });
+  input.addEventListener('focus', open);
+  input.addEventListener('keydown', e => {
+    const n = currentHits.length;
+    if (e.key === 'ArrowDown'){ e.preventDefault(); focusIdx = Math.min(n-1, focusIdx+1); render(); }
+    else if (e.key === 'ArrowUp'){ e.preventDefault(); focusIdx = Math.max(-1, focusIdx-1); render(); }
+    else if (e.key === 'Enter'){
+      e.preventDefault();
+      if (focusIdx >= 0 && currentHits[focusIdx]) go('#/p/' + currentHits[focusIdx].slug);
+      else if (input.value.trim()) go('#/q/' + encodeURIComponent(input.value.trim()));
+      else go('#/');
+      input.blur(); closeResults();
+    } else if (e.key === 'Escape'){ input.blur(); closeResults(); }
+  });
+  box.addEventListener('click', e => {
+    const s = e.target.closest('.r[data-slug]');
+    const q = e.target.closest('[data-query]');
+    if (s){ go('#/p/' + s.dataset.slug); closeResults(); }
+    if (q){ input.value = q.dataset.query; input.focus(); focusIdx = -1; open(); }
+  });
+  return {render};
+}
+let searchBinders = [];
+function closeResults(){ document.querySelectorAll('.results').forEach(b => b.classList.remove('on')); }
+function syncInputs(val){
+  document.querySelectorAll('.search-input').forEach(i => { if (i.value !== val) i.value = val; });
+}
+</script>
+
+<script>
+/* ============================================================
+   Constellation — home / landing surface.
+   Everything here is computed from WIKI_FULL, which is derived
+   from the BUILT wiki pages, so the graph is the real wikilink
+   set and not a tag-based approximation.
+   ============================================================ */
+
+/* ---------------- family map ---------------- */
+const FAM = ['incident', 'cve', 'entity', 'concept'];
+const FAMPOS = {incident:[400,120], cve:[648,300], entity:[400,382], concept:[152,300]};
+
+function famEdges(a, b){ return D.fam_edges[a + '>' + b] || 0; }
+
+function drawGraph(){
+  const svg = el('graph');
+  const maxE = Math.max(...FAM.flatMap(a => FAM.map(b => a === b ? 0 : famEdges(a, b))), 1);
+  let s = '';
+
+  // edges first, so nodes draw over them
+  for (const a of FAM){
+    for (const b of FAM){
+      if (a > b) continue;                       // draw each pair once
+      const n = famEdges(a, b);
+      const rev = a === b ? 0 : famEdges(b, a);
+      const total = n + rev;
+      if (!total) continue;
+      const [x1, y1] = FAMPOS[a], [x2, y2] = FAMPOS[b];
+      const w = (1 + 3.2 * (total / maxE)).toFixed(2);
+      const op = (0.18 + 0.5 * (total / maxE)).toFixed(2);
+      if (a === b){
+        // self-reference: a compact loop lifted just above the node
+        const ratio = total / maxE;
+        const rx = (24 + 14 * ratio).toFixed(1), ry = (18 + 10 * ratio).toFixed(1);
+        const [nx, ny] = FAMPOS[a];
+        const nr = 22 + Math.sqrt(D.counts[a] || 0) * 1.15;
+        s += `<path d="M${nx - 20},${(ny - nr + 6).toFixed(1)} A${rx},${ry} 0 1 1 ${nx + 20},${(ny - nr + 6).toFixed(1)}"`
+           + ` fill="none" stroke="${COL[a]}" stroke-width="${w}" opacity="${op}"
+             stroke-dasharray="3 4"/>`;
+      } else {
+        const mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
+        const dx = x2 - x1, dy = y2 - y1;
+        const len = Math.hypot(dx, dy) || 1;
+        const ox = -dy / len * 34, oy = dx / len * 34;    // bow the curve outward
+        s += `<path d="M${x1},${y1} Q${mx + ox},${my + oy} ${x2},${y2}" fill="none"`
+           + ` stroke="${COL[a]}" stroke-width="${w}" opacity="${op}"/>`;
+      }
+    }
+  }
+
+  // hubs per family: the satellites around each node
+  const hubsByFam = {};
+  for (const h of D.hubs) (hubsByFam[h.k] ||= []).push(h);
+
+  for (const fam of FAM){
+    const [x, y] = FAMPOS[fam];
+    const n = D.counts[fam] || 0;
+    const r = 22 + Math.sqrt(n) * 1.15;
+    s += `<g class="famnode" data-kind="${fam}" style="cursor:pointer">`
+       + `<circle cx="${x}" cy="${y}" r="${r.toFixed(1)}" fill="${COL[fam]}" opacity=".13"`
+       + ` stroke="${COL[fam]}" stroke-width="1.4"/>`
+       + `<text x="${x}" y="${y - 2}" text-anchor="middle" fill="#e2e8f0"`
+       + ` style="font:600 15px Inter,sans-serif">${n}</text>`
+       + `<text x="${x}" y="${y + 14}" text-anchor="middle" fill="#8a9cb6"`
+       + ` style="font:500 9.5px 'JetBrains Mono',monospace;letter-spacing:.1em"`
+       + `>${KIND[fam].toUpperCase()}</text></g>`;
+
+    // satellites, ringed left-to-right
+    const sat = (hubsByFam[fam] || []).slice(0, 4);
+    sat.forEach((h, i) => {
+      const ang = (-0.85 + i * 0.57) + (fam === 'concept' ? Math.PI : fam === 'cve' ? 0.35 : 0);
+      const sx = x + Math.cos(ang) * (r + 52), sy = y + Math.sin(ang) * (r + 44);
+      s += `<line x1="${x}" y1="${y}" x2="${sx}" y2="${sy}" stroke="${COL[fam]}"`
+         + ` stroke-width="1" opacity=".35"/>`
+         + `<g class="sat" data-slug="${h.slug}" style="cursor:pointer">`
+         + `<circle cx="${sx}" cy="${sy}" r="${(4 + Math.min(h.in, 12) * 0.55).toFixed(1)}"`
+         + ` fill="${COL[fam]}" opacity=".85"/>`
+         + `<title>${h.title} — cited by ${h.in}</title></g>`;
+      if (h.in >= 10){
+        const anchor = sx < x - 10 ? 'end' : sx > x + 10 ? 'start' : 'middle';
+        const lx = sx + (anchor === 'end' ? -9 : anchor === 'start' ? 9 : 0);
+        s += `<text x="${lx}" y="${sy + 3}" text-anchor="${anchor}" fill="#8a9cb6"`
+           + ` style="font:500 9px 'JetBrains Mono',monospace">`
+           + `${esc(h.title.length > 22 ? h.title.slice(0, 22) + '…' : h.title)}`
+           + `<tspan fill="#64748b"> ${h.in}</tspan></text>`;
+      }
+    });
+  }
+  svg.innerHTML = s;
+  svg.querySelectorAll('.famnode').forEach(g => g.addEventListener('click', () => go('#/c/' + g.dataset.kind)));
+  svg.querySelectorAll('.sat').forEach(g => g.addEventListener('click', e => { e.stopPropagation(); go('#/p/' + g.dataset.slug); }));
+
+  el('mapTag').textContent = `${D.total} pages · ${D.edge_count} internal links`;
+  el('mapnote').innerHTML = `<b>Reading this map:</b> circle area is real page count`;
+  el('mapnote').innerHTML += ` (${FAM.map(f => D.counts[f] + ' ' + KIND[f].toLowerCase()).join(' · ')}). `
+    + `Edge thickness is the number of cross-links between families, counted from the built`
+    + ` pages. Dotted loops are a family linking to itself. Satellites are the most-cited pages;`
+    + ` the number beside one is how many entries cite it.`;
+}
+
+/* ---------------- side panels ---------------- */
+function renderFams(){
+  el('famTitle').textContent = 'Families';
+  el('famCount').textContent = D.total;
+  el('famList').innerHTML = FAM.map(f => `
+    <div class="hit" data-kind="${f}" style="cursor:pointer">
+      <span class="dotnode" style="width:8px;height:8px;border-radius:50%;background:${COL[f]}"></span>
+      <a href="#/c/${f}">${KINDPL[f]}</a>
+      <span class="m">${D.counts[f]}</span>
+    </div>`).join('');
+  el('famList').querySelectorAll('[data-kind]').forEach(r =>
+    r.addEventListener('click', () => go('#/c/' + r.dataset.kind)));
+}
+
+function renderTags(){
+  const top = D.tags.slice(0, 20);
+  el('tagCount').textContent = `${D.tags.length} subjects`;
+  el('tagcloud').innerHTML = top.map(([t, n]) =>
+    `<span class="chip" data-tag="${esc(t)}">${esc(t)} <em style="font-style:normal;color:#64748b">${n}</em></span>`).join('');
+  el('tagcloud').querySelectorAll('.chip').forEach(c =>
+    c.addEventListener('click', () => go('#/t/' + encodeURIComponent(c.dataset.tag))));
+}
+
+function renderHubs(){
+  const rows = D.hubs.slice(0, 8).map(h => {
+    const p = bySlug.get(h.slug);
+    return `<div class="hit" data-slug="${esc(h.slug)}" style="cursor:pointer">
+        <span class="k k-${h.k}">${KIND[h.k]}</span>
+        <a href="#/p/${esc(h.slug)}">${esc(h.title)}</a>
+        <span class="lk">${h.in} in</span>
+        <span class="m">${h.out} out</span>
+      </div>`;
+  }).join('');
+  el('hubs').innerHTML = `<h4>Most cited<span>${D.edge_count} links</span></h4>` + rows;
+  el('hubs').querySelectorAll('[data-slug]').forEach(r =>
+    r.addEventListener('click', () => go('#/p/' + r.dataset.slug)));
+}
+
+function renderThreads(){
+  const max = Math.max(...D.threads.map(t => t.in + t.out), 1);
+  el('threads').innerHTML = D.threads.slice(0, 6).map(t => {
+    const n = t.in + t.out, pct = Math.round(100 * n / max);
+    return `<div class="th" data-slug="${esc(t.slug)}">
+      <h5>${esc(t.title)}</h5>
+      <div class="mix"><em>${KIND[t.k]}</em><em>${t.in} cited by</em><em>${t.out} links out</em></div>
+      <div class="line"><span style="width:${pct}%"></span></div>
+      <div class="why">Filed ${esc(t.span)} · ${n} recorded connections in the corpus</div>
+    </div>`;
+  }).join('') || '<div class="gnode" style="color:var(--dim)">No entity or concept carries links yet.</div>';
+  el('threads').querySelectorAll('.th').forEach(t =>
+    t.addEventListener('click', () => go('#/p/' + t.dataset.slug)));
+}
+
+function renderOrphans(){
+  el('orphanTag').textContent = `${D.orphan_count} of ${D.total} pages`;
+  const list = D.orphans.slice(0, 12).map(o => `
+    <div class="hit" data-slug="${esc(o.slug)}" style="cursor:pointer">
+      <span class="k k-${o.k}">${KIND[o.k]}</span>
+      <a href="#/p/${esc(o.slug)}">${esc(o.title)}</a>
+      <span class="m">${dmy(o.created)}</span>
+    </div>`).join('');
+  el('orphans').innerHTML = list + (D.orphan_count > D.orphans.length
+    ? `<div class="hit"><span class="m" style="margin-left:0">…and ${D.orphan_count - D.orphans.length} more with no links in or out</span></div>` : '');
+  el('orphans').querySelectorAll('[data-slug]').forEach(r =>
+    r.addEventListener('click', () => go('#/p/' + r.dataset.slug)));
+}
+
+/* ---------------- hero ---------------- */
+function renderHero(){
+  const sev = D.severity || {};
+  el('heroKick').textContent = '// the file';
+  el('heroLede').textContent =
+    `${D.total} pages across four families — ${D.counts.incident} incidents and campaigns, `
+    + `${D.counts.cve} vulnerabilities, ${D.counts.entity} entities and threat actors, `
+    + `${D.counts.concept} concepts. Every page is also a static entry at /wiki/.`;
+  el('heroNote').innerHTML =
+    `Built from the same vault that produces the daily digest · latest filing ${dmy(D.updated_max)} · `
+    + `<b>${D.edge_count}</b> internal links · <b>${D.orphan_count}</b> pages with none · `
+    + `${D.au} recording Australian impact`;
+  const stats = [
+    ['Pages', D.total], ['Incidents', D.counts.incident], ['Vulnerabilities', D.counts.cve],
+    ['Entities', D.counts.entity], ['Concepts', D.counts.concept], ['AU impact', D.au],
+    ['Critical', sev.critical || 0], ['Orphans', D.orphan_count]
+  ];
+  el('statsrow').innerHTML = stats.map(([l, n], i) =>
+    `<div class="stat${i === 7 && n > 300 ? ' warn' : ''}"><b>${n}</b>${l}</div>`).join('');
+  el('method').textContent =
+    `This draft reads the built site, not the vault: titles, dates, severity, tags, sectors, each `
+    + `page's body and its outbound links are extracted from the generated HTML, so the link graph is `
+    + `the real wikilink set rather than a guess. Pages that link to nothing and are linked by nothing `
+    + `are counted as orphans rather than hidden. The corpus loads the whole file; a production build `
+    + `should ship metadata for search and the graph and fetch each body on demand.`;
+}
+
+function renderHome(){
+  renderHero(); renderFams(); renderTags(); renderHubs(); renderThreads(); renderOrphans(); drawGraph();
+}
+</script>
+
+<script>
+/* ============================================================
+   Constellation — boot: search wiring, shortcuts, routing.
+   ============================================================ */
+
+/* the hero search box. bindSearch() owns rendering the dropdown. */
+const heroInput = el('q'), heroBox = el('results');
+const hero = bindSearch(heroInput, heroBox);
+
+/* clicking outside the results closes them without clearing the query */
+document.addEventListener('click', e => {
+  if (!e.target.closest('.cmd')) closeResults();
+});
+
+/* "/" focuses the search from anywhere; Escape clears it */
+document.addEventListener('keydown', e => {
+  const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName);
+  if (e.key === '/' && !typing){ e.preventDefault(); heroInput.focus(); heroInput.select(); }
+  if (e.key === 'Escape' && document.activeElement === heroInput){
+    heroInput.value = ''; hero.render(); closeResults(); heroInput.blur();
+  }
+});
+
+/* keep the query visible when the user is deep-linked into a results view */
+function syncQuery(raw){ if (heroInput.value !== raw) heroInput.value = raw; }
+
+/* ---------------- list & article wiring ----------------
+   drawList()/showPage() render markup; these are the listeners that make it
+   interactive. Kept here (last script) so the render functions stay pure. */
+document.addEventListener('click', e => {
+  const more = e.target.closest('#more');
+  if (more){ listState.shown += PAGE; drawList(); return; }
+
+  const chip = e.target.closest('#listRows .chip[data-tag]');
+  if (chip){ go('#/t/' + encodeURIComponent(chip.dataset.tag)); return; }
+
+  const row = e.target.closest('#listRows .row');
+  if (row){ go('#/p/' + row.dataset.slug); return; }
+
+  if (e.target.id === 'back'){
+    if (history.length > 1) history.back(); else go('#/');
+  }
+});
+
+const sortSel = el('sort');
+if (sortSel){
+  sortSel.addEventListener('change', () => {
+    listState.sort = sortSel.value;
+    listState.shown = PAGE;
+    drawList();
+  });
+}
+
+/* ---------------- boot ---------------- */
+window.addEventListener('hashchange', route);
+window.addEventListener('DOMContentLoaded', () => {
+  // data sanity: if the bundle is missing, say so plainly rather than drawing an empty shell
+  if (!window.WIKI_FULL || !window.WIKI_FULL.items){
+    document.querySelector('.wrap').innerHTML =
+      '<div class="empty">The wiki data bundle (data/wiki.js) did not load. Re-run '
+      + 'extract_full.py, then rebuild this page.</div>';
+    return;
+  }
+  renderHome();
+  route();
+});
+/* DOMContentLoaded may already have fired if this script runs last — cover both */
+if (document.readyState !== 'loading'){ renderHome(); route(); }
+</script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+/* ============================================================
+   Cyber Wiki — Constellation browse surface.
+   Every rule is scoped under .wx: nothing here may reach another page.
+   Generated from mockups/wiki-variants-2026-09/draft-c by
+   mockups/wiki-variants-2026-09/migrate_to_templates.py
+   ============================================================ */
+/* Constellation tokens: the draft had its own :root; point its names at the
+   site tokens instead so the page follows the shared dark/light themes
+   (--sec/--muted -> --text-muted, --dim -> --text-dim, --border2 ->
+   --border-light, --hover -> --surface-hover, --glow -> --accent-glow). */
+.wx{--mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sec:var(--text-muted);--muted:var(--text-muted);--dim:var(--text-dim);
+  --border2:var(--border-light);--hover:var(--surface-hover);--glow:var(--accent-glow)}
+
+.wx a{color:var(--accent);text-decoration:none}
+.wx .mono{font-family:var(--mono)}
+/* ---------- chrome ---------- */
+/* ---------- search ---------- */
+.wx .searchwrap{position:sticky;top:55px;z-index:55;padding:14px 0;background:rgba(10,14,26,.93);backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:border-color .2s}
+.wx .searchwrap.stuck{border-bottom-color:var(--border)}
+.wx .hero .searchwrap{position:static;background:none;backdrop-filter:none}
+.wx .cmd{position:relative;max-width:760px;margin:0 auto}
+.wx .hero .cmd{margin-top:26px}
+.wx .field{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--border2);border-radius:14px;padding:14px 18px;box-shadow:0 16px 38px rgba(0,0,0,.4)}
+.wx .field:focus-within{border-color:var(--accent);box-shadow:0 0 0 4px var(--glow),0 16px 38px rgba(0,0,0,.4)}
+.wx .field input{flex:1;background:none;border:0;outline:none;color:var(--text);font:inherit;font-size:15.5px;min-width:0}
+.wx .field .hint{font:500 10.5px/1 var(--mono);color:var(--dim);border:1px solid var(--border2);border-radius:5px;padding:4px 7px;white-space:nowrap}
+.wx .field .clr{background:none;border:0;color:var(--dim);cursor:pointer;font-size:16px;line-height:1;padding:2px 4px}
+.wx .field .clr:hover{color:var(--text)}
+.wx .results{display:none;position:absolute;top:calc(100% + 10px);left:0;right:0;background:var(--surface);border:1px solid var(--border2);border-radius:14px;box-shadow:0 30px 66px rgba(0,0,0,.6);overflow:hidden;max-height:66vh;overflow-y:auto}
+.wx .results.on{display:block}
+.wx .rhead{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding:12px 18px 9px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;gap:10px}
+.wx .rhead b{color:var(--accent)}
+.wx .r{padding:11px 18px;border-bottom:1px solid var(--border);cursor:pointer;display:flex;gap:12px;align-items:baseline}
+.wx .r:last-child{border-bottom:0}
+.wx .r:hover,.wx .r.sel{background:var(--hover)}
+.wx .r .t{font-size:14.5px;font-weight:550;color:var(--text);flex:1;min-width:0}
+.wx .r .t small{display:block;font-size:12.5px;color:var(--muted);font-weight:400;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wx .r .k{font:600 9.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:4px 7px;border-radius:5px;flex-shrink:0}
+.wx .k-incident{color:#fed7aa;background:rgba(249,115,22,.14)}
+.wx .k-cve{color:#ddd6fe;background:rgba(167,139,250,.14)}
+.wx .k-entity{color:#a5f3fc;background:rgba(34,211,238,.14)}
+.wx .k-concept{color:#bbf7d0;background:rgba(52,211,153,.14)}
+.wx .r .d{font:500 11px/1 var(--mono);color:var(--dim);flex-shrink:0;white-space:nowrap}
+.wx .sugg{display:flex;gap:7px;flex-wrap:wrap;padding:12px 18px}
+.wx .sugg span{font:500 11px/1 var(--mono);color:var(--muted);background:var(--surface2);border:1px solid var(--border);padding:5px 9px;border-radius:6px;cursor:pointer}
+.wx .sugg span:hover{color:var(--accent);border-color:var(--accent)}
+/* ---------- landing ---------- */
+.wx .hero{text-align:center;padding:52px 0 10px}
+.wx .hero .kick{font:500 11px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+.wx .hero h1{font-size:42px;font-weight:700;letter-spacing:-1.3px;margin:14px 0 10px}
+.wx .hero h1 span{color:var(--accent)}
+.wx .hero p.lede{color:var(--muted);font-size:14.5px;max-width:660px;margin:0 auto}
+.wx .note{font:500 10.5px/1.7 var(--mono);color:var(--dim);margin-top:12px;letter-spacing:.03em}
+.wx .note b{color:var(--muted);font-weight:500}
+.wx .statsrow{display:flex;justify-content:center;gap:30px;margin:30px 0 0;flex-wrap:wrap}
+.wx .stat{font:500 10.5px/1.7 var(--mono);color:var(--dim);text-transform:uppercase;letter-spacing:.09em;text-align:left}
+.wx .stat b{display:block;font:600 20px/1.25 Inter;color:var(--text);letter-spacing:-.4px}
+.wx .stat.warn b{color:#fdba74}
+.wx .sect{margin-top:54px}
+.wx .sect > h2{font-size:19px;font-weight:650;letter-spacing:-.3px;display:flex;align-items:center;gap:11px;margin-bottom:6px}
+.wx .sect > h2 .bar{width:22px;height:2px;background:var(--accent);display:inline-block}
+.wx .sect > h2 .tag{margin-left:auto;font:500 10.5px/1 var(--mono);color:var(--dim);text-transform:none;letter-spacing:0}
+.wx .sect > p.sub{color:var(--muted);font-size:13.5px;margin-bottom:18px;max-width:900px}
+.wx .panel{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px}
+.wx .panel h4{font:600 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:12px;display:flex;justify-content:space-between;gap:10px}
+.wx .panel h4 a{color:var(--accent);font-size:10px}
+/* map */
+.wx .mapgrid{display:grid;grid-template-columns:minmax(0,1fr) 350px;gap:22px;align-items:start}
+.wx .mapshell{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:6px;position:relative;overflow:hidden}
+.wx .mapshell svg{display:block;width:100%;height:auto}
+.wx .mapnote{font:500 10.5px/1.7 var(--mono);color:var(--dim);padding:10px 12px 6px}
+.wx .mapnote b{color:var(--muted);font-weight:500}
+/* cards */
+.wx .hit{display:flex;gap:10px;align-items:baseline;padding:9px 0;border-bottom:1px solid var(--border);font-size:14px}
+.wx .hit:last-child{border-bottom:0}
+.wx .hit a{color:var(--text)}
+.wx .hit a:hover{color:var(--accent)}
+.wx .hit .m{margin-left:auto;font:500 10.5px/1 var(--mono);color:var(--dim);white-space:nowrap}
+.wx .hit .lk{font:500 10px/1 var(--mono);color:var(--accent);background:rgba(0,180,216,.1);border:1px solid rgba(0,180,216,.28);padding:3px 5px;border-radius:4px}
+.wx .thread{display:grid;gap:11px}
+.wx .th{border:1px solid var(--border);border-radius:12px;padding:12px 14px;cursor:pointer;transition:border-color .15s,background .15s}
+.wx .th:hover,.wx .th.on{border-color:rgba(0,180,216,.5);background:rgba(0,180,216,.05)}
+.wx .th h5{font-size:15px;font-weight:600;letter-spacing:-.2px;margin-bottom:5px}
+.wx .th .mix{display:flex;gap:7px;flex-wrap:wrap;align-items:center;font:500 10.5px/1 var(--mono);color:var(--dim)}
+.wx .th .mix em{font-style:normal;padding:3px 7px;border-radius:5px;background:var(--surface2);border:1px solid var(--border)}
+.wx .th .line{height:5px;background:var(--surface2);border-radius:999px;margin-top:9px;overflow:hidden}
+.wx .th .line span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),rgba(0,180,216,.22))}
+.wx .th .why{font-size:12.5px;color:var(--muted);margin-top:7px}
+.wx .tagcloud{display:flex;gap:6px;flex-wrap:wrap}
+.wx .chip{font:500 10.5px/1 var(--mono);color:var(--muted);background:var(--surface2);border:1px solid var(--border);padding:4px 8px;border-radius:5px;cursor:pointer}
+.wx .chip:hover{color:var(--accent);border-color:var(--accent)}
+.wx .chip.on{color:#a5e9f7;border-color:var(--accent);background:rgba(0,180,216,.12)}
+/* ---------- results view ---------- */
+.wx .vhead{padding:30px 0 0}
+.wx .vhead .kick{font:500 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.wx .vhead h1{font-size:30px;font-weight:700;letter-spacing:-.8px;margin:10px 0 8px}
+.wx .vhead p{color:var(--muted);font-size:13.5px}
+.wx .tools{display:flex;gap:10px;align-items:center;padding:18px 0 12px;flex-wrap:wrap;border-bottom:1px solid var(--border)}
+.wx select{background:var(--surface);border:1px solid var(--border2);color:var(--sec);font:inherit;font-size:13px;padding:8px 11px;border-radius:8px;outline:none}
+.wx .tools .n{font:500 11.5px/1 var(--mono);color:var(--dim)}
+.wx .tools .sp{margin-left:auto}
+.wx .rows{border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--surface);margin-top:16px}
+.wx .row{padding:15px 18px;border-bottom:1px solid var(--border);cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:16px}
+.wx .row:last-child{border-bottom:0}
+.wx .row:hover{background:var(--hover)}
+.wx .row h3{font-size:15.5px;font-weight:600;line-height:1.35;letter-spacing:-.2px}
+.wx .row p{color:var(--muted);font-size:13px;line-height:1.55;margin-top:5px;max-width:80ch}
+.wx .row .tg{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;align-items:center}
+.wx .row .rt{text-align:right;font:500 10.5px/1.8 var(--mono);color:var(--dim)}
+.wx .row .rt .sev{display:inline-block;padding:3px 7px;border-radius:999px;text-transform:capitalize;border:1px solid var(--border2);margin-bottom:5px}
+.wx .p-critical{color:#fecdd3;background:rgba(244,63,94,.14);border-color:rgba(244,63,94,.4)}
+.wx .p-high{color:#fed7aa;background:rgba(251,146,60,.13);border-color:rgba(251,146,60,.38)}
+.wx .p-medium{color:#fef08a;background:rgba(250,204,21,.12);border-color:rgba(250,204,21,.34)}
+.wx .p-low{color:#bbf7d0;background:rgba(74,222,128,.12);border-color:rgba(74,222,128,.32)}
+.wx .more{margin:18px auto 0;display:block;background:var(--surface);border:1px solid var(--border2);color:var(--sec);font:inherit;font-size:13.5px;padding:11px 22px;border-radius:10px;cursor:pointer}
+.wx .more:hover{border-color:var(--accent);color:var(--text)}
+.wx .empty{padding:46px 20px;text-align:center;color:var(--dim);font-size:14px}
+/* ---------- article ---------- */
+.wx .crumb{font:500 12px/1.6 var(--mono);color:var(--dim);margin:24px 0 14px}
+.wx .crumb button{background:none;border:0;color:var(--accent);font:inherit;cursor:pointer;padding:0}
+.wx .agrid{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:28px;align-items:start}
+.wx .article{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:34px 38px}
+.wx .article h1{font-size:32px;line-height:1.2;letter-spacing:-.9px;font-weight:700}
+.wx .article .meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:15px 0 22px;padding-bottom:17px;border-bottom:1px solid var(--border)}
+.wx .article .meta .d{font:500 11.5px/1 var(--mono);color:var(--dim)}
+.wx .article .body{color:var(--sec);font-size:15.5px;line-height:1.78}
+.wx .article .body p{margin:0 0 15px}
+.wx .article .body h2{font:650 19px/1.35 Inter;color:var(--text);letter-spacing:-.3px;margin:28px 0 12px;padding-top:18px;border-top:1px solid var(--border)}
+.wx .article .body h3{font-size:16px;color:var(--text);margin:20px 0 9px}
+.wx .article .body ul,.wx .article .body ol{margin:0 0 15px 22px}
+.wx .article .body li{margin-bottom:6px}
+.wx .article .body table{width:100%;border-collapse:collapse;margin:14px 0 18px;font-size:13.5px}
+.wx .article .body th,.wx .article .body td{border:1px solid var(--border2);padding:8px 11px;text-align:left;vertical-align:top}
+.wx .article .body th{background:var(--surface2);color:var(--text);font-weight:600}
+.wx .article .body blockquote{border-left:2px solid var(--accent);padding:2px 0 2px 16px;margin:16px 0;color:var(--muted);font-style:italic}
+.wx .article .body code{background:var(--surface2);padding:2px 6px;border-radius:5px;font:13px var(--mono)}
+.wx .article .body pre{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;overflow-x:auto;margin:0 0 16px}
+.wx .article .body img{max-width:100%;border-radius:8px}
+.wx .article .body strong{color:var(--text)}
+.wx .rail{position:sticky;top:132px;display:grid;gap:14px}
+.wx .rail .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 17px}
+.wx .rail .card h4{font:600 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:10px;display:flex;justify-content:space-between}
+.wx .rail .card h4 span{color:var(--accent)}
+.wx .gnode{display:flex;gap:10px;align-items:baseline;padding:8px 0;border-bottom:1px solid var(--border);font-size:13.5px}
+.wx .gnode:last-child{border-bottom:0}
+.wx .gnode .dotnode{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.wx .gnode a{color:var(--sec);line-height:1.45}
+.wx .gnode a:hover{color:var(--accent)}
+.wx .gnode small{display:block;font:500 10px/1.4 var(--mono);color:var(--dim)}
+.wx .attrs{display:grid;gap:8px}
+.wx .attr{display:flex;justify-content:space-between;gap:12px;font-size:13px;border-bottom:1px dashed var(--border);padding-bottom:7px}
+.wx .attr:last-child{border:0;padding-bottom:0}
+.wx .attr span:first-child{color:var(--dim);font-size:12px}
+.wx .attr span:last-child{color:var(--text);text-align:right;font:500 11.5px var(--mono)}
+.wx .srclist{list-style:none;display:grid;gap:7px}
+.wx .srclist li{font-size:13.5px;color:var(--muted);line-height:1.5}
+.wx .srclist li::before{content:"↗ ";color:var(--dim)}
+.wx .srclist a{color:var(--sec)}
+.wx .srclist a:hover{color:var(--accent)}
+.wx .nextprev{display:flex;justify-content:space-between;gap:18px;margin-top:26px;padding-top:18px;border-top:1px solid var(--border)}
+.wx .nextprev a{max-width:46%;font-size:14px;color:var(--sec)}
+.wx .nextprev small{display:block;font:500 10px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:5px}
+.wx .nextprev a:hover{color:var(--accent)}
+/* toast for copy/link actions */
+.wx .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--surface);border:1px solid var(--border2);color:var(--text);font-size:13px;padding:10px 16px;border-radius:10px;opacity:0;transition:all .2s;z-index:80;pointer-events:none}
+.wx .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.wx .mk{position:fixed;right:14px;bottom:14px;z-index:70;font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dim);background:var(--surface);border:1px solid var(--border2);padding:7px 11px;border-radius:999px}
+@media (max-width:1080px){  .wx .mapgrid,.wx .agrid{grid-template-columns:minmax(0,1fr)}
+  .wx .rail{position:static}}
