@@ -17,7 +17,7 @@ import sqlite3
 import datetime as dt
 
 HOME = os.path.expanduser("~")
-VAULT = os.path.join(HOME, "Library/Mobile Documents/iCloud~md~obsidian/Documents/Peter's Vault/Cyber")
+VAULT = os.path.join(HOME, "Library/Mobile Documents/iCloud~md~obsidian/Documents/Cyber Vault/Cyber")
 DB = os.path.join(VAULT, "Cyber Digest/cyber-digest.db")
 WIKI_CVE = os.path.join(VAULT, "Wiki/vulnerabilities")
 SITE = os.path.join(HOME, "Desktop/Hermes/Cyber Site")

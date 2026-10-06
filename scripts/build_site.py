@@ -7,7 +7,7 @@ Output: <repo>/docs/  (GitHub Pages publishes from the /docs folder of main)
 import argparse, base64, calendar, email.utils, glob, hashlib, html, json, math, os, re, shutil, sqlite3, sys, time
 from datetime import datetime, date, timedelta, timezone
 
-VAULT = "/Users/petercox/Library/Mobile Documents/iCloud~md~obsidian/Documents/Peter's Vault/Cyber"
+VAULT = "/Users/petercox/Library/Mobile Documents/iCloud~md~obsidian/Documents/Cyber Vault/Cyber"
 ROOT  = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # <repo>/
 DOCS  = os.path.join(ROOT, "docs")
 DB    = os.path.join(VAULT, "Cyber Digest", "cyber-digest.db")

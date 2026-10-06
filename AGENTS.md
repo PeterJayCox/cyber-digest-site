@@ -49,7 +49,7 @@ the *daily/monthly HTML generators* and the *project* SQLite DB live in the
 **separate `Cyber Digest` project**. The site reads the **vault DB**, not the
 project DB. Paths:
 
-- Vault root: `/Users/petercox/Library/Mobile Documents/iCloud~md~obsidian/Documents/Peter's Vault/Cyber`
+- Vault root: `/Users/petercox/Library/Mobile Documents/iCloud~md~obsidian/Documents/Cyber Vault/Cyber`
 - **Vault DB** `build_site.py` reads: `<vault>/Cyber Digest/cyber-digest.db`
 - Build sources: `<vault>/Cyber/Cyber Digest/Daily/<Month>/`, `<vault>/…/Monthly/`, `<vault>/Wiki/`
 
