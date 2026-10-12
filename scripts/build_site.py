@@ -252,11 +252,11 @@ def esc(s):
 # EVERY page's top nav — shared-chrome pages, the standalone daily/monthly
 # editions and the CVE matrix — is rendered from NAV_ITEMS by nav_html().
 # Grouped entries render twice from the SAME data:
-#   * desktop (>=901px, the measured width the current 6-item row needs on one line):
+#   * desktop (>=990px, the measured width the current 7-item row needs on one line):
 #     a real <button aria-haspopup="true" aria-expanded> that click-toggles one
 #     panel at a time, with Escape / outside-click / focusout / link-select
 #     close paths (NAV_JS);
-#   * mobile (<=900px): one native <details> menu with a nested <details> per
+#   * mobile (<=989px): one native <details> menu with a nested <details> per
 #     group — toggle, keyboard and screen-reader behaviour come free from the
 #     browser, no JS involved. Multi-open by choice: `name` grouping on
 #     <details> is not supported in Safari, so no exclusive-collapse is
@@ -315,6 +315,10 @@ NAV_ITEMS = [
     {"group": "tools",   "href": "tools/cve-attack-matrix.html", "label": "Tools", "icon": "🧰",
      "children": lambda: NAV_TOOLS_CHILDREN,
      "prefixes": ("tools/", "flashcards.html")},
+    # The way back up to the hub (peterjaycox.com), matching the AI daily's nav.
+    # Absolute href: off-site, so _nav_link leaves it alone. Adding this seventh
+    # item moves the single-row breakpoint — see the measured note in site.css.
+    {"href": "https://peterjaycox.com", "label": "Hub", "icon": "🏡"},
 ]
 
 # Dropdown behaviour for the desktop presentation (see @web-desinger's a11y
@@ -381,8 +385,11 @@ _NAV_CSS_CACHE = [None]
 
 
 def _nav_link(href, label, icon, active, base):
+    # An absolute href is an off-site link (the hub); everything else is a path
+    # inside this site and gets the site base prefixed.
+    url = href if href.startswith(("http://", "https://")) else f"{base}/{href}"
     cls = ' class="active"' if href == active else ""
-    return f'<a href="{base}/{href}"{cls}><span class="t">{icon} {esc(label)}</span></a>'
+    return f'<a href="{url}"{cls}><span class="t">{icon} {esc(label)}</span></a>'
 
 
 def _nav_child_links(kids, active, base):

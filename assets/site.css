@@ -154,14 +154,15 @@ a:hover{text-decoration:underline}
 .navmob-grp>summary.active{color:var(--text);background:var(--surface-hover)}
 .navmob-grp ul{margin:0 0 4px 10px;padding-left:8px;border-left:1px solid var(--border)}
 /* Breakpoint: measured, not guessed. With Daily/Monthly folded into the Reports
-   group AND Flashcards folded into Tools, the desktop row is six items and
-   measures 521px of links + 225px brand + 36px toggle, so it holds ONE line down
-   to ~845px of viewport (single-row at 860px, wraps to two rows at 840px in the
-   fixed 60px bar). The details menu owns everything under 901px, keeping ~40px
-   of margin. Re-measure with a headless-Chrome iframe harness before changing
-   either number. */
-@media(min-width:901px){.navmob{display:none!important}}
-@media(max-width:900px){.navlinks{display:none!important}.navmob{display:block!important}}
+   group, Flashcards folded into Tools and the off-site Hub link added, the
+   desktop row is seven items and measures 578px of links + 225px brand + 36px
+   toggle, so it holds ONE line down to 945px of viewport (single-row at 945px,
+   wraps to two rows at 940px in the fixed 60px bar). The details menu owns
+   everything under 990px, keeping ~45px of margin. Re-measure before changing
+   either number: iframe the built page over http, sweep the iframe width, and
+   read .navlinks.getBoundingClientRect().height — one row is ~38px, two ~59px. */
+@media(min-width:990px){.navmob{display:none!important}}
+@media(max-width:989px){.navlinks{display:none!important}.navmob{display:block!important}}
 @media(max-width:1280px){.navlinks a,.navdrop{padding:8px 10px;font-size:13.5px}}
 /* ==NAV-SHARED-CSS-END== */
 
