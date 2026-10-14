@@ -1,0 +1,155 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="utf-8">
+<script>
+(function(){var d=document.documentElement;
+function sys(){try{return (window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark';}catch(e){return 'dark';}}
+function saved(){try{var s=localStorage.getItem('cd-theme2');return (s==='light'||s==='dark')?s:null;}catch(e){return null;}}
+function mode(){return saved()||'auto';}
+function save(m){try{if(m==='auto'){localStorage.removeItem('cd-theme2');}else{localStorage.setItem('cd-theme2',m);}}catch(e){}}
+function label(m){var b=document.querySelector('.theme-toggle');if(!b){return;}
+var t={auto:'Appearance: auto — follows your system ('+sys()+'). Click to cycle auto → light → dark.',
+light:'Appearance: light (pinned). Shift-click to follow your system again.',
+dark:'Appearance: dark (pinned). Shift-click to follow your system again.'}[m];
+if(t){b.setAttribute('title',t);b.setAttribute('aria-label',t);}}
+function apply(){var m=mode();d.setAttribute('data-theme',m==='auto'?sys():m);d.setAttribute('data-theme-mode',m);label(m);}
+/* Cycle visits all three states, always flipping away from what is on screen
+   first: auto -> a pin (the opposite of the current look) -> the other pin ->
+   auto. shiftKey jumps straight back to auto. */
+function cycle(ev){var m=mode();
+if(ev&&ev.shiftKey){save('auto');}
+else if(m==='auto'){save(sys()==='dark'?'light':'dark');}
+else if(m===sys()){save('auto');}
+else{save(m==='light'?'dark':'light');}
+apply();}
+function followSystem(){if(!saved()){apply();}}
+try{localStorage.removeItem('cd-theme');}catch(e){}
+window.__cdSysTheme=sys;
+window.__cdTheme={cycle:cycle,apply:apply,mode:mode,setAuto:function(){save('auto');apply();}};
+apply();
+try{var mq=window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)');
+if(mq&&mq.addEventListener){mq.addEventListener('change',followSystem);}}catch(e){}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',apply);}
+})();
+</script>
+<title>Cyber Digest — 2026-10-15</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head><body><nav class="topnav"><div class="inner"><a class="brand" href="https://cyber.peterjaycox.com/index.html"><span class="brand-logo" aria-hidden="true"></span> Cyber&nbsp;Digest<small>public site</small></a><div class="navlinks"><a href="https://cyber.peterjaycox.com/index.html"><span class="t">🏠 Home</span></a><a href="https://cyber.peterjaycox.com/stories.html"><span class="t">📚 Story DB</span></a><a href="https://cyber.peterjaycox.com/globe.html"><span class="t">🌍 Globe</span></a><div class="navgrp"><button type="button" class="navdrop" aria-haspopup="true" aria-expanded="false" aria-controls="cdnav-reports"><span class="t">📑 Reports</span><span class="caret" aria-hidden="true">▾</span></button><ul class="navmenu" id="cdnav-reports" hidden><li><a href="https://cyber.peterjaycox.com/daily/"><span class="t">🗓️ Daily</span></a></li><li><a href="https://cyber.peterjaycox.com/monthly/index.html"><span class="t">📅 Monthly</span></a></li><li><a href="https://cyber.peterjaycox.com/reports/index.html"><span class="t">📄 Sector reviews</span></a></li></ul></div><a href="https://cyber.peterjaycox.com/wiki/index.html"><span class="t">🧠 Wiki</span></a><div class="navgrp"><button type="button" class="navdrop" aria-haspopup="true" aria-expanded="false" aria-controls="cdnav-tools"><span class="t">🧰 Tools</span><span class="caret" aria-hidden="true">▾</span></button><ul class="navmenu" id="cdnav-tools" hidden><li><a href="https://cyber.peterjaycox.com/tools/cve-attack-matrix.html"><span class="t">🛰️ CVE × MITRE ATT&amp;CK / D3FEND matrix</span></a></li><li><a href="https://cyber.peterjaycox.com/flashcards.html"><span class="t">🗂️ Flashcards</span></a></li><li><a href="https://cyber.peterjaycox.com/tools/drafts/index.html"><span class="t">🧪 Drafts</span></a></li></ul></div><a href="https://peterjaycox.com"><span class="t">🏡 Hub</span></a></div><noscript><style>.navgrp{display:none!important}.navmob{display:block!important}</style></noscript><details class="navmob"><summary aria-label="Open site menu"><span aria-hidden="true">☰</span><span class="t">Menu</span></summary><div class="navmob-panel"><ul class="navmob-list"><li><a href="https://cyber.peterjaycox.com/index.html"><span class="t">🏠 Home</span></a></li><li><a href="https://cyber.peterjaycox.com/stories.html"><span class="t">📚 Story DB</span></a></li><li><a href="https://cyber.peterjaycox.com/globe.html"><span class="t">🌍 Globe</span></a></li><li><details class="navmob-grp"><summary class=""><span class="t">📑 Reports</span></summary><ul><li><a href="https://cyber.peterjaycox.com/daily/"><span class="t">🗓️ Daily</span></a></li><li><a href="https://cyber.peterjaycox.com/monthly/index.html"><span class="t">📅 Monthly</span></a></li><li><a href="https://cyber.peterjaycox.com/reports/index.html"><span class="t">📄 Sector reviews</span></a></li></ul></details></li><li><a href="https://cyber.peterjaycox.com/wiki/index.html"><span class="t">🧠 Wiki</span></a></li><li><details class="navmob-grp"><summary class=""><span class="t">🧰 Tools</span></summary><ul><li><a href="https://cyber.peterjaycox.com/tools/cve-attack-matrix.html"><span class="t">🛰️ CVE × MITRE ATT&amp;CK / D3FEND matrix</span></a></li><li><a href="https://cyber.peterjaycox.com/flashcards.html"><span class="t">🗂️ Flashcards</span></a></li><li><a href="https://cyber.peterjaycox.com/tools/drafts/index.html"><span class="t">🧪 Drafts</span></a></li></ul></details></li><li><a href="https://peterjaycox.com"><span class="t">🏡 Hub</span></a></li></ul></div></details><div class="theme-toggle" role="button" tabindex="0" aria-label="Appearance" title="Appearance" onclick="window.__cdTheme.cycle(event)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.__cdTheme.cycle(event)}"><span class="tt-auto" aria-hidden="true">🌗</span><span class="tt-light" aria-hidden="true">☀️</span><span class="tt-dark" aria-hidden="true">🌙</span></div></div></nav><div class="container"><div class="crumb"><a href="../index.html">Home</a> · <a href="index.html">Daily</a></div>
+<div class="wiki-body"><h1>🛡️ Cyber Digest — 2026-10-15 (Daily)</h1>
+<p><em>A daily roundup of key cybersecurity developments across sectors</em></p>
+<h2>📋 Executive Summary</h2>
+<p><strong>Paragraph 1 — Top Stories:</strong> The defining story of the day is the chained exploitation of the IVanti/Connect Secure zero-day wave. Volexity documents an attacker chaining an authentication bypass with a remote code execution flaw and a still-unpatched privilege escalation to reach root on fully patched Ivanti Connect Secure VPN appliances, then harvesting Active Directory credentials, LAPS passwords and BitLocker recovery keys before stripping its own traces from Ivanti and Linux audit logs. CISA added CVE-2026-104935 to its Known Exploited Vulnerabilities catalogue on 13 October, with the relevant disclosure being Volexity's own post-exploitation write-up; only two of the three chained flaws have fixes, and the privilege escalation remains unpatched — making it the top patch-first priority across Australian perimeter estates. Alongside it, the largest Patch Tuesday on record: Microsoft fixed 1,413 flaws including three zero-days, one an actively exploited Windows Shell RCE flaw added to CISA's KEV. Docker's "GhostPAT" Hub authentication flaw (CVE-2026-105445) let a reassigned personal access token authenticate as the target user to pull, push or delete container images; Ledger asked resellers across Asia to halt hardware wallet sales over a suspected supply-chain attack; US authorities shut down 40+ "laptop farms" and charged fourteen in the North Korean remote-IT-worker fraud scheme (FAMOUS CHOLLIMA); Microsoft disrupted phishing-kit operators behind ~1 billion phishing messages; and a ~24-package RubyGems crypto/web3 supply-chain cluster was verified as malicious alongside a fresh tea.xyz-linked npm autopublish wave. <strong>Verification:</strong> Verified</p>
+<p><strong>Paragraph 2 — Australian &amp; New Zealand Context:</strong> ACSC's 14 October alert "Protecting operational technology and edge devices" is the anchor for Australia, materially relevant because the IVanti Connect Secure chain is widely deployed on Australian government and enterprise perimeter estates, remediation is incomplete (the privilege escalation is unpatched), and CISA's KEV addition makes patch-first action urgent under ASD guidance. No fresh ACSC advisory outranks it in the 48-hour window; the combined 9 October ACSC/ASD advisory on Chinese government-linked actors combining automated and hands-on hacking to steal sensitive data remains the primary guidance. The Docker "GhostPAT" PAT-reassignment design flaw, the npm Trusted Publishing consent gap and the curl HTTP/2 RCE are all supply-chain items with direct Australian developer relevance. For New Zealand, no fresh Privacy Commissioner notification surfaced in the 48-hour window (the newest listing remains an overseas-parented organisation notification), NZ Police cybercrime feeds were quiet, and CERT NZ remains unreachable as documented; emergent NZ risk is limited given the quiet regional window. <strong>Verification:</strong> Verified</p>
+<p><strong>Paragraph 3 — Geopolitical Context &amp; Weekly Trends:</strong> For the week to 15 October (window truncated to available 8–15 October scans, 74–81 stories across ~10 sectors), ransomware (21 stories) and breach/data-leak (14) again dominated, with zero-day/vulnerability (16) and malware (8) close behind. The dominant trend is the patch-first response to hard-zero-day chains — actively exploited GitLab, Ivanti, SonicWall SMA1000-class flaws all landed CISA KEV listings within a day of patch disclosure, reinforcing ASD patch-priority guidance. A second thread is supply-chain architecture: Docker's PAT-reassignment design flaw, npm's Trusted Publishing consent gap and the RubyGems crypto cluster all put registry identity-and-consent models — PAT redesign, publisher consent, token hygiene — in the crosshairs. A third is living-off-the-cloud espionage: Kimsuky's Operation GitPower distributes malware and C2 through GitHub, GitLab and Codeberg. Expect continued pressure on registry vendors to overhaul PAT/publisher-consent flows and fresh scrutiny of AI-agent sandbox bypasses (Vercel "VerCellBreak"). <strong>Verification:</strong> Verified</p>
+<h3>🇦🇺 Australian Context</h3>
+<p>For Australia the anchor is ACSC's 14 October alert "Protecting operational technology and edge devices" — materially relevant because the Ivanti Connect Secure zero-day chain is widely deployed across Australian government and enterprise perimeter estates, remediation remains incomplete (the privilege-escalation component has no patch), and CISA's KEV addition makes immediate patch-first action urgent under ASD guidance. No fresh ACSC advisory outranks it within the 48-hour window; the standing 9 October ACSC/ASD joint advisory on Chinese government-linked actors combining automated and hands-on hacking to steal sensitive data remains the principal guidance. The Docker "GhostPAT" PAT-reassignment design flaw, the npm Trusted Publishing validation gap and the curl HTTP/2 upload RCE carry direct Australian developer and supply-chain relevance. <strong>Verification:</strong> Verified</p>
+<h3>🇳🇿 New Zealand Context</h3>
+<p>No new Privacy Commissioner notification surfaced within the 48-hour window (newest listing remains the overseas-parented organisation notification), and NZ Police cybercrime feeds were quiet over the window; CERT NZ remains unreachable as documented in the ops references. No NZ-specific incident warranted a full entry today. <strong>Verification:</strong> Verified</p>
+<h3>🔍 Geopolitical Context &amp; Weekly Trends</h3>
+<p>For the week to 15 October (window truncated to available scans 8–15 October, 74–81 stories across ~10 sectors), ransomware (21 stories) and breach/data-leak (14) again dominated, with zero-day/vulnerability (16) and malware (8) close behind. The clearest thread is a patch-first response to hard-zero-day chains — actively exploited GitLab, Ivanti, SonicWall SMA1000 and Ivanti VPN flaws all landed CISA KEV listings within a day of patch disclosure. A second thread is supply-chain architecture: Docker's PAT-reassignment design flaw, npm's Trusted Publishing consent gap and the RubyGems crypto cluster all put registry identity-and-consent models in the crosshairs. A third is living-off-the-cloud espionage — Kimsuky's Operation GitPower distributes malware and C2 through GitHub, GitLab and Codeberg. Expect continued pressure on registry vendors to redesign PAT and publisher-consent flows, and fresh scrutiny of AI-agent sandbox bypasses (Vercel "VerCellBreak"). <strong>Verification:</strong> Verified</p>
+<hr />
+<h2>Sector Reports</h2>
+<h2>🌐 Global (Macro)</h2>
+<p><strong>1. Volexity tracks chained exploitation of Ivanti Connect Secure zero-days to reach root, steal AD credentials — privilege escalation still unpatched</strong>
+- <strong>Summary:</strong> An attacker chained an authentication bypass with remote code execution (CVE-2026-104935, patched in the 13 October release) and a still-unpatched privilege escalation to reach root on fully patched Ivanti Connect Secure appliances, then stole Active Directory credentials, LAPS passwords and BitLocker recovery keys while stripping its own traces from Ivanti and Linux audit logs. CISA added CVE-2026-104935 to its KEV catalogue on 13 October; because only two of the three chained flaws are fixed, organisations running Connect Secure should treat appliances as compromised if lateral movement is suspected and patch immediately. <strong>Verification:</strong> Verified
+- <strong>Source:</strong> <a href="https://www.volexity.com/blog/2026/10/13/a-series-of-unauthenticated-events-chained-exploitation-of-ivanti-connect-secure-zero-days/">Volexity</a> and <a href="https://thehackernews.com/2026/10/ivanti-connect-secure-zero-day-chain-exploited.html">The Hacker News</a>
+- <strong>Reliability:</strong> Tier 1/4 — Very High
+- <strong>Date:</strong> 2026-10-13</p>
+<p><strong>2. Microsoft's largest Patch Tuesday on record: 1,413 flaws, three zero-days, actively exploited Windows Shell RCE added to KEV</strong>
+- <strong>Summary:</strong> Microsoft's record October Patch Tuesday addressed 1,413 vulnerabilities including three zero-days, one an actively exploited Windows Shell remote code execution flaw added to CISA's Known Exploited Vulnerabilities catalogue. Administrators should treat the shell flaw as actively targeted and apply the update ahead of routine patch cadence; the scale makes ASCII patch-priority guidance the primary take-away for Australian estates. <strong>Verification:</strong> Verified
+- <strong>Source:</strong> <a href="https://thehackernews.com/2026/10/microsoft-patches-record-1413-flaws.html">The Hacker News</a> and <a href="https://www.bleepingcomputer.com/news/security/microsoft-october-2026-patch-tuesday-fixes-1413-flaws/">BleepingComputer</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-10-13</p>
+<p><strong>3. Docker Hub 'GhostPAT' flaw lets reassigned PATs impersonate users and tamper with images (CVE-2026-105445)</strong>
+- <strong>Summary:</strong> Docker disclosed a critical Docker Hub authentication flaw (CVE-2026-105445) that let an attacker create a personal access token, convert an account to an organisation, name the target user as owner, and reassign the PAT to a new identity without changing the secret — authenticating as the victim to pull, push or delete container images in the target's organisations. Docker rotated affected PATs and recommends rotating any token tied to account-to-organisation transfers. A registry PAT-identity and consent design gap with Australian container-orchestration relevance. <strong>Verification:</strong> Verified
+- <strong>Source:</strong> <a href="https://www.docker.com/blog/docker-hub-security-advisory-cve-2026-105445/">Docker Blog</a> and <a href="https://www.bleepingcomputer.com/news/security/docker-hub-flaw-let-attackers-impersonate-users-tamper-with-images/">BleepingComputer</a>
+- <strong>Reliability:</strong> Tier 1/4 — Very High
+- <strong>Date:</strong> 2026-10-13</p>
+<p><strong>4. Ledger asks resellers across Asia to halt hardware-wallet sales after suspected supply-chain attack</strong>
+- <strong>Summary:</strong> Ledger asked resellers across Asia to pause hardware wallet sales after a suspected supply-chain attack on some in-transit units, urging customers to purchase only through official stores and verify authenticity at first use. The suspicion matches the week's broader PAT-reassignment and registry-identity thread and carries crypto-hardware supply-chain relevance for AU/NZ consumers. <strong>Verification:</strong> Reported
+- <strong>Source:</strong> <a href="https://www.bleepingcomputer.com/news/security/ledger-asks-sellers-across-asia-to-halt-sales-after-suspected-supply-chain-attack/">BleepingComputer</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-10-14</p>
+<p><strong>5. US DOJ shuts down 40+ 'laptop farms' and charges 14 in North Korean remote-IT worker fraud scheme (FAMOUS CHOLLIMA)</strong>
+- <strong>Summary:</strong> The US Department of Justice, with CrowdStrike, charged 14 individuals and dismantled more than 40 'laptop farms' that enabled North Korean remote-IT worker fraud, in which DPRK-linked actors posing as US-based IT contractors infiltrated companies to steal data and generate revenue for the regime. The takedown follows the CrowdStrike/FBI FAMOUS CHOLLIMA disruption pattern. Australian enterprises should revalidate remote-hiring identity processes. <strong>Verification:</strong> Verified
+- <strong>Source:</strong> <a href="https://thehackernews.com/2026/10/us-shuts-down-over-40-laptop-farms.html">The Hacker News</a> and <a href="https://www.crowdstrike.com/en-us/blog/fbi-disrupts-famous-chollima-operation-with-crowdstrike-assistance/">CrowdStrike</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-10-14</p>
+<p><strong>6. Microsoft disrupts Chinese-language phishing-kit ecosystem behind ~1 billion phishing messages; ~24-package RubyGems crypto/web3 supply-chain cluster verified malicious</strong>
+- <strong>Summary:</strong> Microsoft took down a network of Chinese-language phishing-kit operators estimated to have generated around one billion phishing messages, one of the largest takedowns of the year. Separately, the Open Source Malware project verified a cluster of ~24 malicious RubyGems packages (seed-phrase validator and wallet-recovery) that steal cryptocurrency seed phrases on install — part of the tea.xyz-linked npm autopublish supply-chain wave. <strong>Verification:</strong> Verified
+- <strong>Source:</strong> <a href="https://therecord.media/microsoft-disrupts-chinese-language-phishing-king-ecosystem">The Record</a> and <a href="https://opensourcemalware.com/blog/malicious-crypto-shell">Open Source Malware</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-10-14</p>
+<hr />
+<h2>💰 Financial Services</h2>
+<p><strong>1. Bank of America fined $1.2bn for 'egregious' AML deficiencies; UK sanctions Cryptomus for Russian money laundering</strong>
+- <strong>Summary:</strong> US regulators finalised a roughly $1.2 billion penalty against Bank of America over long-running AML and sanctions-compliance failures tied to its transaction-monitoring programme, in a settlement that includes remediation commitments and external compliance testing. Bank of America negotiated the figure down from a larger initial demand, but it ranks among the largest AML enforcement actions of the year. Separately, the UK sanctioned crypto exchange Cryptomus for laundering funds tied to Russian sanctions evasion. The pair reinforce that financial institutions' compliance programmes — not just perimeter security — are in the enforcement crosshairs, alongside the Docker PAT and npm Trusted Publishing supply-chain pressure on token rotation across outsourced financial estates. <strong>Verification:</strong> Verified
+- <strong>Source:</strong> <a href="https://www.finextra.com/newsarticle/48579/boa-fined-12bn-over-egregious-aml-deficiencies">Finextra</a> and <a href="https://krebsonsecurity.com/2026/10/u-k-sanctions-cryptomus-for-russian-money-laundering/">Krebs on Security</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-10-14</p>
+<p><strong>2. BoE and IMF warn cyber disruption to systemically important banks is a financial-stability risk</strong>
+- <strong>Summary:</strong> The Bank of England and the IMF jointly warned that an unresolved cyber attack on a systemically important financial institution or core market infrastructure could cascade into financial stability risk, urging banks to plan for severe prolonged disruption rather than treat cyber as a resilience add-on. The warning stems from reliance on a small number of cloud, payments and market-data third parties — concentration Australian and NZ banks share. <strong>Verification:</strong> Verified
+- <strong>Source:</strong> <a href="https://www.finextra.com/newsarticle/48580/boe-and-imf-warn-of-cyber-threat-to-banking-system">Finextra</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-10-14</p>
+<p><strong>3. 'Hirudo' Android banking trojan replaces banking apps with trojanised clones to defeat integrity checks</strong>
+- <strong>Summary:</strong> Researchers documented 'Hirudo', a new Android banking trojan distributed outside official app stores that installs modified clones of legitimate banking applications in place of the originals, defeating platform anti-fraud and application-integrity checks. By sideloading lookalike apps that pass Play Protect checks, the trojan captures credentials and one-time codes as victims log in. For AU/NZ, banks' device-attestation and app-integrity layers are active evasion targets. <strong>Verification:</strong> Reported
+- <strong>Source:</strong> <a href="https://www.bleepingcomputer.com/news/security/hirudo-android-malware-replaces-banking-apps-to-evade-security-checks/">BleepingComputer</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-10-14</p>
+<hr />
+<h2>🛰️ Defence</h2>
+<p><strong>1. US DOJ shuts down 40+ 'laptop farms' in North Korean remote-IT worker fraud scheme (FAMOUS CHOLLIMA)</strong>
+- <strong>Summary:</strong> The US Department of Justice, aided by CrowdStrike, charged 14 individuals and dismantled more than 40 'laptop farms' used by North Korean remote-IT-worker fraud, where DPRK operatives posing as US-based contractors infiltrated hundreds of companies to steal data and fund the regime. The takedown slows a revenue stream and validates employer identity-verification caution for Australian and NZ remote-hiring operations. <strong>Verification:</strong> Verified
+- <strong>Source:</strong> <a href="https://thehackernews.com/2026/10/us-shuts-down-over-40-laptop-farms.html">The Hacker News</a> and <a href="https://www.crowdstrike.com/en-us/blog/fbi-disrupts-famous-chollima-operation-with-crowdstrike-assistance/">CrowdStrike</a>
+- <strong>Reliability:</strong> Tier 2/4 — High
+- <strong>Date:</strong> 2026-10-14</p>
+<hr />
+<h2>🏛️ Government</h2>
+<p><strong>1. ACSC guidance anchors OT and edge-device protection; Ivanti chain patch-first priority for Australian estates</strong>
+- <strong>Summary:</strong> ACSC's 14 October alert "Protecting operational technology and edge devices" is the anchor for the window: OT and edge estates — including the Ivanti Connect Secure VPN chains widely deployed across Australian government and enterprise perimeters — should be patched first because the privilege-escalation component of the chain is still unpatched and CISA's KEV listing makes exploitation likely. This aligns with the standing ACSC/ASD guidance on Chinese government-linked actors and the ASD patch-priority posture. <strong>Verification:</strong> Verified
+- <strong>Source:</strong> <a href="https://www.cyber.gov.au/alert/protecting-operational-technology-and-edge-devices">ACSC</a>
+- <strong>Reliability:</strong> Tier 1/4 — Very High
+- <strong>Date:</strong> 2026-10-14</p>
+<hr />
+<h2>📊 Industry Breakdown</h2>
+<pre><code class="language-mermaid">pie showData
+    &quot;Global (Macro)&quot; : 6
+    &quot;Financial Services&quot; : 3
+    &quot;Defence&quot; : 1
+    &quot;Government&quot; : 1
+</code></pre>
+<h2>📊 Source Reliability Index</h2>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Very High</td>
+<td>Official / first-party</td>
+</tr>
+<tr>
+<td>2</td>
+<td>High</td>
+<td>Established cyber journalism</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Moderate</td>
+<td>General tech/news media</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Low</td>
+<td>Social / unverified</td>
+</tr>
+</tbody>
+</table>
+<h2>Source Diversity</h2>
+<p><code>Digest generated 2026-10-15. Sources: Volexity (1), The Hacker News (4), BleepingComputer (4), Docker (1), Finextra (2), Krebs on Security (1), CrowdStrike (1), Open Source Malware (1), The Record (1). No single source exceeded 40% threshold.</code></p></div></div></body></html>
