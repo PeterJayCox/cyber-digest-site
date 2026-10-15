@@ -1830,7 +1830,10 @@ def build_index(stories):
     top_sectors=sorted(sectors.items(),key=lambda x:-x[1])[:6]
     top_threats=sorted(threats.items(),key=lambda x:-x[1])[:6]
     sources=set(s.get("source_name") for s in stories if s.get("source_name"))
-    anzi=[s for s in stories if (s.get("anz_relevance") or 0)>=3]
+    # DIRECT AU/NZ only, matching the daily-card tiles (see daily_agg()). Score 3
+    # is the Five Eyes bucket and is excluded, so this stat cannot drift from the
+    # per-day cards.
+    anzi=[s for s in stories if (s.get("anz_relevance") or 0)>=4]
 
     # Per-day aggregation (shared with the Daily archive page) keyed by digest_date
     dag=daily_agg()
