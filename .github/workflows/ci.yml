@@ -13,11 +13,19 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     steps:
+      # Actions are pinned to immutable commit SHAs, never floating tags (v4):
+      # a tag can be re-pointed at malicious code, and this repo is PUBLIC, so a
+      # compromised upstream action would run with the workflow's token. The
+      # trailing comment is the human-readable version; Dependabot
+      # (github-actions, weekly — see .github/dependabot.yml) keeps both the SHA
+      # and the comment current, so pinning does not mean going stale.
       - name: Checkout code
-        uses: actions/checkout@v4.1.7
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332  # v4.1.7
+        with:
+          persist-credentials: false
 
       - name: Set up Python
-        uses: actions/setup-python@v5.1.0
+        uses: actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d  # v5.1.0
         with:
           python-version: "3.11"
 
@@ -28,7 +36,7 @@ jobs:
           fi
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4.0.3
+        uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b  # v4.0.3
         with:
           node-version: "20"
 
