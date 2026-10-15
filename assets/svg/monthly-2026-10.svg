@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400">
+  <defs>
+    <linearGradient id="oct-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0e1a" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="400" fill="url(#oct-bg)"/>
+  <rect width="1200" height="400" fill="none" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- Remote-access appliance stack on the perimeter: three gated nodes, exploitation arcs inbound -->
+  <g transform="translate(880, 200)" fill="none">
+    <g stroke="#f43f5e" stroke-width="1.4" opacity="0.75">
+      <path d="M -250 -70 Q -160 -20 -95 -55" stroke-dasharray="4 6"/>
+      <path d="M -250 0 Q -160 30 -95 -10" stroke-dasharray="4 6"/>
+      <path d="M -250 70 Q -160 80 -95 35" stroke-dasharray="4 6"/>
+    </g>
+    <circle cx="-250" cy="-70" r="4" fill="#f43f5e" stroke="none"/>
+    <circle cx="-250" cy="0" r="4" fill="#f43f5e" stroke="none"/>
+    <circle cx="-250" cy="70" r="4" fill="#f43f5e" stroke="none"/>
+
+    <g stroke="#22d3ee" stroke-width="1.6" opacity="0.85">
+      <rect x="-95" y="-85" width="70" height="130" rx="10" fill="rgba(0,180,216,0.08)"/>
+      <rect x="-95" y="-85" width="70" height="130" rx="10" fill="none" stroke="#00b4d8" stroke-width="1"/>
+      <line x1="-95" y1="-30" x2="-25" y2="-30"/>
+      <line x1="-95" y1="15" x2="-25" y2="15"/>
+    </g>
+    <circle cx="-60" cy="-58" r="5" fill="#22d3ee" stroke="none"/>
+    <circle cx="-60" cy="-8" r="5" fill="#f59e0b" stroke="none"/>
+    <circle cx="-60" cy="42" r="5" fill="#f59e0b" stroke="none"/>
+
+    <!-- trust boundary -->
+    <line x1="-5" y1="-110" x2="-5" y2="110" stroke="#64748b" stroke-width="1.5" stroke-dasharray="2 7"/>
+    <g stroke="#a78bfa" stroke-width="1" opacity="0.5">
+      <circle cx="0" cy="0" r="145" stroke-dasharray="3 5"/>
+      <circle cx="0" cy="0" r="95" stroke-dasharray="3 5"/>
+      <line x1="0" y1="0" x2="140" y2="0"/>
+      <line x1="0" y1="0" x2="0" y2="95"/>
+      <line x1="0" y1="0" x2="82" y2="47"/>
+      <line x1="0" y1="0" x2="-82" y2="47"/>
+      <line x1="0" y1="0" x2="0" y2="-95"/>
+    </g>
+    <circle cx="140" cy="0" r="5" fill="#a78bfa" stroke="none"/>
+    <circle cx="0" cy="95" r="5" fill="#a78bfa" stroke="none"/>
+    <circle cx="82" cy="47" r="5" fill="#a78bfa" stroke="none"/>
+    <circle cx="-82" cy="47" r="5" fill="#a78bfa" stroke="none"/>
+    <circle cx="0" cy="-95" r="5" fill="#a78bfa" stroke="none"/>
+    <circle cx="0" cy="0" r="12" fill="#22d3ee" stroke="#ffffff" stroke-width="2"/>
+    <circle cx="0" cy="0" r="20" fill="none" stroke="#00b4d8" stroke-width="1" opacity="0.7"/>
+  </g>
+
+  <!-- Typography -->
+  <g transform="translate(80, 120)">
+    <rect x="0" y="0" width="242" height="28" rx="14" fill="rgba(244, 63, 94, 0.15)" stroke="rgba(244, 63, 94, 0.45)" stroke-width="1"/>
+    <text x="14" y="18" font-family="-apple-system, sans-serif" font-weight="700" font-size="12" fill="#fb7185" letter-spacing="1">PARTIAL MONTH · 1&#8211;16 OCTOBER</text>
+
+    <text x="0" y="80" font-family="-apple-system, sans-serif" font-weight="800" font-size="42" fill="#e2e8f0">CYBER DIGEST &#183; <tspan fill="#00b4d8">OCTOBER 2026</tspan></text>
+    <text x="0" y="120" font-family="-apple-system, sans-serif" font-weight="400" font-size="20" fill="#b0c0d0">Exploited Edge Appliances, Agents and the Developer Toolchain</text>
+    <text x="0" y="160" font-family="SFMono-Regular, Consolas, monospace" font-size="14" fill="#64748b">178 Deduped Stories &#183; 16 Days Covered &#183; 13 Sectors &#183; 38 Sources</text>
+  </g>
+</svg>
