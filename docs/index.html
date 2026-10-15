@@ -105,7 +105,7 @@ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded'
 <div class="section"><div class="sec-head"><h2><span class="bar"></span>3D Incident Globe</h2><a class="seeall" href="globe.html">Open full globe →</a></div>
 <div class="globe-card" id="home-globe-card">
   <div class="globe-badge">🌍 country-resolved stories · 3D</div>
-  <div id="home-globe"></div>
+  <div id="home-globe" role="img" aria-label="3D globe of country-resolved cyber incidents, coloured by severity. Drag to rotate, or use the link to open the full interactive globe."></div>
   <div class="globe-static" id="home-globe-static" style="display:none">
     <div class="big">🌐</div>
     <div>Country-resolved incidents plotted by severity.<br>Drag the globe to spin it, or open the full page.</div>
@@ -149,7 +149,10 @@ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded'
           .pointRadius(0.3)
           .pointResolution(4);
         globe.pointOfView({lat:22,lng:14,alt:1.15});
-        globe.controls().autoRotate=true;
+        // WCAG 2.2.2 — do not auto-start continuous motion for a user who has
+        // asked the OS for reduced motion. The globe stays fully interactive.
+        var noMotion=!!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+        globe.controls().autoRotate=!noMotion;
         globe.controls().autoRotateSpeed=0.45;
         window.addEventListener('resize', function(){
           globe.width(el.clientWidth).height(el.clientHeight);

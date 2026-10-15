@@ -169,7 +169,7 @@
 </head>
 <body>
 <div class="bar"></div>
-<div id="globe" role="img" aria-label="Interactive 3D globe of cybersecurity incidents. Drag to rotate, scroll to zoom, click a dot for details."></div>
+<div id="globe" role="img" aria-describedby="sub" aria-label="Interactive 3D globe of cybersecurity incidents. Drag to rotate, scroll to zoom, click a dot for details. The same stories are listed as text in the Story Database."></div>
 
 <header>
   <div class="brand">
@@ -257,6 +257,11 @@
 <script>
 (function(){
   var $=function(id){return document.getElementById(id)};
+  // Respect the OS "reduce motion" setting site-wide for this page. A continuously
+  // spinning globe is exactly the kind of auto-starting motion WCAG 2.2.2 covers,
+  // so the spin never starts (and never auto-resumes) when the user has asked for
+  // less motion. Rotation by drag/scroll is unaffected — that is user-initiated.
+  var NO_MOTION = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   // escape dynamic text before it reaches innerHTML (headlines/country names are
   // our own curated DB strings, but keep defence-in-depth regardless)
   function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]});}
@@ -349,7 +354,7 @@
   function resumeSpinSoon(){
     // let the camera settle, then bring the spin back
     setTimeout(function(){
-      if(!timer && globeInstance && globeInstance.controls() && document.visibilityState!=="hidden"){
+      if(!timer && globeInstance && globeInstance.controls() && !NO_MOTION && document.visibilityState!=="hidden"){
         globeInstance.controls().autoRotate=true;
       }
     },2500);
@@ -834,7 +839,7 @@
       // nicer default pose: tilt onto the populated Atlantic/Europe–Americas
       // hemisphere so the cluster view opens on the interesting landmass
       globe.pointOfView({lat:18,lng:-25,alt:2.1});
-      globe.controls().autoRotate=true;
+      globe.controls().autoRotate=!NO_MOTION;
       globe.controls().autoRotateSpeed=0.3;
       globeInstance=globe;
       // apply the zoom-aware styling + initial (cluster) view
@@ -859,7 +864,7 @@
       var c=globe.controls();
       c.addEventListener('start',function(){c.autoRotate=false});
       var t=null;
-      c.addEventListener('end',function(){ clearTimeout(t); if(!spinLock){ t=setTimeout(function(){c.autoRotate=true},2500); } });
+      c.addEventListener('end',function(){ clearTimeout(t); if(!spinLock && !NO_MOTION){ t=setTimeout(function(){c.autoRotate=true},2500); } });
       c.addEventListener('change', updateZoomMode);
       globe.onZoom(function(){ updateZoomMode(); });
       window.addEventListener('resize',function(){ sizeGlobe(); });
