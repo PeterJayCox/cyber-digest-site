@@ -1245,7 +1245,12 @@ def daily_agg():
         if r["threat_type"]: a["threats"][r["threat_type"]]=a["threats"].get(r["threat_type"],0)+1
         if r["source_name"]: a["sources"][r["source_name"]]=a["sources"].get(r["source_name"],0)+1
         if r["reliability_tier"]==1: a["tier1"]+=1
-        if (r["anz_relevance"] or 0)>=3: a["anz"]+=1
+        # DIRECT AU/NZ only (score >=4: an AU/NZ agency/regulator/organisation is
+        # named, or the story has direct AU/NZ impact). Score 3 is the Five Eyes
+        # bucket, which nearly every global story clears, so counting >=3 made the
+        # card tile read like the whole story count. The /stories.html filter keeps
+        # the full 3-tier scale — only the summary tile is narrowed.
+        if (r["anz_relevance"] or 0)>=4: a["anz"]+=1
     for a in agg.values():
         a["sectors"]=sorted(a["sectors"].items(),key=lambda x:-x[1])[:3]
         a["threats"]=sorted(a["threats"].items(),key=lambda x:-x[1])[:3]
@@ -1386,7 +1391,9 @@ def daily_card_data(days):
             v=r[col]
             if v: a[k][v]=a[k].get(v,0)+1
         if r["reliability_tier"]==1: a["tier1"]+=1
-        if (r["anz_relevance"] or 0)>=3: a["anz"]+=1
+        # DIRECT AU/NZ only (>=4) — see the note in daily_agg(); the archive tile
+        # must agree with the homepage card strip.
+        if (r["anz_relevance"] or 0)>=4: a["anz"]+=1
     for d,month in days:
         a=agg.get(d)
         if a is None: continue
