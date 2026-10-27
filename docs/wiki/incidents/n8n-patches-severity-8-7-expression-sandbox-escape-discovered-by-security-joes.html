@@ -31,14 +31,14 @@ if(mq&&mq.addEventListener){mq.addEventListener('change',followSystem);}}catch(e
 if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',apply);}
 })();
 </script>
-<title>n8n Patches Severity 8.7 expression-sandbox Escape Discovered by Security Joes</title>
+<title>n8n patches the severity 8.7 expression-sandbox escape discovered by Security Joes</title>
 <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png">
 <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
 <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png">
 <link rel="alternate" type="application/rss+xml" title="Cyber Digest" href="https://cyber.peterjaycox.com/feed.xml">
 <link rel="alternate" type="application/rss+xml" title="Cyber Digest — Monthly Editions" href="https://cyber.peterjaycox.com/feed-monthly.xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="n8n Patches Severity 8.7 expression-sandbox Escape Discovered by Security Joes">
+<meta property="og:title" content="n8n patches the severity 8.7 expression-sandbox escape discovered by Security Joes">
 <meta property="og:description" content="Curated sector-by-sector roundup of global cybersecurity developments with source-reliability indexing, AU/NZ context, and searchable knowledge base.">
 <meta property="og:url" content="https://cyber.peterjaycox.com/">
 <meta property="og:image" content="https://cyber.peterjaycox.com/assets/img/og-image.png">
@@ -54,21 +54,53 @@ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded'
 <nav class="topnav"><div class="inner"><a class="brand" href="https://cyber.peterjaycox.com/index.html"><span class="brand-logo" aria-hidden="true"></span> Cyber&nbsp;Digest<small>public site</small></a><div class="navlinks"><a href="https://cyber.peterjaycox.com/index.html"><span class="t">🏠 Home</span></a><a href="https://cyber.peterjaycox.com/stories.html"><span class="t">📚 Story DB</span></a><a href="https://cyber.peterjaycox.com/globe.html"><span class="t">🌍 Globe</span></a><div class="navgrp"><button type="button" class="navdrop" aria-haspopup="true" aria-expanded="false" aria-controls="cdnav-reports"><span class="t">📑 Reports</span><span class="caret" aria-hidden="true">▾</span></button><ul class="navmenu" id="cdnav-reports" hidden><li><a href="https://cyber.peterjaycox.com/daily/"><span class="t">🗓️ Daily</span></a></li><li><a href="https://cyber.peterjaycox.com/monthly/index.html"><span class="t">📅 Monthly</span></a></li><li><a href="https://cyber.peterjaycox.com/reports/index.html"><span class="t">📄 Sector reviews</span></a></li></ul></div><a href="https://cyber.peterjaycox.com/wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a><div class="navgrp"><button type="button" class="navdrop" aria-haspopup="true" aria-expanded="false" aria-controls="cdnav-tools"><span class="t">🧰 Tools</span><span class="caret" aria-hidden="true">▾</span></button><ul class="navmenu" id="cdnav-tools" hidden><li><a href="https://cyber.peterjaycox.com/tools/cve-attack-matrix.html"><span class="t">🛰️ CVE × MITRE ATT&amp;CK / D3FEND matrix</span></a></li><li><a href="https://cyber.peterjaycox.com/flashcards.html"><span class="t">🗂️ Flashcards</span></a></li><li><a href="https://cyber.peterjaycox.com/tools/drafts/index.html"><span class="t">🧪 Drafts</span></a></li></ul></div><a href="https://peterjaycox.com"><span class="t">🏡 Hub</span></a></div><noscript><style>.navgrp{display:none!important}.navmob{display:block!important}</style></noscript><details class="navmob"><summary aria-label="Open site menu"><span aria-hidden="true">☰</span><span class="t">Menu</span></summary><div class="navmob-panel"><ul class="navmob-list"><li><a href="https://cyber.peterjaycox.com/index.html"><span class="t">🏠 Home</span></a></li><li><a href="https://cyber.peterjaycox.com/stories.html"><span class="t">📚 Story DB</span></a></li><li><a href="https://cyber.peterjaycox.com/globe.html"><span class="t">🌍 Globe</span></a></li><li><details class="navmob-grp"><summary class=""><span class="t">📑 Reports</span></summary><ul><li><a href="https://cyber.peterjaycox.com/daily/"><span class="t">🗓️ Daily</span></a></li><li><a href="https://cyber.peterjaycox.com/monthly/index.html"><span class="t">📅 Monthly</span></a></li><li><a href="https://cyber.peterjaycox.com/reports/index.html"><span class="t">📄 Sector reviews</span></a></li></ul></details></li><li><a href="https://cyber.peterjaycox.com/wiki/index.html" class="active"><span class="t">🧠 Wiki</span></a></li><li><details class="navmob-grp"><summary class=""><span class="t">🧰 Tools</span></summary><ul><li><a href="https://cyber.peterjaycox.com/tools/cve-attack-matrix.html"><span class="t">🛰️ CVE × MITRE ATT&amp;CK / D3FEND matrix</span></a></li><li><a href="https://cyber.peterjaycox.com/flashcards.html"><span class="t">🗂️ Flashcards</span></a></li><li><a href="https://cyber.peterjaycox.com/tools/drafts/index.html"><span class="t">🧪 Drafts</span></a></li></ul></details></li><li><a href="https://peterjaycox.com"><span class="t">🏡 Hub</span></a></li></ul></div></details><div class="theme-toggle" role="button" tabindex="0" aria-label="Appearance" title="Appearance" onclick="window.__cdTheme.cycle(event)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.__cdTheme.cycle(event)}"><span class="tt-auto" aria-hidden="true">🌗</span><span class="tt-light" aria-hidden="true">☀️</span><span class="tt-dark" aria-hidden="true">🌙</span></div></div></nav><main class="container">
             <div class="container">
             <div class="crumb"><a href="../../index.html">Home</a> · <a href="../../wiki/index.html">Wiki</a> · Incidents &amp; Campaigns</div>
-            <div class="wiki-body"><div class="frontmatter">type: incident · created: 2026-07-28 · updated: 2026-07-28 · tags: [incident] · confidence: high · affected_sectors: [technology] · au_impact: false</div><h1>n8n Patches Severity 8.7 expression-sandbox Escape Discovered by Security Joes</h1>
-<h2>Summary</h2>
-<p>Automation platform n8n patched a high-severity expression-sandbox escape enabling authenticated workflow editors to execute arbitrary operating system commands.</p>
-<h2>Details</h2>
-<p>Automation platform <strong>n8n</strong> has patched a high-severity expression-sandbox escape vulnerability. The vulnerability is tracked as <strong>GHSA-gv7g-jm28-cr3m</strong> with a CVSS score of 8.7.</p>
-<h3>Vulnerability Mechanics</h3>
-<p>The escape allows authenticated workflow editors to bypass previous restrictions and execute arbitrary operating system commands on the host server. It was discovered by security firm <strong>Security Joes</strong> while investigating previous fixes for <strong><a href="../vulnerabilities/cve-2026-27577-n8n-sandbox-escape.html">Cve 2026 27577 N8N Sandbox Escape</a></strong>.</p>
-<h3>Affected Versions and Remediation</h3>
-<p>The vulnerable ranges include:
-- Versions prior to 2.31.5
-- Versions between 2.32.0 and 2.32.1 (excluding 2.32.1)</p>
-<p>Fixes are now available in versions <strong>2.31.5</strong> and <strong>2.32.1</strong>. Administrators are strongly urged to update immediately and should not rely on tentative user access controls.</p>
-<h2>Related Pages</h2>
+            <div class="wiki-body"><div class="frontmatter">type: incident · created: 2026-07-28 · updated: 2026-10-28 · tags: [incident, technology] · confidence: high · severity: high · affected_sectors: [technology] · au_impact: false</div><p>Automation platform <strong>n8n</strong> patched a high-severity expression-sandbox escape that let an authenticated workflow editor execute arbitrary operating-system commands on the n8n host. The flaw is tracked as GHSA-gv7g-jm28-cr3m, rated CVSS 8.7, and had no CVE assigned as of 28 July 2026. Security Joes found it while probing the February 2026 fix for <a href="../vulnerabilities/cve-2026-27577-n8n-sandbox-escape.html">Cve 2026 27577 N8N Sandbox Escape</a>, which showed that the earlier patch was incomplete and a bypass stayed exploitable for several months. Because the prerequisite is an authenticated workflow-editor role, the issue is a privilege-boundary escape rather than an unauthenticated compromise — it matters most where n8n is shared with semi-trusted users or runs inside a network its workflows were never meant to reach. Upgrading to 2.31.5 on the 2.31.x line or 2.32.1 on the 2.32.x line closes it, and tentative user-access controls should not be treated as a substitute for the patch.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Advisory</strong></td>
+<td>GHSA-gv7g-jm28-cr3m</td>
+</tr>
+<tr>
+<td><strong>CVSS</strong></td>
+<td>8.7 (High)</td>
+</tr>
+<tr>
+<td><strong>Product</strong></td>
+<td>n8n automation platform</td>
+</tr>
+<tr>
+<td><strong>Versions affected</strong></td>
+<td>Before 2.31.5; 2.32.0 up to but not including 2.32.1</td>
+</tr>
+<tr>
+<td><strong>Patched versions</strong></td>
+<td>2.31.5 (2.31.x line); 2.32.1 (2.32.x line)</td>
+</tr>
+<tr>
+<td><strong>Prerequisites</strong></td>
+<td>Authenticated workflow editor role</td>
+</tr>
+<tr>
+<td><strong>Discovered by</strong></td>
+<td>Security Joes</td>
+</tr>
+</tbody>
+</table>
+<h2>Related</h2>
 <ul>
-<li><a href="n8n-sandbox-escape-lets-workflow-editors-run-os-commands-cvss-8-7-.html">N8N Sandbox Escape Lets Workflow Editors Run Os Commands Cvss 8 7 </a>\n- <a href="../vulnerabilities/cve-2026-27577-n8n-sandbox-escape.html">Cve 2026 27577 N8N Sandbox Escape</a>\n\n<strong>Sources:</strong> raw/digests/Cyber-Digest-2026-07-28.md</li>
+<li>
+<p><a href="../vulnerabilities/cve-2026-27577-n8n-sandbox-escape.html">Cve 2026 27577 N8N Sandbox Escape</a></p>
+</li>
+<li>
+<p><a href="https://github.com/n8n-io/n8n/security/advisories/GHSA-gv7g-jm28-cr3m">Source article</a></p>
+</li>
 </ul></div>
             </div></main>
 <div class="footer">
