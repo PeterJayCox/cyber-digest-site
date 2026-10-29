@@ -484,7 +484,7 @@ def generate_monthly_covers():
                     output_width=1200, output_height=400)
 
 
-    # October 2026 Cover (PARTIAL MONTH — closed 16 October) - Exploited Edge & Remote-Access Appliances
+    # October 2026 Cover (PARTIAL MONTH — closed 29 October) - Exploited Edge, Runtime & Release Pipeline
     october_svg = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400">
   <defs>
     <linearGradient id="oct-bg" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -540,11 +540,11 @@ def generate_monthly_covers():
   <!-- Typography -->
   <g transform="translate(80, 120)">
     <rect x="0" y="0" width="242" height="28" rx="14" fill="rgba(244, 63, 94, 0.15)" stroke="rgba(244, 63, 94, 0.45)" stroke-width="1"/>
-    <text x="14" y="18" font-family="-apple-system, sans-serif" font-weight="700" font-size="12" fill="#fb7185" letter-spacing="1">PARTIAL MONTH · 1&#8211;16 OCTOBER</text>
+    <text x="14" y="18" font-family="-apple-system, sans-serif" font-weight="700" font-size="12" fill="#fb7185" letter-spacing="1">PARTIAL MONTH · 1&#8211;29 OCTOBER</text>
 
     <text x="0" y="80" font-family="-apple-system, sans-serif" font-weight="800" font-size="42" fill="#e2e8f0">CYBER DIGEST &#183; <tspan fill="#00b4d8">OCTOBER 2026</tspan></text>
-    <text x="0" y="120" font-family="-apple-system, sans-serif" font-weight="400" font-size="20" fill="#b0c0d0">Exploited Edge Appliances, Agents and the Developer Toolchain</text>
-    <text x="0" y="160" font-family="SFMono-Regular, Consolas, monospace" font-size="14" fill="#64748b">178 Deduped Stories &#183; 16 Days Covered &#183; 13 Sectors &#183; 38 Sources</text>
+    <text x="0" y="120" font-family="-apple-system, sans-serif" font-weight="400" font-size="20" fill="#b0c0d0">Exploited Edge Appliances, the Release Pipeline and the Developer Toolchain</text>
+    <text x="0" y="160" font-family="SFMono-Regular, Consolas, monospace" font-size="14" fill="#64748b">346 Deduped Stories &#183; 28 Days Covered &#183; 14 Sectors &#183; 63 Sources</text>
   </g>
 </svg>'''
 
