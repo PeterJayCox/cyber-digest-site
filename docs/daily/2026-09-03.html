@@ -339,6 +339,33 @@ html[data-theme-mode="light"] .theme-toggle .tt-light{display:inline}
 .pie-legend .legend-item .dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
 .pie-legend .legend-item .val{margin-left:auto;font-weight:600;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:12px}
 /* Prose card: bordered surface box for section narrative (tables already use .data-table) */
+/* Prose inside a section-box (ANZ Signal, OSINT, By the Numbers, Action Register,
+   Claim Ledger, Sector Gaps). Without these the browser default applied: nested
+   <ul>s lost their indent so a graded tier list read as one flat run of bullets,
+   and paragraphs sat flush against each other (2026-11-02). */
+.section-box>p{color:var(--text-muted);font-size:13.5px;line-height:1.7;margin:0 0 13px}
+.section-box>p:last-child{margin-bottom:0}
+.section-box>p strong{color:var(--text)}
+.section-box>ul{margin:0 0 14px;padding-left:20px}
+.section-box>ul>li{color:var(--text-muted);font-size:13.5px;line-height:1.65;margin-bottom:8px}
+.section-box>ul>li>strong{color:var(--text)}
+.section-box ul ul{margin:8px 0 0;padding-left:18px}
+.section-box ul ul li{font-size:13px;line-height:1.6;margin-bottom:7px}
+.section-box h3{font-size:.95rem;font-weight:600;color:var(--text);margin:22px 0 10px;line-height:1.4}
+.section-box h3:first-child{margin-top:0}
+/* Story of the Month — long-form prose, not a daily story-card (2026-11-02) */
+.story-prose p{color:var(--text-muted);font-size:14px;line-height:1.75;margin:0 0 14px}
+.story-prose p:last-child{margin-bottom:0}
+.story-prose strong{color:var(--text)}
+.story-prose ul{margin:0 0 14px;padding-left:20px}
+.story-prose li{color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:8px}
+.story-prose li strong{color:var(--text)}
+.story-part{margin-top:28px;padding-top:24px;border-top:1px solid var(--border)}
+.story-part h3{font-size:1.05rem;font-weight:600;color:var(--text);line-height:1.4;margin:0 0 14px}
+.story-part h3::before{content:"";display:block;width:34px;height:3px;border-radius:2px;background:var(--accent);margin-bottom:12px}
+.takeaway{margin:18px 0 0;padding:14px 18px;border-left:3px solid var(--accent);background:var(--accent-bg);border-radius:0 8px 8px 0}
+.takeaway .tk-label{display:block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.takeaway p{margin:0;color:var(--text);font-size:13.5px;line-height:1.65}
 .prose-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px 24px;margin:18px 0;transition:background .25s,border .25s}
 .prose-box p{color:var(--text-muted);font-size:13.5px;line-height:1.7;margin-bottom:13px}
 .prose-box p:last-child{margin-bottom:0}
@@ -962,6 +989,10 @@ a.cvepill{cursor:pointer}
 </tbody>
 </table>
 </section>
+
+<!-- Tail slot: the monthly's Action Register closes the page, after the
+     Analytics appendix (2026-11-02). Empty on the daily editions. -->
+__TAIL__
 
 
 <section id="legend" class="section legend-section">
