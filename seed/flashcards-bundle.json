@@ -4301,6 +4301,241 @@
 ]
 }
 ]
+},
+{
+"name": "Intel · Bias Atlas",
+"desc": "The 21 cognitive biases and 5 structural patterns from the Intel bias atlas: the tell in a draft, and the one move that answers it.",
+"cards": [
+{
+"front": "Absence of Evidence Fallacy — what is the tell, and what is the one move?",
+"back": "\"No evidence of\", \"we have not seen\", \"there is no indication\".\n\nMove: Pair every negative finding with the collection behind it.",
+"tags": [
+"cognitive",
+"evidence",
+"analyst"
+]
+},
+{
+"front": "Anchoring Bias — what is the tell, and what is the one move?",
+"back": "A number or a phrase that first appeared in an earlier product, unchanged.\n\nMove: Re-derive the figure before reusing it, or say that you have not.",
+"tags": [
+"cognitive",
+"evidence",
+"analyst"
+]
+},
+{
+"front": "Availability Heuristic — what is the tell, and what is the one move?",
+"back": "The most recent incident shaping a forward-looking judgement.\n\nMove: Add the historical baseline next to the recent case.",
+"tags": [
+"cognitive",
+"evidence",
+"analyst"
+]
+},
+{
+"front": "Base-Rate Neglect — what is the tell, and what is the one move?",
+"back": "An indicator, alert or typology with no benign explanation rate.\n\nMove: State the benign rate alongside the malicious one, even approximately.",
+"tags": [
+"cognitive",
+"estimation",
+"analyst"
+]
+},
+{
+"front": "Belief Perseverance — what is the tell, and what is the one move?",
+"back": "A judgement carried into a re-issue without its original uncertainty.\n\nMove: Restate the uncertainty at re-issue, not just at first assessment.",
+"tags": [
+"cognitive",
+"perception",
+"analyst"
+]
+},
+{
+"front": "Confirmation Bias — what is the tell, and what is the one move?",
+"back": "A hypothesis and a pile of support, with no rival hypothesis anywhere on the page.\n\nMove: Write the strongest competing hypothesis beside the leading one, and mark which evidence discriminates.",
+"tags": [
+"cognitive",
+"perception",
+"analyst"
+]
+},
+{
+"front": "Conformity Bias — what is the tell, and what is the one move?",
+"back": "A review comment that changed nothing and was not recorded.\n\nMove: Record the reasoning before the discussion, and record the query after it.",
+"tags": [
+"cognitive",
+"social",
+"system"
+]
+},
+{
+"front": "Escalation of Commitment — what is the tell, and what is the one move?",
+"back": "A line or a capability defended by its history rather than its yield.\n\nMove: Ask: if it did not exist today, would we build it?",
+"tags": [
+"cognitive",
+"decision",
+"system"
+]
+},
+{
+"front": "Framing Effect — what is the tell, and what is the one move?",
+"back": "The tasking's own words, unexamined, at the top of your draft.\n\nMove: Rewrite the tasking in your own words, and say what the other framing would have produced.",
+"tags": [
+"cognitive",
+"decision",
+"analyst"
+]
+},
+{
+"front": "Fundamental Attribution Error — what is the tell, and what is the one move?",
+"back": "\"Aggressive\", \"opportunistic\", \"deceptive by nature\".\n\nMove: State the situational driver that would produce the same behaviour.",
+"tags": [
+"cognitive",
+"social",
+"analyst"
+]
+},
+{
+"front": "Groupthink — what is the tell, and what is the one move?",
+"back": "A judgement nobody has argued against, in a team that agrees.\n\nMove: Independent judgements in writing, then reconcile; name a challenger.",
+"tags": [
+"cognitive",
+"social",
+"system"
+]
+},
+{
+"front": "Hindsight Bias — what is the tell, and what is the one move?",
+"back": "A post-mortem conclusion that the outcome was foreseeable.\n\nMove: Check it against the judgement that was actually written at the time.",
+"tags": [
+"cognitive",
+"estimation",
+"analyst"
+]
+},
+{
+"front": "Insensitivity to Sample Size — what is the tell, and what is the one move?",
+"back": "\"Campaign\", \"pattern\", \"characteristic\" with no count in the sentence.\n\nMove: Put the count (n) in the sentence and let the reader see it.",
+"tags": [
+"cognitive",
+"estimation",
+"analyst"
+]
+},
+{
+"front": "Loss Aversion — what is the tell, and what is the one move?",
+"back": "\"The consequences of missing this are unacceptable.\"\n\nMove: State what it costs to be wrong in each direction.",
+"tags": [
+"cognitive",
+"social",
+"system"
+]
+},
+{
+"front": "Mirror Imaging — what is the tell, and what is the one move?",
+"back": "\"They would not do X because it makes no sense.\"\n\nMove: One line naming what the actor would have to believe for the behaviour to make sense to them.",
+"tags": [
+"cognitive",
+"perception",
+"analyst"
+]
+},
+{
+"front": "Overconfidence Bias — what is the tell, and what is the one move?",
+"back": "\"Will\", \"clearly\", \"obviously\", \"always\", or an unqualified number.\n\nMove: Re-earn or strike each absolute on the final read.",
+"tags": [
+"cognitive",
+"estimation",
+"analyst"
+]
+},
+{
+"front": "Recency Bias — what is the tell, and what is the one move?",
+"back": "A trend drawn from the current period alone.\n\nMove: Show the current period against the prior baseline.",
+"tags": [
+"cognitive",
+"decision",
+"analyst"
+]
+},
+{
+"front": "Representativeness Heuristic — what is the tell, and what is the one move?",
+"back": "\"Matches the profile\", \"consistent with the established pattern\".\n\nMove: Ask how many other actors would look identical, and name the evidence that would separate them.",
+"tags": [
+"cognitive",
+"evidence",
+"analyst"
+]
+},
+{
+"front": "Selective Perception — what is the tell, and what is the one move?",
+"back": "Nothing — an absence. The item you cannot find because it was never registered.\n\nMove: Read the file, not the draft, and name one item that argues against the judgement.",
+"tags": [
+"cognitive",
+"perception",
+"analyst"
+]
+},
+{
+"front": "Status Quo Bias — what is the tell, and what is the one move?",
+"back": "\"Unchanged\", \"no change to the previous assessment\".\n\nMove: Date the review and say when the evidence was last tested.",
+"tags": [
+"cognitive",
+"decision",
+"analyst"
+]
+},
+{
+"front": "Vividness Bias — what is the tell, and what is the one move?",
+"back": "A single striking item — a figure, an image, a quote — near the top.\n\nMove: State the source's status against that item, in the product.",
+"tags": [
+"cognitive",
+"evidence",
+"analyst"
+]
+},
+{
+"front": "Carried-Forward Assessment — what is the tell, and what is the one move?",
+"back": "\"No change\" accepted by the process, with no scheduled review and nobody able to say who last tested the evidence.\n\nMove: Put the review on a calendar with a named owner, and print the date the evidence was last tested.",
+"tags": [
+"structural",
+"system"
+]
+},
+{
+"front": "Inherited Partner Reporting — what is the tell, and what is the one move?",
+"back": "Reporting you did not collect, cannot re-derive, and have never seen the handling caveats behind.\n\nMove: State the partner's caveats in your own product in your own words — or state that you do not have them.",
+"tags": [
+"structural",
+"system"
+]
+},
+{
+"front": "Single-Source Dependency — what is the tell, and what is the one move?",
+"back": "The key judgement rests on one report, one chain, and a source you cannot see to the end.\n\nMove: Name the dependency in the product, and say what the judgement would look like if that source were wrong.",
+"tags": [
+"structural",
+"system"
+]
+},
+{
+"front": "Thin Analytic Coverage — what is the tell, and what is the one move?",
+"back": "One name on a national question, and no second reading of the same file.\n\nMove: Say in the product how many analysts the judgement rests on, and what a second reader would have been asked to check.",
+"tags": [
+"structural",
+"system"
+]
+},
+{
+"front": "Volume Mistaken for Development — what is the tell, and what is the one move?",
+"back": "The reporting curve is rising and the product reads it as the activity curve.\n\nMove: Separate the reporting curve from the activity curve, and say which one the trend rests on.",
+"tags": [
+"structural",
+"system"
+]
+}
+]
 }
 ]
 }
