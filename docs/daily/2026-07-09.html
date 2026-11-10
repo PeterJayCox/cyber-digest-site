@@ -631,6 +631,129 @@ a.cvepill{cursor:pointer}
    the point is that the primary is visible at all, not that it competes. */
 .source.src-alt{color:var(--text-muted);font-size:11px;padding:2px 8px}
 .src-note{color:var(--text-dim);font-size:11px;margin-left:2px}
+
+/* ===== ANZ Signal v2 (2026-11-11): stat shape, so-what band, graded cards/rows ===== */
+/* ===== ANZ Signal v2 — proposed components ===== */
+.anz-v2{--g5:#ef4444;--g4:#f59e0b;--g3:#3b82f6;--g2:#475569}
+
+/* standfirst */
+.anz-standfirst{font-size:14.5px!important;line-height:1.72!important;color:var(--text-secondary)!important;
+  border-left:3px solid var(--accent);padding:2px 0 2px 14px;margin:0 0 20px!important}
+.anz-standfirst strong{color:var(--text)!important}
+
+/* block label used above each block */
+.anz-blocklab{display:flex;align-items:center;gap:10px;font-size:10.5px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--text-dim);margin:26px 0 12px}
+.anz-blocklab::after{content:'';flex:1;height:1px;background:var(--border-light)}
+.anz-blocklab:first-of-type{margin-top:18px}
+
+/* --- Block A: stat row --- */
+.anz-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0 0 18px}
+.anz-stats .stat-card{min-width:0}
+.anz-stats .stat-num{font-size:21px}
+.anz-stats .stat-num small{font-size:11px;font-weight:600;color:var(--text-dim);margin-left:2px}
+
+/* grade distribution bar */
+.anz-shape{margin:0 0 4px}
+.anz-shape-bar{display:flex;height:26px;border-radius:7px;overflow:hidden;border:1px solid var(--border);background:var(--surface2)}
+.anz-shape-seg{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;
+  font-feature-settings:'tnum';min-width:26px;letter-spacing:.02em}
+.anz-shape-seg.s5{background:var(--g5)}.anz-shape-seg.s4{background:var(--g4)}
+.anz-shape-seg.s3{background:var(--g3)}.anz-shape-seg.s2{background:var(--g2)}
+.anz-shape-legend{display:flex;flex-wrap:wrap;gap:16px;margin:9px 0 0;font-size:11.5px;color:var(--text-muted)}
+.anz-shape-legend span{display:inline-flex;align-items:center;gap:6px}
+.anz-shape-legend i{width:9px;height:9px;border-radius:2px;display:inline-block}
+.anz-shape-legend i.s5{background:var(--g5)}.anz-shape-legend i.s4{background:var(--g4)}
+.anz-shape-legend i.s3{background:var(--g3)}.anz-shape-legend i.s2{background:var(--g2)}
+.anz-shape-legend b{color:var(--text);font-weight:700}
+
+/* --- Block B: the so-what band --- */
+.anz-sowhat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:8px 0 6px}
+.anz-sw{background:var(--surface2);border:1px solid var(--border);border-radius:11px;padding:0 0 6px;overflow:hidden}
+.anz-sw-head{display:flex;align-items:center;gap:9px;padding:11px 16px;font-size:11px;font-weight:800;
+  letter-spacing:.9px;text-transform:uppercase;border-bottom:1px solid var(--border)}
+.anz-sw-head .anz-sw-ico{font-size:14px;line-height:1}
+.anz-sw-biz .anz-sw-head{background:rgba(0,180,216,.09);color:#7fd8ec;border-bottom-color:rgba(0,180,216,.28)}
+.anz-sw-gov .anz-sw-head{background:rgba(59,130,246,.10);color:#9dc0fb;border-bottom-color:rgba(59,130,246,.28)}
+.anz-sw ul{list-style:none;margin:0;padding:8px 16px 4px}
+.anz-sw li{position:relative;padding:8px 0 8px 15px;font-size:12.8px;line-height:1.58;color:var(--text-muted);
+  border-bottom:1px dashed var(--border)}
+.anz-sw li:last-child{border-bottom:none}
+.anz-sw li::before{content:'';position:absolute;left:0;top:16px;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.anz-sw-gov li::before{background:var(--govt)}
+.anz-sw li strong{color:var(--text);font-weight:650}
+
+/* --- Block C: graded signal cards --- */
+.anz-tier{margin:0 0 6px}
+.anz-tier-head{display:flex;align-items:center;gap:10px;margin:26px 0 11px}
+.anz-tier-head:first-child{margin-top:6px}
+.anz-tier-head h3{font-size:12.5px!important;font-weight:700!important;color:var(--text)!important;
+  text-transform:none!important;letter-spacing:0!important;margin:0!important}
+.anz-tier-head .anz-count{font-size:10.5px;font-weight:700;letter-spacing:.05em;color:var(--text-dim);
+  border:1px solid var(--border-light);border-radius:99px;padding:2px 9px}
+.anz-tier-head::after{content:'';flex:1;height:1px;background:var(--border)}
+
+.anz-gb{display:inline-flex;align-items:center;justify-content:center;min-width:44px;height:20px;padding:0 7px;
+  border-radius:5px;font-size:10.5px;font-weight:800;letter-spacing:.04em;color:#fff;font-feature-settings:'tnum'}
+.anz-gb.g5{background:var(--g5)}.anz-gb.g4{background:var(--g4)}
+.anz-gb.g3{background:var(--g3)}.anz-gb.g2{background:var(--g2)}
+
+.anz-card{display:grid;grid-template-columns:58px 1fr;gap:14px;background:var(--surface2);
+  border:1px solid var(--border);border-left:3px solid var(--g2);border-radius:0 10px 10px 0;
+  padding:13px 16px 14px;margin:0 0 11px}
+.anz-card.g5{border-left-color:var(--g5)}
+.anz-card.g4{border-left-color:var(--g4);grid-template-columns:58px 1fr}
+.anz-card .anz-rail{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding-top:1px}
+.anz-card .anz-rail time{font-size:10.5px;font-weight:700;color:var(--text-dim);letter-spacing:.02em;
+  text-transform:uppercase;line-height:1.25}
+.anz-card h4{margin:0 0 6px;font-size:13.6px;line-height:1.45;font-weight:650;color:var(--text)}
+.anz-card p{margin:0 0 9px;font-size:12.9px;line-height:1.62;color:var(--text-muted)}
+.anz-card p:last-child{margin-bottom:0}
+.anz-card p .cvepill{font-size:10px;padding:1px 5px}
+.anz-so{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;
+  background:rgba(0,180,216,.07);border-left:2px solid var(--accent);border-radius:0 6px 6px 0;padding:8px 12px}
+.anz-so-label{font-size:9.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);
+  padding-top:2px;white-space:nowrap}
+.anz-so p{margin:0!important;font-size:12.6px!important;line-height:1.55!important;color:var(--text-secondary)!important}
+.anz-so p strong{color:var(--text)}
+
+/* compact rows (ANZ-3 / ANZ-2) */
+.anz-rows{list-style:none;margin:0;padding:0;border:1px solid var(--border);border-radius:10px;
+  background:var(--surface2);overflow:hidden}
+.anz-rows li{display:grid;grid-template-columns:52px 1fr;gap:12px;padding:9px 14px;font-size:12.6px;
+  line-height:1.55;color:var(--text-muted);border-bottom:1px solid var(--border);align-items:baseline}
+.anz-rows li:last-child{border-bottom:none}
+.anz-rows li .d{font-size:10.5px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.02em}
+.anz-rows li strong{color:var(--text);font-weight:650}
+.anz-more{margin:10px 0 4px;font-size:11.8px;color:var(--text-dim)}
+
+/* reconciliation footnote */
+.anz-note{margin:18px 0 0;border:1px solid var(--border);border-radius:9px;background:var(--surface2);padding:0 14px}
+.anz-note summary{cursor:pointer;padding:11px 0;font-size:11.5px;font-weight:700;letter-spacing:.04em;
+  color:var(--text-muted);list-style:none}
+.anz-note summary::-webkit-details-marker{display:none}
+.anz-note summary::before{content:'▸ ';color:var(--accent)}
+.anz-note[open] summary::before{content:'▾ '}
+.anz-note p{font-size:12.2px;line-height:1.65;color:var(--text-dim);margin:0 0 12px}
+
+/* actions table — same grammar as the Action Register */
+.anz-v2 .data-table{font-size:12.4px;margin:4px 0 0}
+.anz-v2 .data-table th{font-size:10px;padding:9px 11px}
+.anz-v2 .data-table td{padding:9px 11px;line-height:1.55;vertical-align:top}
+.anz-v2 .data-table td:first-child{color:var(--text);font-weight:600;width:19%}
+.anz-v2 .data-table td .conf{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.04em;
+  padding:1px 0;border-radius:4px}
+
+/* light theme corrections */
+[data-theme="light"] .anz-sw-biz .anz-sw-head{background:rgba(0,114,150,.08);color:#0b6b82;border-bottom-color:rgba(0,114,150,.25)}
+[data-theme="light"] .anz-sw-gov .anz-sw-head{background:rgba(37,99,235,.08);color:#1d4ed8;border-bottom-color:rgba(37,99,235,.25)}
+[data-theme="light"] .anz-shape-seg{color:#fff}
+[data-theme="light"] .anz-card,[data-theme="light"] .anz-sw,[data-theme="light"] .anz-rows,
+[data-theme="light"] .anz-note{background:#f7f8fa}
+[data-theme="light"] .anz-so{background:rgba(0,114,150,.07);border-left-color:#0b6b82}
+[data-theme="light"] .anz-so-label{color:#0b6b82}
+[data-theme="light"] .anz-blocklab{color:#6b7280}
+
 </style>
 <style id="cd-nav-shared">
 .topnav .inner{max-width:1120px;margin:0 auto;padding:0 24px;display:flex;align-items:center;height:60px;gap:8px}
