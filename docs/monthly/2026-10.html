@@ -754,6 +754,26 @@ a.cvepill{cursor:pointer}
 [data-theme="light"] .anz-so-label{color:#0b6b82}
 [data-theme="light"] .anz-blocklab{color:#6b7280}
 
+
+/* ===== grouped TOC (2026-11-11, October edition only) ===== */
+#toc .toc-group{margin-bottom:11px}
+#toc .toc-group:last-child{margin-bottom:0}
+#toc .toc-group-label{display:block;font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--text-dim);padding:0 8px 5px;margin-bottom:3px;border-bottom:1px solid var(--border)}
+#toc details.toc-sub{margin:1px 0 2px}
+#toc details.toc-sub>summary{display:flex;align-items:center;gap:7px;cursor:pointer;list-style:none;
+  padding:3px 8px;border-radius:6px;color:var(--text-muted);font-size:12px;border-left:2px solid transparent}
+#toc details.toc-sub>summary::-webkit-details-marker{display:none}
+#toc details.toc-sub>summary:hover{color:var(--text);background:var(--accent-bg)}
+#toc details.toc-sub>summary::before{content:'\25B8';font-size:9px;color:var(--text-dim);flex-shrink:0;transition:transform .2s}
+#toc details.toc-sub[open]>summary::before{transform:rotate(90deg)}
+#toc details.toc-sub>summary .tsub-name{flex:1;min-width:0;line-height:1.35}
+#toc details.toc-sub[open]>summary{color:var(--text)}
+#toc details.toc-sub a.tsub{margin-left:9px}
+#toc details.toc-sub.has-active>summary{color:var(--accent)}
+#toc details.toc-sub.has-active>summary .tcount{color:var(--accent);border-color:var(--accent)}
+[data-theme="light"] #toc details.toc-sub>summary{color:#4b5563}
+[data-theme="light"] #toc .toc-group-label{color:#6b7280}
 </style>
 <meta name="description" content="Monthly cybersecurity digest for October 2026 — 379 deduped stories across 30 digest days (the series did not run on 18 October).">
 <link rel="canonical" href="https://cyber.peterjaycox.com/monthly/2026-10.html">
@@ -842,12 +862,16 @@ a.cvepill{cursor:pointer}
 <h3>Monthly Digest</h3>
 <button type="button" id="toc-toggle" aria-expanded="true" aria-controls="toc-list"><span>Contents</span><span class="toc-chev" aria-hidden="true">▾</span></button>
 <div id="toc-list">
+<div class="toc-group"><span class="toc-group-label">The month</span>
 <a href="#monthly-glance" data-section="monthly-glance">📊 Month at a Glance</a>
 <a href="#exec" data-section="exec">Executive summary</a>
 <a href="#story" data-section="story">🏆 Story of the Month</a>
 <a href="#anz-signal" data-section="anz-signal">🇦🇺 ANZ Signal</a>
+</div>
+<div class="toc-group"><span class="toc-group-label">Incidents &amp; sectors</span>
 <a href="#osint-enrichment" data-section="osint-enrichment">🔗 OSINT Enrichment</a>
 <a href="#incident-map" data-section="incident-map">🗺️ Incident Map</a>
+<details class="toc-sub"><summary><span class="tsub-name">Sector reports</span><span class="tcount">14</span></summary>
 <a href="#sector-it-technology" data-section="sector-it-technology">💻 IT / Technology</a>
 <a href="#sector-government-policy" data-section="sector-government-policy">🏛️ Government &amp; Policy</a>
 <a href="#sector-financial-services" data-section="sector-financial-services">💰 Financial Services</a>
@@ -862,18 +886,26 @@ a.cvepill{cursor:pointer}
 <a href="#sector-cybercrime-ransomware" data-section="sector-cybercrime-ransomware">🦠 Cybercrime &amp; Ransomware</a>
 <a href="#sector-construction-property" data-section="sector-construction-property">🏗️ Construction &amp; Property</a>
 <a href="#sector-geopolitical-state-sponsored" data-section="sector-geopolitical-state-sponsored">🌐 Geopolitical &amp; State-Sponsored</a>
+</details>
+</div>
+<div class="toc-group"><span class="toc-group-label">The numbers</span>
 <a href="#by-numbers" data-section="by-numbers">📊 By the Numbers</a>
 <a href="#sector-gaps" data-section="sector-gaps">🕳️ Sector Coverage Gaps</a>
+</div>
+<div class="toc-group"><span class="toc-group-label">Analysis</span>
 <a href="#tradecraft" data-section="tradecraft">🛠️ Tradecraft &amp; ATT&amp;CK</a>
 <a href="#theme" data-section="theme">💡 Theme</a>
 <a href="#what-watch" data-section="what-watch">🔮 What to Watch</a>
 <a href="#industry" data-section="industry">🥧 Industry</a>
+</div>
+<div class="toc-group"><span class="toc-group-label">Verification</span>
 <a href="#factcheck" data-section="factcheck">🔍 Fact-Check</a>
 <a href="#claim-ledger" data-section="claim-ledger">🧾 Claim Ledger</a>
 <a href="#source-diversity" data-section="source-diversity">📰 Source Diversity</a>
 <a href="#conf-split" data-section="conf-split">✅ Confidence ledger</a>
 <a href="#analytics" data-section="analytics">📊 Analytics</a>
 <a href="#action-register" data-section="action-register">🎯 Action Register</a>
+</div>
 </div>
 </nav>
 <main id="main" class="main">
@@ -1477,8 +1509,11 @@ document.querySelectorAll('#toc a').forEach(function(l){
 l.setAttribute('role','navigation');
 });
 var _tocObs=new MutationObserver(function(){
-document.querySelectorAll('#toc a.active').forEach(function(a){a.setAttribute('aria-current','location');});
+document.querySelectorAll('#toc a.active').forEach(function(a){a.setAttribute('aria-current','location');
+var d=a.closest('details.toc-sub');if(d&&!d.open)d.open=true;});
 document.querySelectorAll('#toc a:not(.active)').forEach(function(a){a.removeAttribute('aria-current');});
+document.querySelectorAll('#toc details.toc-sub').forEach(function(d){
+var on=!!d.querySelector('a.active');d.classList.toggle('has-active',on);});
 });
 _tocObs.observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['class']});
 /* Executive Summary threads: collapse toggle + mini-TOC scrollspy (progressive). */
