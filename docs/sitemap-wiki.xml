@@ -52,6 +52,7 @@
   <url><loc>https://cyber.peterjaycox.com/wiki/entities/modbeacon-rat.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/entities/msarat.html</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/entities/mustang-panda.html</loc><lastmod>2026-09-23</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/entities/n0n.html</loc><lastmod>2026-11-15</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/entities/nadmesh-botnet.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/entities/nsa-tao.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/entities/o-unc-066.html</loc><lastmod>2026-08-30</lastmod></url>
@@ -490,8 +491,9 @@
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/european-commission-opens-digital-services-act-proceedings-against-booking-com.html</loc><lastmod>2026-10-22</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/european-commission-refers-four-member-states-to-cjeu-over-nis2-transposition.html</loc><lastmod>2026-09-15</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/exclusive-nsa-to-host-hacker-reunion-in-bid-to-rebuild-secretive-tao-unit.html</loc><lastmod>2026-08-29</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/expedia-group-supply-chain-breach-confirmed-n0n-claims-unverified.html</loc><lastmod>2026-11-15</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/extension-of-cisa-2015-info-sharing-protections-passes-as-part-of-house-defence-.html</loc><lastmod>2026-08-17</lastmod></url>
-  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/extortion-group-n0n-claims-bank-payments-vendor-finzly-s-access-secrets.html</loc><lastmod>2026-10-20</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/extortion-group-n0n-claims-bank-payments-vendor-finzly-s-access-secrets.html</loc><lastmod>2026-11-15</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/f5-big-ip-apm-breached-to-deploy-poisonedrefresh-php-rootkit.html</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/f5-discloses-a-9-8-heap-overflow-in-big-ip-apm-that-is-exploited-against-oauth-a.html</loc><lastmod>2026-09-23</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/f5-traces-a-month-long-campaign-stripping-cloud-credentials-from-exposed-vite-de.html</loc><lastmod>2026-09-18</lastmod></url>
@@ -754,7 +756,7 @@
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/n-able-patches-max-severity-n-central-flaw-amid-ongoing-attacks.html</loc><lastmod>2026-09-09</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/n-able-says-attackers-take-over-n-central-servers-after-initial-fix-proves-incom.html</loc><lastmod>2026-08-30</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/n-able-takes-n-central-cloud-offline-after-researcher-discloses-33-zero-days.html</loc><lastmod>2026-11-10</lastmod></url>
-  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/n0n-extortion-batch-names-38-port-terminal-and-shipping-firms-in-one-sweep.html</loc><lastmod>2026-10-20</lastmod></url>
+  <url><loc>https://cyber.peterjaycox.com/wiki/incidents/n0n-extortion-batch-names-38-port-terminal-and-shipping-firms-in-one-sweep.html</loc><lastmod>2026-11-15</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/n8n-patches-severity-8-7-expression-sandbox-escape-discovered-by-security-joes.html</loc><lastmod>2026-10-27</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/nasa-ait-gui-flaws-could-let-unauthenticated-attackers-issue-spacecraft-commands.html</loc><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://cyber.peterjaycox.com/wiki/incidents/nations-take-legal-action-against-north-korean-it-worker-facilitators-after-mult.html</loc><lastmod>2026-09-18</lastmod></url>
